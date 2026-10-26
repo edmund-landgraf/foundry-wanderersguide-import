@@ -1,3 +1,4 @@
+import { PROD_FUNCTIONS_URL, DEFAULT_FUNCTIONS_URL } from "./constants.js";
 // WG edge-function client. API key is the only auth (see docs/PLAN.md section 2).
 // The key is never logged or included in error messages.
 
@@ -58,4 +59,18 @@ export async function exportCharacter(opts, id) {
   const json = await callFunction({ ...opts, fn: "wgui-export-character", body: { id: Number(id), format: "json" } });
   if (!json || json.version !== 4 || !json.character) throw new WgApiError(0, "Export was not a JSON v4 character.");
   return json;
+}
+
+// Accepts the WG "Auth URL" (…/oauth/access?user_id=..&client_id=XXXXXXXX&character_id=..) or a bare 8-char id.
+export function parseClientId(value) {
+  const v = String(value ?? "").trim();
+  if (!v) return "";
+  if (/^[A-Za-z0-9]{8}$/.test(v)) return v;
+  try { return (new URL(v).searchParams.get("client_id") ?? "").trim(); }
+  catch { const m = v.match(/[?&]client_id=([^&#\s]+)/); return m ? decodeURIComponent(m[1]).trim() : ""; }
+}
+// WG server choice: "production" uses the fixed prod URL; "custom" uses the write-in URL.
+export function resolveFunctionsUrl(server, customUrl) {
+  if (server !== "custom") return PROD_FUNCTIONS_URL;
+  return (String(customUrl ?? "").trim() || DEFAULT_FUNCTIONS_URL).replace(/\/+$/, "");
 }

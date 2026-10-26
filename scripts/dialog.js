@@ -1,9 +1,9 @@
 import { MODULE_ID } from "./constants.js";
-import { listCharacters, exportCharacter } from "./api.js";
+import { listCharacters, exportCharacter, parseClientId, resolveFunctionsUrl } from "./api.js";
 import { importCharacter } from "./importer.js";
 
 function opts() {
-  return { baseUrl: game.settings.get(MODULE_ID, "functionsUrl"), apiKey: game.settings.get(MODULE_ID, "apiKey"), clientId: game.settings.get(MODULE_ID, "clientId").trim() };
+  return { baseUrl: resolveFunctionsUrl(game.settings.get(MODULE_ID, "wgServer"), game.settings.get(MODULE_ID, "functionsUrl")), apiKey: game.settings.get(MODULE_ID, "apiKey"), clientId: parseClientId(game.settings.get(MODULE_ID, "authUrl")) };
 }
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
