@@ -39,11 +39,10 @@ test("matchEntries slug -> name -> miss", () => {
   assert.deepEqual(missReport(m), ["feat: Stormwarden Dedication", "equipment: Stormforge Covenant Blade"]);
 });
 
-test("summarizeCharacters marks grants", () => {
-  const s = summarizeCharacters([{ id: 1, name: "A", level: 2, details: { class: { name: "Bard" }, api_clients: { client_access: [{ clientId: "x" }] } } }, { id: 2, name: "B", level: 1, details: {} }]);
-  assert.equal(s[0].granted, true);
+test("summarizeCharacters keeps only rows granted to this client", () => {
+  const s = summarizeCharacters([{ id: 1, name: "A", level: 2, details: { class: { name: "Bard" }, api_clients: { client_access: [{ clientId: "x", publicUserId: "28" }] } } }, { id: 2, name: "B", level: 1, details: {} }], { clientId: "x", publicUserId: "28" });
+  assert.deepEqual(s.map((r) => r.id), [1]);
   assert.equal(s[0].class, "Bard");
-  assert.equal(s[1].granted, false);
 });
 
 test("callFunction retries 429 and never puts key in errors", async () => {
@@ -78,10 +77,15 @@ test("Fist is not imported as an item", () => {
   assert.deepEqual(p.entries.map((e) => e.name), ["Versatile Vial (Lesser)"]);
 });
 
-test("grant marker respects client id", () => {
-  const rows = [{ id: 1, name: "A", level: 1, details: { api_clients: { client_access: [{ clientId: "other" }] } } }];
-  assert.equal(summarizeCharacters(rows, "mine")[0].granted, false);
-  assert.equal(summarizeCharacters(rows)[0].granted, true);
+test("list filter is strict: other clients, other owners, and no client id hide rows", () => {
+  const rows = [
+    { id: 1, details: { api_clients: { client_access: [{ clientId: "other", publicUserId: "28" }] } } },
+    { id: 2, details: { api_clients: { client_access: [{ clientId: "mine", publicUserId: "5" }] } } },
+    { id: 3, details: { api_clients: { client_access: [{ clientId: "mine", publicUserId: "28" }] } } },
+  ];
+  assert.deepEqual(summarizeCharacters(rows, { clientId: "mine", publicUserId: "28" }).map((r) => r.id), [3]);
+  assert.deepEqual(summarizeCharacters(rows, "mine").map((r) => r.id), [2, 3]);
+  assert.deepEqual(summarizeCharacters(rows), []);
 });
 
 test("parseClientId reads client_id from WG Auth URL or bare id", () => {
@@ -94,4 +98,10 @@ test("resolveFunctionsUrl picks prod or custom", () => {
   assert.equal(resolveFunctionsUrl("production", "http://x"), "https://amba.wandersguide.site/functions/v1");
   assert.equal(resolveFunctionsUrl("custom", "http://10.0.0.5:8000/functions/v1/"), "http://10.0.0.5:8000/functions/v1");
   assert.equal(resolveFunctionsUrl("custom", ""), "http://127.0.0.1:8000/functions/v1");
+});
+test("pickChoice maps a PF2e ChoiceSet label to the WG feature name", async () => {
+  globalThis.foundry ??= {};
+  const { pickChoice } = await import("../scripts/importer.js");
+  assert.equal(pickChoice(["Enigma", "Maestro", "Polymath"], ["Bard Muse", "Polymath Muse"]), 2);
+  assert.equal(pickChoice(["Enigma", "Maestro"], ["Bard Muse"]), -1);
 });

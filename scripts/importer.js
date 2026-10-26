@@ -1,23 +1,26 @@
 // Foundry-side import. Uses Foundry/PF2e globals (game, Actor, Item, Folder, ChatMessage).
 import { MODULE_ID, HOMEBREW_FOLDER } from "./constants.js";
-import { buildPlan, matchEntries, missReport } from "./mapping.js";
+import { buildPlan, matchEntries, missReport, sluggify } from "./mapping.js";
 
 const PACK_TYPES = new Set(["ancestry", "heritage", "background", "class", "feat", "spell", "weapon", "armor", "shield", "equipment", "consumable", "treasure", "backpack", "kit"]);
 
 let indexCache = null;
+// Uses each pack's already-loaded default index (name, type). We deliberately do NOT call
+// pack.getIndex({ fields }) here: on Foundry v14 + PF2e, requesting extra fields across all Item
+// packs (feats-srd 6k+, equipment 5.9k) re-extracts every document and froze the client for
+// minutes (the "stalled import"). Slug is derived from the name (PF2e slugs are sluggified names).
 async function compendiumIndex() {
   if (indexCache) return indexCache;
   const rows = [];
   for (const pack of game.packs.filter((p) => p.documentName === "Item")) {
-    const idx = await pack.getIndex({ fields: ["system.slug", "system.level.value", "type"] });
+    const idx = pack.indexed ? pack.index : await pack.getIndex();
     for (const e of idx) {
       if (!PACK_TYPES.has(e.type)) continue;
-      rows.push({ type: e.type, slug: e.system?.slug ?? null, name: e.name, level: e.system?.level?.value ?? null, uuid: e.uuid ?? `Compendium.${pack.collection}.Item.${e._id}` });
+      rows.push({ type: e.type, slug: e.system?.slug ?? sluggify(e.name), name: e.name, level: e.system?.level?.value ?? null, uuid: e.uuid ?? `Compendium.${pack.collection}.Item.${e._id}` });
     }
   }
   return (indexCache = rows);
 }
-
 async function homebrewFolder() {
   return game.folders.find((f) => f.type === "Item" && f.name === HOMEBREW_FOLDER)
     ?? Folder.create({ name: HOMEBREW_FOLDER, type: "Item" });
@@ -60,10 +63,53 @@ async function itemDataFor(entry, folderId) {
   return data;
 }
 
-export async function importCharacter(exp, { host }) {
+// PF2e opens a ChoiceSet prompt (PickAThingPrompt, e.g. "Muses") while ancestry/class/feat items are
+// created, and item creation awaits it. Unattended, that hung the import forever. While importing we
+// answer prompts from the WG export: pick the choice whose label matches a WG feature/feat name
+// ("Polymath" <- "Polymath Muse"); otherwise close the prompt and report it.
+export function pickChoice(labels, hintNames) {
+  const hints = hintNames.map((n) => sluggify(n));
+  for (const [i, label] of labels.entries()) {
+    const l = sluggify(label);
+    if (!l) continue;
+    if (hints.some((h) => h === l || h.startsWith(`${l}-`) || h.endsWith(`-${l}`))) return i;
+  }
+  return -1;
+}
+
+function exportNames(exp) {
+  const out = [];
+  const walk = (v) => { if (Array.isArray(v)) v.forEach(walk); else if (v && typeof v === "object") { if (typeof v.name === "string") out.push(v.name); Object.values(v).forEach((x) => (x && typeof x === "object" ? walk(x) : null)); } };
+  walk(exp?.content?.feats_features ?? {});
+  return out;
+}
+
+function autoAnswerPrompts(hintNames, notes) {
+  const seen = new Set();
+  const tick = () => {
+    for (const app of foundry.applications?.instances?.values?.() ?? []) {
+      if (seen.has(app) || !Array.isArray(app.choices) || typeof app.resolveSelection !== "function") continue;
+      if (!app.rendered) continue;
+      seen.add(app);
+      const i = pickChoice(app.choices.map((c) => c.label ?? ""), hintNames);
+      // PickAThingPrompt resolves its pending promise with app.selection on close (button and select-menu UIs alike).
+      if (i >= 0) { notes.push(`choice ${app.title}: ${app.choices[i].label}`); app.selection = app.choices[i]; app.close(); }
+      else { notes.push(`choice ${app.title}: unresolved (skipped)`); app.close(); }
+    }
+  };
+  const timer = setInterval(tick, 200);
+  return () => clearInterval(timer);
+}
+
+export async function importCharacter(exp, { host, onStep = () => {} }) {
+  const step = (s) => { console.debug(`${MODULE_ID} | ${s}`); onStep(s); };
   const plan = buildPlan(exp);
-  const matched = matchEntries(plan.entries, await compendiumIndex());
+  step("plan");
+  const index = await compendiumIndex();
+  step(`index ${index.length}`);
+  const matched = matchEntries(plan.entries, index);
   const misses = missReport(matched);
+  step("match");
   const folder = await homebrewFolder();
 
   let actor = game.actors.find((a) => a.getFlag(MODULE_ID, "wgId") === plan.wgId && a.getFlag(MODULE_ID, "host") === host);
@@ -88,18 +134,30 @@ export async function importCharacter(exp, { host }) {
     if (ours.length) await actor.deleteEmbeddedDocuments("Item", ours);
     // TODO(PLAN 8, milestone 9): dry-run diff before writing.
   }
+  const notes = [];
+  const stopPrompts = autoAnswerPrompts([...exportNames(exp), ...plan.entries.map((e) => e.name)], notes);
+  try {
+  step("actor");
   await actor.update(forced);
+  step("forced");
 
   // ABC first, then the rest (PLAN 5).
   const order = ["ancestry", "heritage", "background", "class", "feat", "spell", "equipment"];
   const sorted = [...matched].sort((a, b) => order.indexOf(a.kind) - order.indexOf(b.kind));
   for (const kind of order) {
     const batch = [];
+    // Skip entries PF2e already granted (class features, muse, etc.) so they are neither duplicated nor reported as misses.
+    const have = new Set(actor.items.map((i) => sluggify(i.name)));
     for (const e of sorted.filter((x) => x.kind === kind)) {
+      if (kind !== "equipment" && (have.has(sluggify(e.name)) || (kind === "feat" && [...have].some((h) => sluggify(e.name).startsWith(`${h}-`))))) { const k = misses.findIndex((m) => m === `${e.kind}: ${e.name}`); if (k >= 0) misses.splice(k, 1); continue; }
       try { batch.push(await itemDataFor(e, folder.id)); } catch (err) { misses.push(`${e.kind}: ${e.name} (error: ${err.message})`); }
     }
+    step(`build ${kind} ${batch.length}`);
     if (batch.length) await actor.createEmbeddedDocuments("Item", batch, { render: false });
+    step(`created ${kind}`);
   }
+
+  } finally { stopPrompts(); }
 
   if (plan.maxHp != null) {
     // TODO(PLAN 7.2): add a flagged HP adjustment effect when PF2e's computed max differs.
@@ -109,7 +167,7 @@ export async function importCharacter(exp, { host }) {
 
   await ChatMessage.create({
     whisper: [game.user.id],
-    content: `<h3>WG import: ${foundry.utils.escapeHTML?.(plan.name) ?? plan.name}</h3><p>${matched.length - misses.length} matched, ${misses.length} created as homebrew or missed.</p>${misses.length ? `<ul>${misses.map((m) => `<li>${m}</li>`).join("")}</ul>` : ""}`,
+    content: `<h3>WG import: ${foundry.utils.escapeHTML?.(plan.name) ?? plan.name}</h3><p>${matched.length - misses.length} matched, ${misses.length} created as homebrew or missed.</p>${misses.length ? `<ul>${misses.map((m) => `<li>${m}</li>`).join("")}</ul>` : ""}${notes.length ? `<p>Choices:</p><ul>${notes.map((m) => `<li>${m}</li>`).join("")}</ul>` : ""}`,
   });
-  return { actor, misses };
+  return { actor, misses, notes, matched: matched.length - misses.length };
 }
