@@ -6,6 +6,10 @@ Hooks.once("init", () => {
     name: "WGI.Settings.ApiKey.Name", hint: "WGI.Settings.ApiKey.Hint",
     scope: "client", config: true, type: String, default: "",
   });
+  game.settings.register(MODULE_ID, "clientId", {
+    name: "WGI.Settings.ClientId.Name", hint: "WGI.Settings.ClientId.Hint",
+    scope: "client", config: true, type: String, default: "",
+  });
   game.settings.register(MODULE_ID, "functionsUrl", {
     name: "WGI.Settings.FunctionsUrl.Name", hint: "WGI.Settings.FunctionsUrl.Hint",
     scope: "client", config: true, type: String, default: DEFAULT_FUNCTIONS_URL,

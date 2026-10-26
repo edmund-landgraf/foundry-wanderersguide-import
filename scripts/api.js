@@ -38,10 +38,10 @@ export async function callFunction({ baseUrl, apiKey, fn, body, fetchImpl = glob
 /** Lightweight list (PLAN 4A.1 v1): find-character {} as the key owner, trimmed to summary fields. */
 export async function listCharacters(opts) {
   const json = await callFunction({ ...opts, fn: "find-character", body: {} });
-  return summarizeCharacters(json?.data ?? []);
+  return summarizeCharacters(json?.data ?? [], opts.clientId);
 }
 
-export function summarizeCharacters(rows) {
+export function summarizeCharacters(rows, clientId = "") {
   return (Array.isArray(rows) ? rows : [rows]).filter(Boolean).map((c) => ({
     id: c.id,
     name: c.name,
@@ -49,7 +49,8 @@ export function summarizeCharacters(rows) {
     ancestry: c.details?.ancestry?.name ?? "",
     class: c.details?.class?.name ?? "",
     campaignId: c.campaign_id ?? null,
-    granted: (c.details?.api_clients?.client_access?.length ?? 0) > 0,
+    // With the API client id set, only grants to that client count; otherwise any grant (may still 403).
+    granted: (c.details?.api_clients?.client_access ?? []).some((g) => !clientId || g.clientId === clientId),
   }));
 }
 

@@ -55,3 +55,31 @@ test("callFunction retries 429 and never puts key in errors", async () => {
   await assert.rejects(callFunction({ baseUrl: "http://x", apiKey: key, fn: "f", fetchImpl }), (e) => e.status === 403 && !e.message.includes(key));
   assert.equal(n, 2);
 });
+
+const real = JSON.parse(readFileSync(new URL("./fixtures/real-test2-v4.json", import.meta.url)));
+
+test("real local export (test2 Inkwhisk, Gnome Bard 2) maps", () => {
+  const p = buildPlan(real);
+  assert.equal(p.name, "Inkwhisk");
+  assert.equal(p.level, 2);
+  assert.equal(p.maxHp, 28);
+  assert.deepEqual(p.attributes, { str: 0, dex: 2, con: 2, int: 1, wis: 1, cha: 3 });
+  assert.deepEqual(p.languages, ["common", "fey", "gnomish"]);
+  const names = (k) => p.entries.filter((e) => e.kind === k).map((e) => e.name);
+  assert.deepEqual(names("ancestry"), ["Gnome"]);
+  assert.deepEqual(names("class"), ["Bard"]);
+  assert.deepEqual(names("heritage"), ["Chameleon Gnome"]);
+  assert.ok(names("feat").includes("Polymath Muse"));
+  assert.deepEqual(names("spell").sort(), ["Counter Performance", "Courageous Anthem", "Phantasmal Minion"]);
+});
+
+test("Fist is not imported as an item", () => {
+  const p = buildPlan({ version: 4, character: { id: 1, name: "x", level: 1, details: {} }, content: { inventory_flat: [{ item: { id: 1, name: "Fist" } }, { item: { id: 2, name: "Versatile Vial (Lesser)" } }] } });
+  assert.deepEqual(p.entries.map((e) => e.name), ["Versatile Vial (Lesser)"]);
+});
+
+test("grant marker respects client id", () => {
+  const rows = [{ id: 1, name: "A", level: 1, details: { api_clients: { client_access: [{ clientId: "other" }] } } }];
+  assert.equal(summarizeCharacters(rows, "mine")[0].granted, false);
+  assert.equal(summarizeCharacters(rows)[0].granted, true);
+});

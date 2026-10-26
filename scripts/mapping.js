@@ -11,6 +11,8 @@ export function sluggify(name) {
     .replace(/^-|-$/g, "");
 }
 
+const SKIP_ITEMS = new Set(["fist"]);
+
 const ATTR_KEYS = { STR: "str", DEX: "dex", CON: "con", INT: "int", WIS: "wis", CHA: "cha" };
 
 function attrMod(v) {
@@ -46,6 +48,7 @@ export function buildPlan(exp) {
   for (const s of ct.innate_spells ?? []) add("spell", "spell", s.spell?.name, { wgContentId: s.spell?.id, rank: s.rank, innate: true });
   for (const inv of ct.inventory_flat ?? []) {
     const it = inv.item ?? inv;
+    if (SKIP_ITEMS.has(sluggify(it.name))) continue; // built-in strikes, not items
     add("equipment", "equipment", it.name, { wgContentId: it.id, quantity: inv.quantity ?? it.meta_data?.quantity ?? 1, equipped: !!inv.is_equipped });
   }
 
