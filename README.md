@@ -18,7 +18,7 @@ Requires Foundry v12–v13 and the `pf2e` system. Enable the module in your worl
 
 1. In Wanderer's Guide, open account settings and create an API client. Copy its key.
 2. On each character you want to import, grant that API client access.
-3. In Foundry → Configure Settings → Wanderer's Guide Import, click Copy next to **Key** in Wanderer's Guide (Account > API Clients) and paste it into **API Key**. Optionally click Copy next to **Auth URL** and paste the whole URL into **Auth URL**, so the list marks only characters granted to that client (a bare 8-character client id also works). It is a **client** setting (stored only in this browser) and is never logged.
+3. In Foundry → Configure Settings → Wanderer's Guide Import, click Copy next to **Key** in Wanderer's Guide (Account > API Clients) and paste it into **API Key**. It is a **client** setting (stored only in this browser) and is never logged.
 4. Pick **WG server**:
    - **Production** (default): `https://amba.wandersguide.site/functions/v1`
    - **Custom**: enter **Custom server URL** (local dev default `http://127.0.0.1:8000/functions/v1`). A URL saved by 0.1.0 is kept and switched to Custom.
@@ -38,3 +38,13 @@ Stubbed (TODOs reference PLAN milestones): ChoiceSet pre-answers, runes/material
 ```
 npm test
 ```
+
+## Wanderer's Guide functions used
+
+The module calls the key-scoped `wgui-ext` functions (POST `<base>/functions/v1/<name>`, `Authorization: Bearer <API key>`):
+
+- `wgui-ext-list-key-characters`: the character list. The server returns only characters the key can read, so no client-id filtering is done in Foundry (the old **Auth URL** setting is hidden and unused).
+- `wgui-ext-find-key-campaigns`: campaign names for the Campaign column.
+- `wgui-export-character`: the JSON v4 export used for the import.
+
+Errors such as `INVALID_API_KEY`, `CAMPAIGN_FORBIDDEN` and `CAMPAIGN_ID_INVALID` are shown as plain notifications. These functions must be deployed on the selected WG server.

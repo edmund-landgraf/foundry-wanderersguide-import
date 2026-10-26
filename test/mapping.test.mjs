@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { buildPlan, matchEntries, missReport, sluggify } from "../scripts/mapping.js";
-import { summarizeCharacters, callFunction, parseClientId, resolveFunctionsUrl } from "../scripts/api.js";
+import { summarizeCharacters, callFunction, parseClientId, resolveFunctionsUrl, listCharacters, listCampaigns, getCampaign, campaignLabel, friendlyError } from "../scripts/api.js";
 
 const exp = JSON.parse(readFileSync(new URL("./fixtures/sample-v4.json", import.meta.url)));
 
@@ -39,13 +39,10 @@ test("matchEntries slug -> name -> miss", () => {
   assert.deepEqual(missReport(m), ["feat: Stormwarden Dedication", "equipment: Stormforge Covenant Blade"]);
 });
 
-test("summarizeCharacters marks grants", () => {
-  const s = summarizeCharacters([{ id: 1, name: "A", level: 2, details: { class: { name: "Bard" }, api_clients: { client_access: [{ clientId: "x" }] } } }, { id: 2, name: "B", level: 1, details: {} }]);
-  assert.equal(s[0].granted, true);
-  assert.equal(s[0].class, "Bard");
-  assert.equal(s[1].granted, false);
+test("summarizeCharacters reads wgui-ext rows", () => {
+  const s = summarizeCharacters([{ id: 1, name: "A", level: 2, class: "Bard", ancestry: "Gnome", campaign_id: 7, image_url: "u", updated_at: "t" }]);
+  assert.deepEqual(s[0], { id: 1, name: "A", level: 2, ancestry: "Gnome", class: "Bard", campaignId: 7, imageUrl: "u", updatedAt: "t" });
 });
-
 test("callFunction retries 429 and never puts key in errors", async () => {
   let n = 0;
   const key = "11111111-2222-3333-4444-555555555555";
@@ -78,11 +75,6 @@ test("Fist is not imported as an item", () => {
   assert.deepEqual(p.entries.map((e) => e.name), ["Versatile Vial (Lesser)"]);
 });
 
-test("grant marker respects client id", () => {
-  const rows = [{ id: 1, name: "A", level: 1, details: { api_clients: { client_access: [{ clientId: "other" }] } } }];
-  assert.equal(summarizeCharacters(rows, "mine")[0].granted, false);
-  assert.equal(summarizeCharacters(rows)[0].granted, true);
-});
 
 test("parseClientId reads client_id from WG Auth URL or bare id", () => {
   assert.equal(parseClientId("http://localhost:5194/oauth/access?user_id=28&client_id=4a273aa9&character_id=<ID>"), "4a273aa9");
@@ -94,4 +86,40 @@ test("resolveFunctionsUrl picks prod or custom", () => {
   assert.equal(resolveFunctionsUrl("production", "http://x"), "https://amba.wandersguide.site/functions/v1");
   assert.equal(resolveFunctionsUrl("custom", "http://10.0.0.5:8000/functions/v1/"), "http://10.0.0.5:8000/functions/v1");
   assert.equal(resolveFunctionsUrl("custom", ""), "http://127.0.0.1:8000/functions/v1");
+});
+const KEY = "11111111-2222-3333-4444-555555555555";
+const ok = (data) => ({ status: 200, ok: true, headers: { get: () => null }, json: async () => ({ status: "success", data }) });
+
+test("listCharacters posts {} to wgui-ext-list-key-characters with bearer key", async () => {
+  let seen;
+  const fetchImpl = async (url, init) => { seen = { url, init }; return ok([{ id: 3, name: "C", level: 1, class: "Rogue", ancestry: "Elf", campaign_id: null }]); };
+  const rows = await listCharacters({ baseUrl: "http://h/functions/v1", apiKey: KEY, fetchImpl });
+  assert.equal(seen.url, "http://h/functions/v1/wgui-ext-list-key-characters");
+  assert.equal(seen.init.method, "POST");
+  assert.equal(seen.init.headers.Authorization, `Bearer ${KEY}`);
+  assert.equal(seen.init.body, "{}");
+  assert.equal(rows[0].class, "Rogue");
+});
+
+test("campaigns: list names and fetch one", async () => {
+  const bodies = [];
+  const fetchImpl = async (_u, init) => { const b = JSON.parse(init.body); bodies.push(b);
+    return b.campaign_id ? ok({ campaign: { id: 5, name: "Abomination Vaults" }, characters: [{ id: 9, name: "Z", level: 3 }] }) : ok({ campaigns: [{ id: 5, name: "Abomination Vaults", character_ids: [9] }] }); };
+  const list = await listCampaigns({ baseUrl: "http://h", apiKey: KEY, fetchImpl });
+  assert.deepEqual(list, [{ id: 5, name: "Abomination Vaults", characterIds: [9] }]);
+  const one = await getCampaign({ baseUrl: "http://h", apiKey: KEY, fetchImpl }, "5");
+  assert.equal(one.campaign.name, "Abomination Vaults");
+  assert.equal(one.characters[0].id, 9);
+  assert.deepEqual(bodies, [{}, { campaign_id: 5 }]);
+  assert.equal(campaignLabel(5, new Map([[5, "Abomination Vaults"]])), "Abomination Vaults");
+  assert.equal(campaignLabel(6, new Map()), "Campaign #6");
+  assert.equal(campaignLabel(null, new Map()), "");
+});
+
+test("wgui-ext fail codes become friendly messages without the key", async () => {
+  for (const [status, code, want] of [[401, "INVALID_API_KEY", /rejected the API key/], [401, "AUTH_REQUIRED", /No API key/], [403, "CAMPAIGN_FORBIDDEN", /no access to that campaign/], [400, "CAMPAIGN_ID_INVALID", /Invalid campaign id/]]) {
+    const fetchImpl = async () => ({ status, ok: false, headers: { get: () => null }, json: async () => ({ status: "fail", data: { message: "raw", code } }) });
+    await assert.rejects(listCampaigns({ baseUrl: "http://h", apiKey: KEY, fetchImpl }), (e) => e.status === status && want.test(e.message) && !e.message.includes(KEY));
+  }
+  assert.match(friendlyError(404, null), /not found/);
 });
