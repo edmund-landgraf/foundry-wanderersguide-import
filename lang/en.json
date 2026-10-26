@@ -1,0 +1,7 @@
+{
+  "WGI.Button": "Import from Wanderer's Guide",
+  "WGI.Settings.ApiKey.Name": "Wanderer's Guide API key",
+  "WGI.Settings.ApiKey.Hint": "Your WG API client key (36 characters). Stored only in this browser (client setting). Each character must grant this API client in Wanderer's Guide.",
+  "WGI.Settings.FunctionsUrl.Name": "WG functions URL",
+  "WGI.Settings.FunctionsUrl.Hint": "Base URL of the Wanderer's Guide edge functions. Local dev: http://127.0.0.1:8000/functions/v1"
+}

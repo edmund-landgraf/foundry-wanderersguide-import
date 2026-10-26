@@ -1,0 +1,30 @@
+{
+  "version": 4,
+  "character": {
+    "id": 9001, "name": "Fixture Fighter", "level": 3,
+    "details": {
+      "ancestry": { "id": 1, "name": "Human" },
+      "background": { "id": 2, "name": "Guard" },
+      "class": { "id": 3, "name": "Fighter" }
+    }
+  },
+  "content": {
+    "feats_features": {
+      "heritages": [{ "id": 10, "name": "Versatile Heritage" }],
+      "ancestryFeats": [{ "id": 11, "name": "Natural Ambition", "level": 1 }],
+      "classFeats": [{ "id": 12, "name": "Sudden Charge", "level": 1 }, { "id": 13, "name": "Stormwarden Dedication", "level": 2 }],
+      "generalAndSkillFeats": [{ "id": 14, "name": "Toughness", "level": 3 }],
+      "otherFeats": []
+    },
+    "spells": { "all": [] },
+    "focus_spells": [],
+    "innate_spells": [],
+    "inventory_flat": [
+      { "item": { "id": 20, "name": "Longsword" }, "quantity": 1, "is_equipped": true },
+      { "item": { "id": 21, "name": "Stormforge Covenant Blade" }, "quantity": 1, "is_equipped": false }
+    ],
+    "languages": ["Common", "Tempestine"],
+    "max_hp": 47,
+    "attributes": { "ATTRIBUTE_STR": { "value": 4 }, "ATTRIBUTE_DEX": { "value": 2 }, "ATTRIBUTE_CON": 2, "ATTRIBUTE_INT": 0, "ATTRIBUTE_WIS": 1, "ATTRIBUTE_CHA": -1 }
+  }
+}
