@@ -2,8 +2,12 @@
   "WGI.Button": "Import from Wanderer's Guide",
   "WGI.Settings.ApiKey.Name": "API Key",
   "WGI.Settings.ApiKey.Hint": "Click Copy next to Key in Wanderer's Guide (Account > API Clients) and paste it here. Stored only in this browser (client setting).",
-  "WGI.Settings.FunctionsUrl.Name": "WG functions URL",
-  "WGI.Settings.FunctionsUrl.Hint": "Base URL of the Wanderer's Guide edge functions. Local dev: http://127.0.0.1:8000/functions/v1",
   "WGI.Settings.AuthUrl.Name": "Auth URL",
-  "WGI.Settings.AuthUrl.Hint": "Optional. Click Copy next to Auth URL in Wanderer's Guide and paste the whole URL here."
+  "WGI.Settings.AuthUrl.Hint": "Optional. Click Copy next to Auth URL in Wanderer's Guide and paste the whole URL here.",
+  "WGI.Settings.WgServer.Name": "WG server",
+  "WGI.Settings.WgServer.Hint": "Production uses wgui.wandersguide.site. Pick Custom to use the URL below.",
+  "WGI.Settings.WgServer.Production": "Production (wgui.wandersguide.site)",
+  "WGI.Settings.WgServer.Custom": "Custom",
+  "WGI.Settings.FunctionsUrl.Name": "Custom server URL",
+  "WGI.Settings.FunctionsUrl.Hint": "Only used when WG server is Custom. Base URL of the Wanderer's Guide edge functions. Local dev: http://127.0.0.1:8000/functions/v1"
 }

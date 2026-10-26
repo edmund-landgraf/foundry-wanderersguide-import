@@ -1,3 +1,4 @@
+import { PROD_FUNCTIONS_URL, DEFAULT_FUNCTIONS_URL } from "./constants.js";
 // WG edge-function client. API key is the only auth (see docs/PLAN.md section 2).
 // The key is never logged or included in error messages.
 
@@ -67,4 +68,9 @@ export function parseClientId(value) {
   if (/^[A-Za-z0-9]{8}$/.test(v)) return v;
   try { return (new URL(v).searchParams.get("client_id") ?? "").trim(); }
   catch { const m = v.match(/[?&]client_id=([^&#\s]+)/); return m ? decodeURIComponent(m[1]).trim() : ""; }
+}
+// WG server choice: "production" uses the fixed prod URL; "custom" uses the write-in URL.
+export function resolveFunctionsUrl(server, customUrl) {
+  if (server !== "custom") return PROD_FUNCTIONS_URL;
+  return (String(customUrl ?? "").trim() || DEFAULT_FUNCTIONS_URL).replace(/\/+$/, "");
 }

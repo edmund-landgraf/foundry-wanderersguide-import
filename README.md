@@ -19,9 +19,9 @@ Requires Foundry v12–v13 and the `pf2e` system. Enable the module in your worl
 1. In Wanderer's Guide, open account settings and create an API client. Copy its key.
 2. On each character you want to import, grant that API client access.
 3. In Foundry → Configure Settings → Wanderer's Guide Import, click Copy next to **Key** in Wanderer's Guide (Account > API Clients) and paste it into **API Key**. Optionally click Copy next to **Auth URL** and paste the whole URL into **Auth URL**, so the list marks only characters granted to that client (a bare 8-character client id also works). It is a **client** setting (stored only in this browser) and is never logged.
-4. Set **WG functions URL**:
-   - local dev (default): `http://127.0.0.1:8000/functions/v1`
-   - production: the functions URL of `https://wgui.wandersguide.site`.
+4. Pick **WG server**:
+   - **Production** (default): `https://wgui.wandersguide.site/functions/v1`
+   - **Custom**: enter **Custom server URL** (local dev default `http://127.0.0.1:8000/functions/v1`). A URL saved by 0.1.0 is kept and switched to Custom.
 
 ## Use
 

@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { buildPlan, matchEntries, missReport, sluggify } from "../scripts/mapping.js";
-import { summarizeCharacters, callFunction, parseClientId } from "../scripts/api.js";
+import { summarizeCharacters, callFunction, parseClientId, resolveFunctionsUrl } from "../scripts/api.js";
 
 const exp = JSON.parse(readFileSync(new URL("./fixtures/sample-v4.json", import.meta.url)));
 
@@ -89,4 +89,9 @@ test("parseClientId reads client_id from WG Auth URL or bare id", () => {
   assert.equal(parseClientId("  4a273aa9 "), "4a273aa9");
   assert.equal(parseClientId(""), "");
   assert.equal(parseClientId("http://localhost:5194/oauth/access?user_id=28"), "");
+});
+test("resolveFunctionsUrl picks prod or custom", () => {
+  assert.equal(resolveFunctionsUrl("production", "http://x"), "https://wgui.wandersguide.site/functions/v1");
+  assert.equal(resolveFunctionsUrl("custom", "http://10.0.0.5:8000/functions/v1/"), "http://10.0.0.5:8000/functions/v1");
+  assert.equal(resolveFunctionsUrl("custom", ""), "http://127.0.0.1:8000/functions/v1");
 });

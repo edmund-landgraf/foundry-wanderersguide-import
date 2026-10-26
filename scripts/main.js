@@ -12,6 +12,12 @@ Hooks.once("init", () => {
   });
   // Legacy 0.1.0 bare client id; hidden, migrated into authUrl on ready.
   game.settings.register(MODULE_ID, "clientId", { scope: "client", config: false, type: String, default: "" });
+  game.settings.register(MODULE_ID, "wgServer", {
+    name: "WGI.Settings.WgServer.Name", hint: "WGI.Settings.WgServer.Hint",
+    scope: "client", config: true, type: String, default: "production",
+    choices: { production: "WGI.Settings.WgServer.Production", custom: "WGI.Settings.WgServer.Custom" },
+  });
+  // Custom server URL (key kept from 0.1.0 so existing values keep working); used only when wgServer = custom.
   game.settings.register(MODULE_ID, "functionsUrl", {
     name: "WGI.Settings.FunctionsUrl.Name", hint: "WGI.Settings.FunctionsUrl.Hint",
     scope: "client", config: true, type: String, default: DEFAULT_FUNCTIONS_URL,
@@ -41,5 +47,10 @@ Hooks.once("ready", async () => {
     await game.settings.set(MODULE_ID, "authUrl", legacy);
     await game.settings.set(MODULE_ID, "clientId", "");
   }
-  console.log(`${MODULE_ID} | ready`);
+  // 0.1.0 users who saved a functions URL keep it: map them to Custom.
+  const store = game.settings.storage.get("client");
+  if (store?.getItem(`${MODULE_ID}.functionsUrl`) != null && store?.getItem(`${MODULE_ID}.wgServer`) == null) {
+    await game.settings.set(MODULE_ID, "wgServer", "custom");
+  }
+  console.log(`${MODULE_ID} | ready (server: ${game.settings.get(MODULE_ID, "wgServer")})`);
 });
