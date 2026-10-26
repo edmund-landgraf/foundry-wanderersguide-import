@@ -59,3 +59,12 @@ export async function exportCharacter(opts, id) {
   if (!json || json.version !== 4 || !json.character) throw new WgApiError(0, "Export was not a JSON v4 character.");
   return json;
 }
+
+// Accepts the WG "Auth URL" (…/oauth/access?user_id=..&client_id=XXXXXXXX&character_id=..) or a bare 8-char id.
+export function parseClientId(value) {
+  const v = String(value ?? "").trim();
+  if (!v) return "";
+  if (/^[A-Za-z0-9]{8}$/.test(v)) return v;
+  try { return (new URL(v).searchParams.get("client_id") ?? "").trim(); }
+  catch { const m = v.match(/[?&]client_id=([^&#\s]+)/); return m ? decodeURIComponent(m[1]).trim() : ""; }
+}

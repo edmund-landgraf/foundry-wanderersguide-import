@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { buildPlan, matchEntries, missReport, sluggify } from "../scripts/mapping.js";
-import { summarizeCharacters, callFunction } from "../scripts/api.js";
+import { summarizeCharacters, callFunction, parseClientId } from "../scripts/api.js";
 
 const exp = JSON.parse(readFileSync(new URL("./fixtures/sample-v4.json", import.meta.url)));
 
@@ -82,4 +82,11 @@ test("grant marker respects client id", () => {
   const rows = [{ id: 1, name: "A", level: 1, details: { api_clients: { client_access: [{ clientId: "other" }] } } }];
   assert.equal(summarizeCharacters(rows, "mine")[0].granted, false);
   assert.equal(summarizeCharacters(rows)[0].granted, true);
+});
+
+test("parseClientId reads client_id from WG Auth URL or bare id", () => {
+  assert.equal(parseClientId("http://localhost:5194/oauth/access?user_id=28&client_id=4a273aa9&character_id=<ID>"), "4a273aa9");
+  assert.equal(parseClientId("  4a273aa9 "), "4a273aa9");
+  assert.equal(parseClientId(""), "");
+  assert.equal(parseClientId("http://localhost:5194/oauth/access?user_id=28"), "");
 });
