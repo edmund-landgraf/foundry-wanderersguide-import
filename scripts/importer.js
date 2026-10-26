@@ -1,6 +1,6 @@
 // Foundry-side import. Uses Foundry/PF2e globals (game, Actor, Item, Folder, ChatMessage).
 import { MODULE_ID, HOMEBREW_FOLDER } from "./constants.js";
-import { buildPlan, matchEntries, missReport, sluggify } from "./mapping.js";
+import { buildPlan, matchEntries, missReport, sluggify, resolveImageUrl, FALLBACK_IMG } from "./mapping.js";
 
 const PACK_TYPES = new Set(["ancestry", "heritage", "background", "class", "feat", "spell", "weapon", "armor", "shield", "equipment", "consumable", "treasure", "backpack", "kit"]);
 
@@ -113,8 +113,12 @@ export async function importCharacter(exp, { host, onStep = () => {} }) {
   const folder = await homebrewFolder();
 
   let actor = game.actors.find((a) => a.getFlag(MODULE_ID, "wgId") === plan.wgId && a.getFlag(MODULE_ID, "host") === host);
+  const keepImg = actor?.img && !/mystery-man|default-icons/.test(actor.img) ? actor.img : null;
+  const img = resolveImageUrl(plan.imageUrl, host) ?? keepImg ?? FALLBACK_IMG;
   const forced = {
     name: plan.name,
+    img,
+    "prototypeToken.texture.src": img,
     "system.details.level.value": plan.level,
     "system.details.languages.value": plan.languages,
     // Forced values from WG (PLAN 7.2). Attributes are set as manual modifiers.
