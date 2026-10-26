@@ -91,7 +91,7 @@ test("parseClientId reads client_id from WG Auth URL or bare id", () => {
   assert.equal(parseClientId("http://localhost:5194/oauth/access?user_id=28"), "");
 });
 test("resolveFunctionsUrl picks prod or custom", () => {
-  assert.equal(resolveFunctionsUrl("production", "http://x"), "https://wgui.wandersguide.site/functions/v1");
+  assert.equal(resolveFunctionsUrl("production", "http://x"), "https://amba.wandersguide.site/functions/v1");
   assert.equal(resolveFunctionsUrl("custom", "http://10.0.0.5:8000/functions/v1/"), "http://10.0.0.5:8000/functions/v1");
   assert.equal(resolveFunctionsUrl("custom", ""), "http://127.0.0.1:8000/functions/v1");
 });
