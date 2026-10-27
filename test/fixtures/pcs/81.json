@@ -1,0 +1,6044 @@
+{
+ "version": 4,
+ "character": {
+  "id": 81,
+  "name": "Morrow Quillgrave",
+  "level": 1,
+  "experience": 0,
+  "hp_current": 1,
+  "hp_temp": 0,
+  "hero_points": 1,
+  "stamina_current": 0,
+  "resolve_current": 0,
+  "inventory": {
+   "coins": {
+    "cp": 0,
+    "sp": 150,
+    "gp": 0,
+    "pp": 0
+   },
+   "items": []
+  },
+  "notes": null,
+  "details": {
+   "class": {
+    "id": 337,
+    "created_at": "2026-07-24T16:17:11.513933+00:00",
+    "name": "Necromancer",
+    "rarity": "COMMON",
+    "description": "> _Death is as common, if not more so, than life. Despite this, death and decay are considered subjects of the macabre, and those willing to dive headfirst into the fascinations they invoke are necromancers. These occult spellcasters seek the ever-changing borders of life and death, manipulating magic of vitality and void to suit their will. The undead both serve and cower before them._\n\n* * *\n\n### During Combat Encounters...\n\nYou manipulate the flow of life and death on the battlefield. You both create and destroy your undead servants to amplify your occult powers and manipulate battle. You also tip the scales by draining the life of your foes to heal your allies.\n\n### During Social Encounters...\n\nYour knowledge of the esoteric and macabre can be both insightful and frightening. Many find such knowledge to be gruesomely enchanting. When natural charm fails, your occult magic is a potent tool for manipulating the living and the dead.\n\n### While Exploring...\n\nSince you understand them better than most, you excel at locating and handling haunts with your occult prowess. You might summon your undead thralls to trigger traps or to serve as a decoy when you think enemies are near.\n\n### In Downtime...\n\nYou can brew potions, craft magic items, or scribe scrolls for your party and seek out hidden or locked-away knowledge about your grim fascination. Perhaps you tend to the local graveyard to ensure the dead are properly put to rest.\n\n### You Might...\n\n*   Have a feverish desire to study the anatomy of creatures you discover along your journey.\n    \n*   Pay respects for the dead and the death you cause while understanding that it is the inevitable end of all living creatures.\n    \n*   Seek ways to cheat the natural order of life and death, either to make yourself immortal or bring back a loved one.\n    \n\n### Others Probably...\n\n*   Assume you enjoy the cruelty of death and revel in decay.\n    \n*   Seek you out, hoping you can send or receive a message from someone who has passed.\n    \n*   Ignore you, as your existence is a reminder that they and everyone they know will someday die.",
+    "operations": [
+     {
+      "id": "2d33cede-1439-4b6b-86b4-dab7cb4dbb60",
+      "type": "adjValue",
+      "data": {
+       "variable": "ATTRIBUTE_INT",
+       "value": {
+        "value": 1
+       }
+      }
+     },
+     {
+      "id": "a579292a-feb3-4a27-a983-c192f7238c1d",
+      "type": "setValue",
+      "data": {
+       "variable": "MAX_HEALTH_CLASS_PER_LEVEL",
+       "value": 8
+      }
+     },
+     {
+      "id": "b0225a7f-9537-4760-8739-12a2804671fb",
+      "type": "adjValue",
+      "data": {
+       "variable": "PERCEPTION",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "e750b9cd-44c7-4af0-8c3a-5ab6b445c666",
+      "type": "adjValue",
+      "data": {
+       "variable": "SAVE_FORT",
+       "value": {
+        "value": "E"
+       }
+      }
+     },
+     {
+      "id": "cdd6358f-b2c4-4436-908f-cc2dcf3ba10a",
+      "type": "adjValue",
+      "data": {
+       "variable": "SAVE_REFLEX",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "2c27dae1-96b4-4c24-ad1b-06e82880f0b7",
+      "type": "adjValue",
+      "data": {
+       "variable": "SAVE_WILL",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "bec0a014-f009-4caa-8f7b-12bc86dbe71c",
+      "type": "adjValue",
+      "data": {
+       "variable": "SKILL_OCCULTISM",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "fe6add6d-0e9d-4359-aec9-3996c919be39",
+      "type": "adjValue",
+      "data": {
+       "variable": "SIMPLE_WEAPONS",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "d4508c98-0069-4c23-a306-c191c46f3427",
+      "type": "adjValue",
+      "data": {
+       "variable": "UNARMED_ATTACKS",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "7d1a39fc-5c87-4630-ae18-5bd537435217",
+      "type": "adjValue",
+      "data": {
+       "variable": "LIGHT_ARMOR",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "021a5970-47dd-4443-a468-7ba99474cc48",
+      "type": "adjValue",
+      "data": {
+       "variable": "UNARMORED_DEFENSE",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "d1eab920-e5b4-44cf-a8bc-c94875be7d09",
+      "type": "setValue",
+      "data": {
+       "variable": "CLASS_DC",
+       "value": {
+        "value": "T",
+        "attribute": "ATTRIBUTE_INT"
+       }
+      }
+     },
+     {
+      "id": "a8ff7596-fce9-444a-995a-782d0cd60a05",
+      "type": "adjValue",
+      "data": {
+       "variable": "SPELL_ATTACK",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "4edec14c-4291-4d91-94ae-8dde52a53624",
+      "type": "adjValue",
+      "data": {
+       "variable": "SPELL_DC",
+       "value": {
+        "value": "T"
+       }
+      }
+     }
+    ],
+    "trait_id": 5135,
+    "artwork_url": "https://images.demiplane.com/elements/pathfinder-2e/classes/class-necromancer-detail.png?format=webp&quality=90&width=3840",
+    "content_source_id": 842,
+    "version": "1.0",
+    "uuid": 1462501481100287,
+    "skill_training_base": 2,
+    "deprecated": false,
+    "updated_at": "2026-09-24T23:58:24.905554+00:00",
+    "meta_data": {
+     "source": {
+      "url": "https://2e.aonprd.com/Classes.aspx?ID=75",
+      "book": "Impossible Magic",
+      "page": "27"
+     }
+    }
+   },
+   "ancestry": {
+    "id": 4,
+    "created_at": "2023-12-14T04:35:20.980759+00:00",
+    "name": "Dwarf",
+    "rarity": "COMMON",
+    "description": "> _Dwarves are a short, stocky people who are often stubborn, fierce, and devoted._\n\nDwarves have a well-earned reputation as a stoic and stern people, but they also have an unbridled zeal and deeply value artisanship. To a stranger, they can seem untrusting and clannish, but to their friends and family, they are warm and caring. While trust from a dwarf is hard-won, once gained it is as strong as iron.\n\nIf you want to play a character who is as hard as nails, a stubborn and unrelenting adventurer, with a mix of rugged toughness and deep wisdom, you should play a dwarf.",
+    "trait_id": 1467,
+    "artwork_url": "https://images.demiplane.com/elements/pathfinder-2e/ancestries/ancestry-dwarf-rm-detail.png?format=webp&quality=90&width=1920",
+    "content_source_id": 1,
+    "version": "1.0",
+    "operations": [
+     {
+      "id": "2ab7d55b-60a2-4051-9307-e4c73a6d6596",
+      "type": "setValue",
+      "data": {
+       "variable": "MAX_HEALTH_ANCESTRY",
+       "value": 10
+      }
+     },
+     {
+      "id": "09cbf36d-44d6-436d-9456-5499516314aa",
+      "type": "setValue",
+      "data": {
+       "variable": "SIZE",
+       "value": "medium"
+      }
+     },
+     {
+      "id": "72506287-ce22-4033-866d-ab849ac4ec9e",
+      "type": "setValue",
+      "data": {
+       "variable": "SPEED",
+       "value": 20
+      }
+     },
+     {
+      "id": "ca332abb-d0ae-43d6-915b-bb85688cf91e",
+      "type": "adjValue",
+      "data": {
+       "variable": "ATTRIBUTE_CHA",
+       "value": {
+        "value": -1
+       }
+      }
+     },
+     {
+      "id": "2406087d-787e-4a0d-9807-e167794d3471",
+      "type": "giveLanguage",
+      "data": {
+       "languageId": 81
+      }
+     },
+     {
+      "id": "d6dea13c-9849-4988-910b-786afad7f468",
+      "type": "giveLanguage",
+      "data": {
+       "languageId": 83
+      }
+     },
+     {
+      "id": "e423312d-baab-4e75-91ec-11599102f395",
+      "type": "setValue",
+      "data": {
+       "variable": "CORE_LANGUAGES",
+       "value": "[\n  \"Gnomish\",\n  \"Goblin\",\n  \"Jotun\",\n  \"Orcish\",\n  \"Petran\",\n  \"Sakvroth\"\n]"
+      }
+     },
+     {
+      "id": "013967a1-ba53-4692-a13a-ceae609481af",
+      "type": "giveAbilityBlock",
+      "data": {
+       "type": "sense",
+       "abilityBlockId": 20769
+      }
+     },
+     {
+      "id": "6849b687-67e5-4e8c-a232-7726c61a63f8",
+      "type": "adjValue",
+      "data": {
+       "variable": "ATTRIBUTE_CON",
+       "value": {
+        "value": 1
+       }
+      }
+     },
+     {
+      "id": "6e1941cd-a202-4d1c-a117-e3fc8ac9c1e3",
+      "type": "adjValue",
+      "data": {
+       "variable": "ATTRIBUTE_WIS",
+       "value": {
+        "value": 1
+       }
+      }
+     },
+     {
+      "id": "eabb4cd7-5aad-4f7c-a712-95d5e272bcf3",
+      "type": "select",
+      "data": {
+       "title": "Select an Attribute",
+       "modeType": "FILTERED",
+       "optionType": "ADJ_VALUE",
+       "optionsPredefined": [],
+       "optionsFilters": {
+        "id": "8c1e7659-5029-4d00-8d77-f10f50b4688d",
+        "type": "ADJ_VALUE",
+        "group": "ATTRIBUTE",
+        "value": {
+         "value": 1
+        }
+       }
+      }
+     },
+     {
+      "id": "802db98f-dfe6-4dac-b370-650edb781046",
+      "type": "giveAbilityBlock",
+      "data": {
+       "type": "physical-feature",
+       "abilityBlockId": 20771
+      }
+     },
+     {
+      "id": "1cfee0a2-58bd-41d0-9b56-6b1ec041198a",
+      "type": "giveTrait",
+      "data": {
+       "traitId": 2399
+      }
+     }
+    ],
+    "uuid": 518845481186385,
+    "deprecated": null,
+    "updated_at": "2026-08-27T16:49:19.460496+00:00",
+    "meta_data": {
+     "source": {
+      "url": "https://2e.aonprd.com/Ancestries.aspx?ID=59",
+      "book": "Player Core",
+      "page": "42"
+     }
+    }
+   },
+   "background": {
+    "id": 759,
+    "created_at": "2024-04-07T07:54:20.311086+00:00",
+    "name": "Scholar",
+    "rarity": "COMMON",
+    "description": "> _You have a knack for learning and sequestered yourself from the outside world to learn all you could. You read about so many wondrous places and things in your books, always dreaming about one day seeing the real things. Eventually, that curiosity led you to leave your studies and become an adventurer._\n\nChoose two attribute boosts. One must be to Intelligence or Wisdom, and one is a free attribute boost.\n\nYou're trained in your choice of the Arcana, Nature, Occultism, or Religion skill, and gain the [Assurance](link_feat_19919) skill feat in your chosen skill. You're also trained in the Academia Lore skill.",
+    "operations": [
+     {
+      "id": "f16309dc-3607-4ea9-9e15-ca0cacdbe04b",
+      "type": "select",
+      "data": {
+       "title": "Select an Attribute",
+       "modeType": "PREDEFINED",
+       "optionType": "ADJ_VALUE",
+       "optionsPredefined": [
+        {
+         "id": "57a7f0e2-ef9b-43fb-ac7d-199f1fddbe45",
+         "type": "ADJ_VALUE",
+         "operation": {
+          "id": "7a849b6e-2d1c-4d86-9b03-18d1a69d2336",
+          "type": "adjValue",
+          "data": {
+           "variable": "ATTRIBUTE_INT",
+           "value": {
+            "value": 1
+           }
+          }
+         }
+        },
+        {
+         "id": "a4355a0c-6222-4ef9-b9a6-23ab0732202a",
+         "type": "ADJ_VALUE",
+         "operation": {
+          "id": "5ba3d7f4-154c-4524-8b8b-de42da79ff7b",
+          "type": "adjValue",
+          "data": {
+           "variable": "ATTRIBUTE_WIS",
+           "value": {
+            "value": 1
+           }
+          }
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "e71c33cb-a745-4c01-b9a4-6cd304da6095",
+      "type": "select",
+      "data": {
+       "title": "Select an Attribute",
+       "modeType": "FILTERED",
+       "optionType": "ADJ_VALUE",
+       "optionsPredefined": [],
+       "optionsFilters": {
+        "id": "4d52d8ba-3cbd-4dc5-a6f6-792ed4eea0fd",
+        "type": "ADJ_VALUE",
+        "group": "ATTRIBUTE",
+        "value": {
+         "value": 1
+        }
+       }
+      }
+     },
+     {
+      "id": "6b7b3459-1deb-4e86-b5b6-d557b3f72882",
+      "type": "select",
+      "data": {
+       "title": "Select a Skill",
+       "modeType": "PREDEFINED",
+       "optionType": "ADJ_VALUE",
+       "optionsPredefined": [
+        {
+         "id": "07cb8ac0-09f3-468e-ac3b-2f066c9a0236",
+         "type": "ADJ_VALUE",
+         "operation": {
+          "id": "67ce8446-443f-427f-b835-e043c851dbf5",
+          "type": "adjValue",
+          "data": {
+           "variable": "SKILL_ARCANA",
+           "value": {
+            "value": "T"
+           }
+          }
+         }
+        },
+        {
+         "id": "bc907460-15a1-453d-8944-dc9b0de01644",
+         "type": "ADJ_VALUE",
+         "operation": {
+          "id": "ab8e6eda-67e8-4438-91e8-6292387442ab",
+          "type": "adjValue",
+          "data": {
+           "variable": "SKILL_NATURE",
+           "value": {
+            "value": "T"
+           }
+          }
+         }
+        },
+        {
+         "id": "33fe98a8-0316-4db8-ab57-b55588b8bb48",
+         "type": "ADJ_VALUE",
+         "operation": {
+          "id": "9b44aade-32b4-47bb-80de-1257e49f7cd2",
+          "type": "adjValue",
+          "data": {
+           "variable": "SKILL_OCCULTISM",
+           "value": {
+            "value": "T"
+           }
+          }
+         }
+        },
+        {
+         "id": "f0920b5b-7b21-4735-abae-d5413e5be90e",
+         "type": "ADJ_VALUE",
+         "operation": {
+          "id": "4778ca0f-1f43-4a0a-815e-d66a89b69c3f",
+          "type": "adjValue",
+          "data": {
+           "variable": "SKILL_RELIGION",
+           "value": {
+            "value": "T"
+           }
+          }
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "752986d7-fe27-41b6-9a6b-6e26d50d811b",
+      "type": "giveAbilityBlock",
+      "data": {
+       "type": "feat",
+       "abilityBlockId": 19919
+      }
+     },
+     {
+      "id": "26e9546b-0192-4815-a616-e075100eb27a",
+      "type": "createValue",
+      "data": {
+       "variable": "SKILL_LORE_ACADEMIA",
+       "value": {
+        "value": "T",
+        "attribute": "ATTRIBUTE_INT"
+       },
+       "type": "prof"
+      }
+     }
+    ],
+    "content_source_id": 1,
+    "version": "1.0",
+    "uuid": 255740338553190,
+    "artwork_url": null,
+    "deprecated": null,
+    "updated_at": "2026-08-27T16:49:19.969852+00:00",
+    "meta_data": {
+     "source": {
+      "url": "https://2e.aonprd.com/Backgrounds.aspx?ID=440",
+      "book": "Player Core",
+      "page": "88"
+     }
+    }
+   }
+  },
+  "roll_history": null,
+  "custom_operations": null,
+  "meta_data": {
+   "reset_hp": true
+  },
+  "options": {
+   "dice_roller": true,
+   "auto_detect_prerequisites": true
+  },
+  "variants": null,
+  "content_sources": {
+   "enabled": [
+    1,
+    8,
+    7,
+    842
+   ]
+  },
+  "operation_data": {
+   "selections": {
+    "background_f16309dc-3607-4ea9-9e15-ca0cacdbe04b": "7a849b6e-2d1c-4d86-9b03-18d1a69d2336",
+    "background_e71c33cb-a745-4c01-b9a4-6cd304da6095": "ATTRIBUTE_CON",
+    "background_6b7b3459-1deb-4e86-b5b6-d557b3f72882": "9b44aade-32b4-47bb-80de-1257e49f7cd2",
+    "background_752986d7-fe27-41b6-9a6b-6e26d50d811b_1e323240-f76f-42e9-bf07-7339bdab53a5": "ebdadff0-1dcc-4c37-a4a1-a7309a10debe",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-0": "SKILL_ARCANA",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-1": "SKILL_RELIGION",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-2": "SKILL_MEDICINE",
+    "class-feature-57712_c0d5b75e-bd83-49f9-849c-915ad86e38e4": "ATTRIBUTE_INT",
+    "class-feature-57712_3966e801-9422-4c0a-822e-35992a0860d3": "ATTRIBUTE_CON",
+    "class-feature-57712_d9142830-8997-474b-bbcc-7b49b4bfe911": "ATTRIBUTE_DEX",
+    "class-feature-57712_ab225b86-c153-47bb-905a-c13b41ea07bc": "ATTRIBUTE_WIS",
+    "class-feature-57684_8ef70845-e347-4eed-9930-74a41f11460e": "18010bbe-6019-48a7-a9e6-55a6cc1fc529",
+    "class-feature-57683_00680f99-771f-4473-a23d-7a8bc1dd170c": "4dbeeb40-e69d-4b6b-9b77-a880fc30585f",
+    "ancestry_eabb4cd7-5aad-4f7c-a712-95d5e272bcf3": "ATTRIBUTE_INT",
+    "ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-0": "100",
+    "ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-1": "102",
+    "ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-2": "82",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-3": "SKILL_SOCIETY",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-4": "SKILL_CRAFTING",
+    "ancestry-section-5742419753466526_3fd6a268-771b-49fc-93ed-9b53695d1a29": "20731",
+    "ancestry-section-2707339574403411_9f26290c-a2db-4c45-9b34-5053e60c106d-0": "20090",
+    "ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-3": "93",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-5": "SKILL_INTIMIDATION"
+   }
+  },
+  "spells": {
+   "slots": [
+    {
+     "rank": 0,
+     "source": "NECROMANCER",
+     "spell_id": 4937
+    },
+    {
+     "rank": 0,
+     "source": "NECROMANCER",
+     "spell_id": 4554
+    },
+    {
+     "rank": 0,
+     "source": "NECROMANCER",
+     "spell_id": 4893
+    },
+    {
+     "rank": 0,
+     "source": "NECROMANCER",
+     "spell_id": 4562
+    },
+    {
+     "rank": 0,
+     "source": "NECROMANCER",
+     "spell_id": 4831
+    },
+    {
+     "rank": 1,
+     "source": "NECROMANCER",
+     "spell_id": 4648
+    }
+   ],
+   "list": [],
+   "focus_point_current": 0,
+   "innate_casts": []
+  },
+  "companions": null,
+  "campaign_id": 42
+ },
+ "content": {
+  "_README": "Here's some compiled data about the character. Should be fairly human-readable. The <character> section is what WG reads, this section is solely for you! Should give you an abundance of compiled stats and info about the character. If you have any questions, feel free to ask on our Discord!",
+  "feats_features": {
+   "generalAndSkillFeats": [
+    {
+     "id": 19919,
+     "created_at": "2023-12-14T01:12:42.747905+00:00",
+     "operations": [
+      {
+       "id": "1e323240-f76f-42e9-bf07-7339bdab53a5",
+       "type": "select",
+       "data": {
+        "title": "Select a Skill",
+        "modeType": "PREDEFINED",
+        "optionType": "CUSTOM",
+        "optionsPredefined": [
+         {
+          "id": "99761770-29a1-4aa0-8f0d-40323ea438e5",
+          "type": "CUSTOM",
+          "title": "Acrobatics",
+          "description": "",
+          "operations": [
+           {
+            "id": "f509919e-7aa4-410c-a4c7-78bb0f70b144",
+            "type": "addBonusToValue",
+            "data": {
+             "variable": "SKILL_ACROBATICS",
+             "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+            }
+           }
+          ]
+         },
+         {
+          "id": "34bb4632-2f77-4a4e-8b38-99fa19386d0f",
+          "type": "CUSTOM",
+          "title": "Arcana",
+          "description": "",
+          "operations": [
+           {
+            "id": "77a34af3-d033-45e9-8281-062228a152b0",
+            "type": "addBonusToValue",
+            "data": {
+             "variable": "SKILL_ARCANA",
+             "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+            }
+           }
+          ]
+         },
+         {
+          "id": "863dbb98-9411-41f0-82c2-5bb7dfcaf57d",
+          "type": "CUSTOM",
+          "title": "Athletics",
+          "description": "",
+          "operations": [
+           {
+            "id": "a9c48d22-c6d1-43e1-b8af-44a91092f4d6",
+            "type": "addBonusToValue",
+            "data": {
+             "variable": "SKILL_ATHLETICS",
+             "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+            }
+           }
+          ]
+         },
+         {
+          "id": "4033d822-4e72-4740-aa40-62990513b1c5",
+          "type": "CUSTOM",
+          "title": "Crafting",
+          "description": "",
+          "operations": [
+           {
+            "id": "b4c113c4-2d6e-4897-8d89-1773e6a07fb5",
+            "type": "addBonusToValue",
+            "data": {
+             "variable": "SKILL_CRAFTING",
+             "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+            }
+           }
+          ]
+         },
+         {
+          "id": "86628e99-4646-414c-b082-b346f609637d",
+          "type": "CUSTOM",
+          "title": "Deception",
+          "description": "",
+          "operations": [
+           {
+            "id": "17677a1d-8791-41e3-b5cf-5e19e8168530",
+            "type": "addBonusToValue",
+            "data": {
+             "variable": "SKILL_DECEPTION",
+             "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+            }
+           }
+          ]
+         },
+         {
+          "id": "31259bc7-b137-4b5b-9193-07f96a3b3377",
+          "type": "CUSTOM",
+          "title": "Diplomacy",
+          "description": "",
+          "operations": [
+           {
+            "id": "9885abf6-e68b-45e9-a8ad-ea4a725c9b61",
+            "type": "addBonusToValue",
+            "data": {
+             "variable": "SKILL_DIPLOMACY",
+             "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+            }
+           }
+          ]
+         },
+         {
+          "id": "3b97e9d5-6276-491b-8b55-a962cab38024",
+          "type": "CUSTOM",
+          "title": "Intimidation",
+          "description": "",
+          "operations": [
+           {
+            "id": "4a6a3190-ba4d-4e6a-972a-b736fd16a018",
+            "type": "addBonusToValue",
+            "data": {
+             "variable": "SKILL_INTIMIDATION",
+             "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+            }
+           }
+          ]
+         },
+         {
+          "id": "cb8cb834-52e7-45d3-9891-a623f1412aa0",
+          "type": "CUSTOM",
+          "title": "Medicine",
+          "description": "",
+          "operations": [
+           {
+            "id": "a323c65f-2122-42d1-ada3-ed7eb0821c5e",
+            "type": "addBonusToValue",
+            "data": {
+             "variable": "SKILL_MEDICINE",
+             "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+            }
+           }
+          ]
+         },
+         {
+          "id": "904b4089-5c8a-4d67-8467-680d849747bd",
+          "type": "CUSTOM",
+          "title": "Nature",
+          "description": "",
+          "operations": [
+           {
+            "id": "db4f3d09-c0f7-4728-ab5e-733c9edb1530",
+            "type": "addBonusToValue",
+            "data": {
+             "variable": "SKILL_NATURE",
+             "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+            }
+           }
+          ]
+         },
+         {
+          "id": "ebdadff0-1dcc-4c37-a4a1-a7309a10debe",
+          "type": "CUSTOM",
+          "title": "Occultism",
+          "description": "",
+          "operations": [
+           {
+            "id": "a710604a-4cca-48ac-bf4c-3c2ee49e510b",
+            "type": "addBonusToValue",
+            "data": {
+             "variable": "SKILL_OCCULTISM",
+             "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+            }
+           }
+          ]
+         },
+         {
+          "id": "cc15e4f6-b604-4ae9-a678-86d97f86a879",
+          "type": "CUSTOM",
+          "title": "Performance",
+          "description": "",
+          "operations": [
+           {
+            "id": "d7583963-4229-4cad-8d3f-763b86cdd554",
+            "type": "addBonusToValue",
+            "data": {
+             "variable": "SKILL_PERFORMANCE",
+             "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+            }
+           }
+          ]
+         },
+         {
+          "id": "2ef947d9-a5a6-4694-80da-597b32dfbd90",
+          "type": "CUSTOM",
+          "title": "Religion",
+          "description": "",
+          "operations": [
+           {
+            "id": "de8c2052-9948-488c-a349-0c95813382fe",
+            "type": "addBonusToValue",
+            "data": {
+             "variable": "SKILL_RELIGION",
+             "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+            }
+           }
+          ]
+         },
+         {
+          "id": "055a403e-8fd3-4ac8-98e2-e0ebe3117ca8",
+          "type": "CUSTOM",
+          "title": "Society",
+          "description": "",
+          "operations": [
+           {
+            "id": "a84188f5-ae4a-4297-9d4e-184ddebf6128",
+            "type": "addBonusToValue",
+            "data": {
+             "variable": "SKILL_SOCIETY",
+             "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+            }
+           }
+          ]
+         },
+         {
+          "id": "553d6796-7b71-4f2b-b938-9bb0ecac2258",
+          "type": "CUSTOM",
+          "title": "Stealth",
+          "description": "",
+          "operations": [
+           {
+            "id": "66e6c85e-a01a-4e52-bdbc-706b509c3e16",
+            "type": "addBonusToValue",
+            "data": {
+             "variable": "SKILL_STEALTH",
+             "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+            }
+           }
+          ]
+         },
+         {
+          "id": "0f84226c-2133-4a27-8f93-3e5191241ce7",
+          "type": "CUSTOM",
+          "title": "Survival",
+          "description": "",
+          "operations": [
+           {
+            "id": "aefa8688-982f-4fd5-8c77-8721b37016f5",
+            "type": "addBonusToValue",
+            "data": {
+             "variable": "SKILL_SURVIVAL",
+             "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+            }
+           }
+          ]
+         },
+         {
+          "id": "db3acf4c-3903-478d-a2ac-3ca7fa1e729b",
+          "type": "CUSTOM",
+          "title": "Thievery",
+          "description": "",
+          "operations": [
+           {
+            "id": "420820f4-44c4-40f2-9d8d-184a1fb9acf0",
+            "type": "addBonusToValue",
+            "data": {
+             "variable": "SKILL_THIEVERY",
+             "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+            }
+           }
+          ]
+         },
+         {
+          "id": "dd462888-a8f8-4909-9e73-ffd6e329e751",
+          "type": "CUSTOM",
+          "title": "Lore",
+          "description": "",
+          "operations": []
+         }
+        ]
+       }
+      }
+     ],
+     "name": "Assurance",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [
+      "trained in at least one skill"
+     ],
+     "frequency": null,
+     "cost": null,
+     "trigger": null,
+     "requirements": null,
+     "access": null,
+     "description": "Even in the worst circumstances, you can perform basic tasks. Choose a skill you're trained in. You can forgo rolling a skill check for that skill to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers).\n\n(⇧Trained: {{12+level}})\n\n(⇧Expert: {{14+level}})\n\n(⇧Master: {{16+level}})\n\n(⇧Legendary: {{18+level}})",
+     "special": "You can select this feat multiple times. Each time, choose a different skill and gain the benefits for that skill.",
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=5121",
+       "book": "Player Core",
+       "page": "252"
+      },
+      "foundry": {
+       "rules": [
+        {
+         "key": "ChoiceSet",
+         "flag": "assurance",
+         "prompt": "PF2E.SpecificRule.Prompt.Skill",
+         "choices": [
+          {
+           "label": "PF2E.SkillAcr",
+           "value": "acrobatics"
+          },
+          {
+           "label": "PF2E.SkillArc",
+           "value": "arcana"
+          },
+          {
+           "label": "PF2E.SkillAth",
+           "value": "athletics"
+          },
+          {
+           "label": "PF2E.SkillCra",
+           "value": "crafting"
+          },
+          {
+           "label": "PF2E.SkillDec",
+           "value": "deception"
+          },
+          {
+           "label": "PF2E.SkillDip",
+           "value": "diplomacy"
+          },
+          {
+           "label": "PF2E.SkillItm",
+           "value": "intimidation"
+          },
+          {
+           "label": "PF2E.SkillMed",
+           "value": "medicine"
+          },
+          {
+           "label": "PF2E.SkillNat",
+           "value": "nature"
+          },
+          {
+           "label": "PF2E.SkillOcc",
+           "value": "occultism"
+          },
+          {
+           "label": "PF2E.SkillPrf",
+           "value": "performance"
+          },
+          {
+           "label": "PF2E.SkillRel",
+           "value": "religion"
+          },
+          {
+           "label": "PF2E.SkillSoc",
+           "value": "society"
+          },
+          {
+           "label": "PF2E.SkillSte",
+           "value": "stealth"
+          },
+          {
+           "label": "PF2E.SkillSur",
+           "value": "survival"
+          },
+          {
+           "label": "PF2E.SkillThi",
+           "value": "thievery"
+          },
+          {
+           "label": "PF2E.SkillLore",
+           "value": "lore"
+          }
+         ]
+        },
+        {
+         "key": "SubstituteRoll",
+         "slug": "assurance",
+         "label": "PF2E.SpecificRule.SubstituteRoll.Assurance",
+         "value": 10,
+         "selector": "{item|flags.pf2e.rulesSelections.assurance}"
+        },
+        {
+         "key": "AdjustModifier",
+         "selector": "{item|flags.pf2e.rulesSelections.assurance}",
+         "suppress": true,
+         "predicate": [
+          "substitute:assurance",
+          {
+           "not": "bonus:type:proficiency"
+          }
+         ]
+        }
+       ]
+      },
+      "canSelectMultipleTimes": true,
+      "can_select_multiple_times": true
+     },
+     "traits": [
+      1460,
+      1437,
+      1438
+     ],
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 4918231942996785,
+     "availability": null,
+     "updated_at": "2026-08-27T16:53:40.818195+00:00"
+    }
+   ],
+   "classFeats": [
+    {
+     "id": 57723,
+     "created_at": "2026-07-24T21:06:30.190646+00:00",
+     "operations": [],
+     "name": "Consume Thrall",
+     "actions": "FREE-ACTION",
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "once per day",
+     "cost": "",
+     "trigger": "",
+     "requirements": "You have 0 Focus Points and at least one thrall within 30 feet of you",
+     "access": "",
+     "description": "You destroy one thrall within 30 feet of you and regain 1 Focus Point. You can spend this focus point only to cast a grave spell.",
+     "special": "",
+     "type": "feat",
+     "meta_data": {
+      "unselectable": true
+     },
+     "traits": [
+      1432,
+      5135,
+      1514
+     ],
+     "content_source_id": 842,
+     "version": null,
+     "uuid": 8283408546946360,
+     "availability": null,
+     "updated_at": "2026-07-24T21:06:30.190646+00:00"
+    }
+   ],
+   "ancestryFeats": [
+    {
+     "id": 20090,
+     "created_at": "2023-12-14T01:51:30.795748+00:00",
+     "operations": [],
+     "name": "Dwarven Doughtiness",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": null,
+     "cost": null,
+     "trigger": null,
+     "requirements": null,
+     "access": null,
+     "description": "You are naturally calm and collected in the face of imminent danger. At the end of your turn, reduce your frightened condition by 2 instead of 1.",
+     "special": null,
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=4387",
+       "book": "Player Core",
+       "page": "43"
+      },
+      "foundry": {
+       "rules": []
+      }
+     },
+     "traits": [
+      1467
+     ],
+     "content_source_id": 1,
+     "version": "1.0",
+     "uuid": 6221576561793150,
+     "availability": null,
+     "updated_at": "2026-08-27T16:49:23.919185+00:00"
+    }
+   ],
+   "otherFeats": [],
+   "classFeatures": [
+    {
+     "id": 57684,
+     "created_at": "2026-07-24T16:17:02.845892+00:00",
+     "operations": [
+      {
+       "id": "8ef70845-e347-4eed-9930-74a41f11460e",
+       "type": "select",
+       "data": {
+        "title": "Select a Fatal Method",
+        "modeType": "PREDEFINED",
+        "optionType": "CUSTOM",
+        "optionsPredefined": [
+         {
+          "id": "18010bbe-6019-48a7-a9e6-55a6cc1fc529",
+          "type": "CUSTOM",
+          "title": "Puppeteer",
+          "description": "You prefer to study life and death from afar. You gain the [Consume Thrall](link_feat_57723) action and the thrall proliferation ability.\n\n**Consume Thrall** <abbr cost=\"FREE-ACTION\" class=\"action-symbol\">4</abbr> ([concentrate](link_trait_1432), [necromancer](link_trait_5135), [occult](link_trait_1514)) **Frequency** once per day; **Requirements** You have 0 Focus Points and at least one thrall within 30 feet of you; **Effects** You destroy one thrall within 30 feet of you and regain 1 Focus Point. You can spend this focus point only to cast a [grave spell](link_class-feature_57685).\n\n**Thrall Proliferation** Once per round when you cast [create thrall](link_spell_8770), you can create one additional [thrall](link_trait_5139) in range.",
+          "operations": [
+           {
+            "id": "95729ae8-81e6-4e1a-95db-86b6a48aecf0",
+            "type": "giveAbilityBlock",
+            "data": {
+             "type": "feat",
+             "abilityBlockId": 57723
+            }
+           },
+           {
+            "id": "6ba5e063-37f9-498a-a9f0-be19e2c9ef37",
+            "type": "injectText",
+            "data": {
+             "type": "spell",
+             "id": 8770,
+             "text": "**Puppeteer—Thrall Proliferation** Once per round when you cast _create thrall_, you can create one additional [thrall](link_trait_5139) in range."
+            }
+           }
+          ]
+         },
+         {
+          "id": "27cabdf8-bc6f-44d0-ba4a-11dc4b946078",
+          "type": "CUSTOM",
+          "title": "Reaper",
+          "description": "You study flesh up close by clashing blade against bone. You gain the reaper's edge and thrall teamwork abilities.\n\n**Reaper's Edge** You become trained in martial weapons and medium armor. At 11th level, you become expert in martial weapons, and at 13th level you become an expert in medium armor.\n\n**Thrall Teamwork** Once per round after you cast [create thrall](link_spell_8770), you can make a melee [Strike](link_action_19856) as a free action against a creature within your melee reach that is adjacent to at least one of your [thralls](link_trait_5139).",
+          "operations": [
+           {
+            "id": "bf205ade-b48a-4ae1-b4bb-3e386ad7ef7f",
+            "type": "adjValue",
+            "data": {
+             "variable": "MARTIAL_WEAPONS",
+             "value": {
+              "value": "T"
+             }
+            }
+           },
+           {
+            "id": "9b60fce2-0958-48fb-8e45-8025f4ffe141",
+            "type": "adjValue",
+            "data": {
+             "variable": "MEDIUM_ARMOR",
+             "value": {
+              "value": "T"
+             }
+            }
+           },
+           {
+            "id": "c8613fdb-376c-47e9-94b2-569c2ea703de",
+            "type": "conditional",
+            "data": {
+             "conditions": [
+              {
+               "id": "a78d80e8-ff93-48a6-8c91-8de938c5aac0",
+               "name": "LEVEL",
+               "data": {
+                "name": "LEVEL",
+                "type": "num",
+                "value": 0
+               },
+               "type": "num",
+               "operator": "GREATER_THAN_OR_EQUALS",
+               "value": "11"
+              }
+             ],
+             "trueOperations": [
+              {
+               "id": "80ecb271-1722-4daf-9760-46b820aa99d9",
+               "type": "adjValue",
+               "data": {
+                "variable": "MARTIAL_WEAPONS",
+                "value": {
+                 "value": "E"
+                }
+               }
+              }
+             ],
+             "falseOperations": []
+            }
+           },
+           {
+            "id": "e503fdd6-ce50-4a2b-9992-a54fc287b76f",
+            "type": "conditional",
+            "data": {
+             "conditions": [
+              {
+               "id": "02b788b3-b5d4-4689-a481-deb0a0df3100",
+               "name": "LEVEL",
+               "data": {
+                "name": "LEVEL",
+                "type": "num",
+                "value": 0
+               },
+               "type": "num",
+               "operator": "GREATER_THAN_OR_EQUALS",
+               "value": "13"
+              }
+             ],
+             "trueOperations": [
+              {
+               "id": "74e45659-cbb5-4205-83f1-d774cdb62d83",
+               "type": "adjValue",
+               "data": {
+                "variable": "MEDIUM_ARMOR",
+                "value": {
+                 "value": "E"
+                }
+               }
+              }
+             ],
+             "falseOperations": []
+            }
+           },
+           {
+            "id": "47087407-44df-4bf5-a176-3c81bdda676e",
+            "type": "injectText",
+            "data": {
+             "type": "spell",
+             "id": 8770,
+             "text": "**Reaper—Thrall Teamwork** Once per round after you cast _create thrall_, you can make a melee [Strike](link_action_19856) as a free action against a creature within your melee reach that is adjacent to at least one of your [thralls](link_trait_5139)."
+            }
+           }
+          ]
+         }
+        ]
+       }
+      }
+     ],
+     "name": "Fatal Method",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "As a necromancer, you select one fatal method at 1st level. This choice determines your combat style: a puppeteer who creates more thralls to fuel spells, or a reaper who becomes more combat-focused with weapons and armor.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Classes.aspx?ID=75",
+       "book": "Impossible Magic",
+       "page": "27"
+      }
+     },
+     "traits": [
+      5135
+     ],
+     "content_source_id": 842,
+     "version": null,
+     "uuid": 5292614706209314,
+     "availability": null,
+     "updated_at": "2026-08-27T16:42:03.63976+00:00"
+    },
+    {
+     "id": 57685,
+     "created_at": "2026-07-24T16:17:04.180824+00:00",
+     "operations": [
+      {
+       "id": "fc54bea7-7428-4b0e-99a9-8728a381b3d1",
+       "type": "giveSpell",
+       "data": {
+        "spellId": 8763,
+        "type": "FOCUS",
+        "castingSource": "NECROMANCER",
+        "rank": 1
+       }
+      },
+      {
+       "id": "e36e8c0c-89f5-484e-9760-a1ac678bf453",
+       "type": "giveSpell",
+       "data": {
+        "spellId": 8770,
+        "type": "FOCUS",
+        "castingSource": "NECROMANCER",
+        "rank": 0
+       }
+      },
+      {
+       "id": "f94eb800-ad36-4aa5-bc37-31b334b11cce",
+       "type": "giveSpell",
+       "data": {
+        "spellId": 8754,
+        "type": "FOCUS",
+        "castingSource": "NECROMANCER",
+        "rank": 0
+       }
+      }
+     ],
+     "name": "Grave Spells",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "Your necromantic prowess allows you to create unique effects called grave spells, which are a type of focus spell. It costs 1 Focus Point to cast a focus spell. You refill your focus pool during your daily preparations, and you can regain 1 Focus Point by spending 10 minutes using the [Refocus](link_action_19754) activity to speak to the dead, meditate on local supernatural activity, or contemplate anatomical truths. If you have a thrall when you begin [Refocusing](link_action_19754), you can destroy it to regain 2 Focus Points when you [Refocus](link_action_19754).\n\nFocus spells are automatically heightened to half your level rounded up, much like cantrips. Focus spell don't require spell slots, and you can't cast them using spell slots. The maximum Focus Points your focus pool can hold is equal to the number of focus spells you have, but can never be more than 3 points.\n\nYou gain the [necrotic bomb](link_spell_8763) grave spell and an additional grave spell from your grim fascination at 1st level. Therefore, you start with a focus pool of 2 Focus Points. You can learn additional grave spells through necromancer feats.\n\n### Grave Cantrips\n\nGrave cantrips are special grave spells that don't cost Focus Points, so you can use them as often as you like. Grave cantrips are granted in addition to the cantrips you choose with necromancer spellcasting. Unlike other cantrips, you can't swap out grave cantrips gained from necromancer feats at a later level, unless you swap out the specific feat via retraining.\n\nYou learn the [create thrall](link_spell_8770) and [thrall charge](link_spell_8754) grave cantrips, which allow you to summon expendable thralls and manipulate them to do your bidding.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Classes.aspx?ID=75",
+       "book": "Impossible Magic",
+       "page": "27"
+      }
+     },
+     "traits": [
+      5135
+     ],
+     "content_source_id": 842,
+     "version": null,
+     "uuid": 698351336868957,
+     "availability": null,
+     "updated_at": "2026-08-27T16:42:03.63976+00:00"
+    },
+    {
+     "id": 57683,
+     "created_at": "2026-07-24T16:16:56.964712+00:00",
+     "operations": [
+      {
+       "id": "00680f99-771f-4473-a23d-7a8bc1dd170c",
+       "type": "select",
+       "data": {
+        "title": "Select a Grim Fascination",
+        "modeType": "PREDEFINED",
+        "optionType": "CUSTOM",
+        "optionsPredefined": [
+         {
+          "id": "4375be18-c356-4e20-83bc-c542a75b4897",
+          "type": "CUSTOM",
+          "title": "Blood",
+          "description": "Blood necromancers, also known as sanguimancers, manipulate their own blood and the flowing blood of their enemies. Your thralls often resemble vampiric spawn or constructs of hardened blood.\n\n**Grave Spell** [blood infusion](link_spell_8778)\n\n**Thrall Enhancement** You thralls are enhanced with a drop of your blood, and when they fall, your blood returns to you. Whenever a [thrall](link_trait_5139) is destroyed, you regain 1 Hit Point. At 5th level and every 4 levels thereafter, the amount of Hit Points you regain when a [thrall](link_trait_5139) is destroyed increases by 1.",
+          "operations": [
+           {
+            "id": "80347760-5dbd-4255-802d-61f2cd4374d2",
+            "type": "giveSpell",
+            "data": {
+             "spellId": 8778,
+             "type": "FOCUS",
+             "castingSource": "NECROMANCER",
+             "rank": 1
+            }
+           },
+           {
+            "id": "3cddfa4a-3707-4c4d-8ace-90552f4fe410",
+            "type": "injectText",
+            "data": {
+             "type": "trait",
+             "id": 5139,
+             "text": "**Thrall Enhancement—Blood** You thralls are enhanced with a drop of your blood, and when they fall, your blood returns to you. Whenever a thrall is destroyed, you regain 1 Hit Point. At 5th level and every 4 levels thereafter, the amount of Hit Points you regain when a thrall is destroyed increases by 1."
+            }
+           }
+          ]
+         },
+         {
+          "id": "4dbeeb40-e69d-4b6b-9b77-a880fc30585f",
+          "type": "CUSTOM",
+          "title": "Bone",
+          "description": "Bone necromancers, also known as osteomancers, craft what they desire from the skeletons of the dead or simply create new skeletons by expanding and shaping small bone pieces.\n\n**Grave Spell** [bone spear](link_spell_8775)\n\n**Thrall Enhancement** Your thralls are well constructed and nimble. Each of your [thralls'](link_trait_5139) Speed is increased by 5 feet.",
+          "operations": [
+           {
+            "id": "10193416-cfc6-49c8-ab74-c57f9bf26c26",
+            "type": "giveSpell",
+            "data": {
+             "spellId": 8775,
+             "type": "FOCUS",
+             "castingSource": "NECROMANCER",
+             "rank": 1
+            }
+           },
+           {
+            "id": "f50f81c6-d645-454b-b16c-2f232f9f0dad",
+            "type": "injectText",
+            "data": {
+             "type": "trait",
+             "id": 5139,
+             "text": "**Thrall Enhancement—Bone** Your thralls are well constructed and nimble. Each of your thralls' Speed is increased by 5 feet."
+            }
+           }
+          ]
+         },
+         {
+          "id": "e895bb2a-f53b-4693-ab06-2a75b1f269ac",
+          "type": "CUSTOM",
+          "title": "Flesh",
+          "description": "Flesh necromancers, also known as caromancers, are experts at the destruction, production, and manipulation of flesh and muscles. Your thralls generally take on the form of zombies and other creatures of dead flesh.\n\n**Grave Spell** [dead weight](link_spell_8769)\n\n**Thrall Enhancement** You can still make use of a destroyed thrall's flesh. Whenever one of your [thralls](link_trait_5139) is destroyed, you can cause the [thrall](link_trait_5139) to leave behind difficult terrain in the space it was destroyed. The difficult terrain lasts 10 minutes.",
+          "operations": [
+           {
+            "id": "6a09ec23-89f0-4be8-bdc3-d526ccd0e056",
+            "type": "giveSpell",
+            "data": {
+             "spellId": 8769,
+             "type": "FOCUS",
+             "castingSource": "NECROMANCER",
+             "rank": 1
+            }
+           },
+           {
+            "id": "007a7060-79d4-4c9c-bbce-a3c9d3885709",
+            "type": "injectText",
+            "data": {
+             "type": "trait",
+             "id": 5139,
+             "text": "**Thrall Enhancement—Flesh** You can still make use of a destroyed thrall's flesh. Whenever one of your thralls is destroyed, you can cause the thrall to leave behind difficult terrain in the space it was destroyed. The difficult terrain lasts 10 minutes."
+            }
+           }
+          ]
+         },
+         {
+          "id": "d8d3f980-ee4b-479c-8691-babf47a55a07",
+          "type": "CUSTOM",
+          "title": "Spirit",
+          "description": "Spirit necromancers, also known as vitamancers, seek the secrets of the soul and play with the eternal energies of the living and dead. Your thralls often resemble ghosts and spirits.\n\n**Grave Spell** [life tap](link_spell_8765)\n\n**Thrall Enhancement** Your thralls, while still being tied to the physical world, have an incorporeal essence. Whenever one of your [thralls](link_trait_5139) [Strikes](link_action_19856), you can choose for that damage to be [spirit](link_trait_1556) or [void](link_trait_1485) damage instead of physical damage.",
+          "operations": [
+           {
+            "id": "88849f61-eaf3-4b78-a759-beef5ffc8b0b",
+            "type": "giveSpell",
+            "data": {
+             "spellId": 8765,
+             "type": "FOCUS",
+             "castingSource": "NECROMANCER",
+             "rank": 1
+            }
+           },
+           {
+            "id": "4af760a5-c248-4b91-b6a0-28f5e43eccc3",
+            "type": "injectText",
+            "data": {
+             "type": "trait",
+             "id": 5139,
+             "text": "**Thrall Enhancement—Spirit** Your thralls, while still being tied to the physical world, have an incorporeal essence. Whenever one of your thralls [Strikes](link_action_19856), you can choose for that damage to be [spirit](link_trait_1556) or [void](link_trait_1485) damage instead of physical damage."
+            }
+           }
+          ]
+         }
+        ]
+       }
+      }
+     ],
+     "name": "Grim Fascination",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "As a necromancer, you select one grim fascination at 1st level. This fascination is a focus of necrotic study that you have developed a greater mastery over. However, grim fascinations don't prevent you from studying and using other forms of necromancy. Your choice of grim fascination grants you a grave spell and a thrall enhancement that applies to any thrall you create.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Classes.aspx?ID=75",
+       "book": "Impossible Magic",
+       "page": "27"
+      }
+     },
+     "traits": [
+      5135
+     ],
+     "content_source_id": 842,
+     "version": null,
+     "uuid": 1482527759794290,
+     "availability": null,
+     "updated_at": "2026-08-27T16:42:03.63976+00:00"
+    },
+    {
+     "id": 57682,
+     "created_at": "2026-07-24T16:16:53.984614+00:00",
+     "operations": [],
+     "name": "Mastery of Life and Death",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You have studied the delicate balance of life and death to such a point that you can dance between them with ease. Whenever you [Cast a Spell](link_action_19611) or use an ability that would deal [void](link_trait_1485) or [vitality](link_trait_1478) damage, you can choose for the spell to do either [void](link_trait_1485) or [vitality](link_trait_1478) damage to each target separately. When you [Cast a Spell](link_action_19611) or use an ability that would affect or target only living creatures or only [undead](link_trait_2425) creatures, you can affect and target both. This does not apply to the healing effects of spells or abilities. For example, you could have the [harm](link_spell_4653) spell deal vitality damage to [undead](link_trait_2425) enemies, but it would not be able to heal living allies.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Classes.aspx?ID=75",
+       "book": "Impossible Magic",
+       "page": "27"
+      }
+     },
+     "traits": [
+      5135
+     ],
+     "content_source_id": 842,
+     "version": null,
+     "uuid": 7679799535666373,
+     "availability": null,
+     "updated_at": "2026-08-27T16:42:03.63976+00:00"
+    },
+    {
+     "id": 57686,
+     "created_at": "2026-07-24T16:17:05.27873+00:00",
+     "operations": [
+      {
+       "id": "e19ed4b0-453c-44e0-a46c-30d44b86dcce",
+       "type": "defineCastingSource",
+       "data": {
+        "variable": "CASTING_SOURCES",
+        "value": "NECROMANCER:::PREPARED-LIST:::OCCULT:::ATTRIBUTE_INT"
+       }
+      },
+      {
+       "id": "adf53600-34c7-47c3-b39b-0e7ecc852ef2",
+       "type": "adjValue",
+       "data": {
+        "variable": "PRIMARY_SHEET_TABS",
+        "value": "spells"
+       }
+      },
+      {
+       "id": "f680c84a-d693-476b-adb8-f99ff343268f",
+       "type": "giveSpellSlot",
+       "data": {
+        "castingSource": "NECROMANCER",
+        "slots": [
+         {
+          "lvl": 1,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 2,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 3,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 4,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 5,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 6,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 7,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 8,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 9,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 10,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 11,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 12,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 13,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 14,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 15,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 16,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 17,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 18,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 19,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 20,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 1,
+          "rank": 1,
+          "amt": 1
+         },
+         {
+          "lvl": 2,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 3,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 4,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 5,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 6,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 7,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 8,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 9,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 10,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 11,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 12,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 13,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 14,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 15,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 16,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 17,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 18,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 19,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 20,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 2,
+          "rank": 2,
+          "amt": null
+         },
+         {
+          "lvl": 3,
+          "rank": 2,
+          "amt": 1
+         },
+         {
+          "lvl": 4,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 5,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 6,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 7,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 8,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 9,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 10,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 11,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 12,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 13,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 14,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 15,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 16,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 17,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 18,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 19,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 20,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 5,
+          "rank": 3,
+          "amt": 1
+         },
+         {
+          "lvl": 7,
+          "rank": 4,
+          "amt": 1
+         },
+         {
+          "lvl": 9,
+          "rank": 5,
+          "amt": 1
+         },
+         {
+          "lvl": 11,
+          "rank": 6,
+          "amt": 1
+         },
+         {
+          "lvl": 13,
+          "rank": 7,
+          "amt": 1
+         },
+         {
+          "lvl": 15,
+          "rank": 8,
+          "amt": 1
+         },
+         {
+          "lvl": 17,
+          "rank": 9,
+          "amt": 1
+         },
+         {
+          "lvl": 19,
+          "rank": 10,
+          "amt": 1
+         },
+         {
+          "lvl": 20,
+          "rank": 10,
+          "amt": 1
+         },
+         {
+          "lvl": 20,
+          "rank": 9,
+          "amt": 2
+         },
+         {
+          "lvl": 19,
+          "rank": 9,
+          "amt": 2
+         },
+         {
+          "lvl": 18,
+          "rank": 9,
+          "amt": 2
+         },
+         {
+          "lvl": 20,
+          "rank": 8,
+          "amt": 2
+         },
+         {
+          "lvl": 19,
+          "rank": 8,
+          "amt": 2
+         },
+         {
+          "lvl": 18,
+          "rank": 8,
+          "amt": 2
+         },
+         {
+          "lvl": 17,
+          "rank": 8,
+          "amt": 2
+         },
+         {
+          "lvl": 16,
+          "rank": 8,
+          "amt": 2
+         },
+         {
+          "lvl": 20,
+          "rank": 7,
+          "amt": 2
+         },
+         {
+          "lvl": 19,
+          "rank": 7,
+          "amt": 2
+         },
+         {
+          "lvl": 18,
+          "rank": 7,
+          "amt": 2
+         },
+         {
+          "lvl": 17,
+          "rank": 7,
+          "amt": 2
+         },
+         {
+          "lvl": 16,
+          "rank": 7,
+          "amt": 2
+         },
+         {
+          "lvl": 15,
+          "rank": 7,
+          "amt": 2
+         },
+         {
+          "lvl": 14,
+          "rank": 7,
+          "amt": 2
+         },
+         {
+          "lvl": 12,
+          "rank": 6,
+          "amt": 2
+         },
+         {
+          "lvl": 13,
+          "rank": 6,
+          "amt": 2
+         },
+         {
+          "lvl": 14,
+          "rank": 6,
+          "amt": 2
+         },
+         {
+          "lvl": 15,
+          "rank": 6,
+          "amt": 2
+         },
+         {
+          "lvl": 16,
+          "rank": 6,
+          "amt": 2
+         },
+         {
+          "lvl": 17,
+          "rank": 6,
+          "amt": 2
+         },
+         {
+          "lvl": 18,
+          "rank": 6,
+          "amt": 2
+         },
+         {
+          "lvl": 19,
+          "rank": 6,
+          "amt": 2
+         },
+         {
+          "lvl": 20,
+          "rank": 6,
+          "amt": 2
+         },
+         {
+          "lvl": 20,
+          "rank": 5,
+          "amt": 2
+         },
+         {
+          "lvl": 19,
+          "rank": 5,
+          "amt": 2
+         },
+         {
+          "lvl": 18,
+          "rank": 5,
+          "amt": 2
+         },
+         {
+          "lvl": 17,
+          "rank": 5,
+          "amt": 2
+         },
+         {
+          "lvl": 16,
+          "rank": 5,
+          "amt": 2
+         },
+         {
+          "lvl": 15,
+          "rank": 5,
+          "amt": 2
+         },
+         {
+          "lvl": 14,
+          "rank": 5,
+          "amt": 2
+         },
+         {
+          "lvl": 13,
+          "rank": 5,
+          "amt": 2
+         },
+         {
+          "lvl": 12,
+          "rank": 5,
+          "amt": 2
+         },
+         {
+          "lvl": 11,
+          "rank": 5,
+          "amt": 2
+         },
+         {
+          "lvl": 10,
+          "rank": 5,
+          "amt": 2
+         },
+         {
+          "lvl": 8,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 9,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 10,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 11,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 12,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 13,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 14,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 15,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 16,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 17,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 18,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 19,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 20,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 20,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 19,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 18,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 17,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 16,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 15,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 14,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 13,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 12,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 11,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 10,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 9,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 8,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 7,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 6,
+          "rank": 3,
+          "amt": 2
+         }
+        ]
+       }
+      },
+      {
+       "id": "abfb3377-3989-467c-9358-0ce396bbf1c6",
+       "type": "giveSpell",
+       "data": {
+        "spellId": 4653,
+        "type": "NORMAL",
+        "castingSource": "NECROMANCER",
+        "rank": 1
+       }
+      }
+     ],
+     "name": "Necromancer Spellcasting",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "Your studies into the nature of life and death have resulted in the ability to cast occult spells. You are a spellcaster, and you can cast spells of the occult tradition using the [Cast a Spell](link_action_19611) activity. As a necromancer, your chants are generally inspired by laments, requiems, and other rites for the dead, while your gestures evoke the unnatural movement of muscle and cracking of bone.\n\nAt first level, you can prepare one 1st-rank spell and five cantrips each morning from your dirge. Prepared spells remain available to you until you cast them or until you prepare your spells again. The number of spells you can prepare each day is called your spell slots.\n\nAs you increase in level as a necromancer, the number of spells you can prepare each day increases, as does the highest rank of spell you can cast, as shown in Necromancer Spells per Day.\n\nSome of your spells require you to attempt a spell attack to see how effective they are or for your enemies to roll against your spell DC (typically by attempting a saving throw). Since your key attribute is Intelligence, your spell attack modifier and spell DC use your Intelligence modifier\n\n### Heightened Spells\n\nWhen you get spell slots of 2nd rank and higher, you can fill those slots with stronger versions of lower-rank spells. This increases the spell's rank, heightening it to match the spell slot. Many spells have specific improvements when they are heightened to certain ranks.\n\n### Cantrips\n\nSome of your spells are [cantrips](link_trait_1858). A [cantrip](link_trait_1858) is a special type of spell that doesn't use spell slots. You can cast a [cantrip](link_trait_1858) at will, any number of times per day. A [cantrip](link_trait_1858) is always automatically heightened to half your level rounded up––this is usually equal to the highest rank of necromancer spell slot you have. For example, as a 1st-level necromancer, your [cantrips](link_trait_1858) are 1st-rank spells, and as a 5th-level necromancer, your [cantrips](link_trait_1858) are 3rd-rank spells.\n\n### Dirge\n\nYour occult spells become a part of an internal dirge that echoes throughout your body, bones, and even your spirit. Each day, to prepare your spells, you pull forth pieces of your dirge to vocalize. Your dirge contains your choice of eight occult cantrips, the 1st-rank spell [harm](link_spell_4653), and four other 1st-rank occult spells of your choice. You choose these from the common spells on the occult spell list or from other occult spells you gain access to. You can prepare and cast [harm](link_spell_4653) as an occult spell.\n\nEach time you gain a level, you add two occult spells to your dirge, or any spell rank for which you have spell slots, chosen from common occult spells or others you gain access to and learn via [Learn a Spell](link_action_19736).\n\n#### Necromancer Spells per Day\n\n| Lvl | Can. | 1st | 2nd | 3rd | 4th | 5th | 6th | 7th | 8th | 9th | 10th |\n\n| --- | ---- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---- |\n\n| 1 | 5 | 1 | –– | –– | –– | –– | –– | –– | –– | –– | –– |\n\n| 2 | 5 | 2 | –– | –– | –– | –– | –– | –– | –– | –– | –– |\n\n| 3 | 5 | 2 | 1 | –– | –– | –– | –– | –– | –– | –– | –– |  \n| 4 | 5 | 2 | 2 | –– | –– | –– | –– | –– | –– | –– | –– |\n\n| 5 | 5 | 2 | 2 | 1 | –– | –– | –– | –– | –– | –– | –– |\n\n| 6 | 5 | 2 | 2 | 2 | –– | –– | –– | –– | –– | –– | –– |\n\n| 7 | 5 | 2 | 2 | 2 | 1 | –– | –– | –– | –– | –– | –– |\n\n| 8 | 5 | 2 | 2 | 2 | 2 | –– | –– | –– | –– | –– | –– |\n\n| 9 | 5 | 2 | 2 | 2 | 2 | 1 | –– | –– | –– | –– | –– |\n\n| 10 | 5 | 2 | 2 | 2 | 2 | 2 | –– | –– | –– | –– | –– |\n\n| 11 | 5 | 2 | 2 | 2 | 2 | 2 | 1 | –– | –– | –– | –– |\n\n| 12 | 5 | 2 | 2 | 2 | 2 | 2 | 2 | –– | –– | –– | –– |\n\n| 13 | 5 | 2 | 2 | 2 | 2 | 2 | 2 | 1 | –– | –– | –– |\n\n| 14 | 5 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | –– | –– | –– |\n\n| 15 | 5 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 1 | –– | –– |\n\n| 16 | 5 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | –– | –– |\n\n| 17 | 5 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 1 | –– |\n\n| 18 | 5 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | –– |\n\n| 19 | 5 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 1 |\n\n| 20 | 5 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 1 |",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Classes.aspx?ID=75",
+       "book": "Impossible Magic",
+       "page": "27"
+      }
+     },
+     "traits": [
+      5135
+     ],
+     "content_source_id": 842,
+     "version": null,
+     "uuid": 4014053022774185,
+     "availability": null,
+     "updated_at": "2026-08-27T16:42:03.63976+00:00"
+    },
+    {
+     "id": 57681,
+     "created_at": "2026-07-24T16:16:52.743857+00:00",
+     "operations": [
+      {
+       "id": "a921a288-746c-484b-b12a-08be450bdaef",
+       "type": "createValue",
+       "data": {
+        "variable": "SKILL_LORE_UNDEAD",
+        "type": "prof",
+        "value": {
+         "value": "T",
+         "attribute": "ATTRIBUTE_INT"
+        }
+       }
+      },
+      {
+       "id": "79425ad5-3646-40d1-bc6e-cf31655efcf8",
+       "type": "conditional",
+       "data": {
+        "conditions": [
+         {
+          "id": "e0e04793-d683-458e-8783-80261ae28cb1",
+          "name": "LEVEL",
+          "data": {
+           "name": "LEVEL",
+           "type": "num",
+           "value": 0
+          },
+          "type": "num",
+          "operator": "GREATER_THAN_OR_EQUALS",
+          "value": "3"
+         }
+        ],
+        "trueOperations": [
+         {
+          "id": "f1b51bf4-3f61-49e7-b510-97fbbcdbc9ab",
+          "type": "adjValue",
+          "data": {
+           "variable": "SKILL_LORE_UNDEAD",
+           "value": {
+            "value": "E"
+           }
+          }
+         }
+        ],
+        "falseOperations": []
+       }
+      },
+      {
+       "id": "0d61740b-8d53-4e31-bb4d-eea71a2dde37",
+       "type": "conditional",
+       "data": {
+        "conditions": [
+         {
+          "id": "85e419db-efac-47e2-99b6-ac7b51338766",
+          "name": "LEVEL",
+          "data": {
+           "name": "LEVEL",
+           "type": "num",
+           "value": 0
+          },
+          "type": "num",
+          "operator": "GREATER_THAN_OR_EQUALS",
+          "value": "7"
+         }
+        ],
+        "trueOperations": [
+         {
+          "id": "1dd8dd59-fcb3-4054-ac51-e19a460c05e8",
+          "type": "adjValue",
+          "data": {
+           "variable": "SKILL_LORE_UNDEAD",
+           "value": {
+            "value": "M"
+           }
+          }
+         }
+        ],
+        "falseOperations": []
+       }
+      },
+      {
+       "id": "377de701-3f38-428f-97a8-285ec4c6683b",
+       "type": "conditional",
+       "data": {
+        "conditions": [
+         {
+          "id": "904a32fe-2d1e-48e8-9951-32a6b2bb7362",
+          "name": "LEVEL",
+          "data": {
+           "name": "LEVEL",
+           "type": "num",
+           "value": 0
+          },
+          "type": "num",
+          "operator": "GREATER_THAN_OR_EQUALS",
+          "value": "15"
+         }
+        ],
+        "trueOperations": [
+         {
+          "id": "c29ef621-da04-4664-8fce-716967a1aa22",
+          "type": "adjValue",
+          "data": {
+           "variable": "SKILL_LORE_UNDEAD",
+           "value": {
+            "value": "L"
+           }
+          }
+         }
+        ],
+        "falseOperations": []
+       }
+      }
+     ],
+     "name": "Undead Lore",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "Your dealings with death have expanded your knowledge of the macabre. You know the dead and what they are capable of. You become trained in Undead Lore, a special lore skill that can be used to [Recall Knowledge](link_action_19753) regarding undead creatures, haunts, and effects caused by undead creatures or other necromancers, but that can't be used to [Recall Knowledge](link_action_19753) of other topics. At 3rd level, you become an expert in Undead Lore; at 7th level, you become a master in Undead Lore; and at 15th level, you become legendary in Undead Lore.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Classes.aspx?ID=75",
+       "book": "Impossible Magic",
+       "page": "27"
+      }
+     },
+     "traits": [
+      5135
+     ],
+     "content_source_id": 842,
+     "version": null,
+     "uuid": 405465866323146,
+     "availability": null,
+     "updated_at": "2026-08-27T16:42:03.63976+00:00"
+    }
+   ],
+   "physicalFeatures": [
+    {
+     "id": 20771,
+     "created_at": "2023-12-15T00:49:01.55917+00:00",
+     "operations": [
+      {
+       "id": "4a54cb82-df74-402f-bf79-7a361f0b9aaa",
+       "type": "giveItem",
+       "data": {
+        "itemId": 6796
+       }
+      }
+     ],
+     "name": "Clan Dagger",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You get one [clan dagger](link_item_6796) for free, as it was given to you at birth. Selling this clan dagger is a terrible taboo and earns you the disdain of other dwarves.",
+     "special": "",
+     "type": "physical-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Weapons.aspx?ID=368",
+       "book": "Player Core",
+       "page": "277"
+      },
+      "unselectable": true
+     },
+     "traits": [
+      1467
+     ],
+     "content_source_id": 1,
+     "version": "1.0",
+     "uuid": 5509761219133077,
+     "availability": null,
+     "updated_at": "2026-08-27T17:20:36.846183+00:00"
+    }
+   ],
+   "heritages": [
+    {
+     "id": 20731,
+     "created_at": "2023-12-14T04:49:51.913199+00:00",
+     "operations": [
+      {
+       "id": "8de29030-ffeb-4fe8-a080-e3166ac2c5f6",
+       "type": "addBonusToValue",
+       "data": {
+        "variable": "SAVE_FORT",
+        "text": "If you roll a success against an effect that has the void trait or was created by an undead creature, you get a critical success instead."
+       }
+      },
+      {
+       "id": "216c4a29-9814-45e6-8012-cf05cc3e185a",
+       "type": "addBonusToValue",
+       "data": {
+        "variable": "SAVE_REFLEX",
+        "text": "If you roll a success against an effect that has the void trait or was created by an undead creature, you get a critical success instead."
+       }
+      },
+      {
+       "id": "105562c5-46a1-402d-9bcf-9399387475e4",
+       "type": "addBonusToValue",
+       "data": {
+        "variable": "SAVE_WILL",
+        "text": "If you roll a success against an effect that has the void trait or was created by an undead creature, you get a critical success instead."
+       }
+      }
+     ],
+     "name": "Death Warden Dwarf",
+     "actions": null,
+     "level": -1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": null,
+     "cost": null,
+     "trigger": null,
+     "requirements": null,
+     "access": null,
+     "description": "Your ancestors were tomb guardians, and their power to ward off death passed on to you. If you roll a success on a saving throw against an effect that has the [void](link_trait_1485) trait or was created by an [undead](link_trait_2425) creature, you get a critical success instead.",
+     "special": "",
+     "type": "heritage",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Heritages.aspx?ID=235",
+       "book": "Player Core",
+       "page": "43"
+      },
+      "foundry": {
+       "rules": [
+        {
+         "key": "Note",
+         "text": "PF2E.SpecificRule.Dwarf.DeathWardenDwarf.Note",
+         "title": "{item|name}",
+         "outcome": [],
+         "selector": "saving-throw",
+         "predicate": [
+          {
+           "or": [
+            "void",
+            "origin:trait:undead"
+           ]
+          }
+         ]
+        },
+        {
+         "key": "AdjustDegreeOfSuccess",
+         "type": "save",
+         "selector": "saving-throw",
+         "predicate": [
+          {
+           "or": [
+            "void",
+            "origin:trait:undead"
+           ]
+          }
+         ],
+         "adjustment": {
+          "success": "one-degree-better"
+         }
+        }
+       ]
+      }
+     },
+     "traits": [
+      1467
+     ],
+     "content_source_id": 1,
+     "version": "1.0",
+     "uuid": 7632630295588263,
+     "availability": null,
+     "updated_at": "2026-08-27T16:49:23.919185+00:00"
+    }
+   ],
+   "baseAbilities": [],
+   "addedAbilities": []
+  },
+  "character_traits": [
+   {
+    "id": 2399,
+    "created_at": "2024-03-30T02:28:30.447007+00:00",
+    "name": "Humanoid",
+    "description": "Humanoid creatures reason and act much like [humans](link_trait_1436). They typically stand upright and have two arms and two legs.",
+    "meta_data": {
+     "source": {
+      "url": "https://2e.aonprd.com/Traits.aspx?ID=628",
+      "book": "Player Core",
+      "page": "457"
+     },
+     "important": false,
+     "class_trait": false,
+     "unselectable": false,
+     "ancestry_trait": false,
+     "creature_trait": true,
+     "archetype_trait": false,
+     "versatile_heritage_trait": false
+    },
+    "content_source_id": 3,
+    "uuid": 4637282396389759,
+    "updated_at": "2026-08-27T16:53:39.273543+00:00"
+   },
+   {
+    "id": 1467,
+    "created_at": "2023-12-14T04:35:20.548618+00:00",
+    "name": "Dwarf",
+    "description": "This indicates content from the dwarf ancestry.",
+    "meta_data": {
+     "source": {
+      "url": "https://2e.aonprd.com/Traits.aspx?ID=584",
+      "book": "Player Core",
+      "page": "455"
+     },
+     "ancestry_trait": true
+    },
+    "content_source_id": 1,
+    "uuid": 7327654871424708,
+    "updated_at": "2026-08-27T16:49:13.252728+00:00"
+   }
+  ],
+  "languages": [
+   "COMMON",
+   "DWARVEN",
+   "NECRIL",
+   "PETRAN",
+   "DRACONIC",
+   "AKLO"
+  ],
+  "senses": {
+   "precise": [
+    {
+     "sense": {
+      "id": 20769,
+      "created_at": "2023-12-14T23:25:55.882053+00:00",
+      "operations": [
+       {
+        "id": "85ad67ec-6db0-407a-a46c-a5477825b724",
+        "type": "adjValue",
+        "data": {
+         "variable": "SENSES_PRECISE",
+         "value": "darkvision"
+        }
+       }
+      ],
+      "name": "Darkvision",
+      "actions": null,
+      "level": 1,
+      "rarity": "COMMON",
+      "prerequisites": [],
+      "frequency": "",
+      "cost": "",
+      "trigger": "",
+      "requirements": "",
+      "access": "",
+      "description": "A creature with darkvision can see perfectly well in areas of darkness and dim light, though such vision is in black and white only. Some forms of magical darkness, such as a 4th-rank [darkness](link_spell_4552) spell, block normal darkvision.",
+      "special": "",
+      "type": "sense",
+      "meta_data": {
+       "source": {
+        "url": "https://2e.aonprd.com/Familiars.aspx?ID=142",
+        "book": "Player Core",
+        "page": "259"
+       },
+       "unselectable": true
+      },
+      "traits": [],
+      "content_source_id": 3,
+      "version": "1.0",
+      "uuid": 990708369957964,
+      "availability": null,
+      "updated_at": "2026-08-27T16:53:40.818195+00:00"
+     },
+     "senseName": "Darkvision",
+     "range": "",
+     "type": "precise"
+    }
+   ],
+   "imprecise": [
+    {
+     "sense": {
+      "id": 21081,
+      "created_at": "2024-04-05T21:29:53.369732+00:00",
+      "operations": [
+       {
+        "id": "d093403b-7e30-48b0-865b-d823f756f54c",
+        "type": "adjValue",
+        "data": {
+         "variable": "SENSES_IMPRECISE",
+         "value": "hearing"
+        }
+       }
+      ],
+      "name": "Hearing",
+      "actions": null,
+      "level": 1,
+      "rarity": "COMMON",
+      "prerequisites": [],
+      "frequency": "",
+      "cost": "",
+      "trigger": "",
+      "requirements": "",
+      "access": "",
+      "description": "Hearing is the ability to perceive sound by detecting vibrations through an organ such as the ear. A creature might be undetected by you if it’s in an environment that distorts the sense, such as a noisy room. In those cases, you have to use the [Seek](link_action_19845) basic action to detect the creature.",
+      "special": "",
+      "type": "sense",
+      "meta_data": {
+       "unselectable": true
+      },
+      "traits": [],
+      "content_source_id": 3,
+      "version": "1.0",
+      "uuid": 7294419213926000,
+      "availability": null,
+      "updated_at": "2024-04-05T21:29:53.369732+00:00"
+     },
+     "senseName": "Hearing",
+     "range": "",
+     "type": "imprecise"
+    }
+   ],
+   "vague": [
+    {
+     "sense": {
+      "id": 21082,
+      "created_at": "2024-04-05T21:31:08.459485+00:00",
+      "operations": [
+       {
+        "id": "d093403b-7e30-48b0-865b-d823f756f54c",
+        "type": "adjValue",
+        "data": {
+         "variable": "SENSES_VAGUE",
+         "value": "smell"
+        }
+       }
+      ],
+      "name": "Smell",
+      "actions": null,
+      "level": 1,
+      "rarity": "COMMON",
+      "prerequisites": [],
+      "frequency": "",
+      "cost": "",
+      "trigger": "",
+      "requirements": "",
+      "access": "",
+      "description": "Smell allows you to detect and identify chemical substances in your environment through your [olfactory](link_trait_2131) system. This involves the detection of odor molecules by receptor cells in the nose.",
+      "special": "",
+      "type": "sense",
+      "meta_data": {
+       "unselectable": true
+      },
+      "traits": [],
+      "content_source_id": 3,
+      "version": "1.0",
+      "uuid": 5653374427219146,
+      "availability": null,
+      "updated_at": "2024-04-05T21:31:08.459485+00:00"
+     },
+     "senseName": "Smell",
+     "range": "",
+     "type": "vague"
+    }
+   ]
+  },
+  "weapons": [],
+  "inventory_flat": [],
+  "total_bulk": "0",
+  "spell_raw_data": {
+   "slots": [
+    {
+     "id": "CHARACTER-spell-slot-0",
+     "rank": 0,
+     "source": "NECROMANCER",
+     "spell_id": 4937
+    },
+    {
+     "id": "CHARACTER-spell-slot-1",
+     "rank": 0,
+     "source": "NECROMANCER",
+     "spell_id": 4554
+    },
+    {
+     "id": "CHARACTER-spell-slot-2",
+     "rank": 0,
+     "source": "NECROMANCER",
+     "spell_id": 4893
+    },
+    {
+     "id": "CHARACTER-spell-slot-3",
+     "rank": 0,
+     "source": "NECROMANCER",
+     "spell_id": 4562
+    },
+    {
+     "id": "CHARACTER-spell-slot-4",
+     "rank": 0,
+     "source": "NECROMANCER",
+     "spell_id": 4831
+    },
+    {
+     "id": "CHARACTER-spell-slot-5",
+     "rank": 1,
+     "source": "NECROMANCER",
+     "spell_id": 4648
+    }
+   ],
+   "list": [
+    {
+     "spell_id": 4653,
+     "rank": 1,
+     "source": "NECROMANCER"
+    }
+   ],
+   "focus": [
+    {
+     "spell_id": 8763,
+     "source": "NECROMANCER",
+     "rank": 1
+    },
+    {
+     "spell_id": 8770,
+     "source": "NECROMANCER",
+     "rank": 0
+    },
+    {
+     "spell_id": 8754,
+     "source": "NECROMANCER",
+     "rank": 0
+    },
+    {
+     "spell_id": 8775,
+     "source": "NECROMANCER",
+     "rank": 1
+    }
+   ],
+   "innate": [],
+   "sources": [
+    {
+     "name": "NECROMANCER",
+     "type": "PREPARED-LIST",
+     "tradition": "OCCULT",
+     "attribute": "ATTRIBUTE_INT"
+    }
+   ]
+  },
+  "spell_sources": [
+   {
+    "source": {
+     "name": "NECROMANCER",
+     "type": "PREPARED-LIST",
+     "tradition": "OCCULT",
+     "attribute": "ATTRIBUTE_INT"
+    },
+    "stats": {
+     "spell_attack": {
+      "total": [
+       7,
+       2,
+       -3
+      ],
+      "parts": {},
+      "conditionals": []
+     },
+     "spell_dc": {
+      "total": 17,
+      "parts": {}
+     }
+    }
+   }
+  ],
+  "spell_slots": [
+   {
+    "id": "CHARACTER-spell-slot-0",
+    "rank": 0,
+    "source": "NECROMANCER",
+    "spell_id": 4937,
+    "spell": {
+     "id": 4937,
+     "created_at": "2024-03-23T21:33:12.39899+00:00",
+     "name": "Void Warp",
+     "rank": 0,
+     "traditions": [
+      "arcane",
+      "divine",
+      "occult"
+     ],
+     "rarity": "COMMON",
+     "cast": "TWO-ACTIONS",
+     "traits": [
+      1858,
+      1432,
+      1433,
+      1485
+     ],
+     "defense": "basic Fortitude",
+     "cost": "",
+     "trigger": null,
+     "requirements": null,
+     "range": "30 feet",
+     "area": null,
+     "targets": "1 living creature",
+     "duration": "",
+     "description": "You call upon the Void to harm life force. The target takes 2d4 (⬆️{{ceil(level/2)+1}}d4) void damage with a basic Fortitude save. On a critical failure, the target is also enfeebled 1 until the start of your next turn.",
+     "meta_data": {
+      "damage": [],
+      "source": {
+       "url": "https://2e.aonprd.com/Spells.aspx?ID=1745",
+       "book": "Player Core",
+       "page": "366"
+      },
+      "foundry": {
+       "rules": [],
+       "is_focus": false
+      }
+     },
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 7950667567478364,
+     "heightened": {
+      "text": [
+       {
+        "amount": "(+1)",
+        "text": "The damage increases by 1d4."
+       }
+      ],
+      "data": {
+       "damage": {
+        "0": "1d4"
+       },
+       "interval": 1,
+       "type": "interval"
+      }
+     },
+     "availability": null,
+     "updated_at": "2026-08-27T16:53:39.643494+00:00"
+    }
+   },
+   {
+    "id": "CHARACTER-spell-slot-1",
+    "rank": 0,
+    "source": "NECROMANCER",
+    "spell_id": 4554,
+    "spell": {
+     "id": 4554,
+     "created_at": "2024-03-23T20:22:43.622555+00:00",
+     "name": "Daze",
+     "rank": 0,
+     "traditions": [
+      "arcane",
+      "divine",
+      "occult"
+     ],
+     "rarity": "COMMON",
+     "cast": "TWO-ACTIONS",
+     "traits": [
+      1858,
+      1432,
+      1433,
+      1448,
+      1571
+     ],
+     "defense": "basic Will",
+     "cost": "",
+     "trigger": null,
+     "requirements": null,
+     "range": "60 feet",
+     "area": null,
+     "targets": "1 creature",
+     "duration": "1 round",
+     "description": "You push into the target's mind and daze it with a mental jolt. The jolt deals 1d6 (⬆️{{ceil(level/4)}}d6) mental damage, with a basic Will save. If the target critically fails the save, it is also stunned 1.",
+     "meta_data": {
+      "damage": [],
+      "source": {
+       "url": "https://2e.aonprd.com/Spells.aspx?ID=1482",
+       "book": "Player Core",
+       "page": "322"
+      },
+      "foundry": {
+       "rules": [],
+       "is_focus": false
+      }
+     },
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 2984024364456703,
+     "heightened": {
+      "text": [
+       {
+        "amount": "(+2)",
+        "text": "The damage increases by 1d6."
+       }
+      ],
+      "data": {
+       "damage": {
+        "0": "1d6"
+       },
+       "interval": 2,
+       "type": "interval"
+      }
+     },
+     "availability": null,
+     "updated_at": "2026-08-27T16:53:39.643494+00:00"
+    }
+   },
+   {
+    "id": "CHARACTER-spell-slot-2",
+    "rank": 0,
+    "source": "NECROMANCER",
+    "spell_id": 4893,
+    "spell": {
+     "id": 4893,
+     "created_at": "2024-03-23T21:26:11.929831+00:00",
+     "name": "Telekinetic Projectile",
+     "rank": 0,
+     "traditions": [
+      "arcane",
+      "occult"
+     ],
+     "rarity": "COMMON",
+     "cast": "TWO-ACTIONS",
+     "traits": [
+      1520,
+      1858,
+      1432,
+      1433
+     ],
+     "defense": "AC",
+     "cost": "",
+     "trigger": null,
+     "requirements": null,
+     "range": "30 feet",
+     "area": null,
+     "targets": "1 creature",
+     "duration": "",
+     "description": "You hurl a loose, unattended object that is within range and that has 1 Bulk or less at the target. Make a spell attack roll against the target's AC. If you hit, you deal 2d6 (⬆️{{ceil(level/2)+1}}d6) bludgeoning, piercing, or slashing damage—as appropriate for the object you hurled. No specific traits or magic properties of the hurled item affect the attack or the damage.\n\n**Critical Success** You deal double damage.\n\n**Success** You deal full damage.",
+     "meta_data": {
+      "damage": [],
+      "source": {
+       "url": "https://2e.aonprd.com/Spells.aspx?ID=1718",
+       "book": "Player Core",
+       "page": "363"
+      },
+      "foundry": {
+       "rules": [],
+       "is_focus": false
+      }
+     },
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 8520120037902368,
+     "heightened": {
+      "text": [
+       {
+        "amount": "(+1)",
+        "text": "The damage increases by 1d6."
+       }
+      ],
+      "data": {
+       "damage": {
+        "0": "1d6"
+       },
+       "interval": 1,
+       "type": "interval"
+      }
+     },
+     "availability": null,
+     "updated_at": "2026-08-27T16:53:39.643494+00:00"
+    }
+   },
+   {
+    "id": "CHARACTER-spell-slot-3",
+    "rank": 0,
+    "source": "NECROMANCER",
+    "spell_id": 4562,
+    "spell": {
+     "id": 4562,
+     "created_at": "2024-03-23T20:23:49.968419+00:00",
+     "name": "Detect Magic",
+     "rank": 0,
+     "traditions": [
+      "arcane",
+      "divine",
+      "occult",
+      "primal"
+     ],
+     "rarity": "COMMON",
+     "cast": "TWO-ACTIONS",
+     "traits": [
+      1858,
+      1432,
+      1508,
+      1433
+     ],
+     "defense": null,
+     "cost": "",
+     "trigger": null,
+     "requirements": null,
+     "range": "",
+     "area": "30-foot emanation",
+     "targets": "",
+     "duration": "",
+     "description": "You send out a pulse that registers the presence of magic. You receive no information beyond the presence or absence of magic. You can choose to ignore magic you're fully aware of, such as the magic items and ongoing spells of you and your allies.  \nYou detect [illusion](link_trait_1447) magic only if that magic's effect has a lower rank than the rank of your detect magic spell. However, items that have an illusion aura but aren't deceptive in appearance (such as an [invisibility potion](link_item_7051)) typically are detected normally.",
+     "meta_data": {
+      "damage": [],
+      "source": {
+       "url": "https://2e.aonprd.com/Spells.aspx?ID=1485",
+       "book": "Player Core",
+       "page": "323"
+      },
+      "foundry": {
+       "rules": [],
+       "is_focus": false
+      }
+     },
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 1084194073031827,
+     "heightened": {
+      "text": [
+       {
+        "amount": "(3rd)",
+        "text": "You learn the rank or level of the most powerful magical effect the spell detects, as determined by the GM."
+       },
+       {
+        "amount": "(4th)",
+        "text": "As 3rd rank, but you also pinpoint the source of the highest-rank magic. Like for an imprecise sense, you don't learn the exact location, but can narrow down the source to within a 5-foot cube (or the nearest if larger than that)."
+       }
+      ],
+      "data": {}
+     },
+     "availability": null,
+     "updated_at": "2026-08-27T16:53:39.643494+00:00"
+    }
+   },
+   {
+    "id": "CHARACTER-spell-slot-4",
+    "rank": 0,
+    "source": "NECROMANCER",
+    "spell_id": 4831,
+    "spell": {
+     "id": 4831,
+     "created_at": "2024-03-23T21:16:59.384966+00:00",
+     "name": "Shield",
+     "rank": 0,
+     "traditions": [
+      "arcane",
+      "divine",
+      "occult"
+     ],
+     "rarity": "COMMON",
+     "cast": "ONE-ACTION",
+     "traits": [
+      1858,
+      1432,
+      1560
+     ],
+     "defense": null,
+     "cost": "",
+     "trigger": null,
+     "requirements": null,
+     "range": "",
+     "area": null,
+     "targets": "",
+     "duration": "until the start of your next turn",
+     "description": "You raise a magical shield of force. This counts as using the [Raise a Shield](link_action_19750) action, giving you a +1 circumstance bonus to AC until the start of your next turn, but it doesn't require a hand to use.\n\nWhile the spell is in effect, you can use the [Shield Block](link_feat_20534) reaction with your magic shield. The shield has Hardness 5 (⬆️{{ceil(level/4)\\*5}}). You can use the spell's reaction to reduce damage from any spell or [magical](link_trait_1504) effect, even if it doesn't deal physical damage. After you use [Shield Block](link_feat_20534), the spell ends and you can't cast it again for 10 minutes.",
+     "meta_data": {
+      "damage": [],
+      "source": {
+       "url": "https://2e.aonprd.com/Spells.aspx?ID=1671",
+       "book": "Player Core",
+       "page": "356"
+      },
+      "foundry": {
+       "rules": [],
+       "is_focus": false
+      }
+     },
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 4728691256418017,
+     "heightened": {
+      "text": [
+       {
+        "amount": "(+2)",
+        "text": "The shield's Hardness increases by 5."
+       }
+      ],
+      "data": {}
+     },
+     "availability": null,
+     "updated_at": "2026-08-27T16:53:39.643494+00:00"
+    }
+   },
+   {
+    "id": "CHARACTER-spell-slot-5",
+    "rank": 1,
+    "source": "NECROMANCER",
+    "spell_id": 4648,
+    "spell": {
+     "id": 4648,
+     "created_at": "2024-03-23T20:40:09.860568+00:00",
+     "name": "Grim Tendrils",
+     "rank": 1,
+     "traditions": [
+      "arcane",
+      "occult"
+     ],
+     "rarity": "COMMON",
+     "cast": "TWO-ACTIONS",
+     "traits": [
+      1432,
+      1433,
+      1485
+     ],
+     "defense": "basic Fortitude",
+     "cost": "",
+     "trigger": null,
+     "requirements": null,
+     "range": "",
+     "area": "30-foot line",
+     "targets": "",
+     "duration": "",
+     "description": "Tendrils of darkness curl out from your fingertips and race through the air. You deal 2d4 void damage and 1 persistent bleed damage to living creatures in the line. Each living creature in the line must attempt a Fortitude save.\n\n**Critical Success** The creature is unaffected.\n\n**Success** The creature takes half the void damage and no persistent bleed damage.\n\n**Failure** The creature takes full damage.\n\n**Critical Failure** The creature takes double void damage and double persistent bleed damage.",
+     "meta_data": {
+      "damage": [],
+      "source": {
+       "url": "https://2e.aonprd.com/Spells.aspx?ID=1548",
+       "book": "Player Core",
+       "page": "334"
+      },
+      "foundry": {
+       "rules": [],
+       "is_focus": false
+      }
+     },
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 6560076995104867,
+     "heightened": {
+      "text": [
+       {
+        "amount": "(+1)",
+        "text": "The void damage increases by 2d4, and the persistent bleed damage increases by 1."
+       }
+      ],
+      "data": {
+       "damage": {
+        "0": "2d4"
+       },
+       "interval": 1,
+       "type": "interval"
+      }
+     },
+     "availability": null,
+     "updated_at": "2026-08-27T16:53:39.643494+00:00"
+    }
+   }
+  ],
+  "spells": {
+   "all": [
+    {
+     "id": 4653,
+     "created_at": "2024-03-23T20:41:13.789127+00:00",
+     "name": "Harm",
+     "rank": 1,
+     "traditions": [
+      "divine"
+     ],
+     "rarity": "COMMON",
+     "cast": "ONE-TO-THREE-ACTIONS",
+     "traits": [
+      1433,
+      1485
+     ],
+     "defense": null,
+     "cost": "",
+     "trigger": null,
+     "requirements": null,
+     "range": "varies",
+     "area": null,
+     "targets": "1 living creature or 1 willing undead creature",
+     "duration": "",
+     "description": "You channel void energy to harm the living or heal the undead. If the target is a living creature, you deal 1d8 void damage to it, and it gets a basic Fortitude save. If the target is a willing [undead](link_trait_2425) creature, you restore that amount of Hit Points. The number of actions you spend when Casting this Spell determines its targets, range, area, and other parameters.\n\n<abbr cost=\"ONE-ACTION\" class=\"action-symbol\">1</abbr> The spell has a range of touch.\n\n<abbr cost=\"TWO-ACTIONS\" class=\"action-symbol\">2</abbr> ([concentrate](link_trait_1432)) The spell has a range of 30 feet. If you're healing an undead creature, increase the Hit Points restored by 8.\n\n<abbr cost=\"THREE-ACTIONS\" class=\"action-symbol\">3</abbr> ([concentrate](link_trait_1432)) You disperse void energy in a 30-foot emanation. This targets all living and undead creatures in the area.",
+     "meta_data": {
+      "damage": [],
+      "source": {
+       "url": "https://2e.aonprd.com/Spells.aspx?ID=1552",
+       "book": "Player Core",
+       "page": "334"
+      },
+      "foundry": {
+       "rules": [],
+       "is_focus": false
+      }
+     },
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 5038309989983530,
+     "heightened": {
+      "text": [
+       {
+        "amount": "(+1)",
+        "text": "The amount of healing or damage increases by 1d8, and the extra healing for the 2-action version increases by 8."
+       }
+      ],
+      "data": {
+       "damage": {
+        "0": "1d8"
+       },
+       "interval": 1,
+       "type": "interval"
+      }
+     },
+     "availability": null,
+     "updated_at": "2026-08-27T16:53:39.643494+00:00",
+     "casting_source": "NECROMANCER"
+    }
+   ],
+   "cantrips": [],
+   "normal": [
+    {
+     "id": 4653,
+     "created_at": "2024-03-23T20:41:13.789127+00:00",
+     "name": "Harm",
+     "rank": 1,
+     "traditions": [
+      "divine"
+     ],
+     "rarity": "COMMON",
+     "cast": "ONE-TO-THREE-ACTIONS",
+     "traits": [
+      1433,
+      1485
+     ],
+     "defense": null,
+     "cost": "",
+     "trigger": null,
+     "requirements": null,
+     "range": "varies",
+     "area": null,
+     "targets": "1 living creature or 1 willing undead creature",
+     "duration": "",
+     "description": "You channel void energy to harm the living or heal the undead. If the target is a living creature, you deal 1d8 void damage to it, and it gets a basic Fortitude save. If the target is a willing [undead](link_trait_2425) creature, you restore that amount of Hit Points. The number of actions you spend when Casting this Spell determines its targets, range, area, and other parameters.\n\n<abbr cost=\"ONE-ACTION\" class=\"action-symbol\">1</abbr> The spell has a range of touch.\n\n<abbr cost=\"TWO-ACTIONS\" class=\"action-symbol\">2</abbr> ([concentrate](link_trait_1432)) The spell has a range of 30 feet. If you're healing an undead creature, increase the Hit Points restored by 8.\n\n<abbr cost=\"THREE-ACTIONS\" class=\"action-symbol\">3</abbr> ([concentrate](link_trait_1432)) You disperse void energy in a 30-foot emanation. This targets all living and undead creatures in the area.",
+     "meta_data": {
+      "damage": [],
+      "source": {
+       "url": "https://2e.aonprd.com/Spells.aspx?ID=1552",
+       "book": "Player Core",
+       "page": "334"
+      },
+      "foundry": {
+       "rules": [],
+       "is_focus": false
+      }
+     },
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 5038309989983530,
+     "heightened": {
+      "text": [
+       {
+        "amount": "(+1)",
+        "text": "The amount of healing or damage increases by 1d8, and the extra healing for the 2-action version increases by 8."
+       }
+      ],
+      "data": {
+       "damage": {
+        "0": "1d8"
+       },
+       "interval": 1,
+       "type": "interval"
+      }
+     },
+     "availability": null,
+     "updated_at": "2026-08-27T16:53:39.643494+00:00",
+     "casting_source": "NECROMANCER"
+    }
+   ],
+   "rituals": []
+  },
+  "focus_spells": [
+   {
+    "id": 8770,
+    "created_at": "2026-07-27T22:48:10.177747+00:00",
+    "name": "Create Thrall",
+    "rank": 0,
+    "traditions": [],
+    "rarity": "UNCOMMON",
+    "cast": "ONE-ACTION",
+    "traits": [
+     1858,
+     1432,
+     1433,
+     5135,
+     5139
+    ],
+    "defense": "",
+    "cost": "",
+    "trigger": "",
+    "requirements": "",
+    "range": "30 feet",
+    "area": "",
+    "targets": "",
+    "duration": "1 minute",
+    "description": "You conjure forth the undead. You either create 2 [thralls](link_trait_5139) in unoccupied squares within range or create 1 [thrall](link_trait_5139) and immediately [Command that Thrall](link_feat_57836).",
+    "meta_data": {
+     "focus": true,
+     "source": {
+      "url": "https://2e.aonprd.com/Spells.aspx?ID=2895",
+      "book": "Impossible Magic",
+      "page": "181"
+     }
+    },
+    "content_source_id": 842,
+    "version": "1.0",
+    "uuid": 8274633262110714,
+    "heightened": {
+     "text": [],
+     "data": {}
+    },
+    "availability": null,
+    "updated_at": "2026-08-27T16:42:03.63976+00:00",
+    "casting_source": "NECROMANCER"
+   },
+   {
+    "id": 8754,
+    "created_at": "2026-07-27T22:47:25.236745+00:00",
+    "name": "Thrall Charge",
+    "rank": 0,
+    "traditions": [],
+    "rarity": "UNCOMMON",
+    "cast": "TWO-ACTIONS",
+    "traits": [
+     1858,
+     1432,
+     1433,
+     5135
+    ],
+    "defense": "",
+    "cost": "",
+    "trigger": "",
+    "requirements": "",
+    "range": "30 feet",
+    "area": "",
+    "targets": "1 of your thralls",
+    "duration": "",
+    "description": "You urge a thrall to move and attack. You command the target [thrall](link_trait_5139) to [Stride](link_action_19855) and then make a [Strike](link_action_19856) that deals an additional 1d6 damage. You can destroy the thrall as part of this [Strike](link_action_19856) to add a status bonus to the [Strike's](link_action_19856) damage equal to this spell’s rank.",
+    "meta_data": {
+     "source": {
+      "url": "https://2e.aonprd.com/Spells.aspx?ID=2911",
+      "book": "Impossible Magic",
+      "page": "184"
+     }
+    },
+    "content_source_id": 842,
+    "version": "1.0",
+    "uuid": 2063415409141782,
+    "heightened": {
+     "text": [
+      {
+       "amount": "(2nd)",
+       "text": "The additional damage increases to 2d6."
+      },
+      {
+       "amount": "(6th)",
+       "text": "The additional damage increases to 3d6."
+      },
+      {
+       "amount": "(10th)",
+       "text": "The additional damage increases to 4d6."
+      }
+     ],
+     "data": {}
+    },
+    "availability": null,
+    "updated_at": "2026-08-27T16:42:03.63976+00:00",
+    "casting_source": "NECROMANCER"
+   },
+   {
+    "id": 8763,
+    "created_at": "2026-07-27T22:47:54.991019+00:00",
+    "name": "Necrotic Bomb",
+    "rank": 1,
+    "traditions": [],
+    "rarity": "UNCOMMON",
+    "cast": "TWO-ACTIONS",
+    "traits": [
+     1432,
+     1856,
+     1433,
+     5135,
+     1485
+    ],
+    "defense": "basic Fortitude",
+    "cost": "",
+    "trigger": "",
+    "requirements": "",
+    "range": "30 feet",
+    "area": "",
+    "targets": "1 of your thralls",
+    "duration": "",
+    "description": "You overload one of your thralls with void energy, causing it to explode. Each creature within a 10-foot emanation of the thrall takes 1d12 [void](link_trait_1485) damage with a basic Fortitude save. This destroys the [thrall](link_trait_5139).",
+    "meta_data": {
+     "focus": true,
+     "source": {
+      "url": "https://2e.aonprd.com/Spells.aspx?ID=2903",
+      "book": "Impossible Magic",
+      "page": "183"
+     }
+    },
+    "content_source_id": 842,
+    "version": "1.0",
+    "uuid": 489775341888751,
+    "heightened": {
+     "text": [
+      {
+       "amount": "(+1)",
+       "text": "The damage increases by 1d12."
+      }
+     ],
+     "data": {}
+    },
+    "availability": null,
+    "updated_at": "2026-08-27T16:42:03.63976+00:00",
+    "casting_source": "NECROMANCER"
+   },
+   {
+    "id": 8775,
+    "created_at": "2026-07-27T22:48:26.788081+00:00",
+    "name": "Bone Spear",
+    "rank": 1,
+    "traditions": [],
+    "rarity": "UNCOMMON",
+    "cast": "TWO-ACTIONS",
+    "traits": [
+     1432,
+     1856,
+     1433,
+     5135
+    ],
+    "defense": "basic Reflex",
+    "cost": "",
+    "trigger": "",
+    "requirements": "",
+    "range": "30 feet",
+    "area": "",
+    "targets": "1 of your thralls",
+    "duration": "",
+    "description": "You shape a thrall into a spear of jagged bone. Destroy the target [thrall](link_trait_5139), and each creature in a 15-foot line originating from the [thrall's](link_trait_5139) former space takes 2d6 piercing damage with a basic Reflex save.",
+    "meta_data": {
+     "focus": true,
+     "source": {
+      "url": "https://2e.aonprd.com/Spells.aspx?ID=2890",
+      "book": "Impossible Magic",
+      "page": "181"
+     }
+    },
+    "content_source_id": 842,
+    "version": "1.0",
+    "uuid": 6457971167417782,
+    "heightened": {
+     "text": [
+      {
+       "amount": "(+1)",
+       "text": "The damage increases by 2d6."
+      }
+     ],
+     "data": {}
+    },
+    "availability": null,
+    "updated_at": "2026-08-27T16:42:03.63976+00:00",
+    "casting_source": "NECROMANCER"
+   }
+  ],
+  "innate_spells": [],
+  "size": "Medium",
+  "speeds": [
+   {
+    "name": "SPEED",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 20,
+     "value": 20
+    }
+   },
+   {
+    "name": "SPEED_FLY",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 5,
+     "value": 0
+    }
+   },
+   {
+    "name": "SPEED_CLIMB",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 5,
+     "value": 0
+    }
+   },
+   {
+    "name": "SPEED_BURROW",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 5,
+     "value": 0
+    }
+   },
+   {
+    "name": "SPEED_SWIM",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 5,
+     "value": 0
+    }
+   }
+  ],
+  "max_hp": 21,
+  "ac": 14,
+  "shield_item": null,
+  "armor_item": null,
+  "resist_weaks": {
+   "resists": [],
+   "weaks": [],
+   "immunes": []
+  },
+  "proficiencies": {
+   "SAVE_FORT": {
+    "total": "+8",
+    "parts": {
+     "level": 1,
+     "profValue": 4,
+     "attributeMod": 3,
+     "hasConditionals": true,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": [
+       {
+        "text": "If you roll a success against an effect that has the void trait or was created by an undead creature, you get a critical success instead.",
+        "source": "Death Warden Dwarf"
+       }
+      ]
+     }
+    }
+   },
+   "SAVE_REFLEX": {
+    "total": "+4",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 1,
+     "hasConditionals": true,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": [
+       {
+        "text": "If you roll a success against an effect that has the void trait or was created by an undead creature, you get a critical success instead.",
+        "source": "Death Warden Dwarf"
+       }
+      ]
+     }
+    }
+   },
+   "SAVE_WILL": {
+    "total": "+5",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 2,
+     "hasConditionals": true,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": [
+       {
+        "text": "If you roll a success against an effect that has the void trait or was created by an undead creature, you get a critical success instead.",
+        "source": "Death Warden Dwarf"
+       }
+      ]
+     }
+    }
+   },
+   "SKILL_ACROBATICS": {
+    "total": "+1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_ARCANA": {
+    "total": "+7",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_ATHLETICS": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 0,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_CRAFTING": {
+    "total": "+7",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_DECEPTION": {
+    "total": "-1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": -1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_DIPLOMACY": {
+    "total": "-1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": -1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_INTIMIDATION": {
+    "total": "+2",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": -1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_MEDICINE": {
+    "total": "+5",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_NATURE": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_OCCULTISM": {
+    "total": "+7",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 4,
+     "hasConditionals": true,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": [
+       {
+        "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)",
+        "source": "Assurance (Lvl. 1)"
+       }
+      ]
+     }
+    }
+   },
+   "SKILL_PERFORMANCE": {
+    "total": "-1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": -1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_RELIGION": {
+    "total": "+5",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_SOCIETY": {
+    "total": "+7",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_STEALTH": {
+    "total": "+1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_SURVIVAL": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_THIEVERY": {
+    "total": "+1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_LORE____": {
+    "total": "+4",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SPELL_ATTACK": {
+    "total": "+7",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SPELL_DC": {
+    "total": "+7",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "LIGHT_ARMOR": {
+    "total": "+3",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "MEDIUM_ARMOR": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "HEAVY_ARMOR": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "UNARMORED_DEFENSE": {
+    "total": "+3",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "LIGHT_BARDING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "HEAVY_BARDING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SIMPLE_WEAPONS": {
+    "total": "+3",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "MARTIAL_WEAPONS": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ADVANCED_WEAPONS": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "UNARMED_ATTACKS": {
+    "total": "+3",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "PERCEPTION": {
+    "total": "+5",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "CLASS_DC": {
+    "total": "+7",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_AXE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_BOMB": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_BOW": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_BRAWLING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_CLUB": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_CROSSBOW": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_DART": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_FIREARM": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_FLAIL": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_HAMMER": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_KNIFE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_PICK": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_POLEARM": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_SHIELD": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_SLING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_SPEAR": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_SWORD": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_LASER": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_PROJECTILE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_GUN": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_GUN_SIMPLE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_GUN_MARTIAL": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_GUN_ADVANCED": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_ONE_HANDED_AGILE_FINESSE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_CLOTH": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_CHAIN": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_COMPOSITE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_LEATHER": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_PLATE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_CERAMIC": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_POLYMER": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_SKELETAL": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_WOOD": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_LORE_ACADEMIA": {
+    "total": "+7",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_LORE_UNDEAD": {
+    "total": "+7",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "INNATE_SPELL_ATTACK": {
+    "total": "+2",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": -1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "INNATE_SPELL_DC": {
+    "total": "12",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": -1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   }
+  },
+  "attributes": {
+   "ATTRIBUTE_STR": {
+    "value": 0,
+    "partial": false
+   },
+   "ATTRIBUTE_DEX": {
+    "value": 1,
+    "partial": false
+   },
+   "ATTRIBUTE_CON": {
+    "value": 3,
+    "partial": false
+   },
+   "ATTRIBUTE_INT": {
+    "value": 4,
+    "partial": false
+   },
+   "ATTRIBUTE_WIS": {
+    "value": 2,
+    "partial": false
+   },
+   "ATTRIBUTE_CHA": {
+    "value": -1,
+    "partial": false
+   }
+  },
+  "raw_data_dump": {
+   "variables": {
+    "ATTRIBUTE_STR": {
+     "name": "ATTRIBUTE_STR",
+     "type": "attr",
+     "value": {
+      "value": 0,
+      "partial": false
+     }
+    },
+    "ATTRIBUTE_DEX": {
+     "name": "ATTRIBUTE_DEX",
+     "type": "attr",
+     "value": {
+      "value": 1,
+      "partial": false
+     }
+    },
+    "ATTRIBUTE_CON": {
+     "name": "ATTRIBUTE_CON",
+     "type": "attr",
+     "value": {
+      "value": 3,
+      "partial": false
+     }
+    },
+    "ATTRIBUTE_INT": {
+     "name": "ATTRIBUTE_INT",
+     "type": "attr",
+     "value": {
+      "value": 4,
+      "partial": false
+     }
+    },
+    "ATTRIBUTE_WIS": {
+     "name": "ATTRIBUTE_WIS",
+     "type": "attr",
+     "value": {
+      "value": 2,
+      "partial": false
+     }
+    },
+    "ATTRIBUTE_CHA": {
+     "name": "ATTRIBUTE_CHA",
+     "type": "attr",
+     "value": {
+      "value": -1,
+      "partial": false
+     }
+    },
+    "SAVE_FORT": {
+     "name": "SAVE_FORT",
+     "type": "prof",
+     "value": {
+      "value": "E",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_CON"
+     }
+    },
+    "SAVE_REFLEX": {
+     "name": "SAVE_REFLEX",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_DEX"
+     }
+    },
+    "SAVE_WILL": {
+     "name": "SAVE_WILL",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_WIS"
+     }
+    },
+    "SKILL_ACROBATICS": {
+     "name": "SKILL_ACROBATICS",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_DEX"
+     }
+    },
+    "SKILL_ARCANA": {
+     "name": "SKILL_ARCANA",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_INT"
+     }
+    },
+    "SKILL_ATHLETICS": {
+     "name": "SKILL_ATHLETICS",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_STR"
+     }
+    },
+    "SKILL_CRAFTING": {
+     "name": "SKILL_CRAFTING",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_INT"
+     }
+    },
+    "SKILL_DECEPTION": {
+     "name": "SKILL_DECEPTION",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_CHA"
+     }
+    },
+    "SKILL_DIPLOMACY": {
+     "name": "SKILL_DIPLOMACY",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_CHA"
+     }
+    },
+    "SKILL_INTIMIDATION": {
+     "name": "SKILL_INTIMIDATION",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_CHA"
+     }
+    },
+    "SKILL_MEDICINE": {
+     "name": "SKILL_MEDICINE",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_WIS"
+     }
+    },
+    "SKILL_NATURE": {
+     "name": "SKILL_NATURE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_WIS"
+     }
+    },
+    "SKILL_OCCULTISM": {
+     "name": "SKILL_OCCULTISM",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_INT"
+     }
+    },
+    "SKILL_PERFORMANCE": {
+     "name": "SKILL_PERFORMANCE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_CHA"
+     }
+    },
+    "SKILL_RELIGION": {
+     "name": "SKILL_RELIGION",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_WIS"
+     }
+    },
+    "SKILL_SOCIETY": {
+     "name": "SKILL_SOCIETY",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_INT"
+     }
+    },
+    "SKILL_STEALTH": {
+     "name": "SKILL_STEALTH",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_DEX"
+     }
+    },
+    "SKILL_SURVIVAL": {
+     "name": "SKILL_SURVIVAL",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_WIS"
+     }
+    },
+    "SKILL_THIEVERY": {
+     "name": "SKILL_THIEVERY",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_DEX"
+     }
+    },
+    "SKILL_LORE____": {
+     "name": "SKILL_LORE____",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_INT"
+     }
+    },
+    "SPELL_ATTACK": {
+     "name": "SPELL_ATTACK",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0
+     }
+    },
+    "SPELL_DC": {
+     "name": "SPELL_DC",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0
+     }
+    },
+    "CASTING_SOURCES": {
+     "name": "CASTING_SOURCES",
+     "type": "list-str",
+     "value": [
+      "NECROMANCER:::PREPARED-LIST:::OCCULT:::ATTRIBUTE_INT"
+     ]
+    },
+    "SPELL_SLOTS": {
+     "name": "SPELL_SLOTS",
+     "type": "list-str",
+     "value": [
+      "{\"lvl\":1,\"rank\":0,\"amt\":5,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":2,\"rank\":0,\"amt\":5,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":3,\"rank\":0,\"amt\":5,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":4,\"rank\":0,\"amt\":5,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":5,\"rank\":0,\"amt\":5,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":6,\"rank\":0,\"amt\":5,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":7,\"rank\":0,\"amt\":5,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":8,\"rank\":0,\"amt\":5,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":9,\"rank\":0,\"amt\":5,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":10,\"rank\":0,\"amt\":5,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":11,\"rank\":0,\"amt\":5,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":12,\"rank\":0,\"amt\":5,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":13,\"rank\":0,\"amt\":5,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":14,\"rank\":0,\"amt\":5,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":15,\"rank\":0,\"amt\":5,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":16,\"rank\":0,\"amt\":5,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":17,\"rank\":0,\"amt\":5,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":18,\"rank\":0,\"amt\":5,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":19,\"rank\":0,\"amt\":5,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":20,\"rank\":0,\"amt\":5,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":1,\"rank\":1,\"amt\":1,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":2,\"rank\":1,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":3,\"rank\":1,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":4,\"rank\":1,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":5,\"rank\":1,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":6,\"rank\":1,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":7,\"rank\":1,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":8,\"rank\":1,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":9,\"rank\":1,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":10,\"rank\":1,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":11,\"rank\":1,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":12,\"rank\":1,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":13,\"rank\":1,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":14,\"rank\":1,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":15,\"rank\":1,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":16,\"rank\":1,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":17,\"rank\":1,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":18,\"rank\":1,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":19,\"rank\":1,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":20,\"rank\":1,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":2,\"rank\":2,\"amt\":null,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":3,\"rank\":2,\"amt\":1,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":4,\"rank\":2,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":5,\"rank\":2,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":6,\"rank\":2,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":7,\"rank\":2,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":8,\"rank\":2,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":9,\"rank\":2,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":10,\"rank\":2,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":11,\"rank\":2,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":12,\"rank\":2,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":13,\"rank\":2,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":14,\"rank\":2,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":15,\"rank\":2,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":16,\"rank\":2,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":17,\"rank\":2,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":18,\"rank\":2,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":19,\"rank\":2,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":20,\"rank\":2,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":5,\"rank\":3,\"amt\":1,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":7,\"rank\":4,\"amt\":1,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":9,\"rank\":5,\"amt\":1,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":11,\"rank\":6,\"amt\":1,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":13,\"rank\":7,\"amt\":1,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":15,\"rank\":8,\"amt\":1,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":17,\"rank\":9,\"amt\":1,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":19,\"rank\":10,\"amt\":1,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":20,\"rank\":10,\"amt\":1,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":20,\"rank\":9,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":19,\"rank\":9,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":18,\"rank\":9,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":20,\"rank\":8,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":19,\"rank\":8,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":18,\"rank\":8,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":17,\"rank\":8,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":16,\"rank\":8,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":20,\"rank\":7,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":19,\"rank\":7,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":18,\"rank\":7,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":17,\"rank\":7,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":16,\"rank\":7,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":15,\"rank\":7,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":14,\"rank\":7,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":12,\"rank\":6,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":13,\"rank\":6,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":14,\"rank\":6,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":15,\"rank\":6,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":16,\"rank\":6,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":17,\"rank\":6,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":18,\"rank\":6,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":19,\"rank\":6,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":20,\"rank\":6,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":20,\"rank\":5,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":19,\"rank\":5,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":18,\"rank\":5,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":17,\"rank\":5,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":16,\"rank\":5,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":15,\"rank\":5,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":14,\"rank\":5,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":13,\"rank\":5,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":12,\"rank\":5,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":11,\"rank\":5,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":10,\"rank\":5,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":8,\"rank\":4,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":9,\"rank\":4,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":10,\"rank\":4,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":11,\"rank\":4,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":12,\"rank\":4,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":13,\"rank\":4,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":14,\"rank\":4,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":15,\"rank\":4,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":16,\"rank\":4,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":17,\"rank\":4,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":18,\"rank\":4,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":19,\"rank\":4,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":20,\"rank\":4,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":20,\"rank\":3,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":19,\"rank\":3,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":18,\"rank\":3,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":17,\"rank\":3,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":16,\"rank\":3,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":15,\"rank\":3,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":14,\"rank\":3,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":13,\"rank\":3,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":12,\"rank\":3,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":11,\"rank\":3,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":10,\"rank\":3,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":9,\"rank\":3,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":8,\"rank\":3,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":7,\"rank\":3,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}",
+      "{\"lvl\":6,\"rank\":3,\"amt\":2,\"source\":\"NECROMANCER\",\"opId\":\"f680c84a-d693-476b-adb8-f99ff343268f\"}"
+     ]
+    },
+    "SPELL_DATA": {
+     "name": "SPELL_DATA",
+     "type": "list-str",
+     "value": [
+      "{\"spellId\":8763,\"type\":\"FOCUS\",\"castingSource\":\"NECROMANCER\",\"rank\":1}",
+      "{\"spellId\":8770,\"type\":\"FOCUS\",\"castingSource\":\"NECROMANCER\",\"rank\":0}",
+      "{\"spellId\":8754,\"type\":\"FOCUS\",\"castingSource\":\"NECROMANCER\",\"rank\":0}",
+      "{\"spellId\":8775,\"type\":\"FOCUS\",\"castingSource\":\"NECROMANCER\",\"rank\":1}",
+      "{\"spellId\":4653,\"type\":\"NORMAL\",\"castingSource\":\"NECROMANCER\",\"rank\":1}"
+     ]
+    },
+    "FOCUS_POINT_BONUS": {
+     "name": "FOCUS_POINT_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "LIGHT_ARMOR": {
+     "name": "LIGHT_ARMOR",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0
+     }
+    },
+    "MEDIUM_ARMOR": {
+     "name": "MEDIUM_ARMOR",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "HEAVY_ARMOR": {
+     "name": "HEAVY_ARMOR",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "UNARMORED_DEFENSE": {
+     "name": "UNARMORED_DEFENSE",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0
+     }
+    },
+    "LIGHT_BARDING": {
+     "name": "LIGHT_BARDING",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "HEAVY_BARDING": {
+     "name": "HEAVY_BARDING",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "SIMPLE_WEAPONS": {
+     "name": "SIMPLE_WEAPONS",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0
+     }
+    },
+    "MARTIAL_WEAPONS": {
+     "name": "MARTIAL_WEAPONS",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ADVANCED_WEAPONS": {
+     "name": "ADVANCED_WEAPONS",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "UNARMED_ATTACKS": {
+     "name": "UNARMED_ATTACKS",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0
+     }
+    },
+    "PERCEPTION": {
+     "name": "PERCEPTION",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_WIS"
+     }
+    },
+    "CLASS_DC": {
+     "name": "CLASS_DC",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_INT"
+     }
+    },
+    "LEVEL": {
+     "name": "LEVEL",
+     "type": "num",
+     "value": 1
+    },
+    "SIZE": {
+     "name": "SIZE",
+     "type": "str",
+     "value": "medium"
+    },
+    "CORE_LANGUAGES": {
+     "name": "CORE_LANGUAGES",
+     "type": "list-str",
+     "value": [
+      "Gnomish",
+      "Goblin",
+      "Jotun",
+      "Orcish",
+      "Petran",
+      "Sakvroth"
+     ]
+    },
+    "PROF_WITHOUT_LEVEL": {
+     "name": "PROF_WITHOUT_LEVEL",
+     "type": "bool",
+     "value": false
+    },
+    "STAMINA_VARIANT": {
+     "name": "STAMINA_VARIANT",
+     "type": "bool",
+     "value": false
+    },
+    "MAX_HEALTH_ANCESTRY": {
+     "name": "MAX_HEALTH_ANCESTRY",
+     "type": "num",
+     "value": 10
+    },
+    "MAX_HEALTH_CLASS_PER_LEVEL": {
+     "name": "MAX_HEALTH_CLASS_PER_LEVEL",
+     "type": "num",
+     "value": 8
+    },
+    "MAX_HEALTH_BONUS": {
+     "name": "MAX_HEALTH_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "AC_BONUS": {
+     "name": "AC_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "SPEED": {
+     "name": "SPEED",
+     "type": "num",
+     "value": 20
+    },
+    "SPEED_FLY": {
+     "name": "SPEED_FLY",
+     "type": "num",
+     "value": 0
+    },
+    "SPEED_CLIMB": {
+     "name": "SPEED_CLIMB",
+     "type": "num",
+     "value": 0
+    },
+    "SPEED_BURROW": {
+     "name": "SPEED_BURROW",
+     "type": "num",
+     "value": 0
+    },
+    "SPEED_SWIM": {
+     "name": "SPEED_SWIM",
+     "type": "num",
+     "value": 0
+    },
+    "SENSES_PRECISE": {
+     "name": "SENSES_PRECISE",
+     "type": "list-str",
+     "value": [
+      "NORMAL_VISION",
+      "darkvision"
+     ]
+    },
+    "SENSES_IMPRECISE": {
+     "name": "SENSES_IMPRECISE",
+     "type": "list-str",
+     "value": [
+      "HEARING"
+     ]
+    },
+    "SENSES_VAGUE": {
+     "name": "SENSES_VAGUE",
+     "type": "list-str",
+     "value": [
+      "SMELL"
+     ]
+    },
+    "RESISTANCES": {
+     "name": "RESISTANCES",
+     "type": "list-str",
+     "value": []
+    },
+    "WEAKNESSES": {
+     "name": "WEAKNESSES",
+     "type": "list-str",
+     "value": []
+    },
+    "IMMUNITIES": {
+     "name": "IMMUNITIES",
+     "type": "list-str",
+     "value": []
+    },
+    "SENSE_NAMES": {
+     "name": "SENSE_NAMES",
+     "type": "list-str",
+     "value": [
+      "DARKVISION"
+     ]
+    },
+    "MODE_NAMES": {
+     "name": "MODE_NAMES",
+     "type": "list-str",
+     "value": []
+    },
+    "CLASS_NAMES": {
+     "name": "CLASS_NAMES",
+     "type": "list-str",
+     "value": [
+      "NECROMANCER"
+     ]
+    },
+    "ANCESTRY_NAMES": {
+     "name": "ANCESTRY_NAMES",
+     "type": "list-str",
+     "value": [
+      "DWARF"
+     ]
+    },
+    "BACKGROUND_NAMES": {
+     "name": "BACKGROUND_NAMES",
+     "type": "list-str",
+     "value": [
+      "SCHOLAR"
+     ]
+    },
+    "HERITAGE_NAMES": {
+     "name": "HERITAGE_NAMES",
+     "type": "list-str",
+     "value": [
+      "DEATH WARDEN DWARF"
+     ]
+    },
+    "CLASS_ARCHETYPE_NAMES": {
+     "name": "CLASS_ARCHETYPE_NAMES",
+     "type": "list-str",
+     "value": []
+    },
+    "FEAT_NAMES": {
+     "name": "FEAT_NAMES",
+     "type": "list-str",
+     "value": [
+      "ASSURANCE",
+      "DWARVEN DOUGHTINESS",
+      "CONSUME THRALL"
+     ]
+    },
+    "SPELL_NAMES": {
+     "name": "SPELL_NAMES",
+     "type": "list-str",
+     "value": [
+      "NECROTIC BOMB",
+      "CREATE THRALL",
+      "THRALL CHARGE",
+      "BONE SPEAR",
+      "HARM"
+     ]
+    },
+    "LANGUAGE_NAMES": {
+     "name": "LANGUAGE_NAMES",
+     "type": "list-str",
+     "value": [
+      "COMMON",
+      "DWARVEN",
+      "NECRIL",
+      "PETRAN",
+      "DRACONIC",
+      "AKLO"
+     ]
+    },
+    "TRAIT_NAMES": {
+     "name": "TRAIT_NAMES",
+     "type": "list-str",
+     "value": [
+      "NECROMANCER",
+      "HUMANOID",
+      "DWARF"
+     ]
+    },
+    "CLASS_FEATURE_NAMES": {
+     "name": "CLASS_FEATURE_NAMES",
+     "type": "list-str",
+     "value": [
+      "ATTRIBUTE BOOSTS",
+      "FATAL METHOD",
+      "GRAVE SPELLS",
+      "GRIM FASCINATION",
+      "MASTERY OF LIFE AND DEATH",
+      "NECROMANCER SPELLCASTING",
+      "UNDEAD LORE"
+     ]
+    },
+    "PHYSICAL_FEATURE_NAMES": {
+     "name": "PHYSICAL_FEATURE_NAMES",
+     "type": "list-str",
+     "value": [
+      "CLAN DAGGER"
+     ]
+    },
+    "EXTRA_ITEM_NAMES": {
+     "name": "EXTRA_ITEM_NAMES",
+     "type": "list-str",
+     "value": [
+      "FIST",
+      "CLAN DAGGER"
+     ]
+    },
+    "SENSE_IDS": {
+     "name": "SENSE_IDS",
+     "type": "list-str",
+     "value": [
+      "20769"
+     ]
+    },
+    "MODE_IDS": {
+     "name": "MODE_IDS",
+     "type": "list-str",
+     "value": []
+    },
+    "CLASS_IDS": {
+     "name": "CLASS_IDS",
+     "type": "list-str",
+     "value": [
+      "337"
+     ]
+    },
+    "ANCESTRY_IDS": {
+     "name": "ANCESTRY_IDS",
+     "type": "list-str",
+     "value": [
+      "4"
+     ]
+    },
+    "BACKGROUND_IDS": {
+     "name": "BACKGROUND_IDS",
+     "type": "list-str",
+     "value": [
+      "759"
+     ]
+    },
+    "HERITAGE_IDS": {
+     "name": "HERITAGE_IDS",
+     "type": "list-str",
+     "value": [
+      "20731"
+     ]
+    },
+    "CLASS_ARCHETYPE_IDS": {
+     "name": "CLASS_ARCHETYPE_IDS",
+     "type": "list-str",
+     "value": []
+    },
+    "FEAT_IDS": {
+     "name": "FEAT_IDS",
+     "type": "list-str",
+     "value": [
+      "19919",
+      "20090",
+      "57723"
+     ]
+    },
+    "SPELL_IDS": {
+     "name": "SPELL_IDS",
+     "type": "list-str",
+     "value": [
+      "8763",
+      "8770",
+      "8754",
+      "8775",
+      "4653"
+     ]
+    },
+    "LANGUAGE_IDS": {
+     "name": "LANGUAGE_IDS",
+     "type": "list-str",
+     "value": [
+      "81",
+      "83",
+      "100",
+      "102",
+      "82",
+      "93"
+     ]
+    },
+    "CLASS_FEATURE_IDS": {
+     "name": "CLASS_FEATURE_IDS",
+     "type": "list-str",
+     "value": [
+      "57712",
+      "57684",
+      "57685",
+      "57683",
+      "57682",
+      "57686",
+      "57681"
+     ]
+    },
+    "PHYSICAL_FEATURE_IDS": {
+     "name": "PHYSICAL_FEATURE_IDS",
+     "type": "list-str",
+     "value": [
+      "20771"
+     ]
+    },
+    "EXTRA_ITEM_IDS": {
+     "name": "EXTRA_ITEM_IDS",
+     "type": "list-str",
+     "value": [
+      "6796"
+     ]
+    },
+    "BULK_LIMIT_BONUS": {
+     "name": "BULK_LIMIT_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "INVEST_LIMIT_BONUS": {
+     "name": "INVEST_LIMIT_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "IMPLANT_LIMIT_BONUS": {
+     "name": "IMPLANT_LIMIT_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "INJECT_SELECT_OPTIONS": {
+     "name": "INJECT_SELECT_OPTIONS",
+     "type": "list-str",
+     "value": []
+    },
+    "INJECT_TEXT": {
+     "name": "INJECT_TEXT",
+     "type": "list-str",
+     "value": [
+      "{\"type\":\"spell\",\"id\":8770,\"text\":\"**Puppeteer—Thrall Proliferation** Once per round when you cast _create thrall_, you can create one additional [thrall](link_trait_5139) in range.\"}",
+      "{\"type\":\"trait\",\"id\":5139,\"text\":\"**Thrall Enhancement—Bone** Your thralls are well constructed and nimble. Each of your thralls' Speed is increased by 5 feet.\"}"
+     ]
+    },
+    "BLACKLIST_ABILITY_BLOCKS": {
+     "name": "BLACKLIST_ABILITY_BLOCKS",
+     "type": "list-str",
+     "value": []
+    },
+    "BLACKLIST_TRAITS": {
+     "name": "BLACKLIST_TRAITS",
+     "type": "list-str",
+     "value": []
+    },
+    "BLACKLIST_SPELLS": {
+     "name": "BLACKLIST_SPELLS",
+     "type": "list-str",
+     "value": []
+    },
+    "BLACKLIST_ITEMS": {
+     "name": "BLACKLIST_ITEMS",
+     "type": "list-str",
+     "value": []
+    },
+    "WEAPON_SPECIALIZATION": {
+     "name": "WEAPON_SPECIALIZATION",
+     "type": "bool",
+     "value": false
+    },
+    "WEAPON_SPECIALIZATION_GREATER": {
+     "name": "WEAPON_SPECIALIZATION_GREATER",
+     "type": "bool",
+     "value": false
+    },
+    "ARMOR_SPECIALIZATION_LIGHT": {
+     "name": "ARMOR_SPECIALIZATION_LIGHT",
+     "type": "bool",
+     "value": false
+    },
+    "ARMOR_SPECIALIZATION_MEDIUM": {
+     "name": "ARMOR_SPECIALIZATION_MEDIUM",
+     "type": "bool",
+     "value": false
+    },
+    "ARMOR_SPECIALIZATION_HEAVY": {
+     "name": "ARMOR_SPECIALIZATION_HEAVY",
+     "type": "bool",
+     "value": false
+    },
+    "WEAPON_CRITICAL_SPECIALIZATIONS": {
+     "name": "WEAPON_CRITICAL_SPECIALIZATIONS",
+     "type": "list-str",
+     "value": []
+    },
+    "WEAPON_FAMILIARITY": {
+     "name": "WEAPON_FAMILIARITY",
+     "type": "list-str",
+     "value": []
+    },
+    "MARTIAL_EXPERIENCE": {
+     "name": "MARTIAL_EXPERIENCE",
+     "type": "bool",
+     "value": false
+    },
+    "UNBURDENED_IRON": {
+     "name": "UNBURDENED_IRON",
+     "type": "bool",
+     "value": false
+    },
+    "UNTRAINED_IMPROVISATION": {
+     "name": "UNTRAINED_IMPROVISATION",
+     "type": "str",
+     "value": ""
+    },
+    "IMPROVED_MULTILINGUAL": {
+     "name": "IMPROVED_MULTILINGUAL",
+     "type": "bool",
+     "value": false
+    },
+    "USE_DEX_FOR_MELEE_FINESSE": {
+     "name": "USE_DEX_FOR_MELEE_FINESSE",
+     "type": "bool",
+     "value": false
+    },
+    "ADD_CON_TO_BULK_LIMIT": {
+     "name": "ADD_CON_TO_BULK_LIMIT",
+     "type": "bool",
+     "value": false
+    },
+    "USE_CON_FOR_ARMOR_STR_REQ": {
+     "name": "USE_CON_FOR_ARMOR_STR_REQ",
+     "type": "bool",
+     "value": false
+    },
+    "MINIMUM_WEAPON_DAMAGE_DICE": {
+     "name": "MINIMUM_WEAPON_DAMAGE_DICE",
+     "type": "num",
+     "value": 1
+    },
+    "ATTACK_ROLLS_BONUS": {
+     "name": "ATTACK_ROLLS_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "ATTACK_DAMAGE_BONUS": {
+     "name": "ATTACK_DAMAGE_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "DEX_ATTACK_ROLLS_BONUS": {
+     "name": "DEX_ATTACK_ROLLS_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "DEX_ATTACK_DAMAGE_BONUS": {
+     "name": "DEX_ATTACK_DAMAGE_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "STR_ATTACK_ROLLS_BONUS": {
+     "name": "STR_ATTACK_ROLLS_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "STR_ATTACK_DAMAGE_BONUS": {
+     "name": "STR_ATTACK_DAMAGE_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "RANGED_ATTACK_ROLLS_BONUS": {
+     "name": "RANGED_ATTACK_ROLLS_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "RANGED_ATTACK_DAMAGE_BONUS": {
+     "name": "RANGED_ATTACK_DAMAGE_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "MELEE_ATTACK_ROLLS_BONUS": {
+     "name": "MELEE_ATTACK_ROLLS_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "MELEE_ATTACK_DAMAGE_BONUS": {
+     "name": "MELEE_ATTACK_DAMAGE_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "NON_SPELL_ATTACK_ROLLS_BONUS": {
+     "name": "NON_SPELL_ATTACK_ROLLS_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "NON_SPELL_ATTACK_DAMAGE_BONUS": {
+     "name": "NON_SPELL_ATTACK_DAMAGE_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "WEAPON_GROUP_AXE": {
+     "name": "WEAPON_GROUP_AXE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_BOMB": {
+     "name": "WEAPON_GROUP_BOMB",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_BOW": {
+     "name": "WEAPON_GROUP_BOW",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_BRAWLING": {
+     "name": "WEAPON_GROUP_BRAWLING",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_CLUB": {
+     "name": "WEAPON_GROUP_CLUB",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_CROSSBOW": {
+     "name": "WEAPON_GROUP_CROSSBOW",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_DART": {
+     "name": "WEAPON_GROUP_DART",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_FIREARM": {
+     "name": "WEAPON_GROUP_FIREARM",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_FLAIL": {
+     "name": "WEAPON_GROUP_FLAIL",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_HAMMER": {
+     "name": "WEAPON_GROUP_HAMMER",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_KNIFE": {
+     "name": "WEAPON_GROUP_KNIFE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_PICK": {
+     "name": "WEAPON_GROUP_PICK",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_POLEARM": {
+     "name": "WEAPON_GROUP_POLEARM",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_SHIELD": {
+     "name": "WEAPON_GROUP_SHIELD",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_SLING": {
+     "name": "WEAPON_GROUP_SLING",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_SPEAR": {
+     "name": "WEAPON_GROUP_SPEAR",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_SWORD": {
+     "name": "WEAPON_GROUP_SWORD",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_LASER": {
+     "name": "WEAPON_GROUP_LASER",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_PROJECTILE": {
+     "name": "WEAPON_GROUP_PROJECTILE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_DIVISION_GUN": {
+     "name": "WEAPON_DIVISION_GUN",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_DIVISION_GUN_SIMPLE": {
+     "name": "WEAPON_DIVISION_GUN_SIMPLE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_DIVISION_GUN_MARTIAL": {
+     "name": "WEAPON_DIVISION_GUN_MARTIAL",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_DIVISION_GUN_ADVANCED": {
+     "name": "WEAPON_DIVISION_GUN_ADVANCED",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_DIVISION_ONE_HANDED_AGILE_FINESSE": {
+     "name": "WEAPON_DIVISION_ONE_HANDED_AGILE_FINESSE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_CLOTH": {
+     "name": "ARMOR_GROUP_CLOTH",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_CHAIN": {
+     "name": "ARMOR_GROUP_CHAIN",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_COMPOSITE": {
+     "name": "ARMOR_GROUP_COMPOSITE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_LEATHER": {
+     "name": "ARMOR_GROUP_LEATHER",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_PLATE": {
+     "name": "ARMOR_GROUP_PLATE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_CERAMIC": {
+     "name": "ARMOR_GROUP_CERAMIC",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_POLYMER": {
+     "name": "ARMOR_GROUP_POLYMER",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_SKELETAL": {
+     "name": "ARMOR_GROUP_SKELETAL",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_WOOD": {
+     "name": "ARMOR_GROUP_WOOD",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "PAGE_CONTEXT": {
+     "name": "PAGE_CONTEXT",
+     "type": "str",
+     "value": "CHARACTER-BUILDER"
+    },
+    "PATHFINDER": {
+     "name": "PATHFINDER",
+     "type": "bool",
+     "value": true
+    },
+    "STARFINDER": {
+     "name": "STARFINDER",
+     "type": "bool",
+     "value": false
+    },
+    "ORGANIZED_PLAY": {
+     "name": "ORGANIZED_PLAY",
+     "type": "bool",
+     "value": false
+    },
+    "ACTIVE_MODES": {
+     "name": "ACTIVE_MODES",
+     "type": "list-str",
+     "value": []
+    },
+    "PRIMARY_SHEET_TABS": {
+     "name": "PRIMARY_SHEET_TABS",
+     "type": "list-str",
+     "value": [
+      "skills-actions",
+      "inventory",
+      "feats-features",
+      "details",
+      "notes",
+      "spells"
+     ]
+    },
+    "TRAIT_CLASS_NECROMANCER_IDS": {
+     "name": "TRAIT_CLASS_NECROMANCER_IDS",
+     "type": "num",
+     "value": 5135
+    },
+    "TRAIT_ANCESTRY_HUMANOID_IDS": {
+     "name": "TRAIT_ANCESTRY_HUMANOID_IDS",
+     "type": "num",
+     "value": 2399
+    },
+    "TRAIT_ANCESTRY_DWARF_IDS": {
+     "name": "TRAIT_ANCESTRY_DWARF_IDS",
+     "type": "num",
+     "value": 1467
+    },
+    "SKILL_LORE_ACADEMIA": {
+     "name": "SKILL_LORE_ACADEMIA",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "attribute": "ATTRIBUTE_INT"
+     }
+    },
+    "SKILL_LORE_UNDEAD": {
+     "name": "SKILL_LORE_UNDEAD",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "attribute": "ATTRIBUTE_INT"
+     }
+    },
+    "HAS_EIDOLON_COMPANION": {
+     "name": "HAS_EIDOLON_COMPANION",
+     "type": "bool",
+     "value": false
+    },
+    "EIDOLON_WEAPON_POTENCY": {
+     "name": "EIDOLON_WEAPON_POTENCY",
+     "type": "num",
+     "value": 0
+    },
+    "EIDOLON_WEAPON_STRIKING": {
+     "name": "EIDOLON_WEAPON_STRIKING",
+     "type": "num",
+     "value": 0
+    }
+   }
+  }
+ }
+}

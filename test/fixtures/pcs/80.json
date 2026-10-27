@@ -1,0 +1,5453 @@
+{
+ "version": 4,
+ "character": {
+  "id": 80,
+  "name": "Veshka Ashbound",
+  "level": 1,
+  "experience": 0,
+  "hp_current": 1,
+  "hp_temp": 0,
+  "hero_points": 1,
+  "stamina_current": 0,
+  "resolve_current": 0,
+  "inventory": {
+   "coins": {
+    "cp": 0,
+    "sp": 150,
+    "gp": 0,
+    "pp": 0
+   },
+   "items": []
+  },
+  "notes": null,
+  "details": {
+   "class": {
+    "id": 74,
+    "created_at": "2024-04-30T09:02:25.985552+00:00",
+    "name": "Summoner",
+    "rarity": "COMMON",
+    "description": "> _You can magically beckon a powerful being called an eidolon to your side, serving as the mortal conduit that anchors it to the world. Whether your eidolon is a friend, a servant, or even a personal god, your connection to it marks you as extraordinary, shaping the course of your life dramatically._\n\n* * *\n\n### **During Combat Encounters…**\n\nYou and your eidolon fight together as one. You can rely on your eidolon for mundane challenges, saving your spells for when they're needed most.\n\n### **During Social Encounters…**\n\nYour powerful personality allows you to take the lead when negotiating. You and your eidolon might engage with others in different ways, but even if your guardian remains silent, its presence reminds those around you of your power.\n\n### **While Exploring…**\n\nWhether you remain on alert for the presence of strange magic or keep an eye out for trouble, you and your eidolon act together to cover more ground, pool your knowledge, and leverage each other's abilities.\n\n### **In Downtime…**\n\nYou might attempt to learn more about the nature of your eidolon and delve deeper into the secrets of its magical tradition to Learn a Spell, Craft magic items with your eidolon's help, or make allies using your social skills.\n\n### **You Might…**\n\n*   Rely on your eidolon to accomplish physical tasks while you handle the mental ones.\n    \n*   Develop attitudes and mannerisms in line with your eidolon's way of thinking, even as your nature shapes its behavior.\n    \n*   Consider your eidolon a close friend, a guiding figure, a protector, or a rival bound to you.\n    \n\n### **Others Probably…**\n\n*   Feel safe with you (and your eidolon) at their side.\n    \n*   Expect that since you know information about your eidolon, you might know details about other sorts of strange monsters.\n    \n*   View you with awe or fear because of the powerful, strange creature that accompanies you.",
+    "operations": [
+     {
+      "id": "93810106-cf1c-4876-9f1a-f1476775269e",
+      "type": "setValue",
+      "data": {
+       "variable": "CLASS_DC",
+       "value": {
+        "value": "T",
+        "attribute": "ATTRIBUTE_CHA"
+       }
+      }
+     },
+     {
+      "id": "7087dfd3-7915-4271-95a0-b255e1e6c3f0",
+      "type": "adjValue",
+      "data": {
+       "variable": "ATTRIBUTE_CHA",
+       "value": {
+        "value": 1
+       }
+      }
+     },
+     {
+      "id": "2134be6d-fcbf-4321-8003-181d5a66cdb9",
+      "type": "setValue",
+      "data": {
+       "variable": "MAX_HEALTH_CLASS_PER_LEVEL",
+       "value": 10
+      }
+     },
+     {
+      "id": "56ef12b2-9936-4fd9-87d6-353c9d3a1836",
+      "type": "adjValue",
+      "data": {
+       "variable": "PERCEPTION",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "26c48fae-564a-4c35-a09b-785a78d16a8a",
+      "type": "adjValue",
+      "data": {
+       "variable": "SAVE_FORT",
+       "value": {
+        "value": "E"
+       }
+      }
+     },
+     {
+      "id": "8906a581-7604-4107-bd45-acd523590002",
+      "type": "adjValue",
+      "data": {
+       "variable": "SAVE_REFLEX",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "80963e1b-f840-4452-85be-a4deab6f6b42",
+      "type": "adjValue",
+      "data": {
+       "variable": "SAVE_WILL",
+       "value": {
+        "value": "E"
+       }
+      }
+     },
+     {
+      "id": "701248cd-8d52-4fcf-8be7-9665b324176a",
+      "type": "adjValue",
+      "data": {
+       "variable": "SIMPLE_WEAPONS",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "d248da1d-f499-4fb9-aeb1-69ba8ae14ed4",
+      "type": "adjValue",
+      "data": {
+       "variable": "UNARMED_ATTACKS",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "e6e098d1-0ad7-456f-beff-72d3551f5678",
+      "type": "adjValue",
+      "data": {
+       "variable": "UNARMORED_DEFENSE",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "cc0adb3b-8678-46f8-b685-ecb9d159bdfd",
+      "type": "adjValue",
+      "data": {
+       "variable": "SPELL_ATTACK",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "82b755f1-ba12-466f-a63c-7b03578b268d",
+      "type": "adjValue",
+      "data": {
+       "variable": "SPELL_DC",
+       "value": {
+        "value": "T"
+       }
+      }
+     }
+    ],
+    "trait_id": 2939,
+    "artwork_url": "https://2e.aonprd.com/Images/Classes/Iconic_Ija.png",
+    "content_source_id": 842,
+    "version": "1.0",
+    "uuid": 8094531043478906,
+    "skill_training_base": 3,
+    "deprecated": null,
+    "updated_at": "2026-08-27T16:42:03.63976+00:00",
+    "meta_data": {
+     "source": {
+      "url": "https://2e.aonprd.com/Classes.aspx?ID=77",
+      "book": "Impossible Magic",
+      "page": "63"
+     }
+    }
+   },
+   "ancestry": {
+    "id": 3,
+    "created_at": "2023-12-02T22:15:58.556798+00:00",
+    "name": "Elf",
+    "rarity": "COMMON",
+    "description": "> _Elves are a tall, long-lived people with a strong tradition of art and magic._\n\nAs an ancient people, elves have seen great change and have the perspective that can come only from watching the arc of history. After leaving Golarion in ancient times, they returned to a changed land, and they still struggle to reclaim their ancestral homes. Elves value kindness, intellect, and beauty, with many elves striving to improve their manners, appearance, and culture. Their studies delve into a level of detail that most shorter-lived peoples find excessive or inefficient. Elves are often rather private people, steeped in the secrets of their groves and kinship groups. They're slow to build friendships outside their kinsfolk, as elves who spend their lives among shorter-lived peoples often become morose after watching generations of companions age and die. These elves are known as Forlorn among their fellow elves.\n\nIf you want a character who is [magical](link_trait_1504), mystical, and mysterious, you should play an elf.",
+    "trait_id": 1348,
+    "artwork_url": "https://images.demiplane.com/elements/pathfinder-2e/ancestries/ancestry-elf-rm-detail.png?format=webp&quality=90&width=1920",
+    "content_source_id": 1,
+    "version": "1.0",
+    "operations": [
+     {
+      "id": "2ab7d55b-60a2-4051-9307-e4c73a6d6596",
+      "type": "setValue",
+      "data": {
+       "variable": "MAX_HEALTH_ANCESTRY",
+       "value": 6
+      }
+     },
+     {
+      "id": "09cbf36d-44d6-436d-9456-5499516314aa",
+      "type": "setValue",
+      "data": {
+       "variable": "SIZE",
+       "value": "medium"
+      }
+     },
+     {
+      "id": "72506287-ce22-4033-866d-ab849ac4ec9e",
+      "type": "setValue",
+      "data": {
+       "variable": "SPEED",
+       "value": 30
+      }
+     },
+     {
+      "id": "ca332abb-d0ae-43d6-915b-bb85688cf91e",
+      "type": "adjValue",
+      "data": {
+       "variable": "ATTRIBUTE_CON",
+       "value": {
+        "value": -1
+       }
+      }
+     },
+     {
+      "id": "2406087d-787e-4a0d-9807-e167794d3471",
+      "type": "giveLanguage",
+      "data": {
+       "languageId": 81
+      }
+     },
+     {
+      "id": "d6dea13c-9849-4988-910b-786afad7f468",
+      "type": "giveLanguage",
+      "data": {
+       "languageId": 84
+      }
+     },
+     {
+      "id": "e423312d-baab-4e75-91ec-11599102f395",
+      "type": "setValue",
+      "data": {
+       "variable": "CORE_LANGUAGES",
+       "value": "[\n  \"Draconic\",\n  \"Empyrean\",\n  \"Fey\",\n  \"Gnomish\",\n  \"Goblin\",\n  \"Kholo\",\n  \"Orcish\"\n]"
+      }
+     },
+     {
+      "id": "013967a1-ba53-4692-a13a-ceae609481af",
+      "type": "giveAbilityBlock",
+      "data": {
+       "type": "sense",
+       "abilityBlockId": 19330
+      }
+     },
+     {
+      "id": "6849b687-67e5-4e8c-a232-7726c61a63f8",
+      "type": "adjValue",
+      "data": {
+       "variable": "ATTRIBUTE_DEX",
+       "value": {
+        "value": 1
+       }
+      }
+     },
+     {
+      "id": "6e1941cd-a202-4d1c-a117-e3fc8ac9c1e3",
+      "type": "adjValue",
+      "data": {
+       "variable": "ATTRIBUTE_INT",
+       "value": {
+        "value": 1
+       }
+      }
+     },
+     {
+      "id": "eabb4cd7-5aad-4f7c-a712-95d5e272bcf3",
+      "type": "select",
+      "data": {
+       "title": "Select an Attribute",
+       "modeType": "FILTERED",
+       "optionType": "ADJ_VALUE",
+       "optionsPredefined": [],
+       "optionsFilters": {
+        "id": "8c1e7659-5029-4d00-8d77-f10f50b4688d",
+        "type": "ADJ_VALUE",
+        "group": "ATTRIBUTE",
+        "value": {
+         "value": 1
+        }
+       }
+      }
+     },
+     {
+      "id": "13e39aad-cd73-4b63-ae9b-2f8e5b0c12e3",
+      "type": "giveTrait",
+      "data": {
+       "traitId": 2399
+      }
+     }
+    ],
+    "uuid": 6069556547543259,
+    "deprecated": null,
+    "updated_at": "2026-08-27T16:49:19.460496+00:00",
+    "meta_data": {
+     "source": {
+      "url": "https://2e.aonprd.com/Ancestries.aspx?ID=60",
+      "book": "Player Core",
+      "page": "46"
+     }
+    }
+   },
+   "background": {
+    "id": 1152,
+    "created_at": "2024-07-24T19:26:38.579434+00:00",
+    "name": "Feybound",
+    "rarity": "RARE",
+    "description": "> _You have spent time in the First World or another realm of the fey and aren’t entirely the same person you were before. Perhaps you made a purchase at the legendary Witchmarket or partook deeply of fey food and wine. Whatever the case, willingly or inadvertently, you made a bargain with the fey, the benefits of which come at a price._\n\nChoose two ability boosts. One must be to **Dexterity** or **Charisma**, and one is a free ability boost.\n\nYou are trained in Fey Lore and gain the [Fey's Fortune](link_feat_38325) free action. You must follow some rule or limitation as part of your pact with the fey. If you violate the rule, you lose [Fey's Fortune](link_feat_38325) until you receive the effects of a successful [atone](link_spell_4405) ritual using the Nature skill. The exact limitation is up to you and the GM, but the most common requirement is that you must fulfill a single request from any fey who knows your name.",
+    "operations": [
+     {
+      "id": "93b45f32-977c-477c-9bc4-9cdc7590085c",
+      "type": "select",
+      "data": {
+       "title": "Select an Attribute",
+       "modeType": "PREDEFINED",
+       "optionType": "ADJ_VALUE",
+       "optionsPredefined": [
+        {
+         "id": "02d2bd01-f380-4460-b931-f318342c3fcc",
+         "type": "ADJ_VALUE",
+         "operation": {
+          "id": "02c65954-962a-47fb-ab9e-b5985abea395",
+          "type": "adjValue",
+          "data": {
+           "variable": "ATTRIBUTE_DEX",
+           "value": {
+            "value": 1
+           }
+          }
+         }
+        },
+        {
+         "id": "db47a3d9-de52-4e9f-a0e6-1facee5e1f7d",
+         "type": "ADJ_VALUE",
+         "operation": {
+          "id": "b9882198-3761-4e31-bc31-962d2d25e377",
+          "type": "adjValue",
+          "data": {
+           "variable": "ATTRIBUTE_CHA",
+           "value": {
+            "value": 1
+           }
+          }
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "777f1e8b-8792-495f-a857-b87a85514bdc",
+      "type": "select",
+      "data": {
+       "title": "Select an Attribute",
+       "modeType": "FILTERED",
+       "optionType": "ADJ_VALUE",
+       "optionsPredefined": [],
+       "optionsFilters": {
+        "id": "7640a4d2-e031-494d-b0ff-cd0c59676df9",
+        "type": "ADJ_VALUE",
+        "group": "ATTRIBUTE",
+        "value": {
+         "value": 1
+        }
+       }
+      }
+     },
+     {
+      "id": "245f8062-ff52-4140-b0d8-ae332a68ddda",
+      "type": "createValue",
+      "data": {
+       "variable": "SKILL_LORE_FEY",
+       "value": {
+        "value": "T",
+        "attribute": "ATTRIBUTE_INT"
+       },
+       "type": "prof"
+      }
+     },
+     {
+      "id": "4ce3c6b8-07ad-4b83-8d63-1d1c843bf066",
+      "type": "giveAbilityBlock",
+      "data": {
+       "type": "feat",
+       "abilityBlockId": 38325
+      }
+     }
+    ],
+    "content_source_id": 256,
+    "version": "1.0",
+    "uuid": 5602477408420203,
+    "artwork_url": null,
+    "deprecated": null,
+    "updated_at": "2026-08-27T16:49:19.969852+00:00",
+    "meta_data": {
+     "source": {
+      "url": "https://2e.aonprd.com/Backgrounds.aspx?ID=467",
+      "book": "Player Core 2",
+      "page": "52"
+     }
+    }
+   }
+  },
+  "roll_history": null,
+  "custom_operations": null,
+  "meta_data": {
+   "reset_hp": true
+  },
+  "options": {
+   "dice_roller": true,
+   "auto_detect_prerequisites": true
+  },
+  "variants": null,
+  "content_sources": {
+   "enabled": [
+    1,
+    8,
+    7,
+    842
+   ]
+  },
+  "operation_data": {
+   "selections": {
+    "ancestry_eabb4cd7-5aad-4f7c-a712-95d5e272bcf3": "ATTRIBUTE_CHA",
+    "ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-0": "90",
+    "background_93b45f32-977c-477c-9bc4-9cdc7590085c": "b9882198-3761-4e31-bc31-962d2d25e377",
+    "background_777f1e8b-8792-495f-a857-b87a85514bdc": "ATTRIBUTE_CON",
+    "ancestry-section-5742419753466526_3fd6a268-771b-49fc-93ed-9b53695d1a29": "20761",
+    "ancestry-section-2707339574403411_9f26290c-a2db-4c45-9b34-5053e60c106d-0": "20388",
+    "ancestry-section-2707339574403411_9f26290c-a2db-4c45-9b34-5053e60c106d-0_20388_eab49a2d-a8ba-47e7-a903-01e6d844c1c0": "4831",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-0": "SKILL_NATURE",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-1": "SKILL_DIPLOMACY",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-2": "SKILL_DECEPTION",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-3": "SKILL_OCCULTISM",
+    "class-feature-25267_ab16a7aa-4488-4fdf-8e94-d6e327359046": "ATTRIBUTE_CHA",
+    "class-feature-25267_3823e0d7-65c2-4eb6-aacb-72baf2771356": "ATTRIBUTE_CON",
+    "class-feature-25267_c5be0059-b891-4211-8192-3cc4d47e47f6": "ATTRIBUTE_DEX",
+    "class-feature-25267_13004815-213b-4a25-9b7a-5a2b7637ac1c": "ATTRIBUTE_WIS",
+    "class-feature-30220_3878fe26-7dc1-441a-b3d0-1fdf123dcfd4": "34417",
+    "class-feature-30842_c7b9d1f9-b3eb-43d8-b6cd-fd777e97abe7": "22514",
+    "class-feature-30220_3878fe26-7dc1-441a-b3d0-1fdf123dcfd4_34417_f88d929c-ce75-4069-b313-35c1eef449a4": "SKILL_PERFORMANCE",
+    "class-feature-30220_3878fe26-7dc1-441a-b3d0-1fdf123dcfd4_34417_e8940109-8650-4361-8fd5-9aa3d902adf0": "SKILL_STEALTH"
+   }
+  },
+  "spells": {
+   "slots": [],
+   "list": [
+    {
+     "spell_id": 4888,
+     "rank": 0,
+     "source": "SUMMONER"
+    },
+    {
+     "spell_id": 4592,
+     "rank": 0,
+     "source": "SUMMONER"
+    },
+    {
+     "spell_id": 4562,
+     "rank": 0,
+     "source": "SUMMONER"
+    },
+    {
+     "spell_id": 4699,
+     "rank": 0,
+     "source": "SUMMONER"
+    },
+    {
+     "spell_id": 4649,
+     "rank": 0,
+     "source": "SUMMONER"
+    },
+    {
+     "spell_id": 4616,
+     "rank": 1,
+     "source": "SUMMONER"
+    }
+   ],
+   "focus_point_current": 0,
+   "innate_casts": []
+  },
+  "companions": null,
+  "campaign_id": 42
+ },
+ "content": {
+  "_README": "Here's some compiled data about the character. Should be fairly human-readable. The <character> section is what WG reads, this section is solely for you! Should give you an abundance of compiled stats and info about the character. If you have any questions, feel free to ask on our Discord!",
+  "feats_features": {
+   "generalAndSkillFeats": [],
+   "classFeats": [
+    {
+     "id": 30028,
+     "created_at": "2024-06-25T03:21:53.076133+00:00",
+     "operations": [],
+     "name": "Act Together",
+     "actions": "ONE-TO-THREE-ACTIONS",
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "once per round",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You and your eidolon act as one. Either you or your eidolon takes an action or activity using the same number of actions as Act Together, and the other takes a single action.\n\nFor example, if you spent 2 actions to Act Together, you could cast [breath fire](link_spell_4423) (2 actions) and your eidolon could [Strike](link_action_19856) (1 action), or your eidolon could use their Dragon Breath (2 actions) and you could [Stride](link_action_19855) (1 action).\n\nThis lets you each use separate [exploration](link_trait_1457) activities like [Avoid Notice](link_action_21146) as you travel.",
+     "special": "",
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Actions.aspx?ID=4268",
+       "book": "Impossible Magic",
+       "page": "65"
+      },
+      "unselectable": true,
+      "can_select_multiple_times": false
+     },
+     "traits": [
+      2939,
+      2949
+     ],
+     "content_source_id": 842,
+     "version": null,
+     "uuid": 4497616364057519,
+     "availability": null,
+     "updated_at": "2026-08-27T16:42:03.63976+00:00"
+    },
+    {
+     "id": 22514,
+     "created_at": "2024-04-20T06:53:46.330886+00:00",
+     "operations": null,
+     "name": "Expanded Senses",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": null,
+     "cost": null,
+     "trigger": null,
+     "requirements": null,
+     "access": null,
+     "description": "Your eidolon evolves more acute senses. Your eidolon gains [low-light vision](link_sense_19330) and [darkvision](link_sense_20769), as well as [scent](link_sense_20773) as an imprecise sense with a range of 30 feet.",
+     "special": null,
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=9224",
+       "book": "Impossible Magic",
+       "page": "78"
+      },
+      "foundry": {
+       "rules": []
+      }
+     },
+     "traits": [
+      2943,
+      2939
+     ],
+     "content_source_id": 842,
+     "version": null,
+     "uuid": 3608950538791417,
+     "availability": null,
+     "updated_at": "2026-08-27T16:42:03.63976+00:00"
+    },
+    {
+     "id": 30027,
+     "created_at": "2024-06-25T03:21:48.413876+00:00",
+     "operations": [],
+     "name": "Manifest Eidolon",
+     "actions": "THREE-ACTIONS",
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "Your [eidolon](link_trait_2937) appears in an open space adjacent to you, and can then take a single action. If your eidolon was already manifested, you unmanifest it instead.\n\nThe conduit that allows your eidolon to manifest is also a tether between you. Your eidolon must remain within 100 feet of you at all times and can’t willingly go beyond that limit. If forced beyond this distance, or if you are reduced to 0 Hit Points or your eidolon were to die, your eidolon’s physical form unmanifests, and you need to use Manifest Eidolon to manifest them again.",
+     "special": "This activity has the trait matching your eidolon's tradition (arcane, divine, occult, or primal).",
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Actions.aspx?ID=4267",
+       "book": "Impossible Magic",
+       "page": "64"
+      },
+      "unselectable": true
+     },
+     "traits": [
+      1432,
+      1433,
+      2939,
+      1470
+     ],
+     "content_source_id": 842,
+     "version": null,
+     "uuid": 8151498550851973,
+     "availability": null,
+     "updated_at": "2026-08-27T16:42:03.63976+00:00"
+    },
+    {
+     "id": 30029,
+     "created_at": "2024-06-25T03:22:13.784212+00:00",
+     "operations": [],
+     "name": "Share Senses",
+     "actions": "ONE-ACTION",
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "Your eidolon is manifested.",
+     "access": "",
+     "description": "You project your senses into your eidolon, allowing you to perceive through them. When you do, you lose all sensory information from your own body, but can sense through your eidolon's body for up to 1 minute. You can [Dismiss](link_action_19627) this effect.",
+     "special": "This action has the trait matching your eidolon's tradition (arcane, divine, occult, or primal). Your eidolon can also use this ability. When it does, it projects its senses into your body.",
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Actions.aspx?ID=4269",
+       "book": "Impossible Magic",
+       "page": "65"
+      },
+      "unselectable": true
+     },
+     "traits": [
+      2939,
+      1432,
+      1590
+     ],
+     "content_source_id": 842,
+     "version": null,
+     "uuid": 6968986835544881,
+     "availability": null,
+     "updated_at": "2026-08-27T16:42:03.63976+00:00"
+    }
+   ],
+   "ancestryFeats": [
+    {
+     "id": 20388,
+     "created_at": "2023-12-14T03:00:07.635907+00:00",
+     "operations": [
+      {
+       "id": "eab49a2d-a8ba-47e7-a903-01e6d844c1c0",
+       "type": "select",
+       "data": {
+        "title": "Select a Cantrip",
+        "modeType": "FILTERED",
+        "optionType": "SPELL",
+        "optionsPredefined": [],
+        "optionsFilters": {
+         "id": "e8e00857-3067-44a3-9db5-1f4e102dc076",
+         "type": "SPELL",
+         "level": {
+          "max": 0
+         },
+         "traits": [],
+         "traditions": [
+          "Arcane"
+         ],
+         "spellData": {
+          "type": "INNATE",
+          "rank": 0,
+          "tradition": "ARCANE",
+          "casts": 0
+         }
+        }
+       }
+      }
+     ],
+     "name": "Otherworldly Magic",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": null,
+     "cost": null,
+     "trigger": null,
+     "requirements": null,
+     "access": null,
+     "description": "Your elven magic manifests as a simple arcane spell, even if you aren't formally trained in magic. Choose one cantrip from the arcane spell list. You can cast this cantrip as an arcane innate spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up.",
+     "special": null,
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=4410",
+       "book": "Player Core",
+       "page": "48"
+      },
+      "foundry": {
+       "rules": []
+      }
+     },
+     "traits": [
+      1348
+     ],
+     "content_source_id": 1,
+     "version": "1.0",
+     "uuid": 2488090522314245,
+     "availability": null,
+     "updated_at": "2026-08-27T16:49:23.919185+00:00"
+    }
+   ],
+   "otherFeats": [
+    {
+     "id": 34417,
+     "created_at": "2024-08-25T18:35:47.780294+00:00",
+     "operations": [
+      {
+       "id": "1d7270da-ba8e-4b37-a7c8-7af4ce824561",
+       "type": "defineCastingSource",
+       "data": {
+        "variable": "CASTING_SOURCES",
+        "value": "SUMMONER:::SPONTANEOUS-REPERTOIRE:::PRIMAL:::ATTRIBUTE_CHA"
+       }
+      },
+      {
+       "id": "f88d929c-ce75-4069-b313-35c1eef449a4",
+       "type": "adjValue",
+       "data": {
+        "variable": "SKILL_DECEPTION",
+        "value": {
+         "value": "T"
+        }
+       }
+      },
+      {
+       "id": "e8940109-8650-4361-8fd5-9aa3d902adf0",
+       "type": "adjValue",
+       "data": {
+        "variable": "SKILL_NATURE",
+        "value": {
+         "value": "T"
+        }
+       }
+      },
+      {
+       "id": "7e9eb4b6-3313-4e92-bb51-380ade1dc0ae",
+       "type": "giveLanguage",
+       "data": {
+        "languageId": 90
+       }
+      },
+      {
+       "id": "952d4cca-818a-4d0c-87b7-c2669504df8b",
+       "type": "adjValue",
+       "data": {
+        "variable": "BLACKLIST_ABILITY_BLOCKS",
+        "value": "magical understudy"
+       }
+      },
+      {
+       "id": "8613072f-6452-4e6e-9c66-45acef2aae40",
+       "type": "adjValue",
+       "data": {
+        "variable": "BLACKLIST_ABILITY_BLOCKS",
+        "value": "magical adept"
+       }
+      }
+     ],
+     "name": "Fey Eidolon",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "Your eidolon is a fey, a capricious being of the mysterious First World. Many fey appear similar to mortal humanoids, with unusual features such as pointed ears, wings, or bodies composed of natural elements, but the full variety of fey is endless, and many others appear completely inhuman. Fey from the First World never truly die, instead eventually forming into a new creature after being destroyed. Fey eidolons usually come about when a summoner helps stabilize a difficult reincarnation. This means your fey eidolon likely lived a different life just before meeting you and might remember fragments of their old memories. Together, you might have to unravel a memory from your eidolon’s past life among the fey.\n\n**Tradition** [primal](link_trait_1454)\n\n**Traits** [eidolon](link_trait_2937), [fey](link_trait_2021)\n\n**Home Plane** First World\n\n* * *\n\n**Size** Small or Medium\n\n**Suggested Attacks** fist (bludgeoning), wing (bludgeoning), attacks shaped like a weapon\n\n**Eidolon Attributes** _Con_ +0, _Int_ +1, _Wis_ –1, _Cha_ +3\n\n**Skills** Deception, Nature\n\n**Senses** [low-light vision](link_sense_19330)\n\n**Languages** [Fey](link_language_90)\n\n**Speed** 25 feet\n\n* * *\n\n**Initial (1st)—Fey Gift Spells** Your eidolon expands your primal magic with illusion and mental magic, allowing both of you to wield the power of fey glamour. When you add spells to your repertoire, you can choose from the primal list as well as from spells that have the [illusion](link_trait_1447) or [mental](link_trait_1448) traits that appear on the [arcane](link_trait_1459) spell list. As usual for when you add spells of a different tradition to your spell list, you’re still a [primal](link_trait_1454) spellcaster, so all your spells are [primal](link_trait_1454) spells. Your eidolon gains the [Magical Understudy](link_feat_22548) summoner feat, despite not meeting the prerequisite level, and can choose fey gift cantrips in addition to [primal](link_trait_1454) cantrips. As normal for a feat you are granted by name, you can’t retrain [Magical Understudy](link_feat_22548) into another feat.\n\n**Symbiosis (7th)—Fey Mischief** Your eidolon’s fey magic becomes more powerful and mischievous. Your eidolon gains the [Magical Adept](link_feat_22546) feat, despite not meeting the prerequisite level, and can choose from fey gift spells in addition to [primal](link_trait_1454) spells.\n\n**Transcendence (17th)—Fey Chicanery** Ever full of tricks, your fey eidolon twists magical protections into your shared life force, granting them a contingency in their back pocket for desperate situations. During your daily preparations, your eidolon can cast a [contingency](link_spell_4535) spell. The 4th-rank spell they choose must come from the primal or fey gift list, and must either be common or be another spell you have access to.",
+     "special": "",
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Eidolons.aspx?ID=22",
+       "book": "Impossible Magic",
+       "page": "75"
+      }
+     },
+     "traits": [
+      3887
+     ],
+     "content_source_id": 842,
+     "version": null,
+     "uuid": 229044332525571,
+     "availability": null,
+     "updated_at": "2026-08-27T16:42:03.63976+00:00"
+    }
+   ],
+   "classFeatures": [
+    {
+     "id": 30220,
+     "created_at": "2024-07-05T16:48:33.652834+00:00",
+     "operations": [
+      {
+       "id": "519fa279-18da-49e8-96f5-185e10af7c32",
+       "type": "giveAbilityBlock",
+       "data": {
+        "type": "feat",
+        "abilityBlockId": 30027
+       }
+      },
+      {
+       "id": "08c66869-8c7d-4154-8160-118340e4980b",
+       "type": "giveAbilityBlock",
+       "data": {
+        "type": "feat",
+        "abilityBlockId": 30028
+       }
+      },
+      {
+       "id": "2c69a665-cb68-4bc3-b571-944cf31820e6",
+       "type": "giveAbilityBlock",
+       "data": {
+        "type": "feat",
+        "abilityBlockId": 30029
+       }
+      },
+      {
+       "id": "3878fe26-7dc1-441a-b3d0-1fdf123dcfd4",
+       "type": "select",
+       "data": {
+        "title": "Select an Eidolon",
+        "modeType": "FILTERED",
+        "optionType": "ABILITY_BLOCK",
+        "optionsPredefined": [],
+        "optionsFilters": {
+         "id": "bd7435e7-abe4-4835-93e8-6312c4e57353",
+         "type": "ABILITY_BLOCK",
+         "level": {},
+         "traits": [
+          "Summoner Eidolon"
+         ],
+         "abilityBlockType": "feat"
+        }
+       }
+      },
+      {
+       "id": "c0ccb0be-5a75-488a-bc17-79c1c97c912b",
+       "type": "adjValue",
+       "data": {
+        "variable": "PRIMARY_SHEET_TABS",
+        "value": "companions"
+       }
+      }
+     ],
+     "name": "Eidolon",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You have a connection with a powerful and usually otherworldly entity called an eidolon, and you can use your life force as a conduit to manifest this ephemeral entity into the mortal world. Magic also flows through this conduit from your eidolon into you, so your eidolon determines the type of spells you cast and the spell list you choose from (as described in [Summoner Spellcasting](link_class-feature_30839)).\n\nChoose a type of eidolon. When you choose your eidolon, you also determine their appearance and general form, within the parameters for that particular type of eidolon. Once you establish your eidolon’s type and general appearance, these features can’t be changed later, except by selecting special evolution feats that can cause your eidolon to develop new features.\n\nYour magical connection with your eidolon takes the form of a sigil on each of your bodies. As long as your eidolon is manifested, the sigil glows with light and can’t be covered or disguised via any means; it will shine through clothing, appear over cloaks, and remain unaffected by obfuscating magic. This, combined with the way that the two of you clearly act in tandem, makes it readily apparent to an intelligent observer that the two of you are connected in some way, even if the person has never encountered a summoner before.\n\nYou bring your eidolon into reality with the [Manifest Eidolon](link_feat_30027) action.\n\nYour eidolon is no mere minion. It doesn't have the [minion](link_trait_2527) or [summoned](link_trait_2134) trait, and the two of you work together and coordinate your actions. You and your eidolon share your actions and multiple attack penalty. Each round, you can use any of your actions (including reactions and free actions) for yourself or your eidolon.\n\nYou coordinate your actions with your eidolon more efficiently when you [Act Together](link_feat_30028).\n\nYour connection with your eidolon allows you to communicate with them telepathically at all times, even when they aren't manifested. You also gain the [Share Senses](link_feat_30029) action.\n\nLastly, the connection between you and your eidolon means you both share a single pool of Hit Points. Damage taken by either you or the eidolon reduces your Hit Points, while healing either of you recovers your Hit Points. You share temporary Hit Points as well. Like with your actions, if you and your eidolon are both subject to the same effect that affects your Hit Points, you apply those effects only once (applying the greater effect, if applicable). For instance, if you and your eidolon get caught in an area effect that would heal or damage you both, only the greater amount of healing or damage applies.\n\n#### **Gear and your Eidolon**\n\nYour eidolon can't wear or use magic items, except for items with the [eidolon](link_trait_2937) trait. An eidolon can have up to two items [invested](link_action_20775). Your eidolon's link to you means it can benefit from certain magic items invested by you.\n\n*   Your eidolon gains item bonuses to Perception and skills from any magical items that you have invested.\n    \n*   Your eidolon increases its item bonus to AC based on your armor's [_armor potency_](link_item_6719) rune or [_bands of force_](link_item_6732). They also gain an item bonus to its saves from the [_resilient_](link_item_7703) rune on your armor or from your [_bands of force_](link_item_6732). Other permanent items that grant or increase item bonuses to AC and saves might convey a similar benefit, as determined by the GM.\n    \n*   Your eidolon's [Strikes](link_action_19856) benefit from the fundamental and property runes on your [_handwraps of mighty blows_](link_item_7020). Alternatively, you can [Invest](link_action_20775) a [magic](link_trait_1504) weapon (even though [magic](link_trait_1504) weapons can't normally be [Invested](link_action_20775)) to share its fundamental and property runes with your eidolon. You share these benefits only while you're holding the weapon, and you can have no more than one weapon invested in this way at a time. In either case, the eidolon gains only the benefits that can apply to its attacks, with the same limitations noted in [_handwraps of mighty blows_](link_item_7020).\n    \n\n#### **Lost And Altered Actions**\n\nIf you or your eidolon become slowed, stunned, quickened, or otherwise affected by something that changes the actions you gain at the start of each turn, it affects your shared actions. However, if you are both subject to such an effect, apply only the more severe one. For instance, if either you or your eidolon were slowed 1, you would start your turn with one fewer action, but if you were both slowed 1, you would still lose only 1 action, rather than adding the two slowed effects together. However, if you were slowed 1 and your eidolon slowed 2, you’d have 2 fewer actions, because that’s the more severe effect. If only one of you becomes restricted in how you can spend your actions, that restriction doesn’t automatically extend to the other; for example, if your eidolon became immobilized or petrified, they wouldn’t be able to move, but you could still use your actions to move. The GM resolves any situation that’s unclear.\n\nYou, as the player, control both your summoner and your eidolon, and the two are generally considered to cooperate unless you decide for them not to. While a summoner’s link with an eidolon is a partnership, ultimately the eidolon is linked to you, not the other way around. If there’s ever a conflict of who should act, you win out over your eidolon. This means that if the eidolon comes under an effect that would take their actions out of your control, such as the confused or controlled condition, you can use all of your shared actions so your eidolon doesn’t have any actions remaining to cause trouble (as long as you are able to act). However, if you came under such an effect, you would simply use all your shared actions, preventing your eidolon from acting.\n\n#### Unmanifested Eidolon\n\nWhile your eidolon is unmanifested, they typically can’t be targeted or take any actions. The duration of anything affecting the eidolon still passes. Effects that change over time, such as the frightened condition, still advance at the typical time; effects that can be adjusted using actions, such as reducing the sickened condition, can’t be reduced by an unmanifested eidolon. The GM makes the ruling for how specific effects work when it’s unclear.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Classes.aspx?ID=77",
+       "book": "Impossible Magic",
+       "page": "63"
+      }
+     },
+     "traits": [
+      2939
+     ],
+     "content_source_id": 842,
+     "version": null,
+     "uuid": 6750868644963459,
+     "availability": null,
+     "updated_at": "2026-08-27T16:42:03.63976+00:00"
+    },
+    {
+     "id": 30842,
+     "created_at": "2024-07-24T20:19:30.794343+00:00",
+     "operations": [
+      {
+       "id": "c7b9d1f9-b3eb-43d8-b6cd-fd777e97abe7",
+       "type": "select",
+       "data": {
+        "title": "Select an Evolution Feat",
+        "modeType": "FILTERED",
+        "optionType": "ABILITY_BLOCK",
+        "optionsPredefined": [],
+        "optionsFilters": {
+         "id": "ee09c29d-6655-4091-971a-0620922aa7da",
+         "type": "ABILITY_BLOCK",
+         "level": {
+          "max": 1
+         },
+         "traits": [
+          "Summoner",
+          "Evolution"
+         ],
+         "abilityBlockType": "feat"
+        }
+       }
+      }
+     ],
+     "name": "Evolution Feat",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "Evolution feats are a special type of summoner class feat that allow you to customize your eidolon through your shared link. You select one [evolution](link_trait_2943) feat for your eidolon at 1st level, representing the differences that make them unique from other eidolons of their type. If you retrain this feat, the feat you replace it with must also be an [evolution](link_trait_2943) feat.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Classes.aspx?ID=77",
+       "book": "Impossible Magic",
+       "page": "63"
+      }
+     },
+     "traits": [
+      2939
+     ],
+     "content_source_id": 842,
+     "version": null,
+     "uuid": 4676543486160508,
+     "availability": null,
+     "updated_at": "2026-08-27T16:42:03.63976+00:00"
+    },
+    {
+     "id": 30841,
+     "created_at": "2024-07-24T20:19:10.865933+00:00",
+     "operations": [
+      {
+       "id": "8ebc75e0-9784-4cc5-93df-475cc4ca2405",
+       "type": "giveSpell",
+       "data": {
+        "type": "FOCUS",
+        "castingSource": "SUMMONER",
+        "rank": 1,
+        "spellId": 5312
+       }
+      },
+      {
+       "id": "249170a1-cd20-4661-b828-2318bbbfb960",
+       "type": "giveSpell",
+       "data": {
+        "type": "FOCUS",
+        "castingSource": "SUMMONER",
+        "rank": 1,
+        "spellId": 5351
+       }
+      }
+     ],
+     "name": "Link Spells",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "Your connection to your eidolon allows you to cast link spells, special spells that have been forged through your shared connection with your eidolon. Link spells are a type of focus spell. It costs 1 Focus Point to cast a focus spell, and you start with a focus pool of 1 Focus Point. You refill your focus pool during your daily preparations, and you can regain 1 Focus Point by spending 10 minutes using the [Refocus](link_action_19754) activity to specifically connect with your eidolon, such as by having a heart-to-heart conversation, playing together, or meditating in unison on the nature of your bond.\n\nFocus spells are automatically heightened to half your level rounded up, much like cantrips. Focus spells don’t require spell slots; you can’t cast them using spell slots. Certain feats give you more focus spells. The maximum Focus Points your focus pool can hold is equal to the number of focus spells you have, but can never be more than 3 points.\n\nYou learn the [_evolution surge_](link_spell_5351) link spell, which allows you to grant your eidolon one of several useful benefits.\n\n#### Link Cantrips\n\nLink cantrips are special link spells that don’t cost Focus Points, so you can cast them as often as you like. Link cantrips are in addition to the cantrips you choose from your tradition’s spell list. Generally, only feats can give you more link cantrips. Unlike other cantrips, you can’t swap out link cantrips gained from summoner feats at a later level, unless you swap out the specific feat via retraining.\n\nYou learn the [boost eidolon](link_spell_5312) link cantrip, which briefly improves your eidolon's capabilities, allowing it to attack with greater power.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Classes.aspx?ID=77",
+       "book": "Impossible Magic",
+       "page": "63"
+      }
+     },
+     "traits": [
+      2939
+     ],
+     "content_source_id": 842,
+     "version": null,
+     "uuid": 8921292488941,
+     "availability": null,
+     "updated_at": "2026-08-27T16:42:03.63976+00:00"
+    },
+    {
+     "id": 30840,
+     "created_at": "2024-07-24T20:16:17.33943+00:00",
+     "operations": [],
+     "name": "Spell Repertoire",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "The collection of spells you can cast is called your spell repertoire. At 1st level, you learn one 1st-rank spell of your choice and five [cantrips](link_trait_1858) of your choice. You choose these from the common spells from the tradition corresponding to your eidolon, or from other spells from that tradition to which you have access. You can cast any spell in your spell repertoire by using a spell slot of an appropriate spell rank.\n\nYou add to this spell repertoire as you increase in level. Each time you get a spell slot (see the [Summoner Spells per Day](link_class-feature_30839) table), you add a spell to your spell repertoire of the same rank. At 2nd level, you select another 1st-rank spell. At 3rd level, you add the first 2nd-rank spell to your repertoire. At 4th level, you gain your second 2nd-rank spell, and so on. When you add spells, you might select a higher-rank version of a spell you already have so that you can cast a heightened version of that spell.\n\nThough you gain them at the same rate, your spell slots and the spells in your spell repertoire are separate. If a feat or other ability adds a spell to your spell repertoire, it wouldn’t give you another spell slot or vice versa.\n\n#### Swapping Spells in Your Repertoire\n\nAs you gain new spells in your repertoire, you might want to replace some of the spells you previously learned. Each time you gain a level and learn new spells, you can swap out one of your old spells for a different spell of the same rank. This spell can be a cantrip, but you can’t swap out link spells. You can also swap out spells by [retraining](link_action_21203) during downtime.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Classes.aspx?ID=77",
+       "book": "Impossible Magic",
+       "page": "63"
+      }
+     },
+     "traits": [
+      2939
+     ],
+     "content_source_id": 842,
+     "version": null,
+     "uuid": 2633118824654417,
+     "availability": null,
+     "updated_at": "2026-08-27T16:42:03.63976+00:00"
+    },
+    {
+     "id": 30839,
+     "created_at": "2024-07-24T20:12:31.968785+00:00",
+     "operations": [
+      {
+       "id": "ad991aed-cad2-4666-bc9d-17de2a4ed440",
+       "type": "giveSpellSlot",
+       "data": {
+        "castingSource": "SUMMONER",
+        "slots": [
+         {
+          "lvl": 1,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 2,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 3,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 4,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 5,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 6,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 7,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 8,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 9,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 10,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 11,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 12,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 13,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 14,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 15,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 16,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 17,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 18,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 19,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 20,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 1,
+          "rank": 1,
+          "amt": 1
+         },
+         {
+          "lvl": 2,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 3,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 4,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 3,
+          "rank": 2,
+          "amt": 1
+         },
+         {
+          "lvl": 4,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 5,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 6,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 5,
+          "rank": 3,
+          "amt": 1
+         },
+         {
+          "lvl": 6,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 7,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 8,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 7,
+          "rank": 4,
+          "amt": 1
+         },
+         {
+          "lvl": 8,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 9,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 10,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 9,
+          "rank": 5,
+          "amt": 1
+         },
+         {
+          "lvl": 10,
+          "rank": 5,
+          "amt": 2
+         },
+         {
+          "lvl": 11,
+          "rank": 5,
+          "amt": 2
+         },
+         {
+          "lvl": 12,
+          "rank": 5,
+          "amt": 2
+         },
+         {
+          "lvl": 11,
+          "rank": 6,
+          "amt": 1
+         },
+         {
+          "lvl": 12,
+          "rank": 6,
+          "amt": 2
+         },
+         {
+          "lvl": 13,
+          "rank": 6,
+          "amt": 2
+         },
+         {
+          "lvl": 14,
+          "rank": 6,
+          "amt": 2
+         },
+         {
+          "lvl": 13,
+          "rank": 7,
+          "amt": 1
+         },
+         {
+          "lvl": 14,
+          "rank": 7,
+          "amt": 2
+         },
+         {
+          "lvl": 15,
+          "rank": 7,
+          "amt": 2
+         },
+         {
+          "lvl": 16,
+          "rank": 7,
+          "amt": 2
+         },
+         {
+          "lvl": 15,
+          "rank": 8,
+          "amt": 1
+         },
+         {
+          "lvl": 16,
+          "rank": 8,
+          "amt": 2
+         },
+         {
+          "lvl": 17,
+          "rank": 8,
+          "amt": 2
+         },
+         {
+          "lvl": 18,
+          "rank": 8,
+          "amt": 2
+         },
+         {
+          "lvl": 18,
+          "rank": 9,
+          "amt": 2
+         },
+         {
+          "lvl": 17,
+          "rank": 9,
+          "amt": 1
+         },
+         {
+          "lvl": 19,
+          "rank": 9,
+          "amt": 2
+         },
+         {
+          "lvl": 20,
+          "rank": 9,
+          "amt": 2
+         },
+         {
+          "lvl": 19,
+          "rank": 8,
+          "amt": 2
+         },
+         {
+          "lvl": 20,
+          "rank": 8,
+          "amt": 2
+         },
+         {
+          "lvl": 5,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 6,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 7,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 8,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 9,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 10,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 11,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 12,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 13,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 14,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 15,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 16,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 17,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 18,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 19,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 20,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 7,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 8,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 9,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 10,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 11,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 12,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 13,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 14,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 15,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 16,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 17,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 18,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 19,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 20,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 17,
+          "rank": 7,
+          "amt": 2
+         },
+         {
+          "lvl": 18,
+          "rank": 7,
+          "amt": 2
+         },
+         {
+          "lvl": 19,
+          "rank": 7,
+          "amt": 2
+         },
+         {
+          "lvl": 20,
+          "rank": 7,
+          "amt": 2
+         },
+         {
+          "lvl": 15,
+          "rank": 6,
+          "amt": 2
+         },
+         {
+          "lvl": 16,
+          "rank": 6,
+          "amt": 2
+         },
+         {
+          "lvl": 17,
+          "rank": 6,
+          "amt": 2
+         },
+         {
+          "lvl": 18,
+          "rank": 6,
+          "amt": 2
+         },
+         {
+          "lvl": 19,
+          "rank": 6,
+          "amt": 2
+         },
+         {
+          "lvl": 20,
+          "rank": 6,
+          "amt": 2
+         },
+         {
+          "lvl": 9,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 10,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 11,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 12,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 11,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 12,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 13,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 14,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 15,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 16,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 17,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 18,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 19,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 13,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 14,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 15,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 16,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 17,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 18,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 19,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 20,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 20,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 13,
+          "rank": 5,
+          "amt": 2
+         },
+         {
+          "lvl": 14,
+          "rank": 5,
+          "amt": 2
+         },
+         {
+          "lvl": 15,
+          "rank": 5,
+          "amt": 2
+         },
+         {
+          "lvl": 16,
+          "rank": 5,
+          "amt": 2
+         },
+         {
+          "lvl": 17,
+          "rank": 5,
+          "amt": 2
+         },
+         {
+          "lvl": 18,
+          "rank": 5,
+          "amt": 2
+         },
+         {
+          "lvl": 19,
+          "rank": 5,
+          "amt": 2
+         },
+         {
+          "lvl": 20,
+          "rank": 5,
+          "amt": 2
+         }
+        ]
+       }
+      },
+      {
+       "id": "639fddf7-0f1f-49dd-810a-56df1c5d4567",
+       "type": "adjValue",
+       "data": {
+        "variable": "PRIMARY_SHEET_TABS",
+        "value": "spells"
+       }
+      }
+     ],
+     "name": "Summoner Spellcasting",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "Your link to your eidolon grants you limited magic connected to your eidolon’s nature. You are a spellcaster and can cast spells using the [Cast a Spell](link_action_19611) activity. As a summoner, when you cast spells, your incantations call upon forces related to the spellcasting tradition determined by your eidolon, and your gestures often echo the shape of the rune that you and your eidolon share.\n\nEach day, you can cast one 1st-rank spell. You must know spells to cast them, and you learn them via the spell repertoire class feature. The number of spells you can cast each day is called your spell slots.\n\nAs you increase in level as a summoner, the magical link with your eidolon grants you additional spell slots per day, as well as higher ranks of spells. Your total number of spell slots and the highest rank of spells you can cast are shown on the Summoner Spells per Day table.\n\nSome of your spells require you to attempt a spell attack to see how effective they are, or have your enemies roll against your spell DC (typically by attempting a saving throw). Since your key attribute is Charisma, your spell attack modifier and spell DC use your Charisma modifier.\n\n#### Heightening Spells\n\nWhen you gain spell slots of 2nd rank and higher, you can fill those slots with stronger versions of lower-rank spells. This increases the spell’s rank, heightening it to match the spell slot. You must have a spell in your spell repertoire at the rank you want to cast it in order to heighten it to that rank. Many spells have specific improvements when they are heightened to certain ranks. The signature spells class feature lets you heighten certain spells freely.\n\n#### Cantrips\n\nSome of your spells are cantrips. A [cantrip](link_trait_1858) is a special type of spell that doesn’t use spell slots. You can cast a [cantrip](link_trait_1858) at will, any number of times per day. A [cantrip](link_trait_1858) is always automatically heightened to half your level rounded up— this is usually equal to the highest rank of summoner spell slot you have. For example, as a 1st-level summoner, your [cantrips](link_trait_1858) are 1st-rank spells, and as a 5th-level summoner, your [cantrips](link_trait_1858) are 3rd-rank spells.\n\n#### Summoner Spells per Day\n\n| Lvl | Can. | 1st | 2nd | 3rd | 4th | 5th | 6th | 7th | 8th | 9th |\n\n| --- | ---- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n\n| 1 | 5 | 1 | — | — | — | — | — | — | — | — |\n\n| 2 | 5 | 2 | — | — | — | — | — | — | — | — |\n\n| 3 | 5 | 2 | 1 | — | — | — | — | — | — | — |\n\n| 4 | 5 | 2 | 2 | — | — | — | — | — | — | — |\n\n| 5 | 5 | 2 | 2 | 1 | — | — | — | — | — | — |\n\n| 6 | 5 | 2 | 2 | 2 | — | — | — | — | — | — |\n\n| 7 | 5 | 2 | 2 | 2 | 1 | — | — | — | — | — |\n\n| 8 | 5 | 2 | 2 | 2 | 2 | — | — | — | — | — |\n\n| 9 | 5 | 2 | 2 | 2 | 2 | 1 | — | — | — | — |\n\n| 10 | 5 | 2 | 2 | 2 | 2 | 2 | — | — | — | — |\n\n| 11 | 5 | 2 | 2 | 2 | 2 | 2 | 1 | — | — | — |\n\n| 12 | 5 | 2 | 2 | 2 | 2 | 2 | 2 | — | — | — |\n\n| 13 | 5 | 2 | 2 | 2 | 2 | 2 | 2 | 1 | — | — |\n\n| 14 | 5 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | — | — |\n\n| 15 | 5 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 1 | — |\n\n| 16 | 5 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | — |\n\n| 17 | 5 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 1 |\n\n| 18 | 5 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 |\n\n| 19 | 5 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 |\n\n| 20 | 5 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 |",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Classes.aspx?ID=77",
+       "book": "Impossible Magic",
+       "page": "63"
+      }
+     },
+     "traits": [
+      2939
+     ],
+     "content_source_id": 842,
+     "version": null,
+     "uuid": 8055169488116679,
+     "availability": null,
+     "updated_at": "2026-08-27T16:42:03.63976+00:00"
+    }
+   ],
+   "physicalFeatures": [],
+   "heritages": [
+    {
+     "id": 20761,
+     "created_at": "2023-12-14T04:56:23.295477+00:00",
+     "operations": [
+      {
+       "id": "b8575667-1929-4009-9bba-6be0d445e608",
+       "type": "addBonusToValue",
+       "data": {
+        "variable": "PERCEPTION",
+        "value": 2,
+        "type": "circumstance",
+        "text": "when using the Seek action to find hidden or undetected creatures within 30 feet"
+       }
+      }
+     ],
+     "name": "Whisper Elf",
+     "actions": null,
+     "level": -1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": null,
+     "cost": null,
+     "trigger": null,
+     "requirements": null,
+     "access": null,
+     "description": "Your ears are finely tuned, able to detect even the slightest whispers of sound. You gain a +2 circumstance bonus when using the [Seek](link_action_19845) action to find hidden or undetected creatures within 30 feet of you. When you target an opponent that is concealed from you or hidden from you, reduce the DC of the flat check to 3 for a concealed target or 9 for a hidden one. This benefit doesn't apply if you can't hear or if the creature is incapable of making sound (for example, if it's affected by a [silence](link_spell_4836) spell).",
+     "special": "",
+     "type": "heritage",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Heritages.aspx?ID=243",
+       "book": "Player Core",
+       "page": "47"
+      },
+      "foundry": {
+       "rules": [
+        {
+         "key": "FlatModifier",
+         "type": "circumstance",
+         "value": 2,
+         "selector": "perception",
+         "predicate": [
+          {
+           "or": [
+            "target:condition:undetected",
+            "target:condition:hidden"
+           ]
+          },
+          {
+           "lte": [
+            "target:distance",
+            30
+           ]
+          },
+          "target:audible"
+         ]
+        }
+       ]
+      }
+     },
+     "traits": [
+      1348
+     ],
+     "content_source_id": 1,
+     "version": "1.0",
+     "uuid": 839711485613928,
+     "availability": null,
+     "updated_at": "2026-08-27T16:49:23.919185+00:00"
+    }
+   ],
+   "baseAbilities": [],
+   "addedAbilities": []
+  },
+  "character_traits": [
+   {
+    "id": 2399,
+    "created_at": "2024-03-30T02:28:30.447007+00:00",
+    "name": "Humanoid",
+    "description": "Humanoid creatures reason and act much like [humans](link_trait_1436). They typically stand upright and have two arms and two legs.",
+    "meta_data": {
+     "source": {
+      "url": "https://2e.aonprd.com/Traits.aspx?ID=628",
+      "book": "Player Core",
+      "page": "457"
+     },
+     "important": false,
+     "class_trait": false,
+     "unselectable": false,
+     "ancestry_trait": false,
+     "creature_trait": true,
+     "archetype_trait": false,
+     "versatile_heritage_trait": false
+    },
+    "content_source_id": 3,
+    "uuid": 4637282396389759,
+    "updated_at": "2026-08-27T16:53:39.273543+00:00"
+   },
+   {
+    "id": 1348,
+    "created_at": "2023-12-02T22:15:57.649606+00:00",
+    "name": "Elf",
+    "description": "This indicates content from the elf ancestry.",
+    "meta_data": {
+     "source": {
+      "url": "https://2e.aonprd.com/Traits.aspx?ID=588",
+      "book": "Player Core",
+      "page": "455"
+     },
+     "ancestry_trait": true
+    },
+    "content_source_id": 1,
+    "uuid": 4613985024096727,
+    "updated_at": "2026-08-27T16:49:13.252728+00:00"
+   }
+  ],
+  "languages": [
+   "COMMON",
+   "ELVEN",
+   "FEY"
+  ],
+  "senses": {
+   "precise": [
+    {
+     "sense": {
+      "id": 19330,
+      "created_at": "2023-12-03T05:16:56.429526+00:00",
+      "operations": [
+       {
+        "id": "a53b5ac3-0df4-49d2-b924-14e8f6e221e2",
+        "type": "adjValue",
+        "data": {
+         "variable": "SENSES_PRECISE",
+         "value": "low-light vision"
+        }
+       }
+      ],
+      "name": "Low-Light Vision",
+      "actions": null,
+      "level": 1,
+      "rarity": "COMMON",
+      "prerequisites": [],
+      "frequency": "",
+      "cost": "",
+      "trigger": "",
+      "requirements": "",
+      "access": "",
+      "description": "You can see in dim light as though it were bright light, so you ignore the concealed condition due to dim light.",
+      "special": "",
+      "type": "sense",
+      "meta_data": {
+       "unselectable": true
+      },
+      "traits": [],
+      "content_source_id": 3,
+      "version": "1.0",
+      "uuid": 8382024518549176,
+      "availability": null,
+      "updated_at": "2023-12-03T05:16:56.429526+00:00"
+     },
+     "senseName": "Low-Light Vision",
+     "range": "",
+     "type": "precise"
+    }
+   ],
+   "imprecise": [
+    {
+     "sense": {
+      "id": 21081,
+      "created_at": "2024-04-05T21:29:53.369732+00:00",
+      "operations": [
+       {
+        "id": "d093403b-7e30-48b0-865b-d823f756f54c",
+        "type": "adjValue",
+        "data": {
+         "variable": "SENSES_IMPRECISE",
+         "value": "hearing"
+        }
+       }
+      ],
+      "name": "Hearing",
+      "actions": null,
+      "level": 1,
+      "rarity": "COMMON",
+      "prerequisites": [],
+      "frequency": "",
+      "cost": "",
+      "trigger": "",
+      "requirements": "",
+      "access": "",
+      "description": "Hearing is the ability to perceive sound by detecting vibrations through an organ such as the ear. A creature might be undetected by you if it’s in an environment that distorts the sense, such as a noisy room. In those cases, you have to use the [Seek](link_action_19845) basic action to detect the creature.",
+      "special": "",
+      "type": "sense",
+      "meta_data": {
+       "unselectable": true
+      },
+      "traits": [],
+      "content_source_id": 3,
+      "version": "1.0",
+      "uuid": 7294419213926000,
+      "availability": null,
+      "updated_at": "2024-04-05T21:29:53.369732+00:00"
+     },
+     "senseName": "Hearing",
+     "range": "",
+     "type": "imprecise"
+    }
+   ],
+   "vague": [
+    {
+     "sense": {
+      "id": 21082,
+      "created_at": "2024-04-05T21:31:08.459485+00:00",
+      "operations": [
+       {
+        "id": "d093403b-7e30-48b0-865b-d823f756f54c",
+        "type": "adjValue",
+        "data": {
+         "variable": "SENSES_VAGUE",
+         "value": "smell"
+        }
+       }
+      ],
+      "name": "Smell",
+      "actions": null,
+      "level": 1,
+      "rarity": "COMMON",
+      "prerequisites": [],
+      "frequency": "",
+      "cost": "",
+      "trigger": "",
+      "requirements": "",
+      "access": "",
+      "description": "Smell allows you to detect and identify chemical substances in your environment through your [olfactory](link_trait_2131) system. This involves the detection of odor molecules by receptor cells in the nose.",
+      "special": "",
+      "type": "sense",
+      "meta_data": {
+       "unselectable": true
+      },
+      "traits": [],
+      "content_source_id": 3,
+      "version": "1.0",
+      "uuid": 5653374427219146,
+      "availability": null,
+      "updated_at": "2024-04-05T21:31:08.459485+00:00"
+     },
+     "senseName": "Smell",
+     "range": "",
+     "type": "vague"
+    }
+   ]
+  },
+  "weapons": [],
+  "inventory_flat": [],
+  "total_bulk": "0",
+  "spell_raw_data": {
+   "slots": [
+    {
+     "id": "CHARACTER-spell-slot-0",
+     "rank": 0,
+     "source": "SUMMONER"
+    },
+    {
+     "id": "CHARACTER-spell-slot-1",
+     "rank": 0,
+     "source": "SUMMONER"
+    },
+    {
+     "id": "CHARACTER-spell-slot-2",
+     "rank": 0,
+     "source": "SUMMONER"
+    },
+    {
+     "id": "CHARACTER-spell-slot-3",
+     "rank": 0,
+     "source": "SUMMONER"
+    },
+    {
+     "id": "CHARACTER-spell-slot-4",
+     "rank": 0,
+     "source": "SUMMONER"
+    },
+    {
+     "id": "CHARACTER-spell-slot-5",
+     "rank": 1,
+     "source": "SUMMONER"
+    }
+   ],
+   "list": [
+    {
+     "spell_id": 4888,
+     "rank": 0,
+     "source": "SUMMONER"
+    },
+    {
+     "spell_id": 4592,
+     "rank": 0,
+     "source": "SUMMONER"
+    },
+    {
+     "spell_id": 4562,
+     "rank": 0,
+     "source": "SUMMONER"
+    },
+    {
+     "spell_id": 4699,
+     "rank": 0,
+     "source": "SUMMONER"
+    },
+    {
+     "spell_id": 4649,
+     "rank": 0,
+     "source": "SUMMONER"
+    },
+    {
+     "spell_id": 4616,
+     "rank": 1,
+     "source": "SUMMONER"
+    }
+   ],
+   "focus": [
+    {
+     "spell_id": 5312,
+     "source": "SUMMONER",
+     "rank": 1
+    },
+    {
+     "spell_id": 5351,
+     "source": "SUMMONER",
+     "rank": 1
+    }
+   ],
+   "innate": [
+    {
+     "spell_id": 4831,
+     "tradition": "ARCANE",
+     "rank": 0,
+     "casts_max": 0,
+     "casts_current": 0
+    }
+   ],
+   "sources": [
+    {
+     "name": "SUMMONER",
+     "type": "SPONTANEOUS-REPERTOIRE",
+     "tradition": "PRIMAL",
+     "attribute": "ATTRIBUTE_CHA"
+    }
+   ]
+  },
+  "spell_sources": [
+   {
+    "source": {
+     "name": "SUMMONER",
+     "type": "SPONTANEOUS-REPERTOIRE",
+     "tradition": "PRIMAL",
+     "attribute": "ATTRIBUTE_CHA"
+    },
+    "stats": {
+     "spell_attack": {
+      "total": [
+       6,
+       1,
+       -4
+      ],
+      "parts": {},
+      "conditionals": []
+     },
+     "spell_dc": {
+      "total": 16,
+      "parts": {}
+     }
+    }
+   }
+  ],
+  "spell_slots": [
+   {
+    "id": "CHARACTER-spell-slot-0",
+    "rank": 0,
+    "source": "SUMMONER"
+   },
+   {
+    "id": "CHARACTER-spell-slot-1",
+    "rank": 0,
+    "source": "SUMMONER"
+   },
+   {
+    "id": "CHARACTER-spell-slot-2",
+    "rank": 0,
+    "source": "SUMMONER"
+   },
+   {
+    "id": "CHARACTER-spell-slot-3",
+    "rank": 0,
+    "source": "SUMMONER"
+   },
+   {
+    "id": "CHARACTER-spell-slot-4",
+    "rank": 0,
+    "source": "SUMMONER"
+   },
+   {
+    "id": "CHARACTER-spell-slot-5",
+    "rank": 1,
+    "source": "SUMMONER"
+   }
+  ],
+  "spells": {
+   "all": [
+    {
+     "id": 4888,
+     "created_at": "2024-03-23T21:25:41.200074+00:00",
+     "name": "Tangle Vine",
+     "rank": 0,
+     "traditions": [
+      "arcane",
+      "primal"
+     ],
+     "rarity": "COMMON",
+     "cast": "TWO-ACTIONS",
+     "traits": [
+      1520,
+      1858,
+      1432,
+      1433,
+      1654,
+      1680
+     ],
+     "defense": "AC",
+     "cost": "",
+     "trigger": null,
+     "requirements": null,
+     "range": "30 feet",
+     "area": null,
+     "targets": "1 creature",
+     "duration": "",
+     "description": "A vine appears from thin air, flicking from your hand and lashing itself to the target. Attempt a spell attack roll against the target.\n\n**Critical Success** The target gains the immobilized condition and takes a –10-foot circumstance penalty to its Speeds for 1 round. It can attempt to [Escape](link_action_19632) against your spell DC to remove the penalty and the immobilized condition.\n\n**Success** The target takes a –10-foot circumstance penalty to its Speeds for 1 round. It can attempt to [Escape](link_action_19632) against your spell DC to remove the penalty.\n\n**Failure** The target is unaffected.",
+     "meta_data": {
+      "damage": [],
+      "source": {
+       "url": "https://2e.aonprd.com/Spells.aspx?ID=1713",
+       "book": "Player Core",
+       "page": "362"
+      },
+      "foundry": {
+       "rules": [],
+       "is_focus": false
+      }
+     },
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 2301507645464676,
+     "heightened": {
+      "text": [
+       {
+        "amount": "(2nd)",
+        "text": "The effects last for 2 rounds."
+       },
+       {
+        "amount": "(4th)",
+        "text": "The effects last for 1 minute."
+       }
+      ],
+      "data": {}
+     },
+     "availability": null,
+     "updated_at": "2026-08-27T16:53:39.643494+00:00",
+     "casting_source": "SUMMONER"
+    },
+    {
+     "id": 4592,
+     "created_at": "2024-03-23T20:30:52.215827+00:00",
+     "name": "Electric Arc",
+     "rank": 0,
+     "traditions": [
+      "arcane",
+      "primal"
+     ],
+     "rarity": "COMMON",
+     "cast": "TWO-ACTIONS",
+     "traits": [
+      1858,
+      1432,
+      1576,
+      1433
+     ],
+     "defense": "basic Reflex",
+     "cost": "",
+     "trigger": null,
+     "requirements": null,
+     "range": "30 feet",
+     "area": null,
+     "targets": "1 or 2 creatures",
+     "duration": "",
+     "description": "An arc of lightning leaps from one target to another. Each target takes 2d4 (⬆️{{ceil(level/2)+1}}d4) electricity damage with a basic Reflex save.",
+     "meta_data": {
+      "damage": [],
+      "source": {
+       "url": "https://2e.aonprd.com/Spells.aspx?ID=1509",
+       "book": "Player Core",
+       "page": "328"
+      },
+      "foundry": {
+       "rules": [],
+       "is_focus": false
+      }
+     },
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 2461892246724637,
+     "heightened": {
+      "text": [
+       {
+        "amount": "(+1)",
+        "text": "The damage increases by 1d4."
+       }
+      ],
+      "data": {
+       "damage": {
+        "0": "1d4"
+       },
+       "interval": 1,
+       "type": "interval"
+      }
+     },
+     "availability": null,
+     "updated_at": "2026-08-27T16:53:39.643494+00:00",
+     "casting_source": "SUMMONER"
+    },
+    {
+     "id": 4562,
+     "created_at": "2024-03-23T20:23:49.968419+00:00",
+     "name": "Detect Magic",
+     "rank": 0,
+     "traditions": [
+      "arcane",
+      "divine",
+      "occult",
+      "primal"
+     ],
+     "rarity": "COMMON",
+     "cast": "TWO-ACTIONS",
+     "traits": [
+      1858,
+      1432,
+      1508,
+      1433
+     ],
+     "defense": null,
+     "cost": "",
+     "trigger": null,
+     "requirements": null,
+     "range": "",
+     "area": "30-foot emanation",
+     "targets": "",
+     "duration": "",
+     "description": "You send out a pulse that registers the presence of magic. You receive no information beyond the presence or absence of magic. You can choose to ignore magic you're fully aware of, such as the magic items and ongoing spells of you and your allies.  \nYou detect [illusion](link_trait_1447) magic only if that magic's effect has a lower rank than the rank of your detect magic spell. However, items that have an illusion aura but aren't deceptive in appearance (such as an [invisibility potion](link_item_7051)) typically are detected normally.",
+     "meta_data": {
+      "damage": [],
+      "source": {
+       "url": "https://2e.aonprd.com/Spells.aspx?ID=1485",
+       "book": "Player Core",
+       "page": "323"
+      },
+      "foundry": {
+       "rules": [],
+       "is_focus": false
+      }
+     },
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 1084194073031827,
+     "heightened": {
+      "text": [
+       {
+        "amount": "(3rd)",
+        "text": "You learn the rank or level of the most powerful magical effect the spell detects, as determined by the GM."
+       },
+       {
+        "amount": "(4th)",
+        "text": "As 3rd rank, but you also pinpoint the source of the highest-rank magic. Like for an imprecise sense, you don't learn the exact location, but can narrow down the source to within a 5-foot cube (or the nearest if larger than that)."
+       }
+      ],
+      "data": {}
+     },
+     "availability": null,
+     "updated_at": "2026-08-27T16:53:39.643494+00:00",
+     "casting_source": "SUMMONER"
+    },
+    {
+     "id": 4699,
+     "created_at": "2024-03-23T20:49:12.96187+00:00",
+     "name": "Light",
+     "rank": 0,
+     "traditions": [
+      "arcane",
+      "divine",
+      "occult",
+      "primal"
+     ],
+     "rarity": "COMMON",
+     "cast": "TWO-ACTIONS",
+     "traits": [
+      1858,
+      1432,
+      1517,
+      1433
+     ],
+     "defense": null,
+     "cost": "",
+     "trigger": null,
+     "requirements": null,
+     "range": "120 feet",
+     "area": null,
+     "targets": "",
+     "duration": "until your next daily preparations",
+     "description": "You create an orb of light that sheds bright light in a 20-foot radius (and dim light for the next 20 feet) in a color you choose. If you create the light in the same space as a willing creature, you can attach the light to the creature, causing it to float near that creature as it moves. You can [Sustain](link_action_19858) the spell to move the light up to 60 feet; you can attach or detach it from a creature as part of this movement.\n\nYou can [Dismiss](link_action_19627) the spell. If you [Cast the Spell](link_action_19611) while you already have four light spells active, you must choose one of the existing spells to end.",
+     "meta_data": {
+      "damage": [],
+      "source": {
+       "url": "https://2e.aonprd.com/Spells.aspx?ID=1585",
+       "book": "Player Core",
+       "page": "340"
+      },
+      "foundry": {
+       "rules": [],
+       "is_focus": false
+      }
+     },
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 2956398977648258,
+     "heightened": {
+      "text": [
+       {
+        "amount": "(4th)",
+        "text": "The orb sheds light in a 60-foot radius (and dim light for the next 60 feet)."
+       }
+      ],
+      "data": {}
+     },
+     "availability": null,
+     "updated_at": "2026-08-27T16:53:39.643494+00:00",
+     "casting_source": "SUMMONER"
+    },
+    {
+     "id": 4649,
+     "created_at": "2024-03-23T20:40:20.502134+00:00",
+     "name": "Guidance",
+     "rank": 0,
+     "traditions": [
+      "divine",
+      "occult",
+      "primal"
+     ],
+     "rarity": "COMMON",
+     "cast": "ONE-ACTION",
+     "traits": [
+      1858,
+      1432
+     ],
+     "defense": null,
+     "cost": "",
+     "trigger": null,
+     "requirements": null,
+     "range": "30 feet",
+     "area": null,
+     "targets": "1 creature",
+     "duration": "until the start of your next turn",
+     "description": "You ask for the guidance of supernatural entities, granting the target a +1 status bonus to one attack roll, Perception check, saving throw, or skill check the target attempts before the duration ends. The target chooses which roll to use the bonus on before rolling. If the target uses the bonus, the spell ends. Either way, the target is then temporarily immune for 1 hour.",
+     "meta_data": {
+      "damage": [],
+      "source": {
+       "url": "https://2e.aonprd.com/Spells.aspx?ID=1549",
+       "book": "Player Core",
+       "page": "334"
+      },
+      "foundry": {
+       "rules": [],
+       "is_focus": false
+      }
+     },
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 8028104725906475,
+     "heightened": {
+      "text": [],
+      "data": {}
+     },
+     "availability": null,
+     "updated_at": "2026-08-27T16:53:39.643494+00:00",
+     "casting_source": "SUMMONER"
+    },
+    {
+     "id": 4616,
+     "created_at": "2024-03-23T20:34:58.353788+00:00",
+     "name": "Fear",
+     "rank": 1,
+     "traditions": [
+      "arcane",
+      "divine",
+      "occult",
+      "primal"
+     ],
+     "rarity": "COMMON",
+     "cast": "TWO-ACTIONS",
+     "traits": [
+      1432,
+      1486,
+      1487,
+      1433,
+      1448
+     ],
+     "defense": "Will",
+     "cost": "",
+     "trigger": null,
+     "requirements": null,
+     "range": "30 feet",
+     "area": null,
+     "targets": "1 creature",
+     "duration": "varies",
+     "description": "You plant fear in the target; it must attempt a Will save.\n\n**Critical Success** The target is unaffected.\n\n**Success** The target is frightened 1.\n\n**Failure** The target is frightened 2.\n\n**Critical Failure** The target is frightened 3 and fleeing for 1 round.",
+     "meta_data": {
+      "damage": [],
+      "source": {
+       "url": "https://2e.aonprd.com/Spells.aspx?ID=1524",
+       "book": "Player Core",
+       "page": "331"
+      },
+      "foundry": {
+       "rules": [],
+       "is_focus": false
+      }
+     },
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 8944503412485645,
+     "heightened": {
+      "text": [
+       {
+        "amount": "(3rd)",
+        "text": "You can target up to five creatures."
+       }
+      ],
+      "data": {
+       "levels": {
+        "3": {
+         "target": {
+          "value": "5 creatures"
+         }
+        }
+       },
+       "type": "fixed"
+      }
+     },
+     "availability": null,
+     "updated_at": "2026-08-27T16:53:39.643494+00:00",
+     "casting_source": "SUMMONER"
+    }
+   ],
+   "cantrips": [
+    {
+     "id": 4888,
+     "created_at": "2024-03-23T21:25:41.200074+00:00",
+     "name": "Tangle Vine",
+     "rank": 0,
+     "traditions": [
+      "arcane",
+      "primal"
+     ],
+     "rarity": "COMMON",
+     "cast": "TWO-ACTIONS",
+     "traits": [
+      1520,
+      1858,
+      1432,
+      1433,
+      1654,
+      1680
+     ],
+     "defense": "AC",
+     "cost": "",
+     "trigger": null,
+     "requirements": null,
+     "range": "30 feet",
+     "area": null,
+     "targets": "1 creature",
+     "duration": "",
+     "description": "A vine appears from thin air, flicking from your hand and lashing itself to the target. Attempt a spell attack roll against the target.\n\n**Critical Success** The target gains the immobilized condition and takes a –10-foot circumstance penalty to its Speeds for 1 round. It can attempt to [Escape](link_action_19632) against your spell DC to remove the penalty and the immobilized condition.\n\n**Success** The target takes a –10-foot circumstance penalty to its Speeds for 1 round. It can attempt to [Escape](link_action_19632) against your spell DC to remove the penalty.\n\n**Failure** The target is unaffected.",
+     "meta_data": {
+      "damage": [],
+      "source": {
+       "url": "https://2e.aonprd.com/Spells.aspx?ID=1713",
+       "book": "Player Core",
+       "page": "362"
+      },
+      "foundry": {
+       "rules": [],
+       "is_focus": false
+      }
+     },
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 2301507645464676,
+     "heightened": {
+      "text": [
+       {
+        "amount": "(2nd)",
+        "text": "The effects last for 2 rounds."
+       },
+       {
+        "amount": "(4th)",
+        "text": "The effects last for 1 minute."
+       }
+      ],
+      "data": {}
+     },
+     "availability": null,
+     "updated_at": "2026-08-27T16:53:39.643494+00:00",
+     "casting_source": "SUMMONER"
+    },
+    {
+     "id": 4592,
+     "created_at": "2024-03-23T20:30:52.215827+00:00",
+     "name": "Electric Arc",
+     "rank": 0,
+     "traditions": [
+      "arcane",
+      "primal"
+     ],
+     "rarity": "COMMON",
+     "cast": "TWO-ACTIONS",
+     "traits": [
+      1858,
+      1432,
+      1576,
+      1433
+     ],
+     "defense": "basic Reflex",
+     "cost": "",
+     "trigger": null,
+     "requirements": null,
+     "range": "30 feet",
+     "area": null,
+     "targets": "1 or 2 creatures",
+     "duration": "",
+     "description": "An arc of lightning leaps from one target to another. Each target takes 2d4 (⬆️{{ceil(level/2)+1}}d4) electricity damage with a basic Reflex save.",
+     "meta_data": {
+      "damage": [],
+      "source": {
+       "url": "https://2e.aonprd.com/Spells.aspx?ID=1509",
+       "book": "Player Core",
+       "page": "328"
+      },
+      "foundry": {
+       "rules": [],
+       "is_focus": false
+      }
+     },
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 2461892246724637,
+     "heightened": {
+      "text": [
+       {
+        "amount": "(+1)",
+        "text": "The damage increases by 1d4."
+       }
+      ],
+      "data": {
+       "damage": {
+        "0": "1d4"
+       },
+       "interval": 1,
+       "type": "interval"
+      }
+     },
+     "availability": null,
+     "updated_at": "2026-08-27T16:53:39.643494+00:00",
+     "casting_source": "SUMMONER"
+    },
+    {
+     "id": 4562,
+     "created_at": "2024-03-23T20:23:49.968419+00:00",
+     "name": "Detect Magic",
+     "rank": 0,
+     "traditions": [
+      "arcane",
+      "divine",
+      "occult",
+      "primal"
+     ],
+     "rarity": "COMMON",
+     "cast": "TWO-ACTIONS",
+     "traits": [
+      1858,
+      1432,
+      1508,
+      1433
+     ],
+     "defense": null,
+     "cost": "",
+     "trigger": null,
+     "requirements": null,
+     "range": "",
+     "area": "30-foot emanation",
+     "targets": "",
+     "duration": "",
+     "description": "You send out a pulse that registers the presence of magic. You receive no information beyond the presence or absence of magic. You can choose to ignore magic you're fully aware of, such as the magic items and ongoing spells of you and your allies.  \nYou detect [illusion](link_trait_1447) magic only if that magic's effect has a lower rank than the rank of your detect magic spell. However, items that have an illusion aura but aren't deceptive in appearance (such as an [invisibility potion](link_item_7051)) typically are detected normally.",
+     "meta_data": {
+      "damage": [],
+      "source": {
+       "url": "https://2e.aonprd.com/Spells.aspx?ID=1485",
+       "book": "Player Core",
+       "page": "323"
+      },
+      "foundry": {
+       "rules": [],
+       "is_focus": false
+      }
+     },
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 1084194073031827,
+     "heightened": {
+      "text": [
+       {
+        "amount": "(3rd)",
+        "text": "You learn the rank or level of the most powerful magical effect the spell detects, as determined by the GM."
+       },
+       {
+        "amount": "(4th)",
+        "text": "As 3rd rank, but you also pinpoint the source of the highest-rank magic. Like for an imprecise sense, you don't learn the exact location, but can narrow down the source to within a 5-foot cube (or the nearest if larger than that)."
+       }
+      ],
+      "data": {}
+     },
+     "availability": null,
+     "updated_at": "2026-08-27T16:53:39.643494+00:00",
+     "casting_source": "SUMMONER"
+    },
+    {
+     "id": 4699,
+     "created_at": "2024-03-23T20:49:12.96187+00:00",
+     "name": "Light",
+     "rank": 0,
+     "traditions": [
+      "arcane",
+      "divine",
+      "occult",
+      "primal"
+     ],
+     "rarity": "COMMON",
+     "cast": "TWO-ACTIONS",
+     "traits": [
+      1858,
+      1432,
+      1517,
+      1433
+     ],
+     "defense": null,
+     "cost": "",
+     "trigger": null,
+     "requirements": null,
+     "range": "120 feet",
+     "area": null,
+     "targets": "",
+     "duration": "until your next daily preparations",
+     "description": "You create an orb of light that sheds bright light in a 20-foot radius (and dim light for the next 20 feet) in a color you choose. If you create the light in the same space as a willing creature, you can attach the light to the creature, causing it to float near that creature as it moves. You can [Sustain](link_action_19858) the spell to move the light up to 60 feet; you can attach or detach it from a creature as part of this movement.\n\nYou can [Dismiss](link_action_19627) the spell. If you [Cast the Spell](link_action_19611) while you already have four light spells active, you must choose one of the existing spells to end.",
+     "meta_data": {
+      "damage": [],
+      "source": {
+       "url": "https://2e.aonprd.com/Spells.aspx?ID=1585",
+       "book": "Player Core",
+       "page": "340"
+      },
+      "foundry": {
+       "rules": [],
+       "is_focus": false
+      }
+     },
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 2956398977648258,
+     "heightened": {
+      "text": [
+       {
+        "amount": "(4th)",
+        "text": "The orb sheds light in a 60-foot radius (and dim light for the next 60 feet)."
+       }
+      ],
+      "data": {}
+     },
+     "availability": null,
+     "updated_at": "2026-08-27T16:53:39.643494+00:00",
+     "casting_source": "SUMMONER"
+    },
+    {
+     "id": 4649,
+     "created_at": "2024-03-23T20:40:20.502134+00:00",
+     "name": "Guidance",
+     "rank": 0,
+     "traditions": [
+      "divine",
+      "occult",
+      "primal"
+     ],
+     "rarity": "COMMON",
+     "cast": "ONE-ACTION",
+     "traits": [
+      1858,
+      1432
+     ],
+     "defense": null,
+     "cost": "",
+     "trigger": null,
+     "requirements": null,
+     "range": "30 feet",
+     "area": null,
+     "targets": "1 creature",
+     "duration": "until the start of your next turn",
+     "description": "You ask for the guidance of supernatural entities, granting the target a +1 status bonus to one attack roll, Perception check, saving throw, or skill check the target attempts before the duration ends. The target chooses which roll to use the bonus on before rolling. If the target uses the bonus, the spell ends. Either way, the target is then temporarily immune for 1 hour.",
+     "meta_data": {
+      "damage": [],
+      "source": {
+       "url": "https://2e.aonprd.com/Spells.aspx?ID=1549",
+       "book": "Player Core",
+       "page": "334"
+      },
+      "foundry": {
+       "rules": [],
+       "is_focus": false
+      }
+     },
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 8028104725906475,
+     "heightened": {
+      "text": [],
+      "data": {}
+     },
+     "availability": null,
+     "updated_at": "2026-08-27T16:53:39.643494+00:00",
+     "casting_source": "SUMMONER"
+    }
+   ],
+   "normal": [
+    {
+     "id": 4616,
+     "created_at": "2024-03-23T20:34:58.353788+00:00",
+     "name": "Fear",
+     "rank": 1,
+     "traditions": [
+      "arcane",
+      "divine",
+      "occult",
+      "primal"
+     ],
+     "rarity": "COMMON",
+     "cast": "TWO-ACTIONS",
+     "traits": [
+      1432,
+      1486,
+      1487,
+      1433,
+      1448
+     ],
+     "defense": "Will",
+     "cost": "",
+     "trigger": null,
+     "requirements": null,
+     "range": "30 feet",
+     "area": null,
+     "targets": "1 creature",
+     "duration": "varies",
+     "description": "You plant fear in the target; it must attempt a Will save.\n\n**Critical Success** The target is unaffected.\n\n**Success** The target is frightened 1.\n\n**Failure** The target is frightened 2.\n\n**Critical Failure** The target is frightened 3 and fleeing for 1 round.",
+     "meta_data": {
+      "damage": [],
+      "source": {
+       "url": "https://2e.aonprd.com/Spells.aspx?ID=1524",
+       "book": "Player Core",
+       "page": "331"
+      },
+      "foundry": {
+       "rules": [],
+       "is_focus": false
+      }
+     },
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 8944503412485645,
+     "heightened": {
+      "text": [
+       {
+        "amount": "(3rd)",
+        "text": "You can target up to five creatures."
+       }
+      ],
+      "data": {
+       "levels": {
+        "3": {
+         "target": {
+          "value": "5 creatures"
+         }
+        }
+       },
+       "type": "fixed"
+      }
+     },
+     "availability": null,
+     "updated_at": "2026-08-27T16:53:39.643494+00:00",
+     "casting_source": "SUMMONER"
+    }
+   ],
+   "rituals": []
+  },
+  "focus_spells": [
+   {
+    "id": 5312,
+    "created_at": "2024-04-20T06:49:48.547913+00:00",
+    "name": "Boost Eidolon",
+    "rank": 1,
+    "traditions": [],
+    "rarity": "UNCOMMON",
+    "cast": "ONE-ACTION",
+    "traits": [
+     1858,
+     1432,
+     2939
+    ],
+    "defense": null,
+    "cost": "",
+    "trigger": null,
+    "requirements": null,
+    "range": "100 feet",
+    "area": null,
+    "targets": "your eidolon",
+    "duration": "1 round",
+    "description": "You focus deeply on the link between you and your eidolon and boost the power of your eidolon's attacks. Your eidolon gains a +2 status bonus to damage rolls with its [unarmed](link_trait_2398) attacks. If your eidolon's [Strikes](link_action_19856) deal more than one weapon damage die, the status bonus increases to 2 per weapon damage die, to a maximum of +8 with four weapon damage dice.\n\n* * *\n\n**Special** Your eidolon can benefit from either _boost eidolon_ or [reinforce eidolon](link_spell_5431), but not both; if you cast one of these spells during the other’s duration, the newer spell replaces the older one.",
+    "meta_data": {
+     "focus": true,
+     "damage": [],
+     "source": {
+      "url": "https://2e.aonprd.com/Spells.aspx?ID=2913",
+      "book": "Impossible Magic",
+      "page": "185"
+     },
+     "foundry": {
+      "rules": [],
+      "is_focus": false
+     }
+    },
+    "content_source_id": 842,
+    "version": "1.0",
+    "uuid": 4303643586814838,
+    "heightened": {
+     "text": [],
+     "data": {}
+    },
+    "availability": null,
+    "updated_at": "2026-08-27T16:42:03.63976+00:00",
+    "casting_source": "SUMMONER"
+   },
+   {
+    "id": 5351,
+    "created_at": "2024-04-20T06:50:17.339527+00:00",
+    "name": "Evolution Surge",
+    "rank": 1,
+    "traditions": [],
+    "rarity": "UNCOMMON",
+    "cast": "TWO-ACTIONS",
+    "traits": [
+     1432,
+     1856,
+     1433,
+     1456,
+     2939
+    ],
+    "defense": null,
+    "cost": "",
+    "trigger": null,
+    "requirements": null,
+    "range": "100 feet",
+    "area": null,
+    "targets": "your eidolon",
+    "duration": "1 minute",
+    "description": "You flood your eidolon with power, creating a temporary evolution in your eidolon's capabilities. Choose one of the following effects:\n\n*   Your eidolon gains [low-light vision](link_sense_19330) and [darkvision](link_sense_20769).\n    \n*   Your eidolon gains [scent](link_sense_20773) as an imprecise sense up to 30 feet.\n    \n*   Your eidolon can breathe underwater and gains a swim Speed equal to its land Speed or 30 feet, whichever is less. Alternatively, if your eidolon is normally aquatic, it can breathe air and gains a land Speed equal to its swim Speed or 30 feet, whichever is less. Either way, it gains the [amphibious](link_trait_2416) trait.\n    \n*   Your eidolon gains a +20-foot status bonus to its Speed.",
+    "meta_data": {
+     "focus": true,
+     "damage": [],
+     "source": {
+      "url": "https://2e.aonprd.com/Spells.aspx?ID=2915",
+      "book": "Impossible Magic",
+      "page": "185"
+     },
+     "foundry": {
+      "rules": [],
+      "is_focus": false
+     }
+    },
+    "content_source_id": 842,
+    "version": "1.0",
+    "uuid": 8648755821340498,
+    "heightened": {
+     "text": [
+      {
+       "amount": "(3rd)",
+       "text": "Add the following options to the list of effects you can choose:\n\n*   Your eidolon becomes Large, instead of its previous size. This increases your eidolon's reach to 10 feet but doesn't change any other statistics for your eidolon. Because of the special link you share, you can ride your eidolon without getting in each other's way. If another creature tries to ride your eidolon, both you and the riding creature each regain only 2 actions at the start of your turns each round, as normal.\n    \n*   Your eidolon gains a climb Speed equal to its land Speed."
+      },
+      {
+       "amount": "(5th)",
+       "text": "Add the options from the 3rd-rank version and the following options to the list of effects you can choose:\n\n*   Your eidolon becomes Huge, instead of its previous size. This has the same effects as the 3rd-rank option to become Large, except your eidolon's reach increases to 15 feet.\n    \n*   Your eidolon gains a fly Speed equal to its Speed."
+      }
+     ],
+     "data": {}
+    },
+    "availability": null,
+    "updated_at": "2026-08-27T16:42:03.63976+00:00",
+    "casting_source": "SUMMONER"
+   }
+  ],
+  "innate_spells": [
+   {
+    "spell_id": 4831,
+    "tradition": "ARCANE",
+    "rank": 0,
+    "casts_max": 0,
+    "casts_current": 0,
+    "spell": {
+     "id": 4831,
+     "created_at": "2024-03-23T21:16:59.384966+00:00",
+     "name": "Shield",
+     "rank": 0,
+     "traditions": [
+      "arcane",
+      "divine",
+      "occult"
+     ],
+     "rarity": "COMMON",
+     "cast": "ONE-ACTION",
+     "traits": [
+      1858,
+      1432,
+      1560
+     ],
+     "defense": null,
+     "cost": "",
+     "trigger": null,
+     "requirements": null,
+     "range": "",
+     "area": null,
+     "targets": "",
+     "duration": "until the start of your next turn",
+     "description": "You raise a magical shield of force. This counts as using the [Raise a Shield](link_action_19750) action, giving you a +1 circumstance bonus to AC until the start of your next turn, but it doesn't require a hand to use.\n\nWhile the spell is in effect, you can use the [Shield Block](link_feat_20534) reaction with your magic shield. The shield has Hardness 5 (⬆️{{ceil(level/4)\\*5}}). You can use the spell's reaction to reduce damage from any spell or [magical](link_trait_1504) effect, even if it doesn't deal physical damage. After you use [Shield Block](link_feat_20534), the spell ends and you can't cast it again for 10 minutes.",
+     "meta_data": {
+      "damage": [],
+      "source": {
+       "url": "https://2e.aonprd.com/Spells.aspx?ID=1671",
+       "book": "Player Core",
+       "page": "356"
+      },
+      "foundry": {
+       "rules": [],
+       "is_focus": false
+      }
+     },
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 4728691256418017,
+     "heightened": {
+      "text": [
+       {
+        "amount": "(+2)",
+        "text": "The shield's Hardness increases by 5."
+       }
+      ],
+      "data": {}
+     },
+     "availability": null,
+     "updated_at": "2026-08-27T16:53:39.643494+00:00"
+    }
+   }
+  ],
+  "size": "Medium",
+  "speeds": [
+   {
+    "name": "SPEED",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 30,
+     "value": 30
+    }
+   },
+   {
+    "name": "SPEED_FLY",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 5,
+     "value": 0
+    }
+   },
+   {
+    "name": "SPEED_CLIMB",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 5,
+     "value": 0
+    }
+   },
+   {
+    "name": "SPEED_BURROW",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 5,
+     "value": 0
+    }
+   },
+   {
+    "name": "SPEED_SWIM",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 5,
+     "value": 0
+    }
+   }
+  ],
+  "max_hp": 16,
+  "ac": 15,
+  "shield_item": null,
+  "armor_item": null,
+  "resist_weaks": {
+   "resists": [],
+   "weaks": [],
+   "immunes": []
+  },
+  "proficiencies": {
+   "SAVE_FORT": {
+    "total": "+5",
+    "parts": {
+     "level": 1,
+     "profValue": 4,
+     "attributeMod": 0,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SAVE_REFLEX": {
+    "total": "+5",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SAVE_WILL": {
+    "total": "+6",
+    "parts": {
+     "level": 1,
+     "profValue": 4,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_ACROBATICS": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_ARCANA": {
+    "total": "+1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_ATHLETICS": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 0,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_CRAFTING": {
+    "total": "+1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_DECEPTION": {
+    "total": "+6",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 3,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_DIPLOMACY": {
+    "total": "+6",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 3,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_INTIMIDATION": {
+    "total": "+3",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 3,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_MEDICINE": {
+    "total": "+1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_NATURE": {
+    "total": "+4",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_OCCULTISM": {
+    "total": "+4",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_PERFORMANCE": {
+    "total": "+6",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 3,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_RELIGION": {
+    "total": "+1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_SOCIETY": {
+    "total": "+1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_STEALTH": {
+    "total": "+5",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_SURVIVAL": {
+    "total": "+1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_THIEVERY": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_LORE____": {
+    "total": "+1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SPELL_ATTACK": {
+    "total": "+6",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 3,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SPELL_DC": {
+    "total": "+6",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 3,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "LIGHT_ARMOR": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "MEDIUM_ARMOR": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "HEAVY_ARMOR": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "UNARMORED_DEFENSE": {
+    "total": "+3",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "LIGHT_BARDING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "HEAVY_BARDING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SIMPLE_WEAPONS": {
+    "total": "+3",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "MARTIAL_WEAPONS": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ADVANCED_WEAPONS": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "UNARMED_ATTACKS": {
+    "total": "+3",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "PERCEPTION": {
+    "total": "+4",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 1,
+     "hasConditionals": true,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": [
+       {
+        "text": "+2 circumstance bonus when using the Seek action to find hidden or undetected creatures within 30 feet",
+        "source": "Whisper Elf"
+       }
+      ]
+     }
+    }
+   },
+   "CLASS_DC": {
+    "total": "+6",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 3,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_AXE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_BOMB": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_BOW": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_BRAWLING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_CLUB": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_CROSSBOW": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_DART": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_FIREARM": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_FLAIL": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_HAMMER": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_KNIFE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_PICK": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_POLEARM": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_SHIELD": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_SLING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_SPEAR": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_SWORD": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_LASER": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_PROJECTILE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_GUN": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_GUN_SIMPLE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_GUN_MARTIAL": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_GUN_ADVANCED": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_ONE_HANDED_AGILE_FINESSE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_CLOTH": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_CHAIN": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_COMPOSITE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_LEATHER": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_PLATE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_CERAMIC": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_POLYMER": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_SKELETAL": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_WOOD": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "INNATE_SPELL_ATTACK": {
+    "total": "+6",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 3,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "INNATE_SPELL_DC": {
+    "total": "16",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 3,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   }
+  },
+  "attributes": {
+   "ATTRIBUTE_STR": {
+    "value": 0,
+    "partial": false
+   },
+   "ATTRIBUTE_DEX": {
+    "value": 2,
+    "partial": false
+   },
+   "ATTRIBUTE_CON": {
+    "value": 0,
+    "partial": false
+   },
+   "ATTRIBUTE_INT": {
+    "value": 1,
+    "partial": false
+   },
+   "ATTRIBUTE_WIS": {
+    "value": 1,
+    "partial": false
+   },
+   "ATTRIBUTE_CHA": {
+    "value": 3,
+    "partial": false
+   }
+  },
+  "raw_data_dump": {
+   "variables": {
+    "ATTRIBUTE_STR": {
+     "name": "ATTRIBUTE_STR",
+     "type": "attr",
+     "value": {
+      "value": 0,
+      "partial": false
+     }
+    },
+    "ATTRIBUTE_DEX": {
+     "name": "ATTRIBUTE_DEX",
+     "type": "attr",
+     "value": {
+      "value": 2,
+      "partial": false
+     }
+    },
+    "ATTRIBUTE_CON": {
+     "name": "ATTRIBUTE_CON",
+     "type": "attr",
+     "value": {
+      "value": 0,
+      "partial": false
+     }
+    },
+    "ATTRIBUTE_INT": {
+     "name": "ATTRIBUTE_INT",
+     "type": "attr",
+     "value": {
+      "value": 1,
+      "partial": false
+     }
+    },
+    "ATTRIBUTE_WIS": {
+     "name": "ATTRIBUTE_WIS",
+     "type": "attr",
+     "value": {
+      "value": 1,
+      "partial": false
+     }
+    },
+    "ATTRIBUTE_CHA": {
+     "name": "ATTRIBUTE_CHA",
+     "type": "attr",
+     "value": {
+      "value": 3,
+      "partial": false
+     }
+    },
+    "SAVE_FORT": {
+     "name": "SAVE_FORT",
+     "type": "prof",
+     "value": {
+      "value": "E",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_CON"
+     }
+    },
+    "SAVE_REFLEX": {
+     "name": "SAVE_REFLEX",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_DEX"
+     }
+    },
+    "SAVE_WILL": {
+     "name": "SAVE_WILL",
+     "type": "prof",
+     "value": {
+      "value": "E",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_WIS"
+     }
+    },
+    "SKILL_ACROBATICS": {
+     "name": "SKILL_ACROBATICS",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_DEX"
+     }
+    },
+    "SKILL_ARCANA": {
+     "name": "SKILL_ARCANA",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_INT"
+     }
+    },
+    "SKILL_ATHLETICS": {
+     "name": "SKILL_ATHLETICS",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_STR"
+     }
+    },
+    "SKILL_CRAFTING": {
+     "name": "SKILL_CRAFTING",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_INT"
+     }
+    },
+    "SKILL_DECEPTION": {
+     "name": "SKILL_DECEPTION",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_CHA"
+     }
+    },
+    "SKILL_DIPLOMACY": {
+     "name": "SKILL_DIPLOMACY",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_CHA"
+     }
+    },
+    "SKILL_INTIMIDATION": {
+     "name": "SKILL_INTIMIDATION",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_CHA"
+     }
+    },
+    "SKILL_MEDICINE": {
+     "name": "SKILL_MEDICINE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_WIS"
+     }
+    },
+    "SKILL_NATURE": {
+     "name": "SKILL_NATURE",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_WIS"
+     }
+    },
+    "SKILL_OCCULTISM": {
+     "name": "SKILL_OCCULTISM",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_INT"
+     }
+    },
+    "SKILL_PERFORMANCE": {
+     "name": "SKILL_PERFORMANCE",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_CHA"
+     }
+    },
+    "SKILL_RELIGION": {
+     "name": "SKILL_RELIGION",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_WIS"
+     }
+    },
+    "SKILL_SOCIETY": {
+     "name": "SKILL_SOCIETY",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_INT"
+     }
+    },
+    "SKILL_STEALTH": {
+     "name": "SKILL_STEALTH",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_DEX"
+     }
+    },
+    "SKILL_SURVIVAL": {
+     "name": "SKILL_SURVIVAL",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_WIS"
+     }
+    },
+    "SKILL_THIEVERY": {
+     "name": "SKILL_THIEVERY",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_DEX"
+     }
+    },
+    "SKILL_LORE____": {
+     "name": "SKILL_LORE____",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_INT"
+     }
+    },
+    "SPELL_ATTACK": {
+     "name": "SPELL_ATTACK",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0
+     }
+    },
+    "SPELL_DC": {
+     "name": "SPELL_DC",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0
+     }
+    },
+    "CASTING_SOURCES": {
+     "name": "CASTING_SOURCES",
+     "type": "list-str",
+     "value": [
+      "SUMMONER:::SPONTANEOUS-REPERTOIRE:::PRIMAL:::ATTRIBUTE_CHA"
+     ]
+    },
+    "SPELL_SLOTS": {
+     "name": "SPELL_SLOTS",
+     "type": "list-str",
+     "value": [
+      "{\"lvl\":1,\"rank\":0,\"amt\":5,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":2,\"rank\":0,\"amt\":5,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":3,\"rank\":0,\"amt\":5,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":4,\"rank\":0,\"amt\":5,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":5,\"rank\":0,\"amt\":5,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":6,\"rank\":0,\"amt\":5,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":7,\"rank\":0,\"amt\":5,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":8,\"rank\":0,\"amt\":5,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":9,\"rank\":0,\"amt\":5,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":10,\"rank\":0,\"amt\":5,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":11,\"rank\":0,\"amt\":5,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":12,\"rank\":0,\"amt\":5,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":13,\"rank\":0,\"amt\":5,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":14,\"rank\":0,\"amt\":5,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":15,\"rank\":0,\"amt\":5,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":16,\"rank\":0,\"amt\":5,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":17,\"rank\":0,\"amt\":5,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":18,\"rank\":0,\"amt\":5,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":19,\"rank\":0,\"amt\":5,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":20,\"rank\":0,\"amt\":5,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":1,\"rank\":1,\"amt\":1,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":2,\"rank\":1,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":3,\"rank\":1,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":4,\"rank\":1,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":3,\"rank\":2,\"amt\":1,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":4,\"rank\":2,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":5,\"rank\":2,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":6,\"rank\":2,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":5,\"rank\":3,\"amt\":1,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":6,\"rank\":3,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":7,\"rank\":3,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":8,\"rank\":3,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":7,\"rank\":4,\"amt\":1,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":8,\"rank\":4,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":9,\"rank\":4,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":10,\"rank\":4,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":9,\"rank\":5,\"amt\":1,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":10,\"rank\":5,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":11,\"rank\":5,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":12,\"rank\":5,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":11,\"rank\":6,\"amt\":1,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":12,\"rank\":6,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":13,\"rank\":6,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":14,\"rank\":6,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":13,\"rank\":7,\"amt\":1,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":14,\"rank\":7,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":15,\"rank\":7,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":16,\"rank\":7,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":15,\"rank\":8,\"amt\":1,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":16,\"rank\":8,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":17,\"rank\":8,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":18,\"rank\":8,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":18,\"rank\":9,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":17,\"rank\":9,\"amt\":1,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":19,\"rank\":9,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":20,\"rank\":9,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":19,\"rank\":8,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":20,\"rank\":8,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":5,\"rank\":1,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":6,\"rank\":1,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":7,\"rank\":1,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":8,\"rank\":1,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":9,\"rank\":1,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":10,\"rank\":1,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":11,\"rank\":1,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":12,\"rank\":1,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":13,\"rank\":1,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":14,\"rank\":1,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":15,\"rank\":1,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":16,\"rank\":1,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":17,\"rank\":1,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":18,\"rank\":1,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":19,\"rank\":1,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":20,\"rank\":1,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":7,\"rank\":2,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":8,\"rank\":2,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":9,\"rank\":2,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":10,\"rank\":2,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":11,\"rank\":2,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":12,\"rank\":2,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":13,\"rank\":2,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":14,\"rank\":2,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":15,\"rank\":2,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":16,\"rank\":2,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":17,\"rank\":2,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":18,\"rank\":2,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":19,\"rank\":2,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":20,\"rank\":2,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":17,\"rank\":7,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":18,\"rank\":7,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":19,\"rank\":7,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":20,\"rank\":7,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":15,\"rank\":6,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":16,\"rank\":6,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":17,\"rank\":6,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":18,\"rank\":6,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":19,\"rank\":6,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":20,\"rank\":6,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":9,\"rank\":3,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":10,\"rank\":3,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":11,\"rank\":3,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":12,\"rank\":3,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":11,\"rank\":4,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":12,\"rank\":4,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":13,\"rank\":4,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":14,\"rank\":4,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":15,\"rank\":4,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":16,\"rank\":4,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":17,\"rank\":4,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":18,\"rank\":4,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":19,\"rank\":4,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":13,\"rank\":3,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":14,\"rank\":3,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":15,\"rank\":3,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":16,\"rank\":3,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":17,\"rank\":3,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":18,\"rank\":3,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":19,\"rank\":3,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":20,\"rank\":3,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":20,\"rank\":4,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":13,\"rank\":5,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":14,\"rank\":5,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":15,\"rank\":5,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":16,\"rank\":5,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":17,\"rank\":5,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":18,\"rank\":5,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":19,\"rank\":5,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}",
+      "{\"lvl\":20,\"rank\":5,\"amt\":2,\"source\":\"SUMMONER\",\"opId\":\"ad991aed-cad2-4666-bc9d-17de2a4ed440\"}"
+     ]
+    },
+    "SPELL_DATA": {
+     "name": "SPELL_DATA",
+     "type": "list-str",
+     "value": [
+      "{\"spellId\":4831,\"type\":\"INNATE\",\"rank\":0,\"tradition\":\"ARCANE\",\"casts\":0}",
+      "{\"spellId\":5312,\"type\":\"FOCUS\",\"castingSource\":\"SUMMONER\",\"rank\":1}",
+      "{\"spellId\":5351,\"type\":\"FOCUS\",\"castingSource\":\"SUMMONER\",\"rank\":1}"
+     ]
+    },
+    "FOCUS_POINT_BONUS": {
+     "name": "FOCUS_POINT_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "LIGHT_ARMOR": {
+     "name": "LIGHT_ARMOR",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "MEDIUM_ARMOR": {
+     "name": "MEDIUM_ARMOR",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "HEAVY_ARMOR": {
+     "name": "HEAVY_ARMOR",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "UNARMORED_DEFENSE": {
+     "name": "UNARMORED_DEFENSE",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0
+     }
+    },
+    "LIGHT_BARDING": {
+     "name": "LIGHT_BARDING",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "HEAVY_BARDING": {
+     "name": "HEAVY_BARDING",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "SIMPLE_WEAPONS": {
+     "name": "SIMPLE_WEAPONS",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0
+     }
+    },
+    "MARTIAL_WEAPONS": {
+     "name": "MARTIAL_WEAPONS",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ADVANCED_WEAPONS": {
+     "name": "ADVANCED_WEAPONS",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "UNARMED_ATTACKS": {
+     "name": "UNARMED_ATTACKS",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0
+     }
+    },
+    "PERCEPTION": {
+     "name": "PERCEPTION",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_WIS"
+     }
+    },
+    "CLASS_DC": {
+     "name": "CLASS_DC",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_CHA"
+     }
+    },
+    "LEVEL": {
+     "name": "LEVEL",
+     "type": "num",
+     "value": 1
+    },
+    "SIZE": {
+     "name": "SIZE",
+     "type": "str",
+     "value": "medium"
+    },
+    "CORE_LANGUAGES": {
+     "name": "CORE_LANGUAGES",
+     "type": "list-str",
+     "value": [
+      "Draconic",
+      "Empyrean",
+      "Fey",
+      "Gnomish",
+      "Goblin",
+      "Kholo",
+      "Orcish"
+     ]
+    },
+    "PROF_WITHOUT_LEVEL": {
+     "name": "PROF_WITHOUT_LEVEL",
+     "type": "bool",
+     "value": false
+    },
+    "STAMINA_VARIANT": {
+     "name": "STAMINA_VARIANT",
+     "type": "bool",
+     "value": false
+    },
+    "MAX_HEALTH_ANCESTRY": {
+     "name": "MAX_HEALTH_ANCESTRY",
+     "type": "num",
+     "value": 6
+    },
+    "MAX_HEALTH_CLASS_PER_LEVEL": {
+     "name": "MAX_HEALTH_CLASS_PER_LEVEL",
+     "type": "num",
+     "value": 10
+    },
+    "MAX_HEALTH_BONUS": {
+     "name": "MAX_HEALTH_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "AC_BONUS": {
+     "name": "AC_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "SPEED": {
+     "name": "SPEED",
+     "type": "num",
+     "value": 30
+    },
+    "SPEED_FLY": {
+     "name": "SPEED_FLY",
+     "type": "num",
+     "value": 0
+    },
+    "SPEED_CLIMB": {
+     "name": "SPEED_CLIMB",
+     "type": "num",
+     "value": 0
+    },
+    "SPEED_BURROW": {
+     "name": "SPEED_BURROW",
+     "type": "num",
+     "value": 0
+    },
+    "SPEED_SWIM": {
+     "name": "SPEED_SWIM",
+     "type": "num",
+     "value": 0
+    },
+    "SENSES_PRECISE": {
+     "name": "SENSES_PRECISE",
+     "type": "list-str",
+     "value": [
+      "NORMAL_VISION",
+      "low-light vision"
+     ]
+    },
+    "SENSES_IMPRECISE": {
+     "name": "SENSES_IMPRECISE",
+     "type": "list-str",
+     "value": [
+      "HEARING"
+     ]
+    },
+    "SENSES_VAGUE": {
+     "name": "SENSES_VAGUE",
+     "type": "list-str",
+     "value": [
+      "SMELL"
+     ]
+    },
+    "RESISTANCES": {
+     "name": "RESISTANCES",
+     "type": "list-str",
+     "value": []
+    },
+    "WEAKNESSES": {
+     "name": "WEAKNESSES",
+     "type": "list-str",
+     "value": []
+    },
+    "IMMUNITIES": {
+     "name": "IMMUNITIES",
+     "type": "list-str",
+     "value": []
+    },
+    "SENSE_NAMES": {
+     "name": "SENSE_NAMES",
+     "type": "list-str",
+     "value": [
+      "LOW-LIGHT VISION"
+     ]
+    },
+    "MODE_NAMES": {
+     "name": "MODE_NAMES",
+     "type": "list-str",
+     "value": []
+    },
+    "CLASS_NAMES": {
+     "name": "CLASS_NAMES",
+     "type": "list-str",
+     "value": [
+      "SUMMONER"
+     ]
+    },
+    "ANCESTRY_NAMES": {
+     "name": "ANCESTRY_NAMES",
+     "type": "list-str",
+     "value": [
+      "ELF"
+     ]
+    },
+    "BACKGROUND_NAMES": {
+     "name": "BACKGROUND_NAMES",
+     "type": "list-str",
+     "value": []
+    },
+    "HERITAGE_NAMES": {
+     "name": "HERITAGE_NAMES",
+     "type": "list-str",
+     "value": [
+      "WHISPER ELF"
+     ]
+    },
+    "CLASS_ARCHETYPE_NAMES": {
+     "name": "CLASS_ARCHETYPE_NAMES",
+     "type": "list-str",
+     "value": []
+    },
+    "FEAT_NAMES": {
+     "name": "FEAT_NAMES",
+     "type": "list-str",
+     "value": [
+      "OTHERWORLDLY MAGIC",
+      "MANIFEST EIDOLON",
+      "ACT TOGETHER",
+      "SHARE SENSES",
+      "FEY EIDOLON",
+      "EXPANDED SENSES"
+     ]
+    },
+    "SPELL_NAMES": {
+     "name": "SPELL_NAMES",
+     "type": "list-str",
+     "value": [
+      "SHIELD",
+      "BOOST EIDOLON",
+      "EVOLUTION SURGE"
+     ]
+    },
+    "LANGUAGE_NAMES": {
+     "name": "LANGUAGE_NAMES",
+     "type": "list-str",
+     "value": [
+      "COMMON",
+      "ELVEN",
+      "FEY"
+     ]
+    },
+    "TRAIT_NAMES": {
+     "name": "TRAIT_NAMES",
+     "type": "list-str",
+     "value": [
+      "SUMMONER",
+      "HUMANOID",
+      "ELF"
+     ]
+    },
+    "CLASS_FEATURE_NAMES": {
+     "name": "CLASS_FEATURE_NAMES",
+     "type": "list-str",
+     "value": [
+      "ATTRIBUTE BOOSTS",
+      "EIDOLON",
+      "EVOLUTION FEAT",
+      "LINK SPELLS",
+      "SPELL REPERTOIRE",
+      "SUMMONER SPELLCASTING"
+     ]
+    },
+    "PHYSICAL_FEATURE_NAMES": {
+     "name": "PHYSICAL_FEATURE_NAMES",
+     "type": "list-str",
+     "value": []
+    },
+    "EXTRA_ITEM_NAMES": {
+     "name": "EXTRA_ITEM_NAMES",
+     "type": "list-str",
+     "value": [
+      "FIST"
+     ]
+    },
+    "SENSE_IDS": {
+     "name": "SENSE_IDS",
+     "type": "list-str",
+     "value": [
+      "19330"
+     ]
+    },
+    "MODE_IDS": {
+     "name": "MODE_IDS",
+     "type": "list-str",
+     "value": []
+    },
+    "CLASS_IDS": {
+     "name": "CLASS_IDS",
+     "type": "list-str",
+     "value": [
+      "74"
+     ]
+    },
+    "ANCESTRY_IDS": {
+     "name": "ANCESTRY_IDS",
+     "type": "list-str",
+     "value": [
+      "3"
+     ]
+    },
+    "BACKGROUND_IDS": {
+     "name": "BACKGROUND_IDS",
+     "type": "list-str",
+     "value": []
+    },
+    "HERITAGE_IDS": {
+     "name": "HERITAGE_IDS",
+     "type": "list-str",
+     "value": [
+      "20761"
+     ]
+    },
+    "CLASS_ARCHETYPE_IDS": {
+     "name": "CLASS_ARCHETYPE_IDS",
+     "type": "list-str",
+     "value": []
+    },
+    "FEAT_IDS": {
+     "name": "FEAT_IDS",
+     "type": "list-str",
+     "value": [
+      "20388",
+      "30027",
+      "30028",
+      "30029",
+      "34417",
+      "22514"
+     ]
+    },
+    "SPELL_IDS": {
+     "name": "SPELL_IDS",
+     "type": "list-str",
+     "value": [
+      "4831",
+      "5312",
+      "5351"
+     ]
+    },
+    "LANGUAGE_IDS": {
+     "name": "LANGUAGE_IDS",
+     "type": "list-str",
+     "value": [
+      "81",
+      "84",
+      "90"
+     ]
+    },
+    "CLASS_FEATURE_IDS": {
+     "name": "CLASS_FEATURE_IDS",
+     "type": "list-str",
+     "value": [
+      "25267",
+      "30220",
+      "30842",
+      "30841",
+      "30840",
+      "30839"
+     ]
+    },
+    "PHYSICAL_FEATURE_IDS": {
+     "name": "PHYSICAL_FEATURE_IDS",
+     "type": "list-str",
+     "value": []
+    },
+    "EXTRA_ITEM_IDS": {
+     "name": "EXTRA_ITEM_IDS",
+     "type": "list-str",
+     "value": []
+    },
+    "BULK_LIMIT_BONUS": {
+     "name": "BULK_LIMIT_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "INVEST_LIMIT_BONUS": {
+     "name": "INVEST_LIMIT_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "IMPLANT_LIMIT_BONUS": {
+     "name": "IMPLANT_LIMIT_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "INJECT_SELECT_OPTIONS": {
+     "name": "INJECT_SELECT_OPTIONS",
+     "type": "list-str",
+     "value": []
+    },
+    "INJECT_TEXT": {
+     "name": "INJECT_TEXT",
+     "type": "list-str",
+     "value": []
+    },
+    "BLACKLIST_ABILITY_BLOCKS": {
+     "name": "BLACKLIST_ABILITY_BLOCKS",
+     "type": "list-str",
+     "value": [
+      "magical understudy",
+      "magical adept"
+     ]
+    },
+    "BLACKLIST_TRAITS": {
+     "name": "BLACKLIST_TRAITS",
+     "type": "list-str",
+     "value": []
+    },
+    "BLACKLIST_SPELLS": {
+     "name": "BLACKLIST_SPELLS",
+     "type": "list-str",
+     "value": []
+    },
+    "BLACKLIST_ITEMS": {
+     "name": "BLACKLIST_ITEMS",
+     "type": "list-str",
+     "value": []
+    },
+    "WEAPON_SPECIALIZATION": {
+     "name": "WEAPON_SPECIALIZATION",
+     "type": "bool",
+     "value": false
+    },
+    "WEAPON_SPECIALIZATION_GREATER": {
+     "name": "WEAPON_SPECIALIZATION_GREATER",
+     "type": "bool",
+     "value": false
+    },
+    "ARMOR_SPECIALIZATION_LIGHT": {
+     "name": "ARMOR_SPECIALIZATION_LIGHT",
+     "type": "bool",
+     "value": false
+    },
+    "ARMOR_SPECIALIZATION_MEDIUM": {
+     "name": "ARMOR_SPECIALIZATION_MEDIUM",
+     "type": "bool",
+     "value": false
+    },
+    "ARMOR_SPECIALIZATION_HEAVY": {
+     "name": "ARMOR_SPECIALIZATION_HEAVY",
+     "type": "bool",
+     "value": false
+    },
+    "WEAPON_CRITICAL_SPECIALIZATIONS": {
+     "name": "WEAPON_CRITICAL_SPECIALIZATIONS",
+     "type": "list-str",
+     "value": []
+    },
+    "WEAPON_FAMILIARITY": {
+     "name": "WEAPON_FAMILIARITY",
+     "type": "list-str",
+     "value": []
+    },
+    "MARTIAL_EXPERIENCE": {
+     "name": "MARTIAL_EXPERIENCE",
+     "type": "bool",
+     "value": false
+    },
+    "UNBURDENED_IRON": {
+     "name": "UNBURDENED_IRON",
+     "type": "bool",
+     "value": false
+    },
+    "UNTRAINED_IMPROVISATION": {
+     "name": "UNTRAINED_IMPROVISATION",
+     "type": "str",
+     "value": ""
+    },
+    "IMPROVED_MULTILINGUAL": {
+     "name": "IMPROVED_MULTILINGUAL",
+     "type": "bool",
+     "value": false
+    },
+    "USE_DEX_FOR_MELEE_FINESSE": {
+     "name": "USE_DEX_FOR_MELEE_FINESSE",
+     "type": "bool",
+     "value": false
+    },
+    "ADD_CON_TO_BULK_LIMIT": {
+     "name": "ADD_CON_TO_BULK_LIMIT",
+     "type": "bool",
+     "value": false
+    },
+    "USE_CON_FOR_ARMOR_STR_REQ": {
+     "name": "USE_CON_FOR_ARMOR_STR_REQ",
+     "type": "bool",
+     "value": false
+    },
+    "MINIMUM_WEAPON_DAMAGE_DICE": {
+     "name": "MINIMUM_WEAPON_DAMAGE_DICE",
+     "type": "num",
+     "value": 1
+    },
+    "ATTACK_ROLLS_BONUS": {
+     "name": "ATTACK_ROLLS_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "ATTACK_DAMAGE_BONUS": {
+     "name": "ATTACK_DAMAGE_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "DEX_ATTACK_ROLLS_BONUS": {
+     "name": "DEX_ATTACK_ROLLS_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "DEX_ATTACK_DAMAGE_BONUS": {
+     "name": "DEX_ATTACK_DAMAGE_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "STR_ATTACK_ROLLS_BONUS": {
+     "name": "STR_ATTACK_ROLLS_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "STR_ATTACK_DAMAGE_BONUS": {
+     "name": "STR_ATTACK_DAMAGE_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "RANGED_ATTACK_ROLLS_BONUS": {
+     "name": "RANGED_ATTACK_ROLLS_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "RANGED_ATTACK_DAMAGE_BONUS": {
+     "name": "RANGED_ATTACK_DAMAGE_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "MELEE_ATTACK_ROLLS_BONUS": {
+     "name": "MELEE_ATTACK_ROLLS_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "MELEE_ATTACK_DAMAGE_BONUS": {
+     "name": "MELEE_ATTACK_DAMAGE_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "NON_SPELL_ATTACK_ROLLS_BONUS": {
+     "name": "NON_SPELL_ATTACK_ROLLS_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "NON_SPELL_ATTACK_DAMAGE_BONUS": {
+     "name": "NON_SPELL_ATTACK_DAMAGE_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "WEAPON_GROUP_AXE": {
+     "name": "WEAPON_GROUP_AXE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_BOMB": {
+     "name": "WEAPON_GROUP_BOMB",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_BOW": {
+     "name": "WEAPON_GROUP_BOW",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_BRAWLING": {
+     "name": "WEAPON_GROUP_BRAWLING",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_CLUB": {
+     "name": "WEAPON_GROUP_CLUB",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_CROSSBOW": {
+     "name": "WEAPON_GROUP_CROSSBOW",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_DART": {
+     "name": "WEAPON_GROUP_DART",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_FIREARM": {
+     "name": "WEAPON_GROUP_FIREARM",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_FLAIL": {
+     "name": "WEAPON_GROUP_FLAIL",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_HAMMER": {
+     "name": "WEAPON_GROUP_HAMMER",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_KNIFE": {
+     "name": "WEAPON_GROUP_KNIFE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_PICK": {
+     "name": "WEAPON_GROUP_PICK",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_POLEARM": {
+     "name": "WEAPON_GROUP_POLEARM",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_SHIELD": {
+     "name": "WEAPON_GROUP_SHIELD",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_SLING": {
+     "name": "WEAPON_GROUP_SLING",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_SPEAR": {
+     "name": "WEAPON_GROUP_SPEAR",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_SWORD": {
+     "name": "WEAPON_GROUP_SWORD",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_LASER": {
+     "name": "WEAPON_GROUP_LASER",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_PROJECTILE": {
+     "name": "WEAPON_GROUP_PROJECTILE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_DIVISION_GUN": {
+     "name": "WEAPON_DIVISION_GUN",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_DIVISION_GUN_SIMPLE": {
+     "name": "WEAPON_DIVISION_GUN_SIMPLE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_DIVISION_GUN_MARTIAL": {
+     "name": "WEAPON_DIVISION_GUN_MARTIAL",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_DIVISION_GUN_ADVANCED": {
+     "name": "WEAPON_DIVISION_GUN_ADVANCED",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_DIVISION_ONE_HANDED_AGILE_FINESSE": {
+     "name": "WEAPON_DIVISION_ONE_HANDED_AGILE_FINESSE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_CLOTH": {
+     "name": "ARMOR_GROUP_CLOTH",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_CHAIN": {
+     "name": "ARMOR_GROUP_CHAIN",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_COMPOSITE": {
+     "name": "ARMOR_GROUP_COMPOSITE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_LEATHER": {
+     "name": "ARMOR_GROUP_LEATHER",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_PLATE": {
+     "name": "ARMOR_GROUP_PLATE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_CERAMIC": {
+     "name": "ARMOR_GROUP_CERAMIC",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_POLYMER": {
+     "name": "ARMOR_GROUP_POLYMER",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_SKELETAL": {
+     "name": "ARMOR_GROUP_SKELETAL",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_WOOD": {
+     "name": "ARMOR_GROUP_WOOD",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "PAGE_CONTEXT": {
+     "name": "PAGE_CONTEXT",
+     "type": "str",
+     "value": "CHARACTER-BUILDER"
+    },
+    "PATHFINDER": {
+     "name": "PATHFINDER",
+     "type": "bool",
+     "value": true
+    },
+    "STARFINDER": {
+     "name": "STARFINDER",
+     "type": "bool",
+     "value": false
+    },
+    "ORGANIZED_PLAY": {
+     "name": "ORGANIZED_PLAY",
+     "type": "bool",
+     "value": false
+    },
+    "ACTIVE_MODES": {
+     "name": "ACTIVE_MODES",
+     "type": "list-str",
+     "value": []
+    },
+    "PRIMARY_SHEET_TABS": {
+     "name": "PRIMARY_SHEET_TABS",
+     "type": "list-str",
+     "value": [
+      "skills-actions",
+      "inventory",
+      "feats-features",
+      "details",
+      "notes",
+      "companions",
+      "spells"
+     ]
+    },
+    "TRAIT_CLASS_SUMMONER_IDS": {
+     "name": "TRAIT_CLASS_SUMMONER_IDS",
+     "type": "num",
+     "value": 2939
+    },
+    "TRAIT_ANCESTRY_HUMANOID_IDS": {
+     "name": "TRAIT_ANCESTRY_HUMANOID_IDS",
+     "type": "num",
+     "value": 2399
+    },
+    "TRAIT_ANCESTRY_ELF_IDS": {
+     "name": "TRAIT_ANCESTRY_ELF_IDS",
+     "type": "num",
+     "value": 1348
+    },
+    "HAS_EIDOLON_COMPANION": {
+     "name": "HAS_EIDOLON_COMPANION",
+     "type": "bool",
+     "value": false
+    },
+    "EIDOLON_WEAPON_POTENCY": {
+     "name": "EIDOLON_WEAPON_POTENCY",
+     "type": "num",
+     "value": 0
+    },
+    "EIDOLON_WEAPON_STRIKING": {
+     "name": "EIDOLON_WEAPON_STRIKING",
+     "type": "num",
+     "value": 0
+    }
+   }
+  }
+ }
+}
