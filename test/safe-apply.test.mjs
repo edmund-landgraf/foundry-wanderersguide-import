@@ -17,7 +17,7 @@ test("managedTree: module items plus everything granted from them, nothing else"
   ];
   assert.deepEqual([...managedTree(items)].sort(), ["cls", "feat", "loc", "sub", "viaParent"]);
 });
-import { explicitGrants, sameThing } from "../scripts/importer.js";
+import { explicitGrants, sameThing, duplicateItemDiagnostics } from "../scripts/importer.js";
 test("dedupe: only explicit grants from this run's items, same compendium source", () => {
   const it = (id, type, name, src, extra = {}) => ({ id, type, name, _stats: { compendiumSource: src }, flags: extra.flags ?? {}, system: extra.system ?? {} });
   const items = [
@@ -40,9 +40,7 @@ test("dedupe: only explicit grants from this run's items, same compendium source
   assert.equal(hit(e("Fleet", "C:feats.fleet")), null, "an ungranted item never dedupes");
   assert.equal(hit(e("Shield", null)), null, "no prefix matching");
 });
-import { auditImportCoverage, leftoverValues, CLASS_SUPPORT_NOTE } from "../scripts/coverage.js";
-import { buildPlan, sluggify } from "../scripts/mapping.js";
-import { readFileSync as rf } from "node:fs";
+
 test("duplicate diagnostics distinguish a PF2e grant pair from an unexplained duplicate", () => {
   const pair = [
     { id: "feature", type: "feat", name: "Shield Block", system: {}, flags: {} },
@@ -55,7 +53,9 @@ test("duplicate diagnostics distinguish a PF2e grant pair from an unexplained du
   assert.equal(duplicateItemDiagnostics(pair)[0].expectedGrantPair, true);
   assert.equal(duplicateItemDiagnostics(unexplained)[0].expectedGrantPair, false);
 });
-
+import { auditImportCoverage, leftoverValues, CLASS_SUPPORT_NOTE } from "../scripts/coverage.js";
+import { buildPlan, sluggify } from "../scripts/mapping.js";
+import { readFileSync as rf } from "node:fs";
 test("coverage ledger: every source path once, built from plan actions, classes experimental", () => {
   const exp = JSON.parse(rf(new URL("./fixtures/pcs/64.json", import.meta.url)));
   const plan = buildPlan(exp);

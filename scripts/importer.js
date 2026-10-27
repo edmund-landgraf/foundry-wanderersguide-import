@@ -355,7 +355,7 @@ export function explicitGrants(items, old) {
 export function duplicateItemDiagnostics(items) {
   const groups = new Map();
   for (const item of items ?? []) {
-    const key = String(item.type ?? "") + ":" + (item.system?.slug ?? sluggify(item.name));
+    const key = `${item.type ?? ""}:${item.system?.slug ?? sluggify(item.name)}`;
     const group = groups.get(key) ?? groups.set(key, []).get(key);
     group.push(item);
   }
@@ -365,7 +365,11 @@ export function duplicateItemDiagnostics(items) {
       const parentId = i.flags?.pf2e?.grantedBy?.id ?? i.system?.location;
       return typeof parentId === "string" && ids.has(parentId);
     });
-    return { key, items: group.map((i) => ({ id: i.id, name: i.name, type: i.type, source: i._stats?.compendiumSource ?? i.flags?.core?.sourceId ?? null, grantedBy: i.flags?.pf2e?.grantedBy?.id ?? null })), expectedGrantPair: grantPairs.length > 0 };
+    return {
+      key,
+      items: group.map((i) => ({ id: i.id, name: i.name, type: i.type, source: i._stats?.compendiumSource ?? i.flags?.core?.sourceId ?? null, grantedBy: i.flags?.pf2e?.grantedBy?.id ?? null })),
+      expectedGrantPair: grantPairs.length > 0,
+    };
   });
 }
 
@@ -553,7 +557,13 @@ async function applyImport(p, { onStep, parity, failAfter }) {
       step(`created ${kind}`);
     }
     // Leftovers (coverage status leftover-preserved) are kept verbatim on the actor.
-    // Prefer Document flag APIs; Foundry v16 removes the -= embedded-key update form.\n    const leftovers = leftoverValues(exp, p.coverage);\n    if (typeof actor.unsetFlag === \"function\") await actor.unsetFlag(MODULE_ID, \"wgLeftovers\");\n    else await actor.update({ [`flags.${MODULE_ID}.-=wgLeftovers`]: null });\n    if (typeof actor.setFlag === \"function\") await actor.setFlag(MODULE_ID, \"wgLeftovers\", leftovers);\n    else await actor.update({ [`flags.${MODULE_ID}.wgLeftovers`]: leftovers });
+    // Use Document flag APIs when available. The -= embedded-key update form
+    // is deprecated in newer Foundry versions and will be removed in v16.
+    const leftovers = leftoverValues(exp, p.coverage);
+    if (typeof actor.unsetFlag === "function") await actor.unsetFlag(MODULE_ID, "wgLeftovers");
+    else await actor.update({ [`flags.${MODULE_ID}.-=wgLeftovers`]: null });
+    if (typeof actor.setFlag === "function") await actor.setFlag(MODULE_ID, "wgLeftovers", leftovers);
+    else await actor.update({ [`flags.${MODULE_ID}.wgLeftovers`]: leftovers });
     // Replacements exist: now remove the previous module-managed items.
     const stale = [...old].filter((id) => actor.items.has(id));
     if (stale.length) await actor.deleteEmbeddedDocuments("Item", stale);
@@ -647,7 +657,9 @@ export async function importCharacter(exp, { host, onStep = () => {}, parity = f
   const { actor, parity: parityResult } = await applyImport(p, { onStep: step, parity, failAfter });
   const { plan, matched, misses, notes } = p;
   const duplicateDiagnostics = duplicateItemDiagnostics(actor.items);
-  const duplicateHtml = duplicateDiagnostics.length ? "<p>Duplicate-name diagnostics:</p><ul>" + duplicateDiagnostics.map((d) => "<li>" + esc(d.key) + ": " + (d.expectedGrantPair ? "expected PF2e grant relationship" : "unexpected duplicate; review provenance") + "</li>").join("") + "</ul>" : "";
+  const duplicateHtml = duplicateDiagnostics.length
+    ? `<p>Duplicate-name diagnostics:</p><ul>${duplicateDiagnostics.map((d) => `<li>${esc(d.key)}: ${d.expectedGrantPair ? "expected PF2e grant relationship" : "unexpected duplicate; review provenance"}</li>`).join("")}</ul>`
+    : "";
   await ChatMessage.create({
     whisper: [game.user.id],
     content: `<h3>WG import: ${esc(plan.name)}</h3><p>${matched.length - misses.length} matched, ${misses.length} created as homebrew or missed.</p>${misses.length ? `<ul>${misses.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${notes.length ? `<p>Choices:</p><ul>${notes.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${p.ctx.unresolved.length ? `<p>Unresolved choices:</p><ul>${p.ctx.unresolved.map((u) => `<li>${esc(u.owner)}${u.flag ? ` [${esc(u.flag)}]` : ""}: ${esc(u.reason)}</li>`).join("")}</ul>` : ""}${duplicateHtml}${parityResult ? parityHtml(plan.name, parityResult) : ""}${coverageHtml(p.coverage)}`,
