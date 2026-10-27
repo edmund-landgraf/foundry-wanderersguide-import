@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { managedTree } from "../scripts/importer.js";
+import { managedTree, coverageHtml } from "../scripts/importer.js";
 
 const M = "foundry-wanderersguide-import";
 const item = (id, extra = {}) => ({ id, flags: extra.flags ?? {}, system: extra.system ?? {} });
@@ -62,4 +62,19 @@ test("coverage ledger: every source path once, built from plan actions, classes 
   const left = leftoverValues(exp, led);
   assert.ok(Object.keys(left).length === led.counts["leftover-preserved"]);
   assert.equal(left["character.notes"], exp.character.notes);
+});
+
+test("coverage HTML keeps ledger paths and reasons visible", () => {
+  const html = coverageHtml({
+    counts: { mapped: 0, included: 0, unresolved: 1, "leftover-preserved": 1, dropped: 1 },
+    rows: [
+      { path: "content.foo", status: "unresolved", reason: "review manually" },
+      { path: "content.bar", status: "leftover-preserved", reason: "kept in flags.wgLeftovers" },
+      { path: "content.baz", status: "dropped", reason: "derived by PF2e" },
+    ],
+  });
+  assert.match(html, /content\.foo: review manually/);
+  assert.match(html, /content\.bar: kept in flags\.wgLeftovers/);
+  assert.match(html, /content\.baz: derived by PF2e/);
+  assert.doesNotMatch(html, /<code>/);
 });

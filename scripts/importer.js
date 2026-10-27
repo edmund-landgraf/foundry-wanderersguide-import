@@ -431,7 +431,9 @@ function grantedSlugsOf(actor) {
 export function coverageHtml(ledger) {
   const c = ledger.counts;
   const list = (status) => ledger.rows.filter((r) => r.status === status);
-  const ul = (rows) => `<ul>${rows.map((r) => `<li><code>${esc(r.path)}</code>: ${esc(r.reason)}</li>`).join("")}</ul>`;
+  // Keep the path as ordinary text. Foundry's chat/review HTML sanitizer can
+  // drop the contents of inline <code> elements, leaving blank list items.
+  const ul = (rows) => `<ul>${rows.map((r) => `<li>${esc(r.path)}: ${esc(r.reason)}</li>`).join("")}</ul>`;
   return `<h4>Coverage ledger</h4><p>${esc(ledger.classSupport)}</p>`
     + `<p>${c.mapped} mapped, ${c.included} included, ${c.unresolved} unresolved, ${c["leftover-preserved"]} leftover-preserved, ${c.dropped} dropped (${ledger.rows.length} source paths).</p>`
     + (c.unresolved ? `<details class="wgi-cov-unresolved"><summary>Unresolved (${c.unresolved})</summary>${ul(list("unresolved"))}</details>` : "")
