@@ -63,16 +63,17 @@ export function summarizeCharacters(rows) {
     campaignId: c.campaign_id ?? null,
     imageUrl: c.image_url ?? "",
     updatedAt: c.updated_at ?? "",
+    player: c.player ?? null,
   }));
 }
 
-/** Campaigns visible to the key: [{id, name, characterIds}]. */
+/** Campaigns visible to the key: [{id, name, characterIds, owned}]. owned = the key's user is the GM. */
 export async function listCampaigns(opts) {
   const json = await callFunction({ ...opts, fn: "wgui-ext-find-key-campaigns", body: {} });
-  return (json?.data?.campaigns ?? []).map((c) => ({ id: c.id, name: c.name, characterIds: c.character_ids ?? [] }));
+  return (json?.data?.campaigns ?? []).map((c) => ({ id: c.id, name: c.name, characterIds: c.character_ids ?? [], owned: c.owned === true }));
 }
 
-/** One campaign and its characters. */
+/** One campaign and its characters. For the GM this is every PC that joined the campaign (with `player`). */
 export async function getCampaign(opts, campaignId) {
   const json = await callFunction({ ...opts, fn: "wgui-ext-find-key-campaigns", body: { campaign_id: Number(campaignId) } });
   return { campaign: json?.data?.campaign ?? null, characters: summarizeCharacters(json?.data?.characters ?? []) };

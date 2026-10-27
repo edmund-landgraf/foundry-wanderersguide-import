@@ -13,7 +13,7 @@ function charTable(rows, host, { checked = false, tab, names }) {
   const tr = (r) => {
     const ok = r.granted !== false;
     const action = !ok ? "not granted" : inWorld(r.id) ? "Update" : "Insert";
-    return `<tr${ok ? "" : ' style="opacity:.5"'}><td><input type="checkbox" name="wgi" value="${r.id}" ${ok ? "" : "disabled"} ${ok && checked ? "checked" : ""}></td><td>${esc(r.name)}</td><td>${esc(r.level)}</td><td>${esc(r.ancestry)}</td><td>${esc(r.class)}</td><td>${esc(campaignLabel(r.campaignId, names))}</td><td>${r.id}</td><td class="wgi-action">${action}</td></tr>`;
+    return `<tr${ok ? "" : ' style="opacity:.5"'}><td><input type="checkbox" name="wgi" value="${r.id}" ${ok ? "" : "disabled"} ${ok && checked ? "checked" : ""}></td><td>${esc(r.name)}${r.player ? ` <span class="notes">(${esc(r.player)})</span>` : ""}</td><td>${esc(r.level)}</td><td>${esc(r.ancestry)}</td><td>${esc(r.class)}</td><td>${esc(campaignLabel(r.campaignId, names))}</td><td>${r.id}</td><td class="wgi-action">${action}</td></tr>`;
   };
   return `<table class="wgi-table" data-tab="${tab}"><thead><tr><th></th><th>Name</th><th>Lvl</th><th>Ancestry</th><th>Class</th><th>Campaign</th><th>WG id</th><th>Action</th></tr></thead><tbody>${rows.map(tr).join("") || '<tr><td colspan="8">No characters.</td></tr>'}</tbody></table>`;
 }
@@ -29,6 +29,9 @@ async function runImport(ids, host, { dryRun = false, parity = false } = {}) {
       ui.notifications.info(`Imported ${actor.name} (${misses.length} misses).`);
     } catch (e) {
       ui.notifications.error(`Wanderer's Guide ${id}: ${e.message}`);
+      // Toasts vanish; leave a whispered card so a failed import is visible afterwards (and scripted runs can see it).
+      console.error(`${MODULE_ID} | import ${id} failed`, e);
+      await ChatMessage.create({ whisper: [game.user.id], content: `<h3>WG import failed: WG id ${esc(id)}</h3><p>${esc(e.message)}</p>` }).catch(() => {});
     }
   }
 }
@@ -76,7 +79,7 @@ export async function openImportDialog() {
 <section class="wgi-pane" data-wgi-pane="campaign" style="display:none">
   <label>Campaign <select name="wgi-campaign"><option value="">Loading campaigns...</option></select></label>
   <div class="wgi-campaign-chars"></div>
-  <p class="notes">Characters in other players' accounts can only be imported if they granted this API key.</p></section>
+  <p class="notes">If you are the campaign's GM (your WG account owns it), every PC that joined it with the join key is listed. Otherwise only characters granted to this API key appear.</p></section>
 <fieldset class="wgi-options" style="margin-top:.5rem"><legend>Optional</legend>
   <label style="display:block"><input type="checkbox" name="wgi-dryrun"> Preview changes only (dry-run diff, nothing is written)</label>
   <label style="display:block"><input type="checkbox" name="wgi-parity"> Check parity against the export after importing</label></fieldset>`;

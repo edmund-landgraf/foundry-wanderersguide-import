@@ -41,7 +41,7 @@ test("matchEntries slug -> name -> miss", () => {
 
 test("summarizeCharacters reads wgui-ext rows", () => {
   const s = summarizeCharacters([{ id: 1, name: "A", level: 2, class: "Bard", ancestry: "Gnome", campaign_id: 7, image_url: "u", updated_at: "t" }]);
-  assert.deepEqual(s[0], { id: 1, name: "A", level: 2, ancestry: "Gnome", class: "Bard", campaignId: 7, imageUrl: "u", updatedAt: "t" });
+  assert.deepEqual(s[0], { id: 1, name: "A", level: 2, ancestry: "Gnome", class: "Bard", campaignId: 7, imageUrl: "u", updatedAt: "t", player: null });
 });
 test("callFunction retries 429 and never puts key in errors", async () => {
   let n = 0;
@@ -106,7 +106,7 @@ test("campaigns: list names and fetch one", async () => {
   const fetchImpl = async (_u, init) => { const b = JSON.parse(init.body); bodies.push(b);
     return b.campaign_id ? ok({ campaign: { id: 5, name: "Abomination Vaults" }, characters: [{ id: 9, name: "Z", level: 3 }] }) : ok({ campaigns: [{ id: 5, name: "Abomination Vaults", character_ids: [9] }] }); };
   const list = await listCampaigns({ baseUrl: "http://h", apiKey: KEY, fetchImpl });
-  assert.deepEqual(list, [{ id: 5, name: "Abomination Vaults", characterIds: [9] }]);
+  assert.deepEqual(list, [{ id: 5, name: "Abomination Vaults", characterIds: [9], owned: false }]);
   const one = await getCampaign({ baseUrl: "http://h", apiKey: KEY, fetchImpl }, "5");
   assert.equal(one.campaign.name, "Abomination Vaults");
   assert.equal(one.characters[0].id, 9);
