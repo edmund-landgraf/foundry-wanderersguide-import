@@ -56,3 +56,10 @@ Legend: **P0** means class mechanics can be materially wrong while a character l
 Maintain one row per real WG export with: class and level; WG revision; Foundry/PF2e versions; optional module dependencies; source IDs and full selection paths; expected class choices, spell entries/resources, granted items, feat slot/level, companion identity, derived rules; expected unresolved source paths. Prioritize one low-level and one progressed character for each P0 class; add archetype, remaster/legacy and changed-choice variants when the class exercises them. Pathmuncher JSON is useful to design scenarios, but cannot supply WG-specific golden values.
 
 For each fixture, run pure decoder/plan assertions and a Foundry-world test of first import, reload, identical re-import, changed choice, level change and cancellation/failure recovery. Require zero unexplained dropped WG paths, no duplicate managed/granted items, legal persisted PF2e choices and a specific report for every unavailable mechanic. A class stays **experimental** until these pass on the declared Foundry/PF2e versions.
+
+
+## Class rules registry design
+
+This matrix contains 29 class rows. PR #14 adds the design for a normalized, data-driven class rules registry in [CLASS_RULE_REGISTRY.md](CLASS_RULE_REGISTRY.md). The design separates discovery/schema work from the later implementation that will remove runtime hard-codes.
+
+The registry will record class sources, selection rules, grant/dedupe relationships, spellcasting conventions, and evidence/coverage cases. The current hard-coded behavior audit covers `scripts/selections.js`, `scripts/coverage.js`, `scripts/mapping.js`, and `scripts/importer.js`. Generic safety invariants remain executable code; class-specific heuristics become validated data.
