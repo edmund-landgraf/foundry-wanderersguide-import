@@ -415,7 +415,8 @@ export async function planImport(exp, { host }) {
   for (const e of matched) {
     if (e.via === "ambiguous") { e.unresolved = `several compendium items share this name: ${e.candidates.join(", ")}`; ctx.unresolved.push({ owner: `: ${e.name}`, flag: null, reason: e.unresolved }); continue; }
     if (e.unresolved) continue;
-    try { e.data = await itemDataFor(e, null, ctx, notes); }
+    const n0 = notes.length;
+    try { e.data = await itemDataFor(e, null, ctx, notes); e.notes = notes.slice(n0); }
     catch (err) { e.error = err.message; problems.push(`${e.kind}: ${e.name} (${err.message})`); }
   }
   const diff = diffPlan(plan, summarizeActor(actor));
@@ -514,6 +515,8 @@ async function applyImport(p, { onStep, parity, failAfter }) {
         const g = kind === "equipment" ? null : granted.find(({ item }) => sameThing(e, item));
         if (g) {
           e.outcome = "granted"; e.grantedBy = g.parent.name;
+          // The planned pre-fill never reached the actor; drop its note so the report only shows applied choices.
+          for (const n of e.notes ?? []) { const j = notes.indexOf(n); if (j >= 0) notes.splice(j, 1); }
           const k = misses.findIndex((m) => m === `${e.kind}: ${e.name}`); if (k >= 0) misses.splice(k, 1);
           if (kind === "spell" && e.entryId && g.item.system.location?.value !== e.entryId) await g.item.update({ "system.location.value": e.entryId });
           const hints = p.ctx.specific(e.name);
