@@ -3,5 +3,5 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "scripts": { "test": "node --test test/mapping.test.mjs test/golden.test.mjs test/safe-apply.test.mjs", "golden:update": "node test/golden/update.mjs" }
+  "scripts": { "test": "node --test test/mapping.test.mjs test/golden.test.mjs test/safe-apply.test.mjs test/selections.test.mjs", "golden:update": "node test/golden/update.mjs" }
 }

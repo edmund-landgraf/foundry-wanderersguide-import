@@ -94,7 +94,7 @@ function choiceContext(exp, plan, index, actor) {
   }
   const used = new Set();
   const markUsed = (owner) => { for (const k of hints.keys?.get(sluggify(owner)) ?? []) used.add(k); };
-  return { hints, index, uuidName, previous, used, markUsed, unresolved: [], specific: (owner) => hints.get(sluggify(owner)) ?? [] };
+  return { hints, index, uuidName, previous, used, markUsed, conflicts: new Map(), unresolved: [], specific: (owner) => hints.get(sluggify(owner)) ?? [] };
 }
 
 /** Index of the single option matching the hints, or -1 when none or more than one match. */
@@ -523,6 +523,7 @@ async function applyImport(p, { onStep, parity, failAfter }) {
           const sel = [...Object.values(g.item._source.flags?.pf2e?.rulesSelections ?? {}), ...(g.item._source.system?.rules ?? []).filter((r) => r?.key === "ChoiceSet" && r.selection != null).map((r) => r.selection)].map(String);
           if (hints.length && !hints.some((h) => sel.some((v) => sluggify(v) === sluggify(h) || sluggify(g.item.name).includes(sluggify(h))))) {
             p.ctx.unresolved.push({ owner: g.item.name, flag: null, reason: `WG answer ${hints.join(", ")} differs from PF2e's grant via ${g.parent.name}; kept PF2e's grant` });
+            for (const k of p.ctx.hints.keys?.get(sluggify(e.name)) ?? []) p.ctx.conflicts.set(k, `WG answer ${hints.join(", ")} for ${e.name}; PF2e's ${g.parent.name} grant fixes it (${sel.join(", ") || "no selection"}); kept PF2e's rule`);
           }
           continue;
         }
@@ -563,7 +564,7 @@ async function applyImport(p, { onStep, parity, failAfter }) {
     throw err;
   } finally { stopPrompts(); }
   const parityResult = parity ? parityCheck(plan, summarizeActor(actor)) : null;
-  p.coverage = auditImportCoverage(exp, { ...plan, entries: matched }, { applied: true, grantedSlugs: grantedSlugsOf(actor), choiceUsed: p.ctx.used, slug: sluggify });
+  p.coverage = auditImportCoverage(exp, { ...plan, entries: matched }, { applied: true, grantedSlugs: grantedSlugsOf(actor), choiceUsed: p.ctx.used, choiceConflicts: p.ctx.conflicts, slug: sluggify });
   return { actor, parity: parityResult, existing };
 }
 

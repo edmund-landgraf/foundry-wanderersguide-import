@@ -3510,7 +3510,236 @@
     "value": 0,
     "partial": false
    }
+  },
+  "raw_data_dump": {
+   "variables": {
+    "SENSE_NAMES": {
+     "name": "SENSE_NAMES",
+     "type": "list-str",
+     "value": [
+      "LOW-LIGHT VISION"
+     ]
+    },
+    "MODE_NAMES": {
+     "name": "MODE_NAMES",
+     "type": "list-str",
+     "value": []
+    },
+    "CLASS_NAMES": {
+     "name": "CLASS_NAMES",
+     "type": "list-str",
+     "value": [
+      "DRUID"
+     ]
+    },
+    "ANCESTRY_NAMES": {
+     "name": "ANCESTRY_NAMES",
+     "type": "list-str",
+     "value": [
+      "LESHY"
+     ]
+    },
+    "BACKGROUND_NAMES": {
+     "name": "BACKGROUND_NAMES",
+     "type": "list-str",
+     "value": [
+      "HERBALIST"
+     ]
+    },
+    "HERITAGE_NAMES": {
+     "name": "HERITAGE_NAMES",
+     "type": "list-str",
+     "value": [
+      "LEAF LESHY"
+     ]
+    },
+    "CLASS_ARCHETYPE_NAMES": {
+     "name": "CLASS_ARCHETYPE_NAMES",
+     "type": "list-str",
+     "value": []
+    },
+    "FEAT_NAMES": {
+     "name": "FEAT_NAMES",
+     "type": "list-str",
+     "value": [
+      "NATURAL MEDICINE",
+      "SEEDPOD",
+      "LEAF ORDER",
+      "SHIELD BLOCK",
+      "PLANT EMPATHY",
+      "LESHY FAMILIAR"
+     ]
+    },
+    "SPELL_NAMES": {
+     "name": "SPELL_NAMES",
+     "type": "list-str",
+     "value": [
+      "CORNUCOPIA"
+     ]
+    },
+    "LANGUAGE_NAMES": {
+     "name": "LANGUAGE_NAMES",
+     "type": "list-str",
+     "value": [
+      "COMMON",
+      "FEY",
+      "WILDSONG"
+     ]
+    },
+    "TRAIT_NAMES": {
+     "name": "TRAIT_NAMES",
+     "type": "list-str",
+     "value": [
+      "DRUID",
+      "PLANT (CREATURE)",
+      "LESHY"
+     ]
+    },
+    "CLASS_FEATURE_NAMES": {
+     "name": "CLASS_FEATURE_NAMES",
+     "type": "list-str",
+     "value": [
+      "ANATHEMA",
+      "ATTRIBUTE BOOSTS",
+      "DRUID SPELLCASTING",
+      "DRUIDIC ORDER",
+      "SHIELD BLOCK",
+      "VOICE OF NATURE",
+      "WILDSONG"
+     ]
+    },
+    "PHYSICAL_FEATURE_NAMES": {
+     "name": "PHYSICAL_FEATURE_NAMES",
+     "type": "list-str",
+     "value": [
+      "PLANT NOURISHMENT"
+     ]
+    },
+    "EXTRA_ITEM_NAMES": {
+     "name": "EXTRA_ITEM_NAMES",
+     "type": "list-str",
+     "value": [
+      "FIST",
+      "SEEDPOD"
+     ]
+    },
+    "SENSE_IDS": {
+     "name": "SENSE_IDS",
+     "type": "list-str",
+     "value": [
+      "19330"
+     ]
+    },
+    "MODE_IDS": {
+     "name": "MODE_IDS",
+     "type": "list-str",
+     "value": []
+    },
+    "CLASS_IDS": {
+     "name": "CLASS_IDS",
+     "type": "list-str",
+     "value": [
+      "23"
+     ]
+    },
+    "ANCESTRY_IDS": {
+     "name": "ANCESTRY_IDS",
+     "type": "list-str",
+     "value": [
+      "9"
+     ]
+    },
+    "BACKGROUND_IDS": {
+     "name": "BACKGROUND_IDS",
+     "type": "list-str",
+     "value": [
+      "747"
+     ]
+    },
+    "HERITAGE_IDS": {
+     "name": "HERITAGE_IDS",
+     "type": "list-str",
+     "value": [
+      "20743"
+     ]
+    },
+    "CLASS_ARCHETYPE_IDS": {
+     "name": "CLASS_ARCHETYPE_IDS",
+     "type": "list-str",
+     "value": []
+    },
+    "FEAT_IDS": {
+     "name": "FEAT_IDS",
+     "type": "list-str",
+     "value": [
+      "20362",
+      "20520",
+      "33033",
+      "20534",
+      "20412",
+      "20300"
+     ]
+    },
+    "SPELL_IDS": {
+     "name": "SPELL_IDS",
+     "type": "list-str",
+     "value": [
+      "4538"
+     ]
+    },
+    "LANGUAGE_IDS": {
+     "name": "LANGUAGE_IDS",
+     "type": "list-str",
+     "value": [
+      "81",
+      "90",
+      "309"
+     ]
+    },
+    "CLASS_FEATURE_IDS": {
+     "name": "CLASS_FEATURE_IDS",
+     "type": "list-str",
+     "value": [
+      "21215",
+      "19285",
+      "21214",
+      "21216",
+      "19228",
+      "21217",
+      "21218"
+     ]
+    },
+    "PHYSICAL_FEATURE_IDS": {
+     "name": "PHYSICAL_FEATURE_IDS",
+     "type": "list-str",
+     "value": [
+      "21339"
+     ]
+    },
+    "EXTRA_ITEM_IDS": {
+     "name": "EXTRA_ITEM_IDS",
+     "type": "list-str",
+     "value": [
+      "9279"
+     ]
+    },
+    "TRAIT_CLASS_DRUID_IDS": {
+     "name": "TRAIT_CLASS_DRUID_IDS",
+     "type": "num",
+     "value": 1343
+    },
+    "TRAIT_ANCESTRY_PLANT_CREATURE_IDS": {
+     "name": "TRAIT_ANCESTRY_PLANT_CREATURE_IDS",
+     "type": "num",
+     "value": 1654
+    },
+    "TRAIT_ANCESTRY_LESHY_IDS": {
+     "name": "TRAIT_ANCESTRY_LESHY_IDS",
+     "type": "num",
+     "value": 1449
+    }
+   }
   }
  },
- "_sanitized": "user_id, timestamps, api_clients and library dumps (all_traits, all_sources, all_spells, raw_data_dump) removed"
+ "_sanitized": "user_id, timestamps, api_clients and library dumps (all_traits, all_sources, all_spells, raw_data_dump (only variables *_IDS/*_NAMES kept, WG computed-state evidence)) removed"
 }

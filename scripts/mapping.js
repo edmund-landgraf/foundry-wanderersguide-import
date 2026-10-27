@@ -1,3 +1,4 @@
+import { classifySelections } from "./selections.js";
 // Pure mapping: WG JSON v4 export -> import plan. No Foundry globals here, so it is unit-testable in Node.
 
 export function sluggify(name) {
@@ -172,6 +173,9 @@ export function wgChoiceHints(exp) {
     }
   };
   for (const o of owners) visit(o.name, o.operations);
+  // Explicit picks the visitor cannot name itself (e.g. an ABILITY_BLOCK option that gives Plant Empathy),
+  // named from the option's own giveAbilityBlock id (scripts/selections.js).
+  for (const [k, x] of classifySelections(exp)) if (x.answer) push(x.answer.owner, x.answer.name, k);
   return out;
 }
 

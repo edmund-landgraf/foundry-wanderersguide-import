@@ -5201,7 +5201,275 @@
     "value": 1,
     "partial": false
    }
+  },
+  "raw_data_dump": {
+   "variables": {
+    "SENSE_NAMES": {
+     "name": "SENSE_NAMES",
+     "type": "list-str",
+     "value": []
+    },
+    "MODE_NAMES": {
+     "name": "MODE_NAMES",
+     "type": "list-str",
+     "value": [
+      "RAGE"
+     ]
+    },
+    "CLASS_NAMES": {
+     "name": "CLASS_NAMES",
+     "type": "list-str",
+     "value": [
+      "BARBARIAN (LEGACY)"
+     ]
+    },
+    "ANCESTRY_NAMES": {
+     "name": "ANCESTRY_NAMES",
+     "type": "list-str",
+     "value": [
+      "ANADI"
+     ]
+    },
+    "BACKGROUND_NAMES": {
+     "name": "BACKGROUND_NAMES",
+     "type": "list-str",
+     "value": [
+      "DAUNTLESS"
+     ]
+    },
+    "HERITAGE_NAMES": {
+     "name": "HERITAGE_NAMES",
+     "type": "list-str",
+     "value": [
+      "SNARING ANADI"
+     ]
+    },
+    "CLASS_ARCHETYPE_NAMES": {
+     "name": "CLASS_ARCHETYPE_NAMES",
+     "type": "list-str",
+     "value": []
+    },
+    "FEAT_NAMES": {
+     "name": "FEAT_NAMES",
+     "type": "list-str",
+     "value": [
+      "INDOMITABLE ACT",
+      "WEB WALKER",
+      "WEB WEAVER",
+      "SPECIALTY CRAFTING",
+      "DRACONIC ARROGANCE",
+      "SPIRIT INSTINCT",
+      "QUICK-TEMPERED",
+      "RAGE",
+      "SECOND WIND",
+      "CRYSTAL HEALING",
+      "URBAN SURVIVALIST",
+      "SUDDEN CHARGE",
+      "IN PLAIN SIGHT",
+      "INTIMIDATING STRIKE",
+      "SPARKLING PERFORMANCE",
+      "RIDE"
+     ]
+    },
+    "SPELL_NAMES": {
+     "name": "SPELL_NAMES",
+     "type": "list-str",
+     "value": []
+    },
+    "LANGUAGE_NAMES": {
+     "name": "LANGUAGE_NAMES",
+     "type": "list-str",
+     "value": [
+      "ANADI",
+      "MWANGI",
+      "AMURRUN",
+      "PAHTRA"
+     ]
+    },
+    "TRAIT_NAMES": {
+     "name": "TRAIT_NAMES",
+     "type": "list-str",
+     "value": [
+      "BARBARIAN (LEGACY)",
+      "HUMANOID",
+      "ANADI"
+     ]
+    },
+    "CLASS_FEATURE_NAMES": {
+     "name": "CLASS_FEATURE_NAMES",
+     "type": "list-str",
+     "value": [
+      "ATTRIBUTE BOOSTS",
+      "BARBARIAN FEAT",
+      "INSTINCT",
+      "QUICK-TEMPERED",
+      "RAGE",
+      "SKILL FEAT",
+      "FURIOUS FOOTFALLS",
+      "GENERAL FEAT",
+      "SKILL INCREASE",
+      "BRUTALITY",
+      "JUGGERNAUT",
+      "WEAPON SPECIALIZATION"
+     ]
+    },
+    "PHYSICAL_FEATURE_NAMES": {
+     "name": "PHYSICAL_FEATURE_NAMES",
+     "type": "list-str",
+     "value": [
+      "CHANGE SHAPE",
+      "FANGS"
+     ]
+    },
+    "EXTRA_ITEM_NAMES": {
+     "name": "EXTRA_ITEM_NAMES",
+     "type": "list-str",
+     "value": [
+      "FIST",
+      "ANADI FANGS"
+     ]
+    },
+    "SENSE_IDS": {
+     "name": "SENSE_IDS",
+     "type": "list-str",
+     "value": []
+    },
+    "MODE_IDS": {
+     "name": "MODE_IDS",
+     "type": "list-str",
+     "value": [
+      "31008"
+     ]
+    },
+    "CLASS_IDS": {
+     "name": "CLASS_IDS",
+     "type": "list-str",
+     "value": [
+      "68"
+     ]
+    },
+    "ANCESTRY_IDS": {
+     "name": "ANCESTRY_IDS",
+     "type": "list-str",
+     "value": [
+      "115"
+     ]
+    },
+    "BACKGROUND_IDS": {
+     "name": "BACKGROUND_IDS",
+     "type": "list-str",
+     "value": [
+      "1116"
+     ]
+    },
+    "HERITAGE_IDS": {
+     "name": "HERITAGE_IDS",
+     "type": "list-str",
+     "value": [
+      "29468"
+     ]
+    },
+    "CLASS_ARCHETYPE_IDS": {
+     "name": "CLASS_ARCHETYPE_IDS",
+     "type": "list-str",
+     "value": []
+    },
+    "FEAT_IDS": {
+     "name": "FEAT_IDS",
+     "type": "list-str",
+     "value": [
+      "29795",
+      "29475",
+      "29476",
+      "20570",
+      "31322",
+      "31314",
+      "31200",
+      "31184",
+      "31330",
+      "22680",
+      "46748",
+      "31273",
+      "22733",
+      "31328",
+      "35194",
+      "20492"
+     ]
+    },
+    "SPELL_IDS": {
+     "name": "SPELL_IDS",
+     "type": "list-str",
+     "value": []
+    },
+    "LANGUAGE_IDS": {
+     "name": "LANGUAGE_IDS",
+     "type": "list-str",
+     "value": [
+      "319",
+      "328",
+      "313",
+      "902"
+     ]
+    },
+    "CLASS_FEATURE_IDS": {
+     "name": "CLASS_FEATURE_IDS",
+     "type": "list-str",
+     "value": [
+      "30965",
+      "31093",
+      "31305",
+      "31201",
+      "31199",
+      "31094",
+      "30975",
+      "31202",
+      "30970",
+      "30986",
+      "31203",
+      "30977",
+      "30966",
+      "31233",
+      "30987",
+      "31096",
+      "30978",
+      "30971",
+      "31234",
+      "30988",
+      "31219"
+     ]
+    },
+    "PHYSICAL_FEATURE_IDS": {
+     "name": "PHYSICAL_FEATURE_IDS",
+     "type": "list-str",
+     "value": [
+      "29416",
+      "29435"
+     ]
+    },
+    "EXTRA_ITEM_IDS": {
+     "name": "EXTRA_ITEM_IDS",
+     "type": "list-str",
+     "value": [
+      "14437"
+     ]
+    },
+    "TRAIT_CLASS_BARBARIAN_LEGACY_IDS": {
+     "name": "TRAIT_CLASS_BARBARIAN_LEGACY_IDS",
+     "type": "num",
+     "value": 3627
+    },
+    "TRAIT_ANCESTRY_HUMANOID_IDS": {
+     "name": "TRAIT_ANCESTRY_HUMANOID_IDS",
+     "type": "num",
+     "value": 2399
+    },
+    "TRAIT_ANCESTRY_ANADI_IDS": {
+     "name": "TRAIT_ANCESTRY_ANADI_IDS",
+     "type": "num",
+     "value": 2979
+    }
+   }
   }
  },
- "_sanitized": "user_id, timestamps, api_clients and library dumps (all_traits, all_sources, all_spells, raw_data_dump) removed"
+ "_sanitized": "user_id, timestamps, api_clients and library dumps (all_traits, all_sources, all_spells, raw_data_dump (only variables *_IDS/*_NAMES kept, WG computed-state evidence)) removed"
 }

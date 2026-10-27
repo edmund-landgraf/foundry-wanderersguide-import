@@ -8,6 +8,8 @@
 //   dropped             not imported, with the reason
 // Pure: no Foundry globals. Class support is experimental for every class (docs/CLASS_COVERAGE.md).
 
+import { classifySelections } from "./selections.js";
+
 export const CLASS_SUPPORT_NOTE = "Class support: experimental for every class. No class is verified against WG (see docs/CLASS_COVERAGE.md).";
 
 const DERIVED = new Set(["ac", "proficiencies", "senses", "speeds", "weapons", "total_bulk", "size", "resist_weaks", "shield_item", "armor_item", "character_traits", "spell_raw_data", "spells"]);
@@ -22,13 +24,14 @@ const EXPANDED_CONTENT = ["focus_spells", "innate_spells", "inventory_flat"];
  * @param opts.grantedSlugs   slugs of items PF2e granted on the actor (for WG class/physical features)
  * @param opts.choiceUsed     Set of selection keys whose answer the import used
  */
-export function auditImportCoverage(exp, plan, { applied = false, grantedSlugs = new Set(), choiceUsed = new Set(), slug = (s) => s } = {}) {
+export function auditImportCoverage(exp, plan, { applied = false, grantedSlugs = new Set(), choiceUsed = new Set(), choiceConflicts = new Map(), slug = (s) => s } = {}) {
   const rows = [];
   const add = (path, status, reason) => rows.push({ path, status, reason });
   const ch = exp?.character ?? {};
   const ct = exp?.content ?? {};
   const byPath = new Map(plan.entries.map((e) => [e.sourcePath, e]));
   const planIds = new Set(plan.entries.map((e) => String(e.wgContentId)));
+  const classified = classifySelections(exp);
   const tense = applied ? "" : " (planned)";
   const entryRow = (path, e) => {
     if (e.unresolved) return add(path, "unresolved", e.unresolved);
@@ -67,10 +70,13 @@ export function auditImportCoverage(exp, plan, { applied = false, grantedSlugs =
         for (const [sk, sv] of Object.entries(v.selections ?? {})) {
           const sp = `${path}.selections.${sk}`;
           const val = String(sv);
-          if (choiceUsed.has(sk)) add(sp, "mapped", "answered a PF2e ChoiceSet");
+          // a conflict means PF2e overrode the WG answer after it was used, so it wins over choiceUsed
+          if (choiceConflicts.has(sk)) add(sp, "unresolved", `exception pf2e-fixed-choice: ${choiceConflicts.get(sk)}`);
+          else if (choiceUsed.has(sk)) add(sp, "mapped", "answered a PF2e ChoiceSet");
           else if (planIds.has(val)) add(sp, "included", `chose WG item ${val}, imported as its own entry`);
           else if (val.startsWith("ATTRIBUTE_")) add(sp, "included", "attribute boosts: final modifiers forced from content.attributes");
           else if (val.startsWith("SKILL_")) add(sp, "dropped", "skill training selection: skills are not imported (PF2e derives them from its own choices)");
+          else if (classified.has(sk)) { const x = classified.get(sk); add(sp, x.status, `${x.category}: ${x.reason}`); }
           else add(sp, "unresolved", "WG select answer with no PF2e target; review manually");
         }
       }
