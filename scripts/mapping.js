@@ -63,6 +63,7 @@ export function buildPlan(exp) {
     name: ch.name ?? "Unnamed",
     level: Number(ch.level ?? 1),
     maxHp: typeof ct.max_hp === "number" ? ct.max_hp : null,
+    imageUrl: ch.details?.image_url || ch.details?.info?.image_url || null,
     languages: (ct.languages ?? []).map((l) => sluggify(l)),
     attributes,
     entries,
@@ -98,4 +99,21 @@ export function matchEntries(entries, index) {
 
 export function missReport(matched) {
   return matched.filter((m) => !m.match).map((m) => `${m.kind}: ${m.name}`);
+}
+
+export const FALLBACK_IMG = "icons/svg/mystery-man.svg";
+/**
+ * WG portrait URL -> something Foundry can load directly. Absolute http(s)/data URLs pass through
+ * (WG public storage serves Access-Control-Allow-Origin: *, so tokens/WebGL can use it without
+ * downloading). Relative storage paths resolve against the functions host (Supabase/Kong origin).
+ */
+export function resolveImageUrl(raw, functionsUrl) {
+  const v = String(raw ?? "").trim();
+  if (!v) return null;
+  if (/^(https?:|data:)/i.test(v)) return v;
+  let origin;
+  try { origin = new URL(functionsUrl).origin; } catch { return null; }
+  if (v.startsWith("/")) return origin + v;
+  if (v.startsWith("storage/")) return `${origin}/${v}`;
+  return `${origin}/storage/v1/object/public/${v.replace(/^\/+/, "")}`;
 }

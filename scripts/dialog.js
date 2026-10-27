@@ -1,5 +1,5 @@
 import { MODULE_ID } from "./constants.js";
-import { listCharacters, listCampaigns, campaignLabel, exportCharacter, resolveFunctionsUrl } from "./api.js";
+import { listCharacters, listCampaigns, getCampaign, campaignLabel, exportCharacter, resolveFunctionsUrl } from "./api.js";
 import { importCharacter } from "./importer.js";
 
 function opts() {
@@ -7,6 +7,30 @@ function opts() {
 }
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+
+function charTable(rows, host, { checked = false, tab, names }) {
+  const inWorld = (id) => game.actors.some((a) => a.getFlag(MODULE_ID, "wgId") === id && a.getFlag(MODULE_ID, "host") === host);
+  const tr = (r) => {
+    const ok = r.granted !== false;
+    const action = !ok ? "not granted" : inWorld(r.id) ? "Update" : "Insert";
+    return `<tr${ok ? "" : ' style="opacity:.5"'}><td><input type="checkbox" name="wgi" value="${r.id}" ${ok ? "" : "disabled"} ${ok && checked ? "checked" : ""}></td><td>${esc(r.name)}</td><td>${esc(r.level)}</td><td>${esc(r.ancestry)}</td><td>${esc(r.class)}</td><td>${esc(campaignLabel(r.campaignId, names))}</td><td>${r.id}</td><td class="wgi-action">${action}</td></tr>`;
+  };
+  return `<table class="wgi-table" data-tab="${tab}"><thead><tr><th></th><th>Name</th><th>Lvl</th><th>Ancestry</th><th>Class</th><th>Campaign</th><th>WG id</th><th>Action</th></tr></thead><tbody>${rows.map(tr).join("") || '<tr><td colspan="8">No characters.</td></tr>'}</tbody></table>`;
+}
+
+async function runImport(ids, host) {
+  for (const id of ids) {
+    // One character at a time (PLAN 4.2).
+    try {
+      ui.notifications.info(`Wanderer's Guide: importing ${id}...`);
+      const exp = await exportCharacter(opts(), id);
+      const { actor, misses } = await importCharacter(exp, { host });
+      ui.notifications.info(`Imported ${actor.name} (${misses.length} misses).`);
+    } catch (e) {
+      ui.notifications.error(`Wanderer's Guide ${id}: ${e.message}`);
+    }
+  }
+}
 
 export async function openImportDialog() {
   let rows;
@@ -20,34 +44,52 @@ export async function openImportDialog() {
   const names = new Map();
   try { for (const c of await listCampaigns(opts())) names.set(c.id, c.name); } catch (e) { console.warn(`${MODULE_ID} | campaigns: ${e.message}`); }
   const host = opts().baseUrl;
-  const inWorld = (id) => game.actors.some((a) => a.getFlag(MODULE_ID, "wgId") === id && a.getFlag(MODULE_ID, "host") === host);
-  const body = `<table class="wgi-table"><thead><tr><th></th><th>Name</th><th>Lvl</th><th>Ancestry</th><th>Class</th><th>Campaign</th><th>WG id</th><th></th></tr></thead><tbody>${
-    rows.map((r) => `<tr><td><input type="checkbox" name="wgi" value="${r.id}"></td><td>${esc(r.name)}</td><td>${esc(r.level)}</td><td>${esc(r.ancestry)}</td><td>${esc(r.class)}</td><td>${esc(campaignLabel(r.campaignId, names))}</td><td>${r.id}</td><td>${inWorld(r.id) ? "in world" : ""}</td></tr>`).join("") || '<tr><td colspan="8">No characters this API key can read.</td></tr>'
-  }</tbody></table>`;
+  const body = `<nav class="wgi-tabs tabs" style="display:flex;gap:.5rem;margin-bottom:.5rem">
+  <a class="wgi-tab active" data-wgi-tab="account">Import PCs from one account</a>
+  <a class="wgi-tab" data-wgi-tab="campaign">Import PCs from one campaign</a></nav>
+<section class="wgi-pane" data-wgi-pane="account">${charTable(rows, host, { tab: "account", names })}
+<p class="notes">Characters granted to this API key.</p></section>
+<section class="wgi-pane" data-wgi-pane="campaign" style="display:none">
+  <label>Campaign <select name="wgi-campaign"><option value="">Loading campaigns...</option></select></label>
+  <div class="wgi-campaign-chars"></div>
+  <p class="notes">Characters in other players' accounts can only be imported if they granted this API key.</p></section>`;
 
-  const onImport = async (root) => {
-    const ids = [...root.querySelectorAll('input[name="wgi"]:checked')].map((i) => Number(i.value));
-    for (const id of ids) {
-      // One character at a time (PLAN 4.2).
-      try {
-        ui.notifications.info(`Wanderer's Guide: importing ${id}...`);
-        const exp = await exportCharacter(opts(), id);
-        const { actor, misses } = await importCharacter(exp, { host });
-        ui.notifications.info(`Imported ${actor.name} (${misses.length} misses).`);
-      } catch (e) {
-        ui.notifications.error(`Wanderer's Guide ${id}: ${e.message}`);
-      }
-    }
+  const onRender = (root) => {
+    if (!root || root.dataset.wgiWired) return;
+    root.dataset.wgiWired = "1";
+    const show = (name) => {
+      root.querySelectorAll(".wgi-tab").forEach((a) => a.classList.toggle("active", a.dataset.wgiTab === name));
+      root.querySelectorAll(".wgi-pane").forEach((s) => { s.style.display = s.dataset.wgiPane === name ? "" : "none"; });
+    };
+    root.querySelectorAll(".wgi-tab").forEach((a) => a.addEventListener("click", () => show(a.dataset.wgiTab)));
+    const sel = root.querySelector('select[name="wgi-campaign"]');
+    const out = root.querySelector(".wgi-campaign-chars");
+    listCampaigns(opts()).then((cs) => {
+      sel.innerHTML = `<option value="">Select a campaign...</option>${cs.map((c) => `<option value="${c.id}">${esc(c.name)}${c.owned ? " (GM)" : ""}</option>`).join("")}`;
+    }).catch((e) => { sel.innerHTML = `<option value="">${esc(e.message)}</option>`; });
+    sel.addEventListener("change", async () => {
+      out.innerHTML = "";
+      if (!sel.value) return;
+      out.innerHTML = "<p>Loading...</p>";
+      try { out.innerHTML = charTable((await getCampaign(opts(), sel.value)).characters, host, { checked: true, tab: "campaign", names }); }
+      catch (e) { out.innerHTML = `<p>${esc(e.message)}</p>`; }
+    });
+  };
+
+  const selected = (root) => {
+    const pane = [...root.querySelectorAll(".wgi-pane")].find((s) => s.style.display !== "none") ?? root;
+    return [...pane.querySelectorAll('input[name="wgi"]:checked')].map((i) => Number(i.value));
   };
 
   const DialogV2 = foundry.applications?.api?.DialogV2;
   if (DialogV2) {
     await DialogV2.wait({
       window: { title: "Import from Wanderer's Guide" },
-      position: { width: 640 },
+      position: { width: 700 },
       content: body,
+      render: (_ev, dialog) => onRender(dialog.element ?? _ev?.target?.element),
       buttons: [
-        { action: "import", label: "Import selected", default: true, callback: (_ev, button) => onImport(button.form ?? button.closest(".application")) },
+        { action: "import", label: "Import selected", default: true, callback: (_ev, button) => runImport(selected(button.form ?? button.closest(".application")), host) },
         { action: "cancel", label: "Cancel" },
       ],
       rejectClose: false,
@@ -57,10 +99,11 @@ export async function openImportDialog() {
   new Dialog({
     title: "Import from Wanderer's Guide",
     content: body,
+    render: (html) => onRender(html[0]?.closest?.(".app") ?? html[0]),
     buttons: {
-      import: { label: "Import selected", callback: (html) => onImport(html[0] ?? html) },
+      import: { label: "Import selected", callback: (html) => runImport(selected(html[0] ?? html), host) },
       cancel: { label: "Cancel" },
     },
     default: "import",
-  }, { width: 640 }).render(true);
+  }, { width: 700 }).render(true);
 }

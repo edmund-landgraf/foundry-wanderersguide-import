@@ -123,3 +123,21 @@ test("wgui-ext fail codes become friendly messages without the key", async () =>
   }
   assert.match(friendlyError(404, null), /not found/);
 });
+
+test("pickChoice maps a PF2e ChoiceSet label to the WG feature name", async () => {
+  globalThis.foundry ??= {};
+  const { pickChoice } = await import("../scripts/importer.js");
+  assert.equal(pickChoice(["Enigma", "Maestro", "Polymath"], ["Bard Muse", "Polymath Muse"]), 2);
+  assert.equal(pickChoice(["Enigma", "Maestro"], ["Bard Muse"]), -1);
+});
+
+test("portrait: image_url from v4 export, resolved for Foundry", async () => {
+  const { buildPlan, resolveImageUrl } = await import("../scripts/mapping.js");
+  const p = buildPlan({ version: 4, character: { id: 1, name: "x", level: 1, details: { image_url: "https://h/storage/v1/object/public/portraits/a.png" } }, content: {} });
+  assert.equal(p.imageUrl, "https://h/storage/v1/object/public/portraits/a.png");
+  assert.equal(buildPlan({ version: 4, character: { id: 1, name: "x", level: 1, details: {} }, content: {} }).imageUrl, null);
+  const f = "http://127.0.0.1:8000/functions/v1";
+  assert.equal(resolveImageUrl("/storage/v1/object/public/p/b.png", f), "http://127.0.0.1:8000/storage/v1/object/public/p/b.png");
+  assert.equal(resolveImageUrl("portraits/c.png", f), "http://127.0.0.1:8000/storage/v1/object/public/portraits/c.png");
+  assert.equal(resolveImageUrl("", f), null);
+});
