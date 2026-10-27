@@ -1,5 +1,6 @@
 // Foundry-side import. Uses Foundry/PF2e globals (game, Actor, Item, Folder, ChatMessage).
 import { MODULE_ID, HOMEBREW_FOLDER } from "./constants.js";
+import { auditImportCoverage, leftoverValues, CLASS_SUPPORT_NOTE } from "./coverage.js";
 import { buildPlan, matchEntries, missReport, sluggify, resolveImageUrl, FALLBACK_IMG, wgChoiceHints, matchChoice, defaultFlag, spellcastingPlan, entryKeyFor, diffPlan, parityCheck } from "./mapping.js";
 
 const PACK_TYPES = new Set(["ancestry", "heritage", "background", "class", "feat", "spell", "weapon", "armor", "shield", "equipment", "consumable", "treasure", "backpack", "kit"]);
@@ -91,7 +92,9 @@ function choiceContext(exp, plan, index, actor) {
     for (const r of i._source?.system?.rules ?? []) if (r?.key === "ChoiceSet" && r.selection != null) sel[r.flag ?? defaultFlag(i.name)] ??= r.selection;
     if (src && Object.keys(sel).length) previous.set(src, { ...(previous.get(src) ?? {}), ...sel });
   }
-  return { hints, index, uuidName, previous, unresolved: [], specific: (owner) => hints.get(sluggify(owner)) ?? [] };
+  const used = new Set();
+  const markUsed = (owner) => { for (const k of hints.keys?.get(sluggify(owner)) ?? []) used.add(k); };
+  return { hints, index, uuidName, previous, used, markUsed, unresolved: [], specific: (owner) => hints.get(sluggify(owner)) ?? [] };
 }
 
 /** Index of the single option matching the hints, or -1 when none or more than one match. */
@@ -159,6 +162,7 @@ async function prefillChoices(data, ctx, notes) {
       const hit = await resolveChoiceSet(rule, data.name, ctx, { sourceUuid: src, flag });
       if (!hit) { ctx.unresolved.push({ owner: data.name, flag, reason: "no explicit WG answer matching exactly one legal option; PF2e will ask" }); continue; }
       rule.selection = hit.value;
+      if (hit.via === "WG selection") ctx.markUsed(data.name);
       foundry.utils.setProperty(data, `flags.pf2e.rulesSelections.${flag}`, hit.value);
       notes.push(`choice ${data.name}: ${hit.label} (pre-filled from ${hit.via})`);
     } else if (rule?.key === "GrantItem" && typeof rule.uuid === "string" && rule.uuid.startsWith("Compendium.")) {
@@ -170,6 +174,7 @@ async function prefillChoices(data, ctx, notes) {
         const hit = await resolveChoiceSet(gr, granted.name, ctx, { sourceUuid: rule.uuid, flag });
         if (!hit) { ctx.unresolved.push({ owner: granted.name, flag, reason: `granted by ${data.name}; no explicit WG answer; PF2e will ask` }); continue; }
         rule.preselectChoices = { ...(rule.preselectChoices ?? {}), [flag]: hit.value };
+        if (hit.via === "WG selection") ctx.markUsed(granted.name);
         notes.push(`choice ${granted.name}: ${hit.label} (pre-filled via ${data.name}, from ${hit.via})`);
       }
     }
@@ -242,6 +247,7 @@ function watchPrompts(ctx, notes) {
         const hits = app.choices.map((c, k) => (prev.some((v) => JSON.stringify(v) === JSON.stringify(c.value)) ? k : -1)).filter((k) => k >= 0);
         if (hits.length === 1) { i = hits[0]; via = "existing Foundry selection"; }
       }
+      if (i >= 0 && via === "WG selection") ctx.markUsed(owner);
       if (i >= 0) { notes.push(`choice ${app.title}: ${app.choices[i].label} (prompt answered from ${via})`); app.selection = app.choices[i]; app.close(); continue; }
       const rec = { owner: owner || app.title, flag: null, reason: "PF2e prompt shown to the user (no explicit WG answer)" };
       ctx.unresolved.push(rec);
@@ -283,11 +289,10 @@ const findActor = (plan, host) => game.actors.find((a) => a.getFlag(MODULE_ID, "
 
 /** Dry run (PLAN 8): what an import would change. Reads only; nothing is created or written. */
 export async function previewImport(exp, { host }) {
-  const plan = buildPlan(exp);
-  const matched = matchEntries(plan.entries, await compendiumIndex());
-  const actor = findActor(plan, host);
-  return { plan, diff: diffPlan(plan, summarizeActor(actor)), misses: missReport(matched), actor };
+  const p = await planImport(exp, { host });
+  return { plan: p.plan, diff: p.diff, misses: p.misses, actor: p.actor, coverage: p.coverage, unresolved: p.ctx.unresolved, review: reviewHtml(p) };
 }
+
 export function diffHtml(plan, diff, misses) {
   const li = (xs) => (xs.length ? `<ul>${xs.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : "<p>none</p>");
   return `<h3>WG preview: ${esc(plan.name)} (${diff.insert ? "Insert" : "Update"})</h3>`
@@ -411,20 +416,36 @@ export async function planImport(exp, { host }) {
     if (e.via === "ambiguous") { e.unresolved = `several compendium items share this name: ${e.candidates.join(", ")}`; ctx.unresolved.push({ owner: `: ${e.name}`, flag: null, reason: e.unresolved }); continue; }
     if (e.unresolved) continue;
     try { e.data = await itemDataFor(e, null, ctx, notes); }
-    catch (err) { problems.push(`${e.kind}: ${e.name} (${err.message})`); }
+    catch (err) { e.error = err.message; problems.push(`${e.kind}: ${e.name} (${err.message})`); }
   }
   const diff = diffPlan(plan, summarizeActor(actor));
   const homebrew = matched.filter((e) => !e.match && e.data);
-  return { exp, plan, host, index, ctx, matched, misses, notes, problems, actor, entryData, diff, homebrew, valid: problems.length === 0 };
+  const coverage = auditImportCoverage(exp, { ...plan, entries: matched }, { applied: false, grantedSlugs: grantedSlugsOf(actor), choiceUsed: ctx.used, slug: sluggify });
+  return { coverage, exp, plan, host, index, ctx, matched, misses, notes, problems, actor, entryData, diff, homebrew, valid: problems.length === 0 };
 }
 
+function grantedSlugsOf(actor) {
+  return new Set([...(actor?.items ?? [])].filter((i) => i.flags?.pf2e?.grantedBy?.id || typeof i.system?.location === "string").map((i) => i.system?.slug || sluggify(i.name)));
+}
+
+export function coverageHtml(ledger) {
+  const c = ledger.counts;
+  const list = (status) => ledger.rows.filter((r) => r.status === status);
+  const ul = (rows) => `<ul>${rows.map((r) => `<li><code>${esc(r.path)}</code>: ${esc(r.reason)}</li>`).join("")}</ul>`;
+  return `<h4>Coverage ledger</h4><p>${esc(ledger.classSupport)}</p>`
+    + `<p>${c.mapped} mapped, ${c.included} included, ${c.unresolved} unresolved, ${c["leftover-preserved"]} leftover-preserved, ${c.dropped} dropped (${ledger.rows.length} source paths).</p>`
+    + (c.unresolved ? `<details class="wgi-cov-unresolved"><summary>Unresolved (${c.unresolved})</summary>${ul(list("unresolved"))}</details>` : "")
+    + (c.dropped ? `<details class="wgi-cov-dropped"><summary>Dropped (${c.dropped})</summary>${ul(list("dropped"))}</details>` : "")
+    + (c["leftover-preserved"] ? `<details><summary>Leftover-preserved (${c["leftover-preserved"]}, stored in flags.${MODULE_ID}.wgLeftovers)</summary>${ul(list("leftover-preserved"))}</details>` : "");
+}
 export function reviewHtml(p) {
   const li = (xs) => (xs.length ? `<ul>${xs.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : "<p>none</p>");
   return `${diffHtml(p.plan, p.diff, p.misses)}`
     + (p.homebrew.length ? `<p>World homebrew items to create or reuse (folder "${esc(HOMEBREW_FOLDER)}"):</p>${li(p.homebrew.map((e) => `${e.kind}: ${e.name}`))}` : "")
     + (p.notes.length ? `<p>Choices:</p>${li(p.notes)}` : "")
     + (p.ctx.unresolved.length ? `<p><strong>Unresolved (PF2e will ask you; nothing is guessed):</strong></p>${li(p.ctx.unresolved.map((u) => `${u.owner}${u.flag ? ` [${u.flag}]` : ""}: ${u.reason}`))}` : "")
-    + (p.problems.length ? `<p><strong>Plan problems (import blocked):</strong></p>${li(p.problems)}` : "");
+    + (p.problems.length ? `<p><strong>Plan problems (import blocked):</strong></p>${li(p.problems)}` : "")
+    + coverageHtml(p.coverage);
 }
 
 /** Phase 2. Called by importCharacter after confirmation. */
@@ -507,6 +528,9 @@ async function applyImport(p, { onStep, parity, failAfter }) {
       }
       step(`created ${kind}`);
     }
+    // Leftovers (coverage status leftover-preserved) are kept verbatim on the actor.
+    await actor.update({ [`flags.${MODULE_ID}.-=wgLeftovers`]: null });
+    await actor.update({ [`flags.${MODULE_ID}.wgLeftovers`]: leftoverValues(exp, p.coverage) });
     // Replacements exist: now remove the previous module-managed items.
     const stale = [...old].filter((id) => actor.items.has(id));
     if (stale.length) await actor.deleteEmbeddedDocuments("Item", stale);
@@ -534,6 +558,7 @@ async function applyImport(p, { onStep, parity, failAfter }) {
     throw err;
   } finally { stopPrompts(); }
   const parityResult = parity ? parityCheck(plan, summarizeActor(actor)) : null;
+  p.coverage = auditImportCoverage(exp, { ...plan, entries: matched }, { applied: true, grantedSlugs: grantedSlugsOf(actor), choiceUsed: p.ctx.used, slug: sluggify });
   return { actor, parity: parityResult, existing };
 }
 
@@ -600,7 +625,7 @@ export async function importCharacter(exp, { host, onStep = () => {}, parity = f
   const { plan, matched, misses, notes } = p;
   await ChatMessage.create({
     whisper: [game.user.id],
-    content: `<h3>WG import: ${esc(plan.name)}</h3><p>${matched.length - misses.length} matched, ${misses.length} created as homebrew or missed.</p>${misses.length ? `<ul>${misses.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${notes.length ? `<p>Choices:</p><ul>${notes.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${p.ctx.unresolved.length ? `<p>Unresolved choices:</p><ul>${p.ctx.unresolved.map((u) => `<li>${esc(u.owner)}${u.flag ? ` [${esc(u.flag)}]` : ""}: ${esc(u.reason)}</li>`).join("")}</ul>` : ""}${parityResult ? parityHtml(plan.name, parityResult) : ""}`,
+    content: `<h3>WG import: ${esc(plan.name)}</h3><p>${matched.length - misses.length} matched, ${misses.length} created as homebrew or missed.</p>${misses.length ? `<ul>${misses.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${notes.length ? `<p>Choices:</p><ul>${notes.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${p.ctx.unresolved.length ? `<p>Unresolved choices:</p><ul>${p.ctx.unresolved.map((u) => `<li>${esc(u.owner)}${u.flag ? ` [${esc(u.flag)}]` : ""}: ${esc(u.reason)}</li>`).join("")}</ul>` : ""}${parityResult ? parityHtml(plan.name, parityResult) : ""}${coverageHtml(p.coverage)}`,
   });
-  return { actor, misses, notes, unresolved: p.ctx.unresolved, matched: matched.length - misses.length, parity: parityResult };
+  return { actor, misses, notes, unresolved: p.ctx.unresolved, coverage: p.coverage, matched: matched.length - misses.length, parity: parityResult };
 }

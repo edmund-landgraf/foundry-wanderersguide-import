@@ -31,28 +31,32 @@
     "packType": "ancestry",
     "name": "Gnome",
     "slug": "gnome",
-    "wgContentId": 5
+    "wgContentId": 5,
+    "sourcePath": "character.details.ancestry"
    },
    {
     "kind": "heritage",
     "packType": "heritage",
     "name": "Chameleon Gnome",
     "slug": "chameleon-gnome",
-    "wgContentId": 20728
+    "wgContentId": 20728,
+    "sourcePath": "content.feats_features.heritages[0]"
    },
    {
     "kind": "background",
     "packType": "background",
     "name": "Entertainer",
     "slug": "entertainer",
-    "wgContentId": 740
+    "wgContentId": 740,
+    "sourcePath": "character.details.background"
    },
    {
     "kind": "class",
     "packType": "class",
     "name": "Bard",
     "slug": "bard",
-    "wgContentId": 21
+    "wgContentId": 21,
+    "sourcePath": "character.details.class"
    },
    {
     "kind": "feat",
@@ -60,7 +64,8 @@
     "name": "Animal Accomplice",
     "slug": "animal-accomplice",
     "wgContentId": 19903,
-    "level": 1
+    "level": 1,
+    "sourcePath": "content.feats_features.ancestryFeats[0]"
    },
    {
     "kind": "feat",
@@ -68,7 +73,8 @@
     "name": "Martial Performance",
     "slug": "martial-performance",
     "wgContentId": 20326,
-    "level": 1
+    "level": 1,
+    "sourcePath": "content.feats_features.classFeats[0]"
    },
    {
     "kind": "feat",
@@ -76,7 +82,8 @@
     "name": "Versatile Performance",
     "slug": "versatile-performance",
     "wgContentId": 20684,
-    "level": 1
+    "level": 1,
+    "sourcePath": "content.feats_features.classFeats[1]"
    },
    {
     "kind": "feat",
@@ -84,7 +91,8 @@
     "name": "Fascinating Performance",
     "slug": "fascinating-performance",
     "wgContentId": 20141,
-    "level": 1
+    "level": 1,
+    "sourcePath": "content.feats_features.generalAndSkillFeats[0]"
    },
    {
     "kind": "feat",
@@ -92,7 +100,8 @@
     "name": "Polymath Muse",
     "slug": "polymath-muse",
     "wgContentId": 34062,
-    "level": 1
+    "level": 1,
+    "sourcePath": "content.feats_features.otherFeats[0]"
    },
    {
     "kind": "spell",
@@ -102,7 +111,8 @@
     "wgContentId": 4764,
     "rank": 1,
     "castingSource": "BARD",
-    "focus": false
+    "focus": false,
+    "sourcePath": "content.spells.all[0]"
    },
    {
     "kind": "spell",
@@ -112,7 +122,8 @@
     "wgContentId": 4540,
     "rank": 0,
     "castingSource": "BARD",
-    "focus": true
+    "focus": true,
+    "sourcePath": "content.focus_spells[0]"
    },
    {
     "kind": "spell",
@@ -122,7 +133,8 @@
     "wgContentId": 4539,
     "rank": 1,
     "castingSource": "BARD",
-    "focus": true
+    "focus": true,
+    "sourcePath": "content.focus_spells[1]"
    }
   ]
  },
@@ -213,6 +225,139 @@
    ]
   },
   "html": "<h3>WG preview: Inkwhisk (Update)</h3><p>No field changes.</p><p>Add (0):</p><p>none</p><p>Remove (0):</p><p>none</p><p>Unchanged: 12. Would become homebrew: 1.</p>"
+ },
+ "coverage": {
+  "counts": {
+   "mapped": 24,
+   "included": 12,
+   "unresolved": 2,
+   "leftover-preserved": 20,
+   "dropped": 22
+  },
+  "unresolved": [
+   {
+    "path": "character.operation_data.selections.background_0b62c294-14a5-49cc-a5d5-3d67dfeb021b",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-0",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   }
+  ],
+  "dropped": [
+   {
+    "path": "character.operation_data.selections.background_bd9301f2-7349-4c33-92d6-1d9f048de92f",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-0",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-1",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-2",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-3",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-4",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "content._README",
+    "status": "dropped",
+    "reason": "library reference data, not character state"
+   },
+   {
+    "path": "content.character_traits",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.senses",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.weapons",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.total_bulk",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.spell_raw_data",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.spells.cantrips",
+    "status": "dropped",
+    "reason": "derived spell view; PF2e recomputes"
+   },
+   {
+    "path": "content.spells.normal",
+    "status": "dropped",
+    "reason": "derived spell view; PF2e recomputes"
+   },
+   {
+    "path": "content.spells.rituals",
+    "status": "dropped",
+    "reason": "derived spell view; PF2e recomputes"
+   },
+   {
+    "path": "content.size",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.speeds",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.ac",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.shield_item",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.armor_item",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.resist_weaks",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.proficiencies",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   }
+  ]
  },
  "parity": {
   "ok": true,

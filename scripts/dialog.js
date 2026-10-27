@@ -70,8 +70,8 @@ async function runPreview(ids, host) {
   for (const id of ids) {
     try {
       const exp = await exportCharacter(opts(), id);
-      const { plan, diff, misses } = await previewImport(exp, { host });
-      parts.push(diffHtml(plan, diff, misses));
+      const { review } = await previewImport(exp, { host });
+      parts.push(review);
     } catch (e) {
       parts.push(`<h3>WG ${id}</h3><p>${esc(e.message)}</p>`);
     }

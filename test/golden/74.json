@@ -32,28 +32,32 @@
     "packType": "ancestry",
     "name": "Anadi",
     "slug": "anadi",
-    "wgContentId": 115
+    "wgContentId": 115,
+    "sourcePath": "character.details.ancestry"
    },
    {
     "kind": "heritage",
     "packType": "heritage",
     "name": "Snaring Anadi",
     "slug": "snaring-anadi",
-    "wgContentId": 29468
+    "wgContentId": 29468,
+    "sourcePath": "content.feats_features.heritages[0]"
    },
    {
     "kind": "background",
     "packType": "background",
     "name": "Dauntless",
     "slug": "dauntless",
-    "wgContentId": 1116
+    "wgContentId": 1116,
+    "sourcePath": "character.details.background"
    },
    {
     "kind": "class",
     "packType": "class",
     "name": "Barbarian (legacy)",
     "slug": "barbarian",
-    "wgContentId": 68
+    "wgContentId": 68,
+    "sourcePath": "character.details.class"
    },
    {
     "kind": "feat",
@@ -61,7 +65,8 @@
     "name": "Web Walker",
     "slug": "web-walker",
     "wgContentId": 29475,
-    "level": 1
+    "level": 1,
+    "sourcePath": "content.feats_features.ancestryFeats[0]"
    },
    {
     "kind": "feat",
@@ -69,7 +74,8 @@
     "name": "Web Weaver",
     "slug": "web-weaver",
     "wgContentId": 29476,
-    "level": 1
+    "level": 1,
+    "sourcePath": "content.feats_features.ancestryFeats[1]"
    },
    {
     "kind": "feat",
@@ -77,7 +83,8 @@
     "name": "Draconic Arrogance",
     "slug": "draconic-arrogance",
     "wgContentId": 31322,
-    "level": 1
+    "level": 1,
+    "sourcePath": "content.feats_features.classFeats[0]"
    },
    {
     "kind": "feat",
@@ -85,7 +92,8 @@
     "name": "Quick-Tempered",
     "slug": "quick-tempered",
     "wgContentId": 31200,
-    "level": 1
+    "level": 1,
+    "sourcePath": "content.feats_features.classFeats[1]"
    },
    {
     "kind": "feat",
@@ -93,7 +101,8 @@
     "name": "Rage",
     "slug": "rage",
     "wgContentId": 31184,
-    "level": 1
+    "level": 1,
+    "sourcePath": "content.feats_features.classFeats[2]"
    },
    {
     "kind": "feat",
@@ -101,7 +110,8 @@
     "name": "Sudden Charge",
     "slug": "sudden-charge",
     "wgContentId": 31273,
-    "level": 1
+    "level": 1,
+    "sourcePath": "content.feats_features.classFeats[3]"
    },
    {
     "kind": "feat",
@@ -109,7 +119,8 @@
     "name": "Intimidating Strike",
     "slug": "intimidating-strike",
     "wgContentId": 31328,
-    "level": 2
+    "level": 2,
+    "sourcePath": "content.feats_features.classFeats[4]"
    },
    {
     "kind": "feat",
@@ -117,7 +128,8 @@
     "name": "Second Wind",
     "slug": "second-wind",
     "wgContentId": 31330,
-    "level": 2
+    "level": 2,
+    "sourcePath": "content.feats_features.classFeats[5]"
    },
    {
     "kind": "feat",
@@ -125,7 +137,8 @@
     "name": "Crystal Healing",
     "slug": "crystal-healing",
     "wgContentId": 22680,
-    "level": 1
+    "level": 1,
+    "sourcePath": "content.feats_features.generalAndSkillFeats[0]"
    },
    {
     "kind": "feat",
@@ -133,7 +146,8 @@
     "name": "Ride",
     "slug": "ride",
     "wgContentId": 20492,
-    "level": 1
+    "level": 1,
+    "sourcePath": "content.feats_features.generalAndSkillFeats[1]"
    },
    {
     "kind": "feat",
@@ -141,7 +155,8 @@
     "name": "Sparkling Performance",
     "slug": "sparkling-performance",
     "wgContentId": 35194,
-    "level": 1
+    "level": 1,
+    "sourcePath": "content.feats_features.generalAndSkillFeats[2]"
    },
    {
     "kind": "feat",
@@ -149,7 +164,8 @@
     "name": "Specialty Crafting",
     "slug": "specialty-crafting",
     "wgContentId": 20570,
-    "level": 1
+    "level": 1,
+    "sourcePath": "content.feats_features.generalAndSkillFeats[3]"
    },
    {
     "kind": "feat",
@@ -157,7 +173,8 @@
     "name": "Urban Survivalist",
     "slug": "urban-survivalist",
     "wgContentId": 46748,
-    "level": 1
+    "level": 1,
+    "sourcePath": "content.feats_features.generalAndSkillFeats[4]"
    },
    {
     "kind": "feat",
@@ -165,7 +182,8 @@
     "name": "In Plain Sight",
     "slug": "in-plain-sight",
     "wgContentId": 22733,
-    "level": 4
+    "level": 4,
+    "sourcePath": "content.feats_features.generalAndSkillFeats[5]"
    },
    {
     "kind": "feat",
@@ -173,7 +191,8 @@
     "name": "Indomitable Act",
     "slug": "indomitable-act",
     "wgContentId": 29795,
-    "level": 1
+    "level": 1,
+    "sourcePath": "content.feats_features.otherFeats[0]"
    },
    {
     "kind": "feat",
@@ -181,7 +200,8 @@
     "name": "Spirit Instinct",
     "slug": "spirit-instinct",
     "wgContentId": 31314,
-    "level": 1
+    "level": 1,
+    "sourcePath": "content.feats_features.otherFeats[1]"
    },
    {
     "kind": "equipment",
@@ -192,7 +212,8 @@
     "quantity": 1,
     "equipped": true,
     "runes": null,
-    "material": null
+    "material": null,
+    "sourcePath": "content.inventory_flat[0]"
    }
   ]
  },
@@ -300,6 +321,284 @@
    ]
   },
   "html": "<h3>WG preview: Azarra (P2) (Update)</h3><p>No field changes.</p><p>Add (0):</p><p>none</p><p>Remove (0):</p><p>none</p><p>Unchanged: 21. Would become homebrew: 4.</p>"
+ },
+ "coverage": {
+  "counts": {
+   "mapped": 33,
+   "included": 38,
+   "unresolved": 20,
+   "leftover-preserved": 27,
+   "dropped": 33
+  },
+  "unresolved": [
+   {
+    "path": "character.operation_data.selections.class-feature-31093_fc073e4e-1a68-45b2-8550-a4caab054e1a_31322",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-31305_71e76b2a-d8a7-4911-b378-b1dea99dfcae_31314",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-31094_fe85dde8-7e7f-413f-8a65-fd97b554d4aa_31330",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-30975_7321a331-60eb-4fc6-a9cb-e76f92b16cef_22680",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-30970_8be52fe8-0e0f-4c15-be23-13943282f27f_46748",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-31203_5799ef5d-897c-404b-94e1-9fbb159bcecf_31273",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-30977_160efbb6-db1f-4f36-a12d-f231990c4669_22733",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-31096_df1d64ab-7bd4-45fa-b544-0db2e3cdfca7_31328",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-30978_0856cfe8-16ef-4039-a351-9ad0336b7bdf_35194",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-30971_8e506dbc-ffb8-44a3-864f-31d590c712a3_20492",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-0",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-0_313",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-1",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-1_902",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.ancestry-section-5742419753466526_3fd6a268-771b-49fc-93ed-9b53695d1a29_29468",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.ancestry-section-2707339574403411_9f26290c-a2db-4c45-9b34-5053e60c106d-0_29475",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.ancestry-section-491735390724817_9f26290c-a2db-4c45-9b34-5053e60c106d-1_29476",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.background_77716721-c318-4dc4-9f09-2feb206fcd00",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.background_77716721-c318-4dc4-9f09-2feb206fcd00_ca495819-a0b7-4ffb-a004-6d563daaf288",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.ancestry-section-491735390724817_9f26290c-a2db-4c45-9b34-5053e60c106d-1_29476_9a604abf-0883-4211-9d4e-9aede390de8a_dc582144-1fc5-4af9-b319-c1d310f28185",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   }
+  ],
+  "dropped": [
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-0",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-0_SKILL_MEDICINE",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-1",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-1_SKILL_SURVIVAL",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-2",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-2_SKILL_INTIMIDATION",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-3",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-3_SKILL_CRAFTING",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-30986_b494f324-953d-4d8c-a838-6e48b2e029e2",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-30986_b494f324-953d-4d8c-a838-6e48b2e029e2_SKILL_THIEVERY",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-4",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-4_SKILL_ARCANA",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-30987_17424b70-0636-4c0e-b966-7f90256afc0b",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-30987_17424b70-0636-4c0e-b966-7f90256afc0b_SKILL_ATHLETICS",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-30988_435f0bcc-1064-422a-b2ff-a06db35be72d",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-30988_435f0bcc-1064-422a-b2ff-a06db35be72d_SKILL_OCCULTISM",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "content._README",
+    "status": "dropped",
+    "reason": "library reference data, not character state"
+   },
+   {
+    "path": "content.character_traits",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.senses",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.weapons",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.inventory_flat[1]",
+    "status": "dropped",
+    "reason": "built-in strike (fist), not an item"
+   },
+   {
+    "path": "content.total_bulk",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.spell_raw_data",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.spells.cantrips",
+    "status": "dropped",
+    "reason": "derived spell view; PF2e recomputes"
+   },
+   {
+    "path": "content.spells.normal",
+    "status": "dropped",
+    "reason": "derived spell view; PF2e recomputes"
+   },
+   {
+    "path": "content.spells.rituals",
+    "status": "dropped",
+    "reason": "derived spell view; PF2e recomputes"
+   },
+   {
+    "path": "content.size",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.speeds",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.ac",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.shield_item",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.armor_item",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.resist_weaks",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.proficiencies",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   }
+  ]
  },
  "parity": {
   "ok": true,

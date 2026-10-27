@@ -40,3 +40,26 @@ test("dedupe: only explicit grants from this run's items, same compendium source
   assert.equal(hit(e("Fleet", "C:feats.fleet")), null, "an ungranted item never dedupes");
   assert.equal(hit(e("Shield", null)), null, "no prefix matching");
 });
+import { auditImportCoverage, leftoverValues, CLASS_SUPPORT_NOTE } from "../scripts/coverage.js";
+import { buildPlan, sluggify } from "../scripts/mapping.js";
+import { readFileSync as rf } from "node:fs";
+test("coverage ledger: every source path once, built from plan actions, classes experimental", () => {
+  const exp = JSON.parse(rf(new URL("./fixtures/pcs/64.json", import.meta.url)));
+  const plan = buildPlan(exp);
+  assert.ok(plan.entries.every((e) => typeof e.sourcePath === "string"), "every plan entry cites its source path");
+  const entries = plan.entries.map((e) => ({ ...e, match: { uuid: "U" }, outcome: e.name === "Specialty Crafting" ? "granted" : "created", grantedBy: "Web Weaver" }));
+  const sc = entries.find((e) => e.name === "Specialty Crafting");
+  const led = auditImportCoverage(exp, { ...plan, entries }, { applied: true, slug: sluggify });
+  const paths = led.rows.map((r) => r.path);
+  assert.equal(new Set(paths).size, paths.length, "no path counted twice");
+  assert.ok(led.rows.every((r) => r.reason), "every status has a reason");
+  assert.deepEqual(led.rows.find((r) => r.path === sc.sourcePath), { path: sc.sourcePath, status: "included", reason: "granted by PF2e via Web Weaver" });
+  assert.equal(led.classSupport, CLASS_SUPPORT_NOTE);
+  assert.match(CLASS_SUPPORT_NOTE, /experimental for every class/);
+  // An entry that was planned but never applied is reported as dropped, not silently mapped.
+  const lost = auditImportCoverage(exp, { ...plan, entries: entries.map((e) => (e === sc ? { ...e, outcome: undefined } : e)) }, { applied: true, slug: sluggify });
+  assert.equal(lost.rows.find((r) => r.path === sc.sourcePath).status, "dropped");
+  const left = leftoverValues(exp, led);
+  assert.ok(Object.keys(left).length === led.counts["leftover-preserved"]);
+  assert.equal(left["character.notes"], exp.character.notes);
+});

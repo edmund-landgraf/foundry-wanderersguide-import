@@ -3,6 +3,8 @@
 import { readFileSync } from "node:fs";
 import { buildPlan, matchEntries, missReport, wgChoiceHints, spellcastingPlan, diffPlan, parityCheck } from "../../scripts/mapping.js";
 import { diffHtml, parityHtml } from "../../scripts/importer.js";
+import { auditImportCoverage } from "../../scripts/coverage.js";
+import { sluggify } from "../../scripts/mapping.js";
 
 export const PCS = [63, 64, 66, 71, 72, 74, 76, 78];
 const fixture = (name) => JSON.parse(readFileSync(new URL(`../fixtures/pcs/${name}`, import.meta.url)));
@@ -23,6 +25,7 @@ export function goldenFor(id) {
     choiceHints: Object.fromEntries(wgChoiceHints(exp)),
     spellcasting: spellcastingPlan(exp),
     preview: { insert, update, html: diffHtml(plan, update, misses) },
+    coverage: (() => { const c = auditImportCoverage(exp, { ...plan, entries: matched }, { slug: sluggify }); return { counts: c.counts, unresolved: c.rows.filter((r) => r.status === "unresolved"), dropped: c.rows.filter((r) => r.status === "dropped") }; })(),
     parity: { ok: parity.ok, passed: parity.passed, failed: parity.failed, html: parityHtml(plan.name, parity) },
   };
 }
