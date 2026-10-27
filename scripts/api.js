@@ -93,8 +93,20 @@ export function campaignLabel(campaignId, names) {
   if (campaignId == null) return "";
   return names?.get?.(campaignId) ?? names?.[campaignId] ?? `Campaign #${campaignId}`;
 }
+// Slim export (wgui-export-character-slim): the same v4 file without the all_spells / all_traits
+// catalog the importer never reads, about 0.12 MB instead of 4 MB. A WG server without it answers
+// 404 or a 5xx worker error, so fall back to the full export. Auth failures (401/403/429) do not fall back.
+export const SLIM_EXPORT_FN = "wgui-export-character-slim";
+export const FULL_EXPORT_FN = "wgui-export-character";
 export async function exportCharacter(opts, id) {
-  const json = await callFunction({ ...opts, fn: "wgui-export-character", body: { id: Number(id), format: "json" } });
+  const body = { id: Number(id), format: "json" };
+  let json;
+  try {
+    json = await callFunction({ ...opts, fn: SLIM_EXPORT_FN, body });
+  } catch (e) {
+    if (!(e instanceof WgApiError) || !(e.status === 404 || e.status >= 500)) throw e;
+    json = await callFunction({ ...opts, fn: FULL_EXPORT_FN, body });
+  }
   if (!json || json.version !== 4 || !json.character) throw new WgApiError(0, "Export was not a JSON v4 character.");
   return json;
 }
