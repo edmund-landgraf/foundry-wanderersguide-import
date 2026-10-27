@@ -141,3 +141,69 @@ test("portrait: image_url from v4 export, resolved for Foundry", async () => {
   assert.equal(resolveImageUrl("portraits/c.png", f), "http://127.0.0.1:8000/storage/v1/object/public/portraits/c.png");
   assert.equal(resolveImageUrl("", f), null);
 });
+
+// ---- importer TODOs (feat/importer-todos) ------------------------------------------------------
+import { wgChoiceHints, matchChoice, defaultFlag, parseComposedName, spellcastingPlan, entryKeyFor, diffPlan, parityCheck } from "../scripts/mapping.js";
+
+test("wgChoiceHints reads WG select answers per feature", () => {
+  const exp2 = { character: { operation_data: { selections: { "class-feature-1_op-a": "opt-2", "class-feature-2_op-b": "77" } }, details: {} },
+    content: { feats_features: { classFeatures: [
+      { id: 1, name: "Specialty Crafting", operations: [{ id: "op-a", type: "select", data: { optionsPredefined: [{ id: "opt-1", title: "Alchemy" }, { id: "opt-2", title: "Woodworking" }] } }] },
+      { id: 2, name: "Muses", operations: [{ id: "op-b", type: "select", data: { optionsPredefined: [] } }] }],
+      otherFeats: [{ id: 77, name: "Polymath Muse" }] } } };
+  const h = wgChoiceHints(exp2);
+  assert.deepEqual(h.get("specialty-crafting"), ["Woodworking"]);
+  assert.deepEqual(h.get("muses"), ["Polymath Muse"]);
+  assert.deepEqual(wgChoiceHints(real).get("muses"), ["Polymath Muse"]);
+});
+
+test("matchChoice and defaultFlag", () => {
+  assert.equal(matchChoice(["Enigma", "Polymath", "Maestro"], ["Polymath Muse"]), 1);
+  assert.equal(matchChoice(["Alchemy", "Woodworking"], ["Woodworking"]), 1);
+  assert.equal(matchChoice(["Alchemy"], ["Nope"]), -1);
+  assert.equal(defaultFlag("Specialty Crafting"), "specialtyCrafting");
+});
+
+test("parseComposedName splits runes and materials", () => {
+  const a = parseComposedName("+1 Striking Flaming Cold Iron Longsword (Low-Grade)");
+  assert.equal(a.base, "Longsword");
+  assert.deepEqual(a.runes, { potency: 1, striking: 1, resilient: 0, property: ["flaming"] });
+  assert.deepEqual(a.material, { type: "cold-iron", grade: "low" });
+  const b = parseComposedName("+2 Greater Resilient Leather Armor");
+  assert.equal(b.base, "Leather Armor");
+  assert.equal(b.runes.resilient, 2);
+  const c = parseComposedName("Healing Potion (Minor)");
+  assert.equal(c.composed, false);
+  assert.equal(c.base, "Healing Potion (Minor)");
+  const d = parseComposedName("Anadi Fangs", { runes: { striking: 0, potency: 2, property: ["Shock"] } });
+  assert.deepEqual(d.runes, { potency: 2, striking: 0, resilient: 0, property: ["shock"] });
+  const p = buildPlan({ character: {}, content: { inventory_flat: [{ item: { id: 5, name: "+1 Striking Longsword" } }] } });
+  const m = matchEntries(p.entries, [{ type: "weapon", slug: "longsword", name: "Longsword" }]);
+  assert.equal(m[0].via, "base+runes");
+});
+
+test("spellcastingPlan builds entries and keys", () => {
+  const sp = spellcastingPlan(real);
+  assert.deepEqual(sp.map((e) => [e.key, e.mode, e.tradition, e.ability]), [["src:BARD", "spontaneous", "occult", "cha"], ["focus:BARD", "focus", "occult", "cha"]]);
+  assert.deepEqual(sp[0].slots, { 0: 5, 1: 3 });
+  const plan = buildPlan(real);
+  const keys = plan.entries.filter((e) => e.kind === "spell").map((e) => `${e.name}->${entryKeyFor(e)}`);
+  assert.ok(keys.includes("Phantasmal Minion->src:BARD"));
+  assert.ok(keys.includes("Courageous Anthem->focus:BARD"));
+  assert.equal(entryKeyFor({ innate: true, tradition: "occult" }), "innate:occult");
+});
+
+test("diffPlan and parityCheck", () => {
+  const plan = buildPlan(exp);
+  assert.equal(diffPlan(plan, null).insert, true);
+  const actor = { name: plan.name, level: plan.level, hpMax: plan.maxHp, attributes: plan.attributes, languages: plan.languages,
+    items: plan.entries.map((e) => ({ type: e.kind === "equipment" ? "equipment" : e.kind, name: e.name, slug: e.slug, ours: true, rank: e.rank ?? null, entryMode: e.kind === "spell" ? (e.innate ? "innate" : e.focus ? "focus" : "spontaneous") : null })) };
+  const d = diffPlan(plan, actor);
+  assert.deepEqual([d.fields.length, d.add.length, d.remove.length], [0, 0, 0]);
+  assert.equal(parityCheck(plan, actor).ok, true);
+  const worse = { ...actor, hpMax: plan.maxHp - 3, items: actor.items.slice(1) };
+  const pc = parityCheck(plan, worse);
+  assert.equal(pc.ok, false);
+  assert.ok(pc.failed.some((r) => r.check === "max HP"));
+  assert.equal(diffPlan(plan, worse).add.length, 1);
+});
