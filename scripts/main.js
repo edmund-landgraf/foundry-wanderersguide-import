@@ -7,8 +7,9 @@ Hooks.once("init", () => {
     scope: "client", config: true, type: String, default: "",
   });
   game.settings.register(MODULE_ID, "authUrl", {
+    // Hidden since wgui-ext: the server scopes by API key, so client_id filtering is redundant. Kept so saved values survive.
     name: "WGI.Settings.AuthUrl.Name", hint: "WGI.Settings.AuthUrl.Hint",
-    scope: "client", config: true, type: String, default: "",
+    scope: "client", config: false, type: String, default: "",
   });
   // Legacy 0.1.0 bare client id; hidden, migrated into authUrl on ready.
   game.settings.register(MODULE_ID, "clientId", { scope: "client", config: false, type: String, default: "" });

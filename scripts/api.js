@@ -27,34 +27,69 @@ export async function callFunction({ baseUrl, apiKey, fn, body, fetchImpl = glob
     }
     let json = null;
     try { json = await res.json(); } catch { /* non-JSON */ }
-    if (!res.ok) {
-      const msg = json?.data?.message ?? json?.message ?? `HTTP ${res.status}`;
-      const label = { 401: "API key rejected", 403: "Character not granted to this API client", 429: "Rate limited" }[res.status];
-      throw new WgApiError(res.status, label ? `${label} (${res.status}): ${msg}` : msg);
-    }
+    if (!res.ok || json?.status === "fail" || json?.status === "error") throw new WgApiError(res.status, friendlyError(res.status, json));
     return json;
   }
 }
 
-/** Lightweight list (PLAN 4A.1 v1): find-character {} as the key owner, trimmed to summary fields. */
-export async function listCharacters(opts) {
-  const json = await callFunction({ ...opts, fn: "find-character", body: {} });
-  return summarizeCharacters(json?.data ?? [], opts.clientId);
+// wgui-ext error codes -> user-facing text. Never includes the key.
+const ERROR_TEXT = {
+  AUTH_REQUIRED: "No API key was sent. Paste your Wanderer's Guide API key in module settings.",
+  INVALID_API_KEY: "Wanderer's Guide rejected the API key. Copy it again from Account > API Clients.",
+  CAMPAIGN_FORBIDDEN: "This API key has no access to that campaign.",
+  CAMPAIGN_ID_INVALID: "Invalid campaign id.",
+};
+export function friendlyError(status, json) {
+  const code = json?.data?.code;
+  if (code && ERROR_TEXT[code]) return ERROR_TEXT[code];
+  const msg = json?.data?.message ?? json?.message ?? `HTTP ${status}`;
+  const label = { 401: "API key rejected", 403: "Not allowed for this API key", 404: "Function not found on this WG server (is wgui-ext deployed?)", 429: "Rate limited" }[status];
+  return label ? `${label} (${status}): ${msg}` : msg;
 }
 
-export function summarizeCharacters(rows, clientId = "") {
+/** Characters the API key can read (server scopes by key, so every row is importable). */
+export async function listCharacters(opts) {
+  const json = await callFunction({ ...opts, fn: "wgui-ext-list-key-characters", body: {} });
+  return summarizeCharacters(json?.data ?? []);
+}
+
+export function summarizeCharacters(rows) {
   return (Array.isArray(rows) ? rows : [rows]).filter(Boolean).map((c) => ({
     id: c.id,
     name: c.name,
     level: c.level,
-    ancestry: c.details?.ancestry?.name ?? "",
-    class: c.details?.class?.name ?? "",
+    ancestry: typeof c.ancestry === "string" ? c.ancestry : c.ancestry?.name ?? c.details?.ancestry?.name ?? "",
+    class: typeof c.class === "string" ? c.class : c.class?.name ?? c.details?.class?.name ?? "",
     campaignId: c.campaign_id ?? null,
-    // With the API client id set, only grants to that client count; otherwise any grant (may still 403).
-    granted: (c.details?.api_clients?.client_access ?? []).some((g) => !clientId || g.clientId === clientId),
+    imageUrl: c.image_url ?? "",
+    updatedAt: c.updated_at ?? "",
+    player: c.player ?? null,
   }));
 }
 
+/** wgui-ext campaign row -> {id, name, imageUrl, imageFocusY, characterIds, owned}. imageUrl = WG campaign art (meta_data.image_url). */
+export function summarizeCampaign(c) {
+  if (!c) return null;
+  return { id: c.id, name: c.name, imageUrl: c.image_url ?? null, imageFocusY: c.image_focus_y ?? null, characterIds: c.character_ids ?? [], owned: c.owned === true };
+}
+
+/** Campaigns visible to the key (see summarizeCampaign). owned = the key's user is the GM. */
+export async function listCampaigns(opts) {
+  const json = await callFunction({ ...opts, fn: "wgui-ext-find-key-campaigns", body: {} });
+  return (json?.data?.campaigns ?? []).map(summarizeCampaign);
+}
+
+/** One campaign and its characters. For the GM this is every PC that joined the campaign (with `player`). */
+export async function getCampaign(opts, campaignId) {
+  const json = await callFunction({ ...opts, fn: "wgui-ext-find-key-campaigns", body: { campaign_id: Number(campaignId) } });
+  return { campaign: summarizeCampaign(json?.data?.campaign), characters: summarizeCharacters(json?.data?.characters ?? []) };
+}
+
+/** Campaign name for a row, falling back to "Campaign #id" only when the name is unknown. */
+export function campaignLabel(campaignId, names) {
+  if (campaignId == null) return "";
+  return names?.get?.(campaignId) ?? names?.[campaignId] ?? `Campaign #${campaignId}`;
+}
 export async function exportCharacter(opts, id) {
   const json = await callFunction({ ...opts, fn: "wgui-export-character", body: { id: Number(id), format: "json" } });
   if (!json || json.version !== 4 || !json.character) throw new WgApiError(0, "Export was not a JSON v4 character.");
