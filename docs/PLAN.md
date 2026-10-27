@@ -1,6 +1,6 @@
 ﻿# Foundry Wanderer's Guide Import: Plan
 
-Status: draft (not built). Repo is not a git repo yet; nothing committed.
+Status: implemented experimental MVP. The repository is GitHub-backed; see the README for current supported behavior and known limitations. This plan remains the target-state roadmap rather than a claim that every PF2e parity field is complete.
 
 ## 1. Goal
 

@@ -238,3 +238,17 @@ test("summarizeCampaign carries WG campaign art", async () => {
   assert.deepEqual(summarizeCampaign({ id: 42, name: "C", image_url: "https://x/a.png", image_focus_y: 40, character_ids: [1], owned: true }), { id: 42, name: "C", imageUrl: "https://x/a.png", imageFocusY: 40, characterIds: [1], owned: true });
   assert.equal(summarizeCampaign(null), null);
 });
+
+test("API summaries tolerate empty or malformed list payloads", async () => {
+  const { summarizeCharacters, summarizeCampaign, friendlyError } = await import("../scripts/api.js");
+  assert.deepEqual(summarizeCharacters(null), []);
+  assert.deepEqual(summarizeCharacters({ id: 4, name: "Solo" }), [{ id: 4, name: "Solo", level: undefined, ancestry: "", class: "", campaignId: null, imageUrl: "", updatedAt: "", player: null }]);
+  assert.equal(summarizeCampaign(undefined), null);
+  assert.doesNotMatch(friendlyError(500, { data: { message: "Bearer 11111111-2222-3333-4444-555555555555 rejected" } }), /11111111-2222-3333-4444-555555555555/);
+});
+
+test("exportCharacter rejects non-v4 exports", async () => {
+  const { exportCharacter } = await import("../scripts/api.js");
+  const fetchImpl = async () => ({ status: 200, ok: true, headers: { get: () => null }, json: async () => ({ version: 3, character: {} }) });
+  await assert.rejects(exportCharacter({ baseUrl: "http://h", apiKey: KEY, fetchImpl }, 7), /JSON v4 character/);
+});

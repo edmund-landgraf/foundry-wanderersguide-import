@@ -44,7 +44,10 @@ export function friendlyError(status, json) {
   if (code && ERROR_TEXT[code]) return ERROR_TEXT[code];
   const msg = json?.data?.message ?? json?.message ?? `HTTP ${status}`;
   const label = { 401: "API key rejected", 403: "Not allowed for this API key", 404: "Function not found on this WG server (is wgui-ext deployed?)", 429: "Rate limited" }[status];
-  return label ? `${label} (${status}): ${msg}` : msg;
+  // Upstream error text is untrusted. Do not allow a UUID-shaped API key or token to
+  // leak into notifications, chat cards, or console errors.
+  const safe = String(msg).replace(/\b[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\b/gi, "[redacted]");
+  return label ? `${label} (${status}): ${safe}` : safe;
 }
 
 /** Characters the API key can read (server scopes by key, so every row is importable). */

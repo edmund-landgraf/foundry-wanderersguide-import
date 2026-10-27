@@ -1,6 +1,6 @@
 # Wanderer's Guide Import (Foundry VTT, PF2e)
 
-Imports Pathfinder 2e characters from Wanderer's Guide (WGUI) into the current Foundry world. MVP; see [docs/PLAN.md](docs/PLAN.md).
+Imports Pathfinder 2e characters from Wanderer's Guide (WGUI) into the current Foundry world. The module is experimental and currently targets the verified Foundry/PF2e versions in [module.json](module.json).
 
 ## Install
 
@@ -12,7 +12,7 @@ https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/
 
 For development, link the repo into `<Foundry Data>/modules/foundry-wanderersguide-import` (Windows: `mklink /J`).
 
-Requires Foundry v12–v13 and the `pf2e` system. Enable the module in your world.
+Requires Foundry v12–v14 and the `pf2e` system. The published manifest currently verifies Foundry 14 and PF2e 8.6.1; other combinations are not covered by the automated tests.
 
 ## API key setup (only auth mode)
 
@@ -25,13 +25,13 @@ Requires Foundry v12–v13 and the `pf2e` system. Enable the module in your worl
 
 ## Use
 
-Actors sidebar → **Import from Wanderer's Guide** → tick characters → **Import selected**. Characters without a grant are greyed out. Each import whispers a miss report to you. Re-importing the same WG character updates the same actor (flags `wgId` + host).
+Actors sidebar → **Import from Wanderer's Guide** → tick characters → **Import selected**. Each import whispers a miss/parity report to you. Re-importing the same WG character updates the same actor (flags `wgId` + host) and preserves current HP, temporary HP, prepared spells, and spell-slot usage where the corresponding spellcasting entry remains available.
 
 ## What works / what's stubbed
 
-Works: character list, one-at-a-time JSON v4 export with 429 backoff, actor create/update by flags, compendium match (slug → name → name+level) for ancestry, heritage, background, class, feats, spells, equipment; unmatched items become world items in a "Wanderer's Guide Homebrew" folder; level, languages, attributes, HP forced from WG.
+Works: character list, one-at-a-time JSON v4 export with 429 backoff, actor create/update by flags, compendium match (slug → name → name+level) for ancestry, heritage, background, class, feats, spells, and equipment; ChoiceSet hints; rune/material parsing; spellcasting entries; unmatched items in a "Wanderer's Guide Homebrew" folder; optional dry-run diff and parity reporting; campaign selection and optional campaign art; level, languages, attributes, and HP reconciliation.
 
-Stubbed (TODOs reference PLAN milestones): ChoiceSet pre-answers, runes/materials, spellcasting entries, dry-run diff, parity check.
+Known limitations: the module has no Foundry-world integration test suite; parity currently covers a subset of the full PF2e sheet; skills, saves, AC, perception, currency, and several derived/proficiency fields are not yet forced from WG; and campaign visibility can exceed exportability when WG does not grant the API client access to a PC.
 
 ## Tests
 
