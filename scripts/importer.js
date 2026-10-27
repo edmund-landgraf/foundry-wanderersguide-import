@@ -535,7 +535,8 @@ async function applyImport(p, { onStep, parity, failAfter }) {
       step(`created ${kind}`);
     }
     // Leftovers (coverage status leftover-preserved) are kept verbatim on the actor.
-    // Prefer Document flag APIs; Foundry v16 removes the -= embedded-key update form.\n    const leftovers = leftoverValues(exp, p.coverage);\n    if (typeof actor.unsetFlag === \"function\") await actor.unsetFlag(MODULE_ID, \"wgLeftovers\");\n    else await actor.update({ [`flags.${MODULE_ID}.-=wgLeftovers`]: null });\n    if (typeof actor.setFlag === \"function\") await actor.setFlag(MODULE_ID, \"wgLeftovers\", leftovers);\n    else await actor.update({ [`flags.${MODULE_ID}.wgLeftovers`]: leftovers });
+    await actor.update({ [`flags.${MODULE_ID}.-=wgLeftovers`]: null });
+    await actor.update({ [`flags.${MODULE_ID}.wgLeftovers`]: leftoverValues(exp, p.coverage) });
     // Replacements exist: now remove the previous module-managed items.
     const stale = [...old].filter((id) => actor.items.has(id));
     if (stale.length) await actor.deleteEmbeddedDocuments("Item", stale);
