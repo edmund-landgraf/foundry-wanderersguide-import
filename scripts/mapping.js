@@ -76,7 +76,7 @@ export function buildPlan(exp) {
   };
 }
 
-/** Match entries against a compendium index: slug first, then name, then name+level. */
+/** Match entries against a compendium index: slug first, then an unambiguous name (or name+level). */
 export function matchEntries(entries, index) {
   const bySlug = new Map();
   const byName = new Map();
@@ -99,8 +99,13 @@ export function matchEntries(entries, index) {
     for (const t of typesFor(e.packType)) {
       const list = byName.get(`${t}:${e.name.toLowerCase()}`);
       if (list?.length) {
-        const lvl = e.level != null ? list.find((r) => r.level === e.level) : null;
-        return { ...e, match: lvl ?? list[0], via: lvl ? "name+level" : "name" };
+        // Confidence gate: a name match is used only when it is unambiguous (one compendium item,
+        // or exactly one at the WG level). Otherwise the entry is unresolved, never list[0].
+        const uniq = [...new Map(list.map((r) => [r.uuid, r])).values()];
+        if (uniq.length === 1) return { ...e, match: uniq[0], via: "name" };
+        const lvl = e.level != null ? uniq.filter((r) => r.level === e.level) : [];
+        if (lvl.length === 1) return { ...e, match: lvl[0], via: "name+level" };
+        return { ...e, match: null, via: "ambiguous", candidates: uniq.map((r) => r.uuid) };
       }
     }
     return { ...e, match: null, via: "miss" };
