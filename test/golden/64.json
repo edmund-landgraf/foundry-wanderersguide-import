@@ -325,111 +325,16 @@
  "coverage": {
   "counts": {
    "mapped": 33,
-   "included": 38,
-   "unresolved": 20,
+   "included": 41,
+   "unresolved": 1,
    "leftover-preserved": 27,
-   "dropped": 33
+   "dropped": 50
   },
   "unresolved": [
    {
-    "path": "character.operation_data.selections.class-feature-31093_fc073e4e-1a68-45b2-8550-a4caab054e1a_31322",
-    "status": "unresolved",
-    "reason": "WG select answer with no PF2e target; review manually"
-   },
-   {
-    "path": "character.operation_data.selections.class-feature-31305_71e76b2a-d8a7-4911-b378-b1dea99dfcae_31314",
-    "status": "unresolved",
-    "reason": "WG select answer with no PF2e target; review manually"
-   },
-   {
-    "path": "character.operation_data.selections.class-feature-31094_fe85dde8-7e7f-413f-8a65-fd97b554d4aa_31330",
-    "status": "unresolved",
-    "reason": "WG select answer with no PF2e target; review manually"
-   },
-   {
-    "path": "character.operation_data.selections.class-feature-30975_7321a331-60eb-4fc6-a9cb-e76f92b16cef_22680",
-    "status": "unresolved",
-    "reason": "WG select answer with no PF2e target; review manually"
-   },
-   {
-    "path": "character.operation_data.selections.class-feature-30970_8be52fe8-0e0f-4c15-be23-13943282f27f_46748",
-    "status": "unresolved",
-    "reason": "WG select answer with no PF2e target; review manually"
-   },
-   {
-    "path": "character.operation_data.selections.class-feature-31203_5799ef5d-897c-404b-94e1-9fbb159bcecf_31273",
-    "status": "unresolved",
-    "reason": "WG select answer with no PF2e target; review manually"
-   },
-   {
-    "path": "character.operation_data.selections.class-feature-30977_160efbb6-db1f-4f36-a12d-f231990c4669_22733",
-    "status": "unresolved",
-    "reason": "WG select answer with no PF2e target; review manually"
-   },
-   {
-    "path": "character.operation_data.selections.class-feature-31096_df1d64ab-7bd4-45fa-b544-0db2e3cdfca7_31328",
-    "status": "unresolved",
-    "reason": "WG select answer with no PF2e target; review manually"
-   },
-   {
-    "path": "character.operation_data.selections.class-feature-30978_0856cfe8-16ef-4039-a351-9ad0336b7bdf_35194",
-    "status": "unresolved",
-    "reason": "WG select answer with no PF2e target; review manually"
-   },
-   {
-    "path": "character.operation_data.selections.class-feature-30971_8e506dbc-ffb8-44a3-864f-31d590c712a3_20492",
-    "status": "unresolved",
-    "reason": "WG select answer with no PF2e target; review manually"
-   },
-   {
-    "path": "character.operation_data.selections.ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-0",
-    "status": "unresolved",
-    "reason": "WG select answer with no PF2e target; review manually"
-   },
-   {
-    "path": "character.operation_data.selections.ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-0_313",
-    "status": "unresolved",
-    "reason": "WG select answer with no PF2e target; review manually"
-   },
-   {
-    "path": "character.operation_data.selections.ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-1",
-    "status": "unresolved",
-    "reason": "WG select answer with no PF2e target; review manually"
-   },
-   {
-    "path": "character.operation_data.selections.ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-1_902",
-    "status": "unresolved",
-    "reason": "WG select answer with no PF2e target; review manually"
-   },
-   {
-    "path": "character.operation_data.selections.ancestry-section-5742419753466526_3fd6a268-771b-49fc-93ed-9b53695d1a29_29468",
-    "status": "unresolved",
-    "reason": "WG select answer with no PF2e target; review manually"
-   },
-   {
-    "path": "character.operation_data.selections.ancestry-section-2707339574403411_9f26290c-a2db-4c45-9b34-5053e60c106d-0_29475",
-    "status": "unresolved",
-    "reason": "WG select answer with no PF2e target; review manually"
-   },
-   {
-    "path": "character.operation_data.selections.ancestry-section-491735390724817_9f26290c-a2db-4c45-9b34-5053e60c106d-1_29476",
-    "status": "unresolved",
-    "reason": "WG select answer with no PF2e target; review manually"
-   },
-   {
-    "path": "character.operation_data.selections.background_77716721-c318-4dc4-9f09-2feb206fcd00",
-    "status": "unresolved",
-    "reason": "WG select answer with no PF2e target; review manually"
-   },
-   {
-    "path": "character.operation_data.selections.background_77716721-c318-4dc4-9f09-2feb206fcd00_ca495819-a0b7-4ffb-a004-6d563daaf288",
-    "status": "unresolved",
-    "reason": "WG select answer with no PF2e target; review manually"
-   },
-   {
     "path": "character.operation_data.selections.ancestry-section-491735390724817_9f26290c-a2db-4c45-9b34-5053e60c106d-1_29476_9a604abf-0883-4211-9d4e-9aede390de8a_dc582144-1fc5-4af9-b319-c1d310f28185",
     "status": "unresolved",
-    "reason": "WG select answer with no PF2e target; review manually"
+    "reason": "choice-answer: Specialty Crafting: WG chose Woodworking; not consumed by a PF2e ChoiceSet"
    }
   ],
   "dropped": [
@@ -474,6 +379,31 @@
     "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
    },
    {
+    "path": "character.operation_data.selections.class-feature-31093_fc073e4e-1a68-45b2-8550-a4caab054e1a_31322",
+    "status": "dropped",
+    "reason": "inactive-nested: inactive nested selection: no select operation in the export reads \"31322\", and WG's computed state (raw_data_dump *_IDS) does not contain 31324"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-31305_71e76b2a-d8a7-4911-b378-b1dea99dfcae_31314",
+    "status": "dropped",
+    "reason": "inactive-nested: inactive nested selection: no select operation in the export reads \"31314\", and WG's computed state (raw_data_dump *_IDS) does not contain 31313"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-31094_fe85dde8-7e7f-413f-8a65-fd97b554d4aa_31330",
+    "status": "dropped",
+    "reason": "inactive-nested: inactive nested selection: no select operation in the export reads \"31330\", and WG's computed state (raw_data_dump *_IDS) does not contain 31331"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-30975_7321a331-60eb-4fc6-a9cb-e76f92b16cef_22680",
+    "status": "dropped",
+    "reason": "inactive-nested: inactive nested selection: no select operation in the export reads \"22680\", and WG's computed state (raw_data_dump *_IDS) does not contain 27656"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-30970_8be52fe8-0e0f-4c15-be23-13943282f27f_46748",
+    "status": "dropped",
+    "reason": "inactive-nested: inactive nested selection: no select operation in the export reads \"46748\", and WG's computed state (raw_data_dump *_IDS) does not contain 22435"
+   },
+   {
     "path": "character.operation_data.selections.class-feature-30986_b494f324-953d-4d8c-a838-6e48b2e029e2",
     "status": "dropped",
     "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
@@ -482,6 +412,16 @@
     "path": "character.operation_data.selections.class-feature-30986_b494f324-953d-4d8c-a838-6e48b2e029e2_SKILL_THIEVERY",
     "status": "dropped",
     "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-31203_5799ef5d-897c-404b-94e1-9fbb159bcecf_31273",
+    "status": "dropped",
+    "reason": "inactive-nested: inactive nested selection: no select operation in the export reads \"31273\", and WG's computed state (raw_data_dump *_IDS) does not contain 27928"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-30977_160efbb6-db1f-4f36-a12d-f231990c4669_22733",
+    "status": "dropped",
+    "reason": "inactive-nested: inactive nested selection: no select operation in the export reads \"22733\", and WG's computed state (raw_data_dump *_IDS) does not contain 46731"
    },
    {
     "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-4",
@@ -504,6 +444,21 @@
     "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
    },
    {
+    "path": "character.operation_data.selections.class-feature-31096_df1d64ab-7bd4-45fa-b544-0db2e3cdfca7_31328",
+    "status": "dropped",
+    "reason": "inactive-nested: inactive nested selection: no select operation in the export reads \"31328\", and WG's computed state (raw_data_dump *_IDS) does not contain 27928"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-30978_0856cfe8-16ef-4039-a351-9ad0336b7bdf_35194",
+    "status": "dropped",
+    "reason": "inactive-nested: inactive nested selection: no select operation in the export reads \"35194\", and WG's computed state (raw_data_dump *_IDS) does not contain 35143"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-30971_8e506dbc-ffb8-44a3-864f-31d590c712a3_20492",
+    "status": "dropped",
+    "reason": "inactive-nested: inactive nested selection: no select operation in the export reads \"20492\", and WG's computed state (raw_data_dump *_IDS) does not contain 20640"
+   },
+   {
     "path": "character.operation_data.selections.class-feature-30988_435f0bcc-1064-422a-b2ff-a06db35be72d",
     "status": "dropped",
     "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
@@ -512,6 +467,36 @@
     "path": "character.operation_data.selections.class-feature-30988_435f0bcc-1064-422a-b2ff-a06db35be72d_SKILL_OCCULTISM",
     "status": "dropped",
     "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-0_313",
+    "status": "dropped",
+    "reason": "inactive-nested: inactive nested selection: no select operation in the export reads \"313\", and WG's computed state (raw_data_dump *_IDS) does not contain 419"
+   },
+   {
+    "path": "character.operation_data.selections.ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-1_902",
+    "status": "dropped",
+    "reason": "inactive-nested: inactive nested selection: no select operation in the export reads \"902\", and WG's computed state (raw_data_dump *_IDS) does not contain 94"
+   },
+   {
+    "path": "character.operation_data.selections.ancestry-section-5742419753466526_3fd6a268-771b-49fc-93ed-9b53695d1a29_29468",
+    "status": "dropped",
+    "reason": "inactive-nested: inactive nested selection: no select operation in the export reads \"29468\", and WG's computed state (raw_data_dump *_IDS) does not contain 29466"
+   },
+   {
+    "path": "character.operation_data.selections.ancestry-section-2707339574403411_9f26290c-a2db-4c45-9b34-5053e60c106d-0_29475",
+    "status": "dropped",
+    "reason": "inactive-nested: inactive nested selection: no select operation in the export reads \"29475\", and WG's computed state (raw_data_dump *_IDS) does not contain 29472"
+   },
+   {
+    "path": "character.operation_data.selections.ancestry-section-491735390724817_9f26290c-a2db-4c45-9b34-5053e60c106d-1_29476",
+    "status": "dropped",
+    "reason": "inactive-nested: inactive nested selection: no select operation in the export reads \"29476\", and WG's computed state (raw_data_dump *_IDS) does not contain 29472"
+   },
+   {
+    "path": "character.operation_data.selections.background_77716721-c318-4dc4-9f09-2feb206fcd00_ca495819-a0b7-4ffb-a004-6d563daaf288",
+    "status": "dropped",
+    "reason": "inactive-nested: inactive nested selection: no select operation in the export reads \"ca495819-a0b7-4ffb-a004-6d563daaf288\", and WG's computed state (raw_data_dump *_IDS) does not contain 660a8e2d-813a-488f-80d9-0aac359b6e6f"
    },
    {
     "path": "content._README",
@@ -597,6 +582,11 @@
     "path": "content.proficiencies",
     "status": "dropped",
     "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.raw_data_dump",
+    "status": "dropped",
+    "reason": "library reference data, not character state"
    }
   ]
  },

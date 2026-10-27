@@ -3583,7 +3583,243 @@
     "value": 2,
     "partial": false
    }
+  },
+  "raw_data_dump": {
+   "variables": {
+    "SENSE_NAMES": {
+     "name": "SENSE_NAMES",
+     "type": "list-str",
+     "value": [
+      "LOW-LIGHT VISION"
+     ]
+    },
+    "MODE_NAMES": {
+     "name": "MODE_NAMES",
+     "type": "list-str",
+     "value": []
+    },
+    "CLASS_NAMES": {
+     "name": "CLASS_NAMES",
+     "type": "list-str",
+     "value": [
+      "ALCHEMIST"
+     ]
+    },
+    "ANCESTRY_NAMES": {
+     "name": "ANCESTRY_NAMES",
+     "type": "list-str",
+     "value": [
+      "YAKSHA"
+     ]
+    },
+    "BACKGROUND_NAMES": {
+     "name": "BACKGROUND_NAMES",
+     "type": "list-str",
+     "value": [
+      "DECKHAND"
+     ]
+    },
+    "HERITAGE_NAMES": {
+     "name": "HERITAGE_NAMES",
+     "type": "list-str",
+     "value": [
+      "RESPITE OF LOAM AND LEAF"
+     ]
+    },
+    "CLASS_ARCHETYPE_NAMES": {
+     "name": "CLASS_ARCHETYPE_NAMES",
+     "type": "list-str",
+     "value": []
+    },
+    "FEAT_NAMES": {
+     "name": "FEAT_NAMES",
+     "type": "list-str",
+     "value": [
+      "CAT FALL",
+      "TANGLE-TONGUE'S WIT",
+      "ALCHEMICAL ASSESSMENT",
+      "ALCHEMICAL CRAFTING",
+      "QUICK ALCHEMY",
+      "MUTAGENIST RESEARCH FIELD",
+      "IMPROVISE ADMIXTURE",
+      "FAMILIAR ODDITIES",
+      "EYE OF THE ARCLORDS"
+     ]
+    },
+    "SPELL_NAMES": {
+     "name": "SPELL_NAMES",
+     "type": "list-str",
+     "value": []
+    },
+    "LANGUAGE_NAMES": {
+     "name": "LANGUAGE_NAMES",
+     "type": "list-str",
+     "value": [
+      "COMMON",
+      "FEY",
+      "YAKSHA",
+      "TANUKI"
+     ]
+    },
+    "TRAIT_NAMES": {
+     "name": "TRAIT_NAMES",
+     "type": "list-str",
+     "value": [
+      "ALCHEMIST",
+      "SPIRIT",
+      "YAKSHA",
+      "PLANT (CREATURE)"
+     ]
+    },
+    "CLASS_FEATURE_NAMES": {
+     "name": "CLASS_FEATURE_NAMES",
+     "type": "list-str",
+     "value": [
+      "ALCHEMIST FEAT",
+      "ALCHEMY",
+      "ATTRIBUTE BOOSTS",
+      "RESEARCH FIELD",
+      "SKILL FEAT",
+      "GENERAL FEAT",
+      "SKILL INCREASE"
+     ]
+    },
+    "PHYSICAL_FEATURE_NAMES": {
+     "name": "PHYSICAL_FEATURE_NAMES",
+     "type": "list-str",
+     "value": []
+    },
+    "EXTRA_ITEM_NAMES": {
+     "name": "EXTRA_ITEM_NAMES",
+     "type": "list-str",
+     "value": [
+      "FIST",
+      "VERSATILE VIAL (LESSER)"
+     ]
+    },
+    "SENSE_IDS": {
+     "name": "SENSE_IDS",
+     "type": "list-str",
+     "value": [
+      "19330"
+     ]
+    },
+    "MODE_IDS": {
+     "name": "MODE_IDS",
+     "type": "list-str",
+     "value": []
+    },
+    "CLASS_IDS": {
+     "name": "CLASS_IDS",
+     "type": "list-str",
+     "value": [
+      "107"
+     ]
+    },
+    "ANCESTRY_IDS": {
+     "name": "ANCESTRY_IDS",
+     "type": "list-str",
+     "value": [
+      "189"
+     ]
+    },
+    "BACKGROUND_IDS": {
+     "name": "BACKGROUND_IDS",
+     "type": "list-str",
+     "value": [
+      "1007"
+     ]
+    },
+    "HERITAGE_IDS": {
+     "name": "HERITAGE_IDS",
+     "type": "list-str",
+     "value": [
+      "35351"
+     ]
+    },
+    "CLASS_ARCHETYPE_IDS": {
+     "name": "CLASS_ARCHETYPE_IDS",
+     "type": "list-str",
+     "value": []
+    },
+    "FEAT_IDS": {
+     "name": "FEAT_IDS",
+     "type": "list-str",
+     "value": [
+      "19983",
+      "35360",
+      "31818",
+      "19894",
+      "31176",
+      "32987",
+      "31448",
+      "21362",
+      "25458"
+     ]
+    },
+    "SPELL_IDS": {
+     "name": "SPELL_IDS",
+     "type": "list-str",
+     "value": []
+    },
+    "LANGUAGE_IDS": {
+     "name": "LANGUAGE_IDS",
+     "type": "list-str",
+     "value": [
+      "81",
+      "90",
+      "672",
+      "673"
+     ]
+    },
+    "CLASS_FEATURE_IDS": {
+     "name": "CLASS_FEATURE_IDS",
+     "type": "list-str",
+     "value": [
+      "31082",
+      "31207",
+      "30965",
+      "31299",
+      "31083",
+      "30975",
+      "30970",
+      "30986"
+     ]
+    },
+    "PHYSICAL_FEATURE_IDS": {
+     "name": "PHYSICAL_FEATURE_IDS",
+     "type": "list-str",
+     "value": []
+    },
+    "EXTRA_ITEM_IDS": {
+     "name": "EXTRA_ITEM_IDS",
+     "type": "list-str",
+     "value": [
+      "15516"
+     ]
+    },
+    "TRAIT_CLASS_ALCHEMIST_IDS": {
+     "name": "TRAIT_CLASS_ALCHEMIST_IDS",
+     "type": "num",
+     "value": 3626
+    },
+    "TRAIT_ANCESTRY_SPIRIT_IDS": {
+     "name": "TRAIT_ANCESTRY_SPIRIT_IDS",
+     "type": "num",
+     "value": 1556
+    },
+    "TRAIT_ANCESTRY_YAKSHA_IDS": {
+     "name": "TRAIT_ANCESTRY_YAKSHA_IDS",
+     "type": "num",
+     "value": 3891
+    },
+    "TRAIT_ANCESTRY_PLANT_CREATURE_IDS": {
+     "name": "TRAIT_ANCESTRY_PLANT_CREATURE_IDS",
+     "type": "num",
+     "value": 1654
+    }
+   }
   }
  },
- "_sanitized": "user_id, timestamps, api_clients and library dumps (all_traits, all_sources, all_spells, raw_data_dump) removed"
+ "_sanitized": "user_id, timestamps, api_clients and library dumps (all_traits, all_sources, all_spells, raw_data_dump (only variables *_IDS/*_NAMES kept, WG computed-state evidence)) removed"
 }

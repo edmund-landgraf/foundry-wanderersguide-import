@@ -3461,7 +3461,235 @@
     "value": 3,
     "partial": false
    }
+  },
+  "raw_data_dump": {
+   "variables": {
+    "SENSE_NAMES": {
+     "name": "SENSE_NAMES",
+     "type": "list-str",
+     "value": [
+      "LOW-LIGHT VISION"
+     ]
+    },
+    "MODE_NAMES": {
+     "name": "MODE_NAMES",
+     "type": "list-str",
+     "value": [
+      "COURAGEOUS ANTHEM"
+     ]
+    },
+    "CLASS_NAMES": {
+     "name": "CLASS_NAMES",
+     "type": "list-str",
+     "value": [
+      "BARD"
+     ]
+    },
+    "ANCESTRY_NAMES": {
+     "name": "ANCESTRY_NAMES",
+     "type": "list-str",
+     "value": [
+      "GNOME"
+     ]
+    },
+    "BACKGROUND_NAMES": {
+     "name": "BACKGROUND_NAMES",
+     "type": "list-str",
+     "value": [
+      "ENTERTAINER"
+     ]
+    },
+    "HERITAGE_NAMES": {
+     "name": "HERITAGE_NAMES",
+     "type": "list-str",
+     "value": [
+      "CHAMELEON GNOME"
+     ]
+    },
+    "CLASS_ARCHETYPE_NAMES": {
+     "name": "CLASS_ARCHETYPE_NAMES",
+     "type": "list-str",
+     "value": []
+    },
+    "FEAT_NAMES": {
+     "name": "FEAT_NAMES",
+     "type": "list-str",
+     "value": [
+      "FASCINATING PERFORMANCE",
+      "ANIMAL ACCOMPLICE",
+      "POLYMATH MUSE",
+      "MARTIAL PERFORMANCE",
+      "VERSATILE PERFORMANCE"
+     ]
+    },
+    "SPELL_NAMES": {
+     "name": "SPELL_NAMES",
+     "type": "list-str",
+     "value": [
+      "COUNTER PERFORMANCE",
+      "COURAGEOUS ANTHEM",
+      "PHANTASMAL MINION"
+     ]
+    },
+    "LANGUAGE_NAMES": {
+     "name": "LANGUAGE_NAMES",
+     "type": "list-str",
+     "value": [
+      "COMMON",
+      "FEY",
+      "GNOMISH"
+     ]
+    },
+    "TRAIT_NAMES": {
+     "name": "TRAIT_NAMES",
+     "type": "list-str",
+     "value": [
+      "BARD",
+      "HUMANOID",
+      "GNOME"
+     ]
+    },
+    "CLASS_FEATURE_NAMES": {
+     "name": "CLASS_FEATURE_NAMES",
+     "type": "list-str",
+     "value": [
+      "ATTRIBUTE BOOSTS",
+      "BARD SPELLCASTING",
+      "COMPOSITION SPELLS",
+      "MUSES",
+      "SPELL REPERTOIRE (BARD)",
+      "BARD FEAT",
+      "SKILL FEAT"
+     ]
+    },
+    "PHYSICAL_FEATURE_NAMES": {
+     "name": "PHYSICAL_FEATURE_NAMES",
+     "type": "list-str",
+     "value": []
+    },
+    "EXTRA_ITEM_NAMES": {
+     "name": "EXTRA_ITEM_NAMES",
+     "type": "list-str",
+     "value": [
+      "FIST"
+     ]
+    },
+    "SENSE_IDS": {
+     "name": "SENSE_IDS",
+     "type": "list-str",
+     "value": [
+      "19330"
+     ]
+    },
+    "MODE_IDS": {
+     "name": "MODE_IDS",
+     "type": "list-str",
+     "value": [
+      "33987"
+     ]
+    },
+    "CLASS_IDS": {
+     "name": "CLASS_IDS",
+     "type": "list-str",
+     "value": [
+      "21"
+     ]
+    },
+    "ANCESTRY_IDS": {
+     "name": "ANCESTRY_IDS",
+     "type": "list-str",
+     "value": [
+      "5"
+     ]
+    },
+    "BACKGROUND_IDS": {
+     "name": "BACKGROUND_IDS",
+     "type": "list-str",
+     "value": [
+      "740"
+     ]
+    },
+    "HERITAGE_IDS": {
+     "name": "HERITAGE_IDS",
+     "type": "list-str",
+     "value": [
+      "20728"
+     ]
+    },
+    "CLASS_ARCHETYPE_IDS": {
+     "name": "CLASS_ARCHETYPE_IDS",
+     "type": "list-str",
+     "value": []
+    },
+    "FEAT_IDS": {
+     "name": "FEAT_IDS",
+     "type": "list-str",
+     "value": [
+      "20141",
+      "19903",
+      "34062",
+      "20326",
+      "20684"
+     ]
+    },
+    "SPELL_IDS": {
+     "name": "SPELL_IDS",
+     "type": "list-str",
+     "value": [
+      "4539",
+      "4540",
+      "4764"
+     ]
+    },
+    "LANGUAGE_IDS": {
+     "name": "LANGUAGE_IDS",
+     "type": "list-str",
+     "value": [
+      "81",
+      "90",
+      "85"
+     ]
+    },
+    "CLASS_FEATURE_IDS": {
+     "name": "CLASS_FEATURE_IDS",
+     "type": "list-str",
+     "value": [
+      "19285",
+      "20962",
+      "20964",
+      "20965",
+      "20963",
+      "20968",
+      "19312"
+     ]
+    },
+    "PHYSICAL_FEATURE_IDS": {
+     "name": "PHYSICAL_FEATURE_IDS",
+     "type": "list-str",
+     "value": []
+    },
+    "EXTRA_ITEM_IDS": {
+     "name": "EXTRA_ITEM_IDS",
+     "type": "list-str",
+     "value": []
+    },
+    "TRAIT_CLASS_BARD_IDS": {
+     "name": "TRAIT_CLASS_BARD_IDS",
+     "type": "num",
+     "value": 1341
+    },
+    "TRAIT_ANCESTRY_HUMANOID_IDS": {
+     "name": "TRAIT_ANCESTRY_HUMANOID_IDS",
+     "type": "num",
+     "value": 2399
+    },
+    "TRAIT_ANCESTRY_GNOME_IDS": {
+     "name": "TRAIT_ANCESTRY_GNOME_IDS",
+     "type": "num",
+     "value": 1452
+    }
+   }
   }
  },
- "_sanitized": "user_id, timestamps, api_clients and library dumps (all_traits, all_sources, all_spells, raw_data_dump) removed"
+ "_sanitized": "user_id, timestamps, api_clients and library dumps (all_traits, all_sources, all_spells, raw_data_dump (only variables *_IDS/*_NAMES kept, WG computed-state evidence)) removed"
 }

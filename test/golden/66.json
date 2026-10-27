@@ -142,6 +142,9 @@
  "choiceHints": {
   "druidic-order": [
    "Leaf Order"
+  ],
+  "voice-of-nature": [
+   "Plant Empathy"
   ]
  },
  "spellcasting": [
@@ -211,21 +214,16 @@
  "coverage": {
   "counts": {
    "mapped": 23,
-   "included": 10,
-   "unresolved": 2,
+   "included": 11,
+   "unresolved": 1,
    "leftover-preserved": 23,
-   "dropped": 19
+   "dropped": 20
   },
   "unresolved": [
    {
-    "path": "character.operation_data.selections.background_b45f0fc2-ca52-4d47-83fb-5d00e2c8ccc5",
-    "status": "unresolved",
-    "reason": "WG select answer with no PF2e target; review manually"
-   },
-   {
     "path": "character.operation_data.selections.class-feature-21217_f78123ba-0c0a-4a65-8de5-f33d5523257c",
     "status": "unresolved",
-    "reason": "WG select answer with no PF2e target; review manually"
+    "reason": "choice-answer: Voice of Nature: WG chose Plant Empathy (ability block 20412); not consumed by a PF2e ChoiceSet"
    }
   ],
   "dropped": [
@@ -323,6 +321,11 @@
     "path": "content.proficiencies",
     "status": "dropped",
     "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.raw_data_dump",
+    "status": "dropped",
+    "reason": "library reference data, not character state"
    }
   ]
  },
