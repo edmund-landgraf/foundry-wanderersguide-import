@@ -2,6 +2,8 @@
 
 Status: implementation plan, 2026-10-27. The module currently imports many core items, spells, gear, currency, and hero points. This document describes the remaining functional work. It is not a claim that the class scenarios below already pass in Foundry.
 
+The [29-class coverage matrix](CLASS_COVERAGE.md) records the full current Foundry class pack, Pathmuncher conversion lessons, WG-specific evidence needed, and release checks. Use it with this plan; the examples in section 4 are the first complex slices, not the complete class scope.
+
 ## Goal and governing decision
 
 Use AMBA's existing Wanderer's Guide (WG) export interpretation as the canonical source reader. Preserve its tested conversion methods and `wg-friendly/v1` data shape wherever possible. Add a Foundry PF2e adapter after that reader. Do not maintain a second independent interpretation of WG operation keys, compiled feat groups, calculated statistics, or composed item names in `scripts/mapping.js`.
@@ -110,9 +112,9 @@ The UI and private report should give each difference a source path, expected WG
 4. **Dual decoder.** Run old `buildPlan` and AMBA conversion on the same fixtures without changing actor writes. Enumerate every mismatch and decide which interpretation is correct from the raw WG export. Gate: no regression in currently supported fields; operation selections and source IDs are preserved.
 5. **Resolver and source ledger.** Add typed compendium candidates, aliases, missing-core replacement choices, and per-source-path outcomes. Gate: no fuzzy match silently becomes final, no granted feature duplicates, and a static mapped-key list cannot hide dropped data.
 6. **Rule selections.** Implement the isolated PF2e adapter and persistent choice memory. Gate: a class choice remains selected after actor reload and second import; cancellation changes no actor.
-7. **Class slices.** Implement and test Witch first (patron, hex, familiar), then Runesmith class runes and Exemplar, then Summoner/Inventor companions. Each slice requires a real WG export, matching PF2e rule examples, and import/reload/re-import checks before being marked supported. Keep unsupported cases visible in the report.
+7. **Class slices.** Start with shared class/feat/grant/choice handling; implement and test Witch, Thaumaturge, Necromancer, Runesmith and Exemplar choices, then Summoner/Inventor companions and the remaining high-risk classes from the [coverage matrix](CLASS_COVERAGE.md). Run the same gate on all 29 classes before claiming comprehensive class support. Each slice requires a real WG export, matching PF2e rule examples, and import/reload/re-import/level-change checks before being marked supported. Keep unsupported cases visible in the report.
 8. **Coverage and parity.** Extend source-path coverage and PF2e comparisons. Gate: each fixture has zero unexplained dropped source paths; supported fields match and unresolved or unsupported fields are listed clearly.
-9. **Foundry matrix and release.** Run manual or automated Foundry-world checks on declared versions, narrow compatibility if required, update README, and package the built JS. Gate: a fresh module installation imports and re-imports each supported class fixture.
+9. **Foundry matrix and release.** Run manual or automated Foundry-world checks on declared versions, narrow compatibility if required, update README, and package the built JS. Gate: a fresh module installation imports and re-imports each class claimed as supported; the release notes enumerate unverified classes and unsupported mechanics against the 29-class matrix.
 
 The critical Foundry-world cases are: first import, identical second import, a WG choice change, a compendium rename, no access (403), malformed export, import cancellation, failure halfway through item creation, a missing core compendium item, a player-added item kept or explicitly replaced, a granted child item, and a companion updated twice. Unit tests should use the raw WG fixtures and assert meaningful normalized selections, plan entries, source-path ledger statuses and parity results; they cannot substitute for PF2e rule evaluation in a real world.
 
