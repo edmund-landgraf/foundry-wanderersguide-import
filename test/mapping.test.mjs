@@ -208,6 +208,31 @@ test("diffPlan and parityCheck", () => {
   assert.equal(diffPlan(plan, worse).add.length, 1);
 });
 
+test("re-import preserves live HP without exceeding the new maximum", async () => {
+  const { preservedCurrentHp } = await import("../scripts/importer.js");
+  assert.equal(preservedCurrentHp({ currentHp: 17, maxHp: 30 }, 35, true), 17);
+  assert.equal(preservedCurrentHp({ currentHp: 40, maxHp: 40 }, 25, true), 25);
+  assert.equal(preservedCurrentHp({ currentHp: 0, maxHp: 20 }, 20, true), 0);
+  assert.equal(preservedCurrentHp(null, 20, false), 20);
+});
+
+test("captureRuntimeState records HP, temporary HP, and spell slot usage", async () => {
+  const { captureRuntimeState } = await import("../scripts/importer.js");
+  const item = {
+    type: "spellcastingEntry",
+    name: "Bard Spells",
+    system: { slots: { slot1: { max: 2, value: 1, prepared: ["spell-a"] }, slot2: { max: 2, value: 0, prepared: [] } } },
+    flags: { "foundry-wanderersguide-import": { kind: "spellcasting", wgSource: "BARD" } },
+  };
+  const state = captureRuntimeState({ system: { attributes: { hp: { value: 12, max: 28, temp: 4 } } }, items: [item] });
+  assert.deepEqual(state, {
+    currentHp: 12,
+    maxHp: 28,
+    tempHp: 4,
+    spellcasting: { BARD: { slot1: { max: 2, value: 1, prepared: ["spell-a"] }, slot2: { max: 2, value: 0, prepared: [] } } },
+  });
+});
+
 test("summarizeCampaign carries WG campaign art", async () => {
   const { summarizeCampaign } = await import("../scripts/api.js");
   assert.deepEqual(summarizeCampaign({ id: 42, name: "C", image_url: "https://x/a.png", image_focus_y: 40, character_ids: [1], owned: true }), { id: 42, name: "C", imageUrl: "https://x/a.png", imageFocusY: 40, characterIds: [1], owned: true });

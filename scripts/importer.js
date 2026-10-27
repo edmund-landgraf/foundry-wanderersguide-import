@@ -49,7 +49,7 @@ export function captureRuntimeState(actor) {
     if (getFlag(item, "kind") !== "spellcasting") continue;
     const source = getFlag(item, "wgSource") ?? item.name;
     slots[source] = Object.fromEntries(Object.entries(item.system?.slots ?? {}).map(([rank, value]) => [rank, {
-      value: value?.value,
+      ...(value ?? {}),
       prepared: Array.isArray(value?.prepared) ? [...value.prepared] : value?.prepared,
     }]));
   }
@@ -161,7 +161,12 @@ async function itemDataFor(entry, folderId, ctx, notes) {
     delete data._id;
   } else {
     // Homebrew / unmatched: reuse or create a world item (PLAN section 9).
-    let world = game.items.find((i) => i.getFlag(MODULE_ID, "wgContentId") === entry.wgContentId && entry.wgContentId != null);
+    const type = entry.packType === "equipment" ? "equipment" : entry.packType;
+    let world = game.items.find((i) => {
+      const id = i.getFlag(MODULE_ID, "wgContentId");
+      if (entry.wgContentId != null) return id === entry.wgContentId;
+      return id == null && i.getFlag(MODULE_ID, "homebrew") === true && i.type === type && i.name === entry.name;
+    });
     if (!world) world = await Item.create(homebrewItemData(entry, folderId));
     data = world.toObject();
     delete data._id;
@@ -295,6 +300,8 @@ export async function importCharacter(exp, { host, onStep = () => {}, parity = f
   const ctx = choiceContext(exp, plan, index);
 
   let actor = findActor(plan, host);
+  const existing = !!actor;
+  const runtime = captureRuntimeState(actor);
   const keepImg = actor?.img && !/mystery-man|default-icons/.test(actor.img) ? actor.img : null;
   const img = resolveImageUrl(plan.imageUrl, host) ?? keepImg ?? FALLBACK_IMG;
   const forced = {
@@ -337,8 +344,6 @@ export async function importCharacter(exp, { host, onStep = () => {}, parity = f
     const ids = [...ours].filter((id) => actor.items.has(id));
     if (ids.length) await actor.deleteEmbeddedDocuments("Item", ids);
   }
-  const existing = !!actor;
-  const runtime = captureRuntimeState(actor);
   const notes = [];
   const stopPrompts = autoAnswerPrompts(ctx, notes);
   try {
