@@ -17,7 +17,7 @@ test("managedTree: module items plus everything granted from them, nothing else"
   ];
   assert.deepEqual([...managedTree(items)].sort(), ["cls", "feat", "loc", "sub", "viaParent"]);
 });
-import { explicitGrants, sameThing } from "../scripts/importer.js";
+import { explicitGrants, sameThing, duplicateItemDiagnostics } from "../scripts/importer.js";
 test("dedupe: only explicit grants from this run's items, same compendium source", () => {
   const it = (id, type, name, src, extra = {}) => ({ id, type, name, _stats: { compendiumSource: src }, flags: extra.flags ?? {}, system: extra.system ?? {} });
   const items = [
@@ -39,6 +39,19 @@ test("dedupe: only explicit grants from this run's items, same compendium source
   assert.equal(hit(e("Toughness", "C:feats.toughness")), null, "grant from an old (non-run) parent does not count");
   assert.equal(hit(e("Fleet", "C:feats.fleet")), null, "an ungranted item never dedupes");
   assert.equal(hit(e("Shield", null)), null, "no prefix matching");
+});
+
+test("duplicate diagnostics distinguish a PF2e grant pair from an unexplained duplicate", () => {
+  const pair = [
+    { id: "feature", type: "feat", name: "Shield Block", system: {}, flags: {} },
+    { id: "granted", type: "feat", name: "Shield Block", system: {}, flags: { pf2e: { grantedBy: { id: "feature" } } } },
+  ];
+  const unexplained = [
+    { id: "a", type: "feat", name: "Shield Block", system: {}, flags: {} },
+    { id: "b", type: "feat", name: "Shield Block", system: {}, flags: {} },
+  ];
+  assert.equal(duplicateItemDiagnostics(pair)[0].expectedGrantPair, true);
+  assert.equal(duplicateItemDiagnostics(unexplained)[0].expectedGrantPair, false);
 });
 import { auditImportCoverage, leftoverValues, CLASS_SUPPORT_NOTE } from "../scripts/coverage.js";
 import { buildPlan, sluggify } from "../scripts/mapping.js";

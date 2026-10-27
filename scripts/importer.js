@@ -351,6 +351,28 @@ export function explicitGrants(items, old) {
   return out;
 }
 
+/** Explain duplicate item names without treating valid PF2e grant pairs as errors. */
+export function duplicateItemDiagnostics(items) {
+  const groups = new Map();
+  for (const item of items ?? []) {
+    const key = `${item.type ?? ""}:${item.system?.slug ?? sluggify(item.name)}`;
+    const group = groups.get(key) ?? groups.set(key, []).get(key);
+    group.push(item);
+  }
+  return [...groups].filter(([, group]) => group.length > 1).map(([key, group]) => {
+    const ids = new Set(group.map((i) => i.id));
+    const grantPairs = group.filter((i) => {
+      const parentId = i.flags?.pf2e?.grantedBy?.id ?? i.system?.location;
+      return typeof parentId === "string" && ids.has(parentId);
+    });
+    return {
+      key,
+      items: group.map((i) => ({ id: i.id, name: i.name, type: i.type, source: i._stats?.compendiumSource ?? i.flags?.core?.sourceId ?? null, grantedBy: i.flags?.pf2e?.grantedBy?.id ?? null })),
+      expectedGrantPair: grantPairs.length > 0,
+    };
+  });
+}
+
 const KIND_ITEM_TYPES = { ancestry: ["ancestry"], heritage: ["heritage"], background: ["background"], class: ["class"], feat: ["feat", "action"], spell: ["spell"] };
 /** Same compendium source, or (when WG's entry has no match of that item type) the same slug. No prefix or fuzzy matching. */
 export function sameThing(entry, item) {
@@ -634,9 +656,13 @@ export async function importCharacter(exp, { host, onStep = () => {}, parity = f
   }
   const { actor, parity: parityResult } = await applyImport(p, { onStep: step, parity, failAfter });
   const { plan, matched, misses, notes } = p;
+  const duplicateDiagnostics = duplicateItemDiagnostics(actor.items);
+  const duplicateHtml = duplicateDiagnostics.length
+    ? `<p>Duplicate-name diagnostics:</p><ul>${duplicateDiagnostics.map((d) => `<li>${esc(d.key)}: ${d.expectedGrantPair ? "expected PF2e grant relationship" : "unexpected duplicate; review provenance"}</li>`).join("")}</ul>`
+    : "";
   await ChatMessage.create({
     whisper: [game.user.id],
-    content: `<h3>WG import: ${esc(plan.name)}</h3><p>${matched.length - misses.length} matched, ${misses.length} created as homebrew or missed.</p>${misses.length ? `<ul>${misses.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${notes.length ? `<p>Choices:</p><ul>${notes.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${p.ctx.unresolved.length ? `<p>Unresolved choices:</p><ul>${p.ctx.unresolved.map((u) => `<li>${esc(u.owner)}${u.flag ? ` [${esc(u.flag)}]` : ""}: ${esc(u.reason)}</li>`).join("")}</ul>` : ""}${parityResult ? parityHtml(plan.name, parityResult) : ""}${coverageHtml(p.coverage)}`,
+    content: `<h3>WG import: ${esc(plan.name)}</h3><p>${matched.length - misses.length} matched, ${misses.length} created as homebrew or missed.</p>${misses.length ? `<ul>${misses.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${notes.length ? `<p>Choices:</p><ul>${notes.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${p.ctx.unresolved.length ? `<p>Unresolved choices:</p><ul>${p.ctx.unresolved.map((u) => `<li>${esc(u.owner)}${u.flag ? ` [${esc(u.flag)}]` : ""}: ${esc(u.reason)}</li>`).join("")}</ul>` : ""}${duplicateHtml}${parityResult ? parityHtml(plan.name, parityResult) : ""}${coverageHtml(p.coverage)}`,
   });
   return { actor, misses, notes, unresolved: p.ctx.unresolved, coverage: p.coverage, matched: matched.length - misses.length, parity: parityResult };
 }
