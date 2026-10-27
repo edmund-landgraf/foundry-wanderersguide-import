@@ -1,0 +1,222 @@
+{
+ "plan": {
+  "wgId": 72,
+  "name": "Ernmpo (P1)",
+  "level": 3,
+  "maxHp": 41,
+  "coins": {
+   "cp": 0,
+   "sp": 0,
+   "gp": 0,
+   "pp": 0
+  },
+  "heroPoints": 1,
+  "imageUrl": "https://api.wanderersguide.app/storage/v1/object/public/portraits/default/7e6ad4e6-8cfa-4088-9069-2330165a811e.png",
+  "languages": [
+   "common",
+   "fey",
+   "yaksha",
+   "tanuki"
+  ],
+  "attributes": {
+   "str": 1,
+   "dex": 1,
+   "con": 3,
+   "int": 0,
+   "wis": 2,
+   "cha": 2
+  },
+  "entries": [
+   {
+    "kind": "ancestry",
+    "packType": "ancestry",
+    "name": "Yaksha",
+    "slug": "yaksha",
+    "wgContentId": 189
+   },
+   {
+    "kind": "heritage",
+    "packType": "heritage",
+    "name": "Respite of Loam and Leaf",
+    "slug": "respite-of-loam-and-leaf",
+    "wgContentId": 35351
+   },
+   {
+    "kind": "background",
+    "packType": "background",
+    "name": "Deckhand",
+    "slug": "deckhand",
+    "wgContentId": 1007
+   },
+   {
+    "kind": "class",
+    "packType": "class",
+    "name": "Alchemist",
+    "slug": "alchemist",
+    "wgContentId": 107
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Tangle-Tongue's Wit",
+    "slug": "tangle-tongues-wit",
+    "wgContentId": 35360,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Alchemical Assessment",
+    "slug": "alchemical-assessment",
+    "wgContentId": 31818,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Quick Alchemy",
+    "slug": "quick-alchemy",
+    "wgContentId": 31176,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Improvise Admixture",
+    "slug": "improvise-admixture",
+    "wgContentId": 31448,
+    "level": 2
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Alchemical Crafting",
+    "slug": "alchemical-crafting",
+    "wgContentId": 19894,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Cat Fall",
+    "slug": "cat-fall",
+    "wgContentId": 19983,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Eye of the Arclords",
+    "slug": "eye-of-the-arclords",
+    "wgContentId": 25458,
+    "level": 2
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Familiar Oddities",
+    "slug": "familiar-oddities",
+    "wgContentId": 21362,
+    "level": 2
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Mutagenist Research Field",
+    "slug": "mutagenist-research-field",
+    "wgContentId": 32987,
+    "level": 1
+   },
+   {
+    "kind": "equipment",
+    "packType": "equipment",
+    "name": "Versatile Vial (Lesser)",
+    "slug": "versatile-vial-lesser",
+    "wgContentId": 15516,
+    "quantity": 1,
+    "equipped": true,
+    "runes": null,
+    "material": null
+   }
+  ]
+ },
+ "match": [
+  "ancestry: Yaksha -> Compendium.pf2e.ancestries.Item.k3zyr6du4gV0Ftuh (slug)",
+  "heritage: Respite of Loam and Leaf -> Compendium.pf2e.heritages.Item.WczVM4KQq7xybsPZ (slug)",
+  "background: Deckhand -> Compendium.pf2e.backgrounds.Item.IObZEUz8wneEMgR3 (slug)",
+  "class: Alchemist -> Compendium.pf2e.classes.Item.XwfcJuskrhI9GIjX (slug)",
+  "feat: Tangle-Tongue's Wit -> Compendium.pf2e.feats-srd.Item.zxozwMyJgOzxADHh (slug)",
+  "feat: Alchemical Assessment -> Compendium.pf2e.feats-srd.Item.ypir96PNY6LBSIWT (slug)",
+  "feat: Quick Alchemy -> Compendium.pf2e.classfeatures.Item.sPtl05wwTpqFI0lL (slug)",
+  "feat: Improvise Admixture -> Compendium.pf2e.feats-srd.Item.H6SL2F11nlMfqCQC (slug)",
+  "feat: Alchemical Crafting -> Compendium.pf2e.feats-srd.Item.is3Oz9wt11lNq62K (slug)",
+  "feat: Cat Fall -> Compendium.pf2e.feats-srd.Item.LQw0yIMDUJJkq1nD (slug)",
+  "feat: Eye of the Arclords -> Compendium.pf2e.feats-srd.Item.OtV7esAwza1U6Kwr (slug)",
+  "feat: Familiar Oddities -> Compendium.pf2e.feats-srd.Item.5f8gQxVdioUcgsTD (slug)",
+  "feat: Mutagenist Research Field -> MISS (miss)",
+  "equipment: Versatile Vial (Lesser) -> MISS (miss)"
+ ],
+ "misses": [
+  "feat: Mutagenist Research Field",
+  "equipment: Versatile Vial (Lesser)"
+ ],
+ "choiceHints": {
+  "research-field": [
+   "Mutagenist Research Field"
+  ]
+ },
+ "spellcasting": [],
+ "preview": {
+  "insert": {
+   "insert": true,
+   "fields": [],
+   "add": [
+    "ancestry: Yaksha",
+    "heritage: Respite of Loam and Leaf",
+    "background: Deckhand",
+    "class: Alchemist",
+    "feat: Tangle-Tongue's Wit",
+    "feat: Alchemical Assessment",
+    "feat: Quick Alchemy",
+    "feat: Improvise Admixture",
+    "feat: Alchemical Crafting",
+    "feat: Cat Fall",
+    "feat: Eye of the Arclords",
+    "feat: Familiar Oddities",
+    "feat: Mutagenist Research Field",
+    "equipment: Versatile Vial (Lesser)"
+   ],
+   "remove": [],
+   "keep": []
+  },
+  "update": {
+   "insert": false,
+   "fields": [],
+   "add": [],
+   "remove": [],
+   "keep": [
+    "ancestry: Yaksha",
+    "heritage: Respite of Loam and Leaf",
+    "background: Deckhand",
+    "class: Alchemist",
+    "feat: Tangle-Tongue's Wit",
+    "feat: Alchemical Assessment",
+    "feat: Quick Alchemy",
+    "feat: Improvise Admixture",
+    "feat: Alchemical Crafting",
+    "feat: Cat Fall",
+    "feat: Eye of the Arclords",
+    "feat: Familiar Oddities",
+    "feat: Mutagenist Research Field",
+    "equipment: Versatile Vial (Lesser)"
+   ]
+  },
+  "html": "<h3>WG preview: Ernmpo (P1) (Update)</h3><p>No field changes.</p><p>Add (0):</p><p>none</p><p>Remove (0):</p><p>none</p><p>Unchanged: 14. Would become homebrew: 2.</p>"
+ },
+ "parity": {
+  "ok": true,
+  "passed": 10,
+  "failed": [],
+  "html": "<h4>Parity check</h4><p>All checks match the export.</p>"
+ }
+}

@@ -1,0 +1,330 @@
+{
+ "note": "Compendium index rows relevant to this PC and summarizeActor() of the imported actor, captured from local Foundry v14 / PF2e 8.6.1 on 2026-10-27.",
+ "index": [
+  {
+   "type": "ancestry",
+   "slug": "gnome",
+   "name": "Gnome",
+   "level": null,
+   "uuid": "Compendium.pf2e.ancestries.Item.CYlfsYLJcBOgqKtD"
+  },
+  {
+   "type": "background",
+   "slug": "entertainer",
+   "name": "Entertainer",
+   "level": null,
+   "uuid": "Compendium.pf2e.backgrounds.Item.i4hN6OYv8qmi3GLW"
+  },
+  {
+   "type": "class",
+   "slug": "bard",
+   "name": "Bard",
+   "level": null,
+   "uuid": "Compendium.pf2e.classes.Item.3gweRQ5gn7szIWAv"
+  },
+  {
+   "type": "feat",
+   "slug": "fascinating-performance",
+   "name": "Fascinating Performance",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.7LB00jkh6JaJr3vS"
+  },
+  {
+   "type": "feat",
+   "slug": "animal-accomplice",
+   "name": "Animal Accomplice",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.ED58GzldWb82yc2q"
+  },
+  {
+   "type": "feat",
+   "slug": "versatile-performance",
+   "name": "Versatile Performance",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.jBp91q4uzwd4FeSX"
+  },
+  {
+   "type": "feat",
+   "slug": "martial-performance",
+   "name": "Martial Performance",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.q1iP3SjAF5uceI0M"
+  },
+  {
+   "type": "heritage",
+   "slug": "chameleon-gnome",
+   "name": "Chameleon Gnome",
+   "level": null,
+   "uuid": "Compendium.pf2e.heritages.Item.XeXWsvcWU3Zaj5WC"
+  },
+  {
+   "type": "spell",
+   "slug": "courageous-anthem",
+   "name": "Courageous Anthem",
+   "level": null,
+   "uuid": "Compendium.pf2e.spells-srd.Item.IAjvwqgiDr3qGYxY"
+  },
+  {
+   "type": "spell",
+   "slug": "counter-performance",
+   "name": "Counter Performance",
+   "level": null,
+   "uuid": "Compendium.pf2e.spells-srd.Item.WILXkjU5Yq3yw10r"
+  },
+  {
+   "type": "spell",
+   "slug": "phantasmal-minion",
+   "name": "Phantasmal Minion",
+   "level": null,
+   "uuid": "Compendium.pf2e.spells-srd.Item.xqmHD8JIjak15lRk"
+  }
+ ],
+ "actor": {
+  "name": "Inkwhisk (P4)",
+  "level": 2,
+  "hpMax": 28,
+  "attributes": {
+   "str": 0,
+   "dex": 2,
+   "con": 2,
+   "int": 1,
+   "wis": 1,
+   "cha": 3
+  },
+  "languages": [
+   "common",
+   "fey",
+   "gnomish"
+  ],
+  "items": [
+   {
+    "type": "ancestry",
+    "name": "Gnome",
+    "slug": "gnome",
+    "kind": "ancestry",
+    "wgContentId": 5,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "heritage",
+    "name": "Chameleon Gnome",
+    "slug": "chameleon-gnome",
+    "kind": "heritage",
+    "wgContentId": 20728,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "background",
+    "name": "Entertainer",
+    "slug": "entertainer",
+    "kind": "background",
+    "wgContentId": 740,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Fascinating Performance",
+    "slug": "fascinating-performance",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "class",
+    "name": "Bard",
+    "slug": "bard",
+    "kind": "class",
+    "wgContentId": 21,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Muses",
+    "slug": "muses",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Polymath",
+    "slug": "polymath",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Versatile Performance",
+    "slug": "versatile-performance",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Spell Repertoire",
+    "slug": "spell-repertoire",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Composition Spells",
+    "slug": "composition-spells",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Bard Spellcasting",
+    "slug": "bard-spellcasting",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Animal Accomplice",
+    "slug": "animal-accomplice",
+    "kind": "feat",
+    "wgContentId": 19903,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Martial Performance",
+    "slug": "martial-performance",
+    "kind": "feat",
+    "wgContentId": 20326,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Pet",
+    "slug": "pet",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "spellcastingEntry",
+    "name": "Bard Spells",
+    "slug": "bard-spells",
+    "kind": "spellcasting",
+    "wgContentId": null,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "spellcastingEntry",
+    "name": "Bard Focus Spells",
+    "slug": "bard-focus-spells",
+    "kind": "spellcasting",
+    "wgContentId": null,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "spell",
+    "name": "Phantasmal Minion",
+    "slug": "phantasmal-minion",
+    "kind": "spell",
+    "wgContentId": 4764,
+    "ours": true,
+    "rank": 1,
+    "entryMode": "spontaneous",
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "spell",
+    "name": "Courageous Anthem",
+    "slug": "courageous-anthem",
+    "kind": "spell",
+    "wgContentId": 4540,
+    "ours": true,
+    "rank": 1,
+    "entryMode": "focus",
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "spell",
+    "name": "Counter Performance",
+    "slug": "counter-performance",
+    "kind": "spell",
+    "wgContentId": 4539,
+    "ours": true,
+    "rank": 1,
+    "entryMode": "focus",
+    "runes": null,
+    "material": null
+   }
+  ]
+ }
+}

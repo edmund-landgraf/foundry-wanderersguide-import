@@ -1,0 +1,517 @@
+{
+ "note": "Compendium index rows relevant to this PC and summarizeActor() of the imported actor, captured from local Foundry v14 / PF2e 8.6.1 on 2026-10-27.",
+ "index": [
+  {
+   "type": "ancestry",
+   "slug": "anadi",
+   "name": "Anadi",
+   "level": null,
+   "uuid": "Compendium.pf2e.ancestries.Item.TQEqWqc7BYiadUdY"
+  },
+  {
+   "type": "background",
+   "slug": "dauntless",
+   "name": "Dauntless",
+   "level": null,
+   "uuid": "Compendium.pf2e.backgrounds.Item.0ncxOTCDptu01nR8"
+  },
+  {
+   "type": "class",
+   "slug": "barbarian",
+   "name": "Barbarian",
+   "level": null,
+   "uuid": "Compendium.pf2e.classes.Item.YDRiP7uVvr9WRhOI"
+  },
+  {
+   "type": "feat",
+   "slug": "quick-tempered",
+   "name": "Quick-Tempered",
+   "level": null,
+   "uuid": "Compendium.pf2e.classfeatures.Item.04lXNnt73rF3RNc4"
+  },
+  {
+   "type": "feat",
+   "slug": "spirit-instinct",
+   "name": "Spirit Instinct",
+   "level": null,
+   "uuid": "Compendium.pf2e.classfeatures.Item.TQqv9Q5mB4PW6LH9"
+  },
+  {
+   "type": "feat",
+   "slug": "rage",
+   "name": "Rage",
+   "level": null,
+   "uuid": "Compendium.pf2e.classfeatures.Item.WZUCvxqbigXos1L9"
+  },
+  {
+   "type": "feat",
+   "slug": "second-wind",
+   "name": "Second Wind",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.4bvoePh1p3ZGgqhP"
+  },
+  {
+   "type": "feat",
+   "slug": "crystal-healing",
+   "name": "Crystal Healing",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.6O8MoMheHs5hNHX1"
+  },
+  {
+   "type": "feat",
+   "slug": "web-weaver",
+   "name": "Web Weaver",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.CUrxG9CzT1hSfuhP"
+  },
+  {
+   "type": "feat",
+   "slug": "draconic-arrogance",
+   "name": "Draconic Arrogance",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.EOmTf95t03y4IGdp"
+  },
+  {
+   "type": "feat",
+   "slug": "web-walker",
+   "name": "Web Walker",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.KXUVAI6SDtxwjO7t"
+  },
+  {
+   "type": "feat",
+   "slug": "specialty-crafting",
+   "name": "Specialty Crafting",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.QLeMH5mQgh28sa5o"
+  },
+  {
+   "type": "feat",
+   "slug": "ride",
+   "name": "Ride",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.Rq5wkA8DtsmbzoGV"
+  },
+  {
+   "type": "feat",
+   "slug": "in-plain-sight",
+   "name": "In Plain Sight",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.ZC9C6rxPJKrw6Ktx"
+  },
+  {
+   "type": "feat",
+   "slug": "intimidating-strike",
+   "name": "Intimidating Strike",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.lkcM4V3VDAtjlR9P"
+  },
+  {
+   "type": "feat",
+   "slug": "sudden-charge",
+   "name": "Sudden Charge",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.qQt3CMrhLkUV1wCv"
+  },
+  {
+   "type": "heritage",
+   "slug": "snaring-anadi",
+   "name": "Snaring Anadi",
+   "level": null,
+   "uuid": "Compendium.pf2e.heritages.Item.cwOUw7kofcAiY01I"
+  }
+ ],
+ "actor": {
+  "name": "Azarra (P2)",
+  "level": 7,
+  "hpMax": 99,
+  "attributes": {
+   "str": 3,
+   "dex": 2,
+   "con": 1,
+   "int": 2,
+   "wis": 4,
+   "cha": 1
+  },
+  "languages": [
+   "anadi",
+   "mwangi",
+   "amurrun",
+   "pahtra"
+  ],
+  "items": [
+   {
+    "type": "ancestry",
+    "name": "Anadi",
+    "slug": "anadi",
+    "kind": "ancestry",
+    "wgContentId": 115,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "action",
+    "name": "Change Shape",
+    "slug": "change-shape",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Fangs",
+    "slug": "fangs",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "heritage",
+    "name": "Snaring Anadi",
+    "slug": "snaring-anadi",
+    "kind": "heritage",
+    "wgContentId": 29468,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "background",
+    "name": "Dauntless",
+    "slug": "dauntless",
+    "kind": "background",
+    "wgContentId": 1116,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "action",
+    "name": "Indomitable Act",
+    "slug": "indomitable-act",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "class",
+    "name": "Barbarian",
+    "slug": "barbarian",
+    "kind": "class",
+    "wgContentId": 68,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Instinct",
+    "slug": "instinct",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Rage",
+    "slug": "rage",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Quick-Tempered",
+    "slug": "quick-tempered",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Spirit Instinct",
+    "slug": "spirit-instinct",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "action",
+    "name": "Rage",
+    "slug": "rage",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "action",
+    "name": "Quick-Tempered",
+    "slug": "quick-tempered",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Furious Footfalls",
+    "slug": "furious-footfalls",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Brutality",
+    "slug": "brutality",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Juggernaut",
+    "slug": "juggernaut",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Weapon Specialization",
+    "slug": "weapon-specialization",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Web Walker",
+    "slug": "web-walker",
+    "kind": "feat",
+    "wgContentId": 29475,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Web Weaver",
+    "slug": "web-weaver",
+    "kind": "feat",
+    "wgContentId": 29476,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Draconic Arrogance",
+    "slug": "draconic-arrogance",
+    "kind": "feat",
+    "wgContentId": 31322,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Sudden Charge",
+    "slug": "sudden-charge",
+    "kind": "feat",
+    "wgContentId": 31273,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Intimidating Strike",
+    "slug": "intimidating-strike",
+    "kind": "feat",
+    "wgContentId": 31328,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Second Wind",
+    "slug": "second-wind",
+    "kind": "feat",
+    "wgContentId": 31330,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Crystal Healing",
+    "slug": "crystal-healing",
+    "kind": "feat",
+    "wgContentId": 22680,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Ride",
+    "slug": "ride",
+    "kind": "feat",
+    "wgContentId": 20492,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Sparkling Performance",
+    "slug": "sparkling-performance",
+    "kind": "feat",
+    "wgContentId": 35194,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Specialty Crafting (Woodworking)",
+    "slug": "specialty-crafting",
+    "kind": "feat",
+    "wgContentId": 20570,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Urban Survivalist",
+    "slug": "urban-survivalist",
+    "kind": "feat",
+    "wgContentId": 46748,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "In Plain Sight",
+    "slug": "in-plain-sight",
+    "kind": "feat",
+    "wgContentId": 22733,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Specialty Crafting (Weaving)",
+    "slug": "specialty-crafting",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "equipment",
+    "name": "Anadi Fangs",
+    "slug": "anadi-fangs",
+    "kind": "equipment",
+    "wgContentId": 14437,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   }
+  ]
+ }
+}

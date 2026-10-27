@@ -1,0 +1,3589 @@
+{
+ "version": 4,
+ "character": {
+  "id": 63,
+  "name": "Ernmpo",
+  "level": 3,
+  "experience": 0,
+  "hp_current": 41,
+  "hp_temp": 0,
+  "hero_points": 1,
+  "stamina_current": 21,
+  "resolve_current": 0,
+  "inventory": {
+   "items": [
+    {
+     "id": "extra-item-15516",
+     "item": {
+      "id": 15516,
+      "created_at": "2024-07-30T17:17:31.183639+00:00",
+      "updated_at": "2026-08-02T21:57:32.458046+00:00",
+      "name": "Versatile Vial (Lesser)",
+      "price": {},
+      "bulk": "0",
+      "level": 1,
+      "rarity": "COMMON",
+      "availability": null,
+      "traits": [
+       1528,
+       1529,
+       1530,
+       1531,
+       3540,
+       1532
+      ],
+      "description": "**Activate** <abbr cost=\"ONE-ACTION\" class=\"action-symbol\">1</abbr> [Strike](link_action_19856)\n\n* * *\n\nThis tiny glass flask contains volatile chemicals that can be used offensively in a pinch. The bomb deals 1d6 acid damage and 1 acid splash damage.",
+      "group": "WEAPON",
+      "hands": null,
+      "size": "MEDIUM",
+      "craft_requirements": "",
+      "usage": "held in 1 hand",
+      "meta_data": {
+       "image_url": "",
+       "category": "martial",
+       "group": "bomb",
+       "damage": {
+        "damageType": "acid",
+        "dice": 1,
+        "die": "d6",
+        "extra": ""
+       },
+       "bulk": {},
+       "charges": {},
+       "hardness": 0,
+       "hp_max": 0,
+       "broken_threshold": 0,
+       "is_shoddy": false,
+       "unselectable": false,
+       "quantity": 1,
+       "material": {},
+       "range": 20,
+       "reload": "—",
+       "runes": {
+        "property": []
+       },
+       "starfinder": {},
+       "foundry": {}
+      },
+      "operations": [],
+      "content_source_id": 256,
+      "version": "1.0"
+     },
+     "is_formula": false,
+     "is_equipped": true,
+     "is_invested": false,
+     "is_implanted": false,
+     "container_contents": []
+    },
+    {
+     "id": "extra-item-9252",
+     "item": {
+      "id": 9252,
+      "created_at": "2024-03-24T22:44:19.105898+00:00",
+      "updated_at": "2026-08-27T16:49:04.220135+00:00",
+      "name": "Fist",
+      "price": {},
+      "bulk": "0",
+      "level": 0,
+      "rarity": "COMMON",
+      "availability": null,
+      "traits": [
+       1569,
+       1570,
+       1571,
+       2398
+      ],
+      "description": "_Sometimes, the only way you can make someone listen is with your fist._",
+      "group": "WEAPON",
+      "hands": "1",
+      "size": "MEDIUM",
+      "craft_requirements": "",
+      "usage": "",
+      "meta_data": {
+       "image_url": "",
+       "category": "unarmed_attack",
+       "group": "brawling",
+       "damage": {
+        "damageType": "bludgeoning",
+        "dice": 1,
+        "die": "d4",
+        "extra": ""
+       },
+       "bulk": {},
+       "charges": {},
+       "hardness": 0,
+       "hp_max": 0,
+       "broken_threshold": 0,
+       "is_shoddy": false,
+       "unselectable": true,
+       "quantity": 1,
+       "material": {},
+       "runes": {
+        "property": []
+       },
+       "starfinder": {
+        "slots": []
+       },
+       "foundry": {}
+      },
+      "operations": [],
+      "content_source_id": 1,
+      "version": "1.0"
+     },
+     "is_formula": false,
+     "is_equipped": true,
+     "is_invested": false,
+     "is_implanted": false,
+     "container_contents": []
+    }
+   ],
+   "coins": {
+    "cp": 0,
+    "sp": 0,
+    "gp": 0,
+    "pp": 0
+   }
+  },
+  "notes": null,
+  "details": {
+   "class": {
+    "id": 107,
+    "created_at": "2024-07-26T18:59:30.996177+00:00",
+    "updated_at": "2026-08-27T16:49:14.833831+00:00",
+    "name": "Alchemist",
+    "rarity": "COMMON",
+    "description": "> _There's no sight more beautiful to you than a strange brew bubbling in a beaker, and you consume your ingenious elixirs with abandon. You're fascinated by uncovering the secrets of science and the natural world, and you're constantly experimenting in your lab or on the go with inventive concoctions for every eventuality. You are fearless in the face of risk, hurling explosive or toxic creations at your foes. Your unique path toward greatness is lined with alchemical brews that push your mind and body to their limits._\n\n* * *\n\n### **During Combat Encounters…**\n\nYou lob bombs at your foes, harry your enemies, and support the rest of your party with potent elixirs. You might even use mutagens to warp your body into a resilient and powerful weapon.\n\n### **During Social Encounters…**\n\nYou provide knowledge and experience about alchemical items and related secrets, such as poisons and diseases.\n\n### **While Exploring…**\n\nYou keep an eye out for additional ingredients that you can turn into alchemical reagents, while giving advice on all things alchemical and mysterious.\n\n### **In Downtime…**\n\nYou experiment in an alchemical lab, brewing elixirs, making bombs, and furthering your alchemical knowledge.\n\n### **You Might…**\n\n*   Enjoy tinkering with strange formulas and alchemical reagents, often with a single-minded dedication and recklessness that gives others pause.\n    \n*   Get a kick out of wreaking havoc with the alchemical concoctions you've made, and enjoy watching things burn, dissolve, freeze, and jolt.\n    \n*   Endlessly experiment to discover new, more potent alchemical tools.\n    \n\n### **Others Probably…**\n\n*   Think you're some kind of sorcerer or an eccentric wizard and don't understand that you don't cast spells; spellcasters who clumsily dabble in alchemy only heighten this misconception.\n    \n*   Don't understand your zeal for alchemy, creativity, and invention.\n    \n*   Assume that if you haven't caused a catastrophe with your experimentations, you inevitably will.",
+    "operations": [
+     {
+      "id": "a609fa9c-25f4-491c-b4b2-01298359611f",
+      "type": "adjValue",
+      "data": {
+       "variable": "ATTRIBUTE_INT",
+       "value": {
+        "value": 1
+       }
+      }
+     },
+     {
+      "id": "12968691-c867-4ca6-991e-c55f779a6f30",
+      "type": "setValue",
+      "data": {
+       "variable": "MAX_HEALTH_CLASS_PER_LEVEL",
+       "value": 8
+      }
+     },
+     {
+      "id": "9fddf749-1098-40bc-a75e-9183be0ac959",
+      "type": "adjValue",
+      "data": {
+       "variable": "PERCEPTION",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "ee832f86-dc1d-44a6-a18a-89857a6e520c",
+      "type": "adjValue",
+      "data": {
+       "variable": "SAVE_FORT",
+       "value": {
+        "value": "E"
+       }
+      }
+     },
+     {
+      "id": "c4d53c88-cf5b-4939-b349-2a068acbd052",
+      "type": "adjValue",
+      "data": {
+       "variable": "SAVE_REFLEX",
+       "value": {
+        "value": "E"
+       }
+      }
+     },
+     {
+      "id": "e4a46187-197c-4923-b8d5-a4cffa9b674b",
+      "type": "adjValue",
+      "data": {
+       "variable": "SAVE_WILL",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "58bc2058-a07f-4304-b947-efe818dab9eb",
+      "type": "adjValue",
+      "data": {
+       "variable": "SKILL_CRAFTING",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "e67b6af3-fca7-4416-a486-166a611dfbea",
+      "type": "adjValue",
+      "data": {
+       "variable": "SIMPLE_WEAPONS",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "1d49045f-ec40-4978-9a1d-c0d30e57b9a7",
+      "type": "adjValue",
+      "data": {
+       "variable": "WEAPON_GROUP_BOMB",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "56f5a140-adb7-49a3-8ae1-bc4eaaf4fdc6",
+      "type": "adjValue",
+      "data": {
+       "variable": "UNARMED_ATTACKS",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "cab72eaa-6625-4066-94aa-91338a4719d0",
+      "type": "adjValue",
+      "data": {
+       "variable": "LIGHT_ARMOR",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "67e1d52b-c6e2-41dc-be2e-8c97722a3125",
+      "type": "adjValue",
+      "data": {
+       "variable": "MEDIUM_ARMOR",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "34d6ad1a-ac99-4a99-9a03-3fb7bff0f259",
+      "type": "adjValue",
+      "data": {
+       "variable": "UNARMORED_DEFENSE",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "68e6640d-b41e-4033-aab8-771c6a177524",
+      "type": "setValue",
+      "data": {
+       "variable": "CLASS_DC",
+       "value": {
+        "value": "T",
+        "attribute": "ATTRIBUTE_INT"
+       }
+      }
+     }
+    ],
+    "skill_training_base": 3,
+    "trait_id": 3626,
+    "artwork_url": "https://images.demiplane.com/elements/pathfinder-2e/classes/class-alchemist-rm-detail.png?format=webp&quality=90&width=1920",
+    "deprecated": null,
+    "content_source_id": 256,
+    "version": "1.0"
+   },
+   "background": {
+    "id": 1007,
+    "created_at": "2024-05-08T21:49:05.166908+00:00",
+    "updated_at": "2024-05-08T21:49:05.166908+00:00",
+    "name": "Deckhand",
+    "rarity": "COMMON",
+    "description": "The rolling waves of the high seas, the constant sway of the deck underfoot, and the creaking heights of a ship's rigging are as familiar to you as solid ground. You might have worked on a simple fishing boat, a wealthy merchant's galley, a mighty warship—or even a pirate's caravel. Whether your crew retired, your ship sank, or you've turned to adventuring so you can keep all the treasure for yourself, you still retain an excellent sense of balance and quick reflexes.  \n  \nChoose two attribute boosts. One must be to **Strength** or **Dexterity**, and one is a free attribute boost.  \n  \nYou're trained in the Acrobatics skill, and the Sailing Lore skill. You gain the [Cat Fall](link_feat_19983) skill feat.",
+    "artwork_url": "",
+    "operations": [
+     {
+      "id": "5b1ccf92-ae92-419a-8c69-826a0b00d71f",
+      "type": "select",
+      "data": {
+       "title": "Select an Attribute",
+       "modeType": "PREDEFINED",
+       "optionType": "ADJ_VALUE",
+       "optionsPredefined": [
+        {
+         "id": "4278f3a7-633b-42d0-9273-9d153c16ef9f",
+         "type": "ADJ_VALUE",
+         "operation": {
+          "id": "b4534dca-667d-44b7-8fef-3ccbb7ece8fc",
+          "type": "adjValue",
+          "data": {
+           "variable": "ATTRIBUTE_STR",
+           "value": {
+            "value": 1
+           }
+          }
+         }
+        },
+        {
+         "id": "f05e9cb9-1e4a-483a-9d55-61fe3da4eb6f",
+         "type": "ADJ_VALUE",
+         "operation": {
+          "id": "0c711058-b542-4609-bfec-984d666a07f6",
+          "type": "adjValue",
+          "data": {
+           "variable": "ATTRIBUTE_DEX",
+           "value": {
+            "value": 1
+           }
+          }
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "f92381be-cfd2-49bf-a287-5dc8cb2e8276",
+      "type": "select",
+      "data": {
+       "title": "Select an Attribute",
+       "modeType": "FILTERED",
+       "optionType": "ADJ_VALUE",
+       "optionsPredefined": [],
+       "optionsFilters": {
+        "id": "455561d6-7324-4bef-926a-e314b126c3af",
+        "type": "ADJ_VALUE",
+        "group": "ATTRIBUTE",
+        "value": {
+         "value": 1
+        }
+       }
+      }
+     },
+     {
+      "id": "8742b4dd-3e10-4cf8-8e3d-e9874a49d117",
+      "type": "adjValue",
+      "data": {
+       "variable": "SKILL_ACROBATICS",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "42777d49-3af0-42a8-959b-dcf21f44968a",
+      "type": "createValue",
+      "data": {
+       "variable": "SKILL_LORE_SAILING",
+       "type": "prof",
+       "value": {
+        "value": "T",
+        "attribute": "ATTRIBUTE_INT"
+       }
+      }
+     },
+     {
+      "id": "569a6733-ddec-4deb-8a0c-b02836c6d77b",
+      "type": "giveAbilityBlock",
+      "data": {
+       "type": "feat",
+       "abilityBlockId": 19983
+      }
+     }
+    ],
+    "deprecated": null,
+    "content_source_id": 117,
+    "version": "1.0"
+   },
+   "ancestry": {
+    "id": 189,
+    "created_at": "2024-08-29T18:43:10.14793+00:00",
+    "updated_at": "2026-08-27T16:49:19.460496+00:00",
+    "name": "Yaksha",
+    "rarity": "RARE",
+    "description": "> _Away from shining citadels and opulent palaces, reticent yakshas shelter Tian Xia’s rural hinterlands from natural disasters and otherworldly depredations. Famed for resolute vows and prowess with primal magic, yakshas shield the indigent and protect the wilderness, punishing those who threaten either with bone-crushing fury. Yaksha legends recall their origins as divine spirits, overseeing the safety of roads and abodes in a primeval world of vast storm forests and titanic flame floods—the First World, a realm of boundless potentiality._\n\nDuring the Great Abandonment, when the gods left the First World, many yakshas rejected this exodus, instead staying to perform their duties as caretakers. Despite the realm’s sudden dearth of [divine](link_trait_1475) power, the remaining yakshas swore primordial vows, allowing them to channel power from the nearby Creation’s Forge into primal magic and transform swathes of the metamorphic First World into stable regions to provide refuge for destitute [fey](link_trait_2021).\n\nYakshas faced great hostility in the First World; their sheltering of impoverished fey didn’t garner sympathy but instead drew scorn from others. Affronted fey aristocrats saw yaksha sanctuaries as a challenge to their authority, and the stolid plainness of yaksha domains offended the fey’s aesthetic sensitivities. Thus, yaksha communities increasingly became targets and, at some uncertain time, were banished to the Universe. Some of these exiles came to settle in obscurity amid Tian Xia’s forests, a fact that planar scholars record as a tragedy. After all, if these yakshas had left alongside the gods earlier, they would surely enjoy greater prominence and privilege on Golarion.\n\nYet most yakshas spurn such sentiments, instead expressing quiet pride in fulfilling their vows where even the gods failed. Yakshas view their departure not as a dereliction, but an execution of duty. Their histories claim this egress paved the way for other persecuted fey to escape, and thus their relocation aligned with their obligations. Many yakshas still enjoy amicable relations with fey emigrants, protecting them and their descendants from First World pursuers. Just as many wander bucolic back roads and shadowy swamps, guiding lost travelers, repairing flood-torn bridges, or simply nurturing the green, growing [earth](link_trait_1523)—a fundamental pillar of the land. Such stalwart custodianship has earned the reclusive yakshas a reputation for being hospitable, if enigmatic, guardians of the wild.\n\nIf you want to play a character who’s a guardian [spirit](link_trait_1556) and has complex relationships with gods and [fiends](link_trait_2415) alike, swears primordial vows to uphold noble duties, and acts on behalf of the humble and forgotten, you should play a yaksha.",
+    "trait_id": 3891,
+    "artwork_url": "https://images.demiplane.com/elements/pathfinder-2e/ancestries/ancestry-yaksha-detail.png?format=webp&quality=90&width=1920",
+    "content_source_id": 318,
+    "deprecated": null,
+    "version": "1.0",
+    "operations": [
+     {
+      "id": "bfcc5f10-ef2a-4ff0-a614-8679bd829792",
+      "type": "setValue",
+      "data": {
+       "variable": "MAX_HEALTH_ANCESTRY",
+       "value": 8
+      }
+     },
+     {
+      "id": "11dec64a-4e34-41a9-a47a-29561146b60a",
+      "type": "setValue",
+      "data": {
+       "variable": "SIZE",
+       "value": "medium"
+      }
+     },
+     {
+      "id": "8ab9f1f9-6dee-4886-95c3-a985f2274677",
+      "type": "adjValue",
+      "data": {
+       "variable": "ATTRIBUTE_CON",
+       "value": {
+        "value": 1
+       }
+      }
+     },
+     {
+      "id": "5f440e05-ace4-4876-b12d-cf47996d7f22",
+      "type": "adjValue",
+      "data": {
+       "variable": "ATTRIBUTE_CHA",
+       "value": {
+        "value": 1
+       }
+      }
+     },
+     {
+      "id": "dffceead-f4ae-4037-9039-99d888167968",
+      "type": "adjValue",
+      "data": {
+       "variable": "ATTRIBUTE_INT",
+       "value": {
+        "value": -1
+       }
+      }
+     },
+     {
+      "id": "0db7dd90-eeac-4ba5-9d55-7aa8d3efe01c",
+      "type": "select",
+      "data": {
+       "title": "Select an Attribute",
+       "modeType": "FILTERED",
+       "optionType": "ADJ_VALUE",
+       "optionsPredefined": [],
+       "optionsFilters": {
+        "id": "17f9268d-39b8-49ef-a993-91fad2b79fea",
+        "type": "ADJ_VALUE",
+        "group": "ATTRIBUTE",
+        "value": {
+         "value": 1
+        }
+       }
+      }
+     },
+     {
+      "id": "f13b172f-0135-438e-98cc-687c496bbea4",
+      "type": "giveLanguage",
+      "data": {
+       "languageId": 81
+      }
+     },
+     {
+      "id": "0cc33667-1abc-4e52-9cd0-856273e5bf87",
+      "type": "giveLanguage",
+      "data": {
+       "languageId": 90
+      }
+     },
+     {
+      "id": "6106325e-c507-44e0-92bd-1c6a604eb759",
+      "type": "setValue",
+      "data": {
+       "variable": "CORE_LANGUAGES",
+       "value": "[\n  \"Empyrean\",\n  \"Diabolic\",\n  \"Nagaji\",\n  \"Tang\",\n  \"Tengu\",\n  \"Vudran\"\n]"
+      }
+     },
+     {
+      "id": "574e289e-1472-413f-bd1c-f094deca767d",
+      "type": "giveTrait",
+      "data": {
+       "traitId": 1556
+      }
+     },
+     {
+      "id": "f159ed49-c55e-4dd6-ae02-ee460e0f7ff8",
+      "type": "giveAbilityBlock",
+      "data": {
+       "type": "sense",
+       "abilityBlockId": 19330
+      }
+     },
+     {
+      "id": "2be69609-ecbb-4258-a2cb-fcc1b3e59e5c",
+      "type": "setValue",
+      "data": {
+       "variable": "SPEED",
+       "value": 25
+      }
+     },
+     {
+      "id": "a3f07a40-eef8-44b3-b0f7-bbec841183fd",
+      "type": "giveLanguage",
+      "data": {
+       "languageId": 672
+      }
+     },
+     {
+      "id": "f509fcd2-91d1-4006-9282-41dd8d59cba6",
+      "type": "giveTrait",
+      "data": {
+       "traitId": 3891
+      }
+     }
+    ]
+   },
+   "info": {
+    "appearance": "undefined",
+    "personality": "undefined",
+    "alignment": "undefined",
+    "beliefs": "undefined",
+    "age": "undefined",
+    "height": "undefined",
+    "weight": "undefined",
+    "gender": "undefined",
+    "pronouns": "undefined",
+    "faction": "undefined",
+    "reputation": 0,
+    "ethnicity": "undefined",
+    "nationality": "undefined",
+    "birthplace": "undefined",
+    "organized_play_id": ""
+   },
+   "conditions": [],
+   "background_image_url": "https://cdna.artstation.com/p/assets/images/images/017/216/894/large/andreas-rocha-wizardstoweriii01.jpg",
+   "image_url": "https://api.wanderersguide.app/storage/v1/object/public/portraits/default/7e6ad4e6-8cfa-4088-9069-2330165a811e.png"
+  },
+  "roll_history": null,
+  "custom_operations": null,
+  "meta_data": {
+   "reset_hp": false,
+   "given_item_ids": [
+    15516,
+    9252
+   ],
+   "calculated_stats": {
+    "hp_max": 41,
+    "stamina_max": 0,
+    "resolve_max": 0,
+    "ac": 16,
+    "profs": {
+     "SAVE_FORT": {
+      "total": 10,
+      "type": "E"
+     },
+     "SAVE_REFLEX": {
+      "total": 8,
+      "type": "E"
+     },
+     "SAVE_WILL": {
+      "total": 7,
+      "type": "T"
+     },
+     "SKILL_ACROBATICS": {
+      "total": 6,
+      "type": "T"
+     },
+     "SKILL_ARCANA": {
+      "total": 5,
+      "type": "U"
+     },
+     "SKILL_ATHLETICS": {
+      "total": 1,
+      "type": "U"
+     },
+     "SKILL_CRAFTING": {
+      "total": 5,
+      "type": "T"
+     },
+     "SKILL_DECEPTION": {
+      "total": 2,
+      "type": "U"
+     },
+     "SKILL_DIPLOMACY": {
+      "total": 2,
+      "type": "U"
+     },
+     "SKILL_INTIMIDATION": {
+      "total": 2,
+      "type": "U"
+     },
+     "SKILL_MEDICINE": {
+      "total": 2,
+      "type": "U"
+     },
+     "SKILL_NATURE": {
+      "total": 2,
+      "type": "U"
+     },
+     "SKILL_OCCULTISM": {
+      "total": 0,
+      "type": "U"
+     },
+     "SKILL_PERFORMANCE": {
+      "total": 2,
+      "type": "U"
+     },
+     "SKILL_RELIGION": {
+      "total": 2,
+      "type": "U"
+     },
+     "SKILL_SOCIETY": {
+      "total": 0,
+      "type": "U"
+     },
+     "SKILL_STEALTH": {
+      "total": 1,
+      "type": "U"
+     },
+     "SKILL_SURVIVAL": {
+      "total": 2,
+      "type": "U"
+     },
+     "SKILL_THIEVERY": {
+      "total": 6,
+      "type": "T"
+     },
+     "SPELL_ATTACK": {
+      "total": 5,
+      "type": "T"
+     },
+     "SPELL_DC": {
+      "total": 5,
+      "type": "T"
+     },
+     "LIGHT_ARMOR": {
+      "total": 5,
+      "type": "T"
+     },
+     "MEDIUM_ARMOR": {
+      "total": 5,
+      "type": "T"
+     },
+     "HEAVY_ARMOR": {
+      "total": 0,
+      "type": "U"
+     },
+     "UNARMORED_DEFENSE": {
+      "total": 5,
+      "type": "T"
+     },
+     "LIGHT_BARDING": {
+      "total": 0,
+      "type": "U"
+     },
+     "HEAVY_BARDING": {
+      "total": 0,
+      "type": "U"
+     },
+     "SIMPLE_WEAPONS": {
+      "total": 5,
+      "type": "T"
+     },
+     "MARTIAL_WEAPONS": {
+      "total": 0,
+      "type": "U"
+     },
+     "ADVANCED_WEAPONS": {
+      "total": 0,
+      "type": "U"
+     },
+     "UNARMED_ATTACKS": {
+      "total": 5,
+      "type": "T"
+     },
+     "PERCEPTION": {
+      "total": 7,
+      "type": "T"
+     },
+     "CLASS_DC": {
+      "total": 5,
+      "type": "T"
+     },
+     "WEAPON_GROUP_AXE": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_BOMB": {
+      "total": 5,
+      "type": "T"
+     },
+     "WEAPON_GROUP_BOW": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_BRAWLING": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_CLUB": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_CROSSBOW": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_DART": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_FIREARM": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_FLAIL": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_HAMMER": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_KNIFE": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_PICK": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_POLEARM": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_SHIELD": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_SLING": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_SPEAR": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_SWORD": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_LASER": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_PROJECTILE": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_DIVISION_GUN": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_DIVISION_GUN_SIMPLE": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_DIVISION_GUN_MARTIAL": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_DIVISION_GUN_ADVANCED": {
+      "total": 0,
+      "type": "U"
+     },
+     "ARMOR_GROUP_CLOTH": {
+      "total": 0,
+      "type": "U"
+     },
+     "ARMOR_GROUP_CHAIN": {
+      "total": 0,
+      "type": "U"
+     },
+     "ARMOR_GROUP_COMPOSITE": {
+      "total": 0,
+      "type": "U"
+     },
+     "ARMOR_GROUP_LEATHER": {
+      "total": 0,
+      "type": "U"
+     },
+     "ARMOR_GROUP_PLATE": {
+      "total": 0,
+      "type": "U"
+     },
+     "SKILL_COMPUTERS": {
+      "total": 0,
+      "type": "U"
+     },
+     "SKILL_PILOTING": {
+      "total": 6,
+      "type": "T"
+     },
+     "SKILL_LORE_SAILING": {
+      "total": 5,
+      "type": "T"
+     }
+    }
+   }
+  },
+  "options": {
+   "is_public": false,
+   "dice_roller": false,
+   "voluntary_flaws": false,
+   "class_archetypes": false,
+   "custom_operations": false,
+   "ignore_bulk_limit": false,
+   "auto_heighten_spells": false,
+   "alternate_ancestry_boosts": false,
+   "auto_detect_prerequisites": false
+  },
+  "variants": {
+   "ancestry_paragon": false,
+   "proficiency_without_level": false,
+   "proficiency_half_level": false,
+   "stamina": false,
+   "free_archetype": false,
+   "dual_class": false
+  },
+  "content_sources": {
+   "enabled": [
+    32,
+    903,
+    14,
+    34,
+    33,
+    18,
+    839,
+    611,
+    114,
+    239,
+    240,
+    241,
+    35,
+    51,
+    19,
+    901,
+    20,
+    3,
+    11,
+    43,
+    580,
+    12,
+    420,
+    730,
+    36,
+    9,
+    21,
+    37,
+    818,
+    203,
+    38,
+    7,
+    22,
+    23,
+    731,
+    17,
+    852,
+    853,
+    859,
+    867,
+    146,
+    185,
+    24,
+    842,
+    437,
+    635,
+    39,
+    25,
+    26,
+    45,
+    8,
+    873,
+    27,
+    636,
+    811,
+    46,
+    499,
+    40,
+    117,
+    186,
+    50,
+    29,
+    1,
+    256,
+    276,
+    476,
+    41,
+    15,
+    748,
+    493,
+    402,
+    52,
+    13,
+    902,
+    118,
+    582,
+    591,
+    147,
+    448,
+    578,
+    793,
+    579,
+    152,
+    42,
+    840,
+    590,
+    900,
+    172,
+    44,
+    28,
+    47,
+    48,
+    318,
+    171,
+    30,
+    16,
+    581,
+    838,
+    49,
+    85,
+    400,
+    305,
+    31
+   ]
+  },
+  "operation_data": {
+   "selections": {
+    "class_720d2fe6-f042-4353-8313-1293375b1301-0": "SKILL_THIEVERY",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-0_SKILL_THIEVERY": "SKILL_THIEVERY",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-1": "SKILL_PILOTING",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-1_SKILL_PILOTING": "SKILL_MEDICINE",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-2": "SKILL_LORE_SAILING",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-2_SKILL_LORE_SAILING": "SKILL_SURVIVAL",
+    "class-feature-31082_3b6ac969-4dac-4647-96f4-0f133a169f77": "31818",
+    "class-feature-31082_3b6ac969-4dac-4647-96f4-0f133a169f77_31818": "31817",
+    "class-feature-30965_d900cf62-993b-4f6b-a497-33345c8419f6": "ATTRIBUTE_CON",
+    "class-feature-30965_d900cf62-993b-4f6b-a497-33345c8419f6_ATTRIBUTE_CON": "ATTRIBUTE_STR",
+    "class-feature-30965_4a800419-f7d5-43a3-8f4a-b03a8e76eb37": "ATTRIBUTE_DEX",
+    "class-feature-30965_4a800419-f7d5-43a3-8f4a-b03a8e76eb37_ATTRIBUTE_DEX": "ATTRIBUTE_WIS",
+    "class-feature-30965_ff531ab1-3d9a-43a0-b9c4-d7c29af9e830": "ATTRIBUTE_CHA",
+    "class-feature-30965_ff531ab1-3d9a-43a0-b9c4-d7c29af9e830_ATTRIBUTE_CHA": "ATTRIBUTE_CHA",
+    "class-feature-30965_18fee4ba-a9a5-4f9c-85f4-fad3f73e0480": "ATTRIBUTE_WIS",
+    "class-feature-30965_18fee4ba-a9a5-4f9c-85f4-fad3f73e0480_ATTRIBUTE_WIS": "ATTRIBUTE_INT",
+    "class-feature-31299_0e582969-7d82-4a55-9f3c-03c8a3f35c91": "32987",
+    "class-feature-31299_0e582969-7d82-4a55-9f3c-03c8a3f35c91_32987": "32987",
+    "class-feature-31083_d6c577fe-9e17-45dc-a38e-428d10e2d4cf": "31448",
+    "class-feature-31083_d6c577fe-9e17-45dc-a38e-428d10e2d4cf_31448": "31819",
+    "class-feature-30975_7321a331-60eb-4fc6-a9cb-e76f92b16cef": "21362",
+    "class-feature-30975_7321a331-60eb-4fc6-a9cb-e76f92b16cef_21362": "35182",
+    "class-feature-30970_8be52fe8-0e0f-4c15-be23-13943282f27f": "25458",
+    "class-feature-30970_8be52fe8-0e0f-4c15-be23-13943282f27f_25458": "21977",
+    "class-feature-30986_b494f324-953d-4d8c-a838-6e48b2e029e2": "SKILL_ARCANA",
+    "class-feature-30986_b494f324-953d-4d8c-a838-6e48b2e029e2_SKILL_ARCANA": "SKILL_ACROBATICS",
+    "ancestry_0db7dd90-eeac-4ba5-9d55-7aa8d3efe01c": "ATTRIBUTE_WIS",
+    "ancestry_0db7dd90-eeac-4ba5-9d55-7aa8d3efe01c_ATTRIBUTE_WIS": "ATTRIBUTE_STR",
+    "ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-0": "673",
+    "ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-0_673": "317",
+    "ancestry-section-5742419753466526_3fd6a268-771b-49fc-93ed-9b53695d1a29": "35351",
+    "ancestry-section-5742419753466526_3fd6a268-771b-49fc-93ed-9b53695d1a29_35351": "35351",
+    "ancestry-section-2707339574403411_9f26290c-a2db-4c45-9b34-5053e60c106d-0": "35360",
+    "ancestry-section-2707339574403411_9f26290c-a2db-4c45-9b34-5053e60c106d-0_35360": "35353",
+    "background_5b1ccf92-ae92-419a-8c69-826a0b00d71f": "b4534dca-667d-44b7-8fef-3ccbb7ece8fc",
+    "background_5b1ccf92-ae92-419a-8c69-826a0b00d71f_b4534dca-667d-44b7-8fef-3ccbb7ece8fc": "b4534dca-667d-44b7-8fef-3ccbb7ece8fc",
+    "background_f92381be-cfd2-49bf-a287-5dc8cb2e8276": "ATTRIBUTE_CON",
+    "background_f92381be-cfd2-49bf-a287-5dc8cb2e8276_ATTRIBUTE_CON": "ATTRIBUTE_DEX"
+   }
+  },
+  "spells": {
+   "slots": [],
+   "list": [],
+   "focus_point_current": 0,
+   "innate_casts": []
+  },
+  "companions": null,
+  "campaign_id": 41
+ },
+ "content": {
+  "_README": "Here's some compiled data about the character. Should be fairly human-readable. The <character> section is what WG reads, this section is solely for you! Should give you an abundance of compiled stats and info about the character. If you have any questions, feel free to ask on our Discord!",
+  "feats_features": {
+   "generalAndSkillFeats": [
+    {
+     "id": 19894,
+     "created_at": "2023-12-14T01:07:40.675984+00:00",
+     "operations": [],
+     "name": "Alchemical Crafting",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [
+      "trained in Crafting"
+     ],
+     "frequency": null,
+     "cost": null,
+     "trigger": null,
+     "requirements": null,
+     "access": null,
+     "description": "You can use the [Craft](link_action_19617) activity to create [alchemical](link_trait_1529) items. When you select this feat, you immediately add the formulas for four common 1st-level alchemical items to your [formula book](link_item_6972).",
+     "special": null,
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=5117",
+       "book": "Player Core",
+       "page": "252"
+      },
+      "foundry": {
+       "rules": []
+      }
+     },
+     "traits": [
+      1437,
+      1438
+     ],
+     "content_source_id": 1,
+     "version": "1.0",
+     "uuid": 875713794774102,
+     "availability": null,
+     "search_tsv": "'1529':17B '19617':10B '1st':33B '1st-level':32B '6972':43B 'action':9B 'activ':11B 'add':26B 'alchem':1A,14B,35B 'book':40B 'common':31B 'craft':2A,7B 'creat':13B 'feat':23B 'formula':28B,39B 'four':30B 'immedi':25B 'item':18B,36B,42B 'level':34B 'link':8B,15B,41B 'select':21B 'trait':16B 'use':5B",
+     "updated_at": "2026-08-27T16:49:23.919185+00:00"
+    },
+    {
+     "id": 19983,
+     "created_at": "2023-12-14T01:26:28.792654+00:00",
+     "operations": [],
+     "name": "Cat Fall",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [
+      "trained in Acrobatics"
+     ],
+     "frequency": null,
+     "cost": null,
+     "trigger": null,
+     "requirements": null,
+     "access": null,
+     "description": "Your catlike aerial acrobatics allow you to cushion your falls. Treat falls as 10 feet shorter. If you’re an expert in Acrobatics, treat falls as 25 feet shorter and 50 feet if you’re a master. If you’re legendary in Acrobatics, you always land on your feet and don’t take damage, regardless of the distance of the fall.",
+     "special": null,
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=5131",
+       "book": "Player Core",
+       "page": "253"
+      },
+      "foundry": {
+       "rules": []
+      }
+     },
+     "traits": [
+      1437,
+      1438
+     ],
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 5345300989678044,
+     "availability": null,
+     "search_tsv": "'10':16B '25':29B '50':33B 'acrobat':6B,25B,45B 'aerial':5B 'allow':7B 'alway':47B 'cat':1A 'catlik':4B 'cushion':10B 'damag':56B 'distanc':60B 'expert':23B 'fall':2A,12B,14B,27B,63B 'feet':17B,30B,34B,51B 'land':48B 'legendari':43B 'master':39B 're':21B,37B,42B 'regardless':57B 'shorter':18B,31B 'take':55B 'treat':13B,26B",
+     "updated_at": "2026-08-27T16:53:40.818195+00:00"
+    },
+    {
+     "id": 25458,
+     "created_at": "2024-05-03T17:54:58.970614+00:00",
+     "operations": [],
+     "name": "Eye of the Arclords",
+     "actions": "ONE-ACTION",
+     "level": 2,
+     "rarity": "UNCOMMON",
+     "prerequisites": [
+      "expert in Arcana",
+      "Arcane Sense"
+     ],
+     "frequency": "once per day",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "You are a member of the Arclords of Nex.",
+     "description": "You open an incandescent third eye upon your forehead. The eye can remain open for 1 minute, and you can close it before then with a single action with the [concentrate](link_trait_1432) trait. It can remain open for 2 minutes if you’re a master in Arcana, or 5 minutes if you’re legendary. While the eye is open, you gain the following benefits: you gain the effects of the [detect magic](link_spell_4562) [arcane](link_trait_1459) innate spell from your [Arcane Sense](link_feat_19915) at the start of each of your turns without needing to [cast the spell](link_action_19611); you gain darkvision; you gain a +2 status bonus to Perception checks to Seek undetected and hidden creatures and to your Perception DC against [Hide](link_action_19726) and [Sneak](link_action_19850). After your third eye closes, you are dazzled for an amount of time equal to how long you had it open.",
+     "special": "",
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=870",
+       "book": "World Guide",
+       "page": "81"
+      }
+     },
+     "traits": [
+      1437,
+      1438
+     ],
+     "content_source_id": 31,
+     "version": null,
+     "uuid": 2004526864659786,
+     "availability": null,
+     "search_tsv": "'+2':118B '1':20B '1432':38B '1459':85B '19611':111B '19726':139B '19850':144B '19915':94B '2':45B '4562':81B '5':55B 'action':32B,110B,138B,143B 'amount':155B 'arcan':82B,90B 'arcana':53B 'arclord':4A 'benefit':70B 'bonus':120B 'cast':106B 'check':123B 'close':25B,149B 'concentr':35B 'creatur':129B 'darkvis':114B 'dazzl':152B 'dc':134B 'detect':77B 'effect':74B 'equal':158B 'eye':1A,10B,15B,63B,148B 'feat':93B 'follow':69B 'forehead':13B 'gain':67B,72B,113B,116B 'hidden':128B 'hide':136B 'incandesc':8B 'innat':86B 'legendari':60B 'link':36B,79B,83B,92B,109B,137B,142B 'long':161B 'magic':78B 'master':51B 'minut':21B,46B,56B 'need':104B 'open':6B,18B,43B,65B,165B 'percept':122B,133B 're':49B,59B 'remain':17B,42B 'seek':125B 'sens':91B 'singl':31B 'sneak':141B 'spell':80B,87B,108B 'start':97B 'status':119B 'third':9B,147B 'time':157B 'trait':37B,39B,84B 'turn':102B 'undetect':126B 'upon':11B 'without':103B",
+     "updated_at": "2026-08-27T16:49:27.66876+00:00"
+    },
+    {
+     "id": 21362,
+     "created_at": "2024-04-18T21:28:27.307698+00:00",
+     "operations": [],
+     "name": "Familiar Oddities",
+     "actions": null,
+     "level": 2,
+     "rarity": "RARE",
+     "prerequisites": [
+      "Curse Maelstrom Dedication",
+      "trained in Occultism or Curse Lore"
+     ],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "Perhaps due to the curse within you, curses occasionally perceive you as an extension of themselves and readily reveal themselves to you. You gain a +2 circumstance bonus to checks to [Identify Magic](link_action_19730) on a [cursed item](link_trait_1558) or a spell that has the [curse](link_trait_1855) trait.",
+     "special": "",
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=3830",
+       "book": "Dark Archive",
+       "page": "169"
+      }
+     },
+     "traits": [
+      2542,
+      1438
+     ],
+     "content_source_id": 12,
+     "version": null,
+     "uuid": 8488623551007592,
+     "availability": null,
+     "search_tsv": "'+2':28B '1558':45B '1855':55B '19730':38B 'action':37B 'bonus':30B 'check':32B 'circumst':29B 'curs':7B,10B,41B,52B 'due':4B 'extens':16B 'familiar':1A 'gain':26B 'identifi':34B 'item':42B 'link':36B,43B,53B 'magic':35B 'occasion':11B 'odditi':2A 'perceiv':12B 'perhap':3B 'readili':20B 'reveal':21B 'spell':48B 'trait':44B,54B,56B 'within':8B",
+     "updated_at": "2026-08-27T16:49:25.686839+00:00"
+    }
+   ],
+   "classFeats": [
+    {
+     "id": 31818,
+     "created_at": "2024-08-06T20:32:44.846365+00:00",
+     "operations": [],
+     "name": "Alchemical Assessment",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [
+      "trained in Crafting"
+     ],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You can identify alchemical items quickly. When using the Crafting skill to [Identify Alchemy](link_action_19729) on an alchemical item you hold, you can do so as a single action, rather than spending 10 minutes.",
+     "special": "",
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=5761",
+       "book": "Player Core 2",
+       "page": "63"
+      }
+     },
+     "traits": [
+      3626
+     ],
+     "content_source_id": 256,
+     "version": null,
+     "uuid": 7067592382468069,
+     "availability": null,
+     "search_tsv": "'10':37B '19729':19B 'action':18B,33B 'alchem':1A,6B,22B 'alchemi':16B 'assess':2A 'craft':12B 'hold':25B 'identifi':5B,15B 'item':7B,23B 'link':17B 'minut':38B 'quick':8B 'rather':34B 'singl':32B 'skill':13B 'spend':36B 'use':10B",
+     "updated_at": "2026-08-27T16:49:27.66876+00:00"
+    },
+    {
+     "id": 31176,
+     "created_at": "2024-07-30T17:05:52.36043+00:00",
+     "operations": [],
+     "name": "Quick Alchemy",
+     "actions": "ONE-ACTION",
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "You're either holding or wearing an alchemist's toolkit and you have a free hand.",
+     "access": "",
+     "description": "You can either use up a versatile vial to make another [alchemical](link_trait_1529) [consumable](link_trait_1531) at a moment’s notice or create an especially short-lived versatile vial. Any effect created by an item made with Quick Alchemy that would have a duration longer than 10 minutes lasts for 10 minutes instead.\n\n*   **Create Consumable** You expend one of your versatile vials to create a single [alchemical](link_trait_1529) [consumable](link_trait_1531) item of your level or lower that’s in your [formula book](link_item_6972). You don’t have to spend the normal monetary cost in [alchemical](link_trait_1529) raw materials or need to attempt a Crafting check. This item has the [infused](link_trait_3540) trait, but it remains potent only until the start of your next turn. (As normal, you need only one formula for an item to create any level of that item.)\n    \n*   **Quick Vial** You create a versatile vial that can be used only as a [bomb](link_trait_1530) or for the versatile vial option from your research field (it can’t be used to create a [consumable](link_trait_1531), for example). This item has the [infused](link_trait_3540) trait, but it remains potent only until the end of your current turn.",
+     "special": "",
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Actions.aspx?ID=2801",
+       "book": "Player Core 2",
+       "page": "59"
+      },
+      "unselectable": true
+     },
+     "traits": [
+      3626,
+      1433
+     ],
+     "content_source_id": 256,
+     "version": null,
+     "uuid": 3378041843631222,
+     "availability": null,
+     "search_tsv": "'10':53B,57B '1529':17B,76B,110B '1530':175B '1531':21B,80B,197B '3540':127B,207B '6972':95B 'alchem':14B,73B,107B 'alchemi':2A,45B 'anoth':13B 'attempt':116B 'bomb':172B 'book':92B 'check':119B 'consum':18B,61B,77B,194B 'cost':105B 'craft':118B 'creat':28B,38B,60B,70B,152B,161B,192B 'current':219B 'durat':50B 'effect':37B 'either':5B 'end':216B 'especi':30B 'exampl':199B 'expend':63B 'field':185B 'formula':91B,147B 'infus':124B,204B 'instead':59B 'item':41B,81B,94B,121B,150B,157B,201B 'last':55B 'level':84B,154B 'link':15B,19B,74B,78B,93B,108B,125B,173B,195B,205B 'live':33B 'longer':51B 'lower':86B 'made':42B 'make':12B 'materi':112B 'minut':54B,58B 'moment':24B 'monetari':104B 'need':114B,144B 'next':139B 'normal':103B,142B 'notic':26B 'one':64B,146B 'option':181B 'potent':132B,212B 'quick':1A,44B,158B 'raw':111B 'remain':131B,211B 'research':184B 'short':32B 'short-liv':31B 'singl':72B 'spend':101B 'start':136B 'trait':16B,20B,75B,79B,109B,126B,128B,174B,196B,206B,208B 'turn':140B,220B 'use':6B,168B,190B 'versatil':9B,34B,67B,163B,179B 'vial':10B,35B,68B,159B,164B,180B 'would':47B",
+     "updated_at": "2026-08-27T16:49:29.077051+00:00"
+    },
+    {
+     "id": 31448,
+     "created_at": "2024-08-02T21:33:53.941553+00:00",
+     "operations": [],
+     "name": "Improvise Admixture",
+     "actions": "ONE-ACTION",
+     "level": 2,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "once per day",
+     "cost": "",
+     "trigger": "",
+     "requirements": "You have fewer than your maximum number of versatile vials, and you're either holding or wearing an alchemist's toolkit.",
+     "access": "",
+     "description": "You scrounge together enough ingredients from what’s left in your alchemist’s toolkit to produce a few more [versatile vials](link_item_15516) on the fly. Attempt a Crafting check. The DC is usually a standard-difficulty DC for your level, but the GM can assign a different DC based on the circumstances. The number of vials you regain depends on the result of your check (up to your maximum).\n\n**Critical Success** You regain 3 [versatile vials](link_item_15516).\n\n**Success** You regain 2 [versatile vials](link_item_15516).\n\n**Failure** You regain 1 [versatile vial](link_item_15516).\n\n**Critical Failure** You don’t regain any [versatile vials](link_item_15516).",
+     "special": "",
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=5767",
+       "book": "Player Core 2",
+       "page": "63"
+      }
+     },
+     "traits": [
+      3626,
+      1432,
+      1433
+     ],
+     "content_source_id": 256,
+     "version": null,
+     "uuid": 3780006882646425,
+     "availability": null,
+     "search_tsv": "'1':97B '15516':26B,84B,93B,102B,114B '2':88B '3':79B 'admixtur':2A 'alchemist':14B 'assign':50B 'attempt':30B 'base':54B 'check':33B,70B 'circumst':57B 'craft':32B 'critic':75B,103B 'dc':35B,42B,53B 'depend':64B 'differ':52B 'difficulti':41B 'enough':6B 'failur':94B,104B 'fli':29B 'gm':48B 'improvis':1A 'ingredi':7B 'item':25B,83B,92B,101B,113B 'left':11B 'level':45B 'link':24B,82B,91B,100B,112B 'maximum':74B 'number':59B 'produc':18B 'regain':63B,78B,87B,96B,108B 'result':67B 'scroung':4B 'standard':40B 'standard-difficulti':39B 'success':76B,85B 'togeth':5B 'toolkit':16B 'usual':37B 'versatil':22B,80B,89B,98B,110B 'vial':23B,61B,81B,90B,99B,111B",
+     "updated_at": "2026-08-27T16:49:29.077051+00:00"
+    }
+   ],
+   "ancestryFeats": [
+    {
+     "id": 35360,
+     "created_at": "2024-09-10T17:56:23.141686+00:00",
+     "operations": [
+      {
+       "id": "31086c2c-0a23-48ae-ac36-e7a4fbc271eb",
+       "type": "select",
+       "data": {
+        "title": "Select a Language",
+        "modeType": "FILTERED",
+        "optionType": "LANGUAGE",
+        "optionsPredefined": [],
+        "optionsFilters": {
+         "id": "3e946ea9-c3f3-4220-9a27-2c660ec761b0",
+         "type": "LANGUAGE"
+        }
+       }
+      },
+      {
+       "id": "5ac4baf7-1938-4387-bb5a-23c21c7996e5",
+       "type": "select",
+       "data": {
+        "title": "Select a Language",
+        "modeType": "FILTERED",
+        "optionType": "LANGUAGE",
+        "optionsPredefined": [],
+        "optionsFilters": {
+         "id": "a9ae855d-f594-42bf-ac01-b67db5a1e37c",
+         "type": "LANGUAGE"
+        }
+       }
+      },
+      {
+       "id": "08a0cf67-64fa-4fc3-b1ab-12b37c5cbd27",
+       "type": "addBonusToValue",
+       "data": {
+        "variable": "SAVE_FORT",
+        "value": "+2",
+        "type": "circumstance",
+        "text": "against linguistic effects"
+       }
+      },
+      {
+       "id": "b8ac245b-b398-4246-be75-81f6e1892395",
+       "type": "addBonusToValue",
+       "data": {
+        "variable": "SAVE_WILL",
+        "value": "+2",
+        "type": "circumstance",
+        "text": "against linguistic effects"
+       }
+      },
+      {
+       "id": "fab37b88-b72b-4c71-b522-b7762c52c8a1",
+       "type": "addBonusToValue",
+       "data": {
+        "variable": "SAVE_REFLEX",
+        "value": "+2",
+        "type": "circumstance",
+        "text": "against linguistic effects"
+       }
+      }
+     ],
+     "name": "Tangle-Tongue's Wit",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "Your talent for language is a blessing from the yaksha makers of old. You learn two new languages, chosen from languages you have access to. You also gain a +2 circumstance bonus to your saving throws against [linguistic](link_trait_1458) effects.",
+     "special": "",
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=6973",
+       "book": "Tian Xia Character Guide",
+       "page": "79"
+      }
+     },
+     "traits": [
+      3891
+     ],
+     "content_source_id": 318,
+     "version": null,
+     "uuid": 3746617005386575,
+     "availability": null,
+     "search_tsv": "'+2':35B '1458':46B 'access':29B 'also':32B 'bless':12B 'bonus':37B 'chosen':24B 'circumst':36B 'effect':47B 'gain':33B 'languag':9B,23B,26B 'learn':20B 'linguist':43B 'link':44B 'maker':16B 'new':22B 'old':18B 'save':40B 'talent':7B 'tangl':2A 'tangle-tongu':1A 'throw':41B 'tongu':3A 'trait':45B 'two':21B 'wit':5A 'yaksha':15B",
+     "updated_at": "2026-08-27T16:49:30.462716+00:00"
+    }
+   ],
+   "otherFeats": [
+    {
+     "id": 32987,
+     "created_at": "2024-08-08T21:13:26.407075+00:00",
+     "operations": [
+      {
+       "id": "d762dbef-8c2d-415e-9df5-d2e66c904dcf",
+       "type": "injectText",
+       "data": {
+        "type": "item",
+        "id": 15516,
+        "text": "**Field Vials** You can drink the contents of one your versatile vials to suppress the drawback you take from one [mutagen](link_trait_1563) currently affecting you until the beginning of your next turn. A vial used this way loses the [acid](link_trait_1528), [bomb](link_trait_1530), and [splash](link_trait_1532) traits and gains the [elixir](link_trait_1553) trait. If you have more than one drawback due to Combine Elixirs or a similar ability, drinking the vial suppresses one drawback of your choice."
+       }
+      },
+      {
+       "id": "17508e04-fb61-4617-a6ff-5181b6de2eb5",
+       "type": "injectText",
+       "data": {
+        "type": "item",
+        "id": 15517,
+        "text": "**Field Vials** You can drink the contents of one your versatile vials to suppress the drawback you take from one [mutagen](link_trait_1563) currently affecting you until the beginning of your next turn. A vial used this way loses the [acid](link_trait_1528), [bomb](link_trait_1530), and [splash](link_trait_1532) traits and gains the [elixir](link_trait_1553) trait. If you have more than one drawback due to Combine Elixirs or a similar ability, drinking the vial suppresses one drawback of your choice."
+       }
+      },
+      {
+       "id": "0459bf01-7e18-4f14-944d-ec1c64bf445a",
+       "type": "injectText",
+       "data": {
+        "type": "item",
+        "id": 15518,
+        "text": "**Field Vials** You can drink the contents of one your versatile vials to suppress the drawback you take from one [mutagen](link_trait_1563) currently affecting you until the beginning of your next turn. A vial used this way loses the [acid](link_trait_1528), [bomb](link_trait_1530), and [splash](link_trait_1532) traits and gains the [elixir](link_trait_1553) trait. If you have more than one drawback due to Combine Elixirs or a similar ability, drinking the vial suppresses one drawback of your choice."
+       }
+      },
+      {
+       "id": "5fd88ae1-cfa5-42e5-a155-a139e3ff67ee",
+       "type": "injectText",
+       "data": {
+        "type": "item",
+        "id": 15519,
+        "text": "**Field Vials** You can drink the contents of one your versatile vials to suppress the drawback you take from one [mutagen](link_trait_1563) currently affecting you until the beginning of your next turn. A vial used this way loses the [acid](link_trait_1528), [bomb](link_trait_1530), and [splash](link_trait_1532) traits and gains the [elixir](link_trait_1553) trait. If you have more than one drawback due to Combine Elixirs or a similar ability, drinking the vial suppresses one drawback of your choice."
+       }
+      },
+      {
+       "id": "81a048f7-0a4f-4346-9f3f-1c81f62df75c",
+       "type": "conditional",
+       "data": {
+        "conditions": [
+         {
+          "id": "11b42354-9f91-4216-b394-2b45839341a0",
+          "name": "CLASS_FEATURE_NAMES",
+          "data": {
+           "name": "CLASS_FEATURE_NAMES",
+           "type": "list-str",
+           "value": []
+          },
+          "type": "list-str",
+          "operator": "INCLUDES",
+          "value": "advanced vials"
+         }
+        ],
+        "trueOperations": [
+         {
+          "id": "7bec5fb3-562d-47a2-8820-49585d12fc0e",
+          "type": "injectText",
+          "data": {
+           "type": "item",
+           "id": 15516,
+           "text": "**Advanced Vials** When you drink one of your field vials, you also gain resistance to physical damage for the same duration. The resistance is equal to half your level."
+          }
+         },
+         {
+          "id": "b95d740c-dd58-4f91-a612-cbfe269160cc",
+          "type": "injectText",
+          "data": {
+           "type": "item",
+           "id": 15517,
+           "text": "**Advanced Vials** When you drink one of your field vials, you also gain resistance to physical damage for the same duration. The resistance is equal to half your level."
+          }
+         },
+         {
+          "id": "786f01f5-ff2b-46a9-a184-e555982c89bc",
+          "type": "injectText",
+          "data": {
+           "type": "item",
+           "id": 15518,
+           "text": "**Advanced Vials** When you drink one of your field vials, you also gain resistance to physical damage for the same duration. The resistance is equal to half your level."
+          }
+         },
+         {
+          "id": "0d301dea-2b15-4ce6-b0d5-6ffd67dcb026",
+          "type": "injectText",
+          "data": {
+           "type": "item",
+           "id": 15519,
+           "text": "**Advanced Vials** When you drink one of your field vials, you also gain resistance to physical damage for the same duration. The resistance is equal to half your level."
+          }
+         }
+        ],
+        "falseOperations": []
+       }
+      }
+     ],
+     "name": "Mutagenist Research Field",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You focus on bizarre mutagenic transformations that sacrifice one aspect of a creature’s physical or psychological being in order to strengthen another.\n\n**Formulas** Two common 1st-level [alchemical](link_trait_1529) [mutagens](link_trait_1563).\n\n**Field Benefit** When you use a [mutagen](link_trait_1563), you gain a number of temporary Hit Points equal to your Intelligence modifier (minimum 0) plus half your level. These temporary Hit Points last for 1 minute or until the [mutagen's](link_trait_1563) duration expires, whichever comes first. You can’t gain temporary HP from drinking a mutagen again for 1 minute.\n\n**Field Vials** You can drink the contents of one your [versatile vials](link_item_15516) to suppress the drawback you take from one [mutagen](link_trait_1563) currently affecting you for 1 minute. A vial used this way loses the [acid](link_trait_1528), [bomb](link_trait_1530), and [splash](link_trait_1532) traits and gains the [elixir](link_trait_1553) trait. If you have more than one drawback due to [Combine Elixirs](link_feat_31828) or a similar ability, drinking the vial suppresses one drawback of your choice.\n\n**Field Discovery (5th)** The mutagens flowing through your blood have altered your body chemistry. When you roll a Fortitude save while affected by a [mutagen](link_trait_1563) and dislike the result, you can end the effect of the [mutagen](link_trait_1563) to reroll the save. This is a [fortune](link_trait_1460) effect.\n\n**Advanced Vials (11th)** When you drink one of your field vials, you also gain resistance to physical damage for the same duration. The resistance is equal to half your level.\n\n**Greater Field Discovery (13th)** If you imbibe another [mutagen](link_trait_1563) while you are under the effects of a [mutagen](link_trait_1563), you can gain the benefits and the drawbacks of both [mutagens](link_trait_1563) at once, despite the fact that they both have the [polymorph](link_trait_1453) trait and would not normally function together. If you come under the effects of any further [mutagens](link_trait_1563) while benefiting from two [mutagens](link_trait_1563), you lose the benefit of one of the former [mutagens](link_trait_1563) of your choice, while retaining the drawbacks of all the [mutagens](link_trait_1563). If you are under the effects of two [mutagens](link_trait_1563) and you come under the effect of a non-[mutagen](link_trait_1563) [polymorph](link_trait_1453) effect, you lose the benefits of the [mutagens](link_trait_1563) while retaining the drawbacks of both. Your field vial benefit applies to one [mutagen](link_trait_1563) of your choice.",
+     "special": "",
+     "type": "feat",
+     "meta_data": {
+      "unselectable": false
+     },
+     "traits": [
+      3855
+     ],
+     "content_source_id": 256,
+     "version": null,
+     "uuid": 3738055956558429,
+     "availability": null,
+     "search_tsv": "'0':65B '1':76B,103B,136B '11th':251B '13th':282B '1453':330B,414B '1460':247B '1528':148B '1529':36B '1530':152B '1532':157B '15516':119B '1553':165B '1563':40B,50B,85B,131B,221B,236B,290B,302B,316B,350B,358B,371B,385B,397B,410B,425B,442B '1st':31B '1st-level':30B '31828':180B '5th':196B 'abil':184B 'acid':145B 'advanc':249B 'affect':133B,215B 'alchem':33B 'also':261B 'alter':204B 'anoth':26B,286B 'appli':436B 'aspect':13B 'benefit':42B,307B,352B,362B,419B,435B 'bizarr':7B 'blood':202B 'bodi':206B 'bomb':149B 'chemistri':207B 'choic':193B,374B,445B 'combin':176B 'come':89B,340B,400B 'common':29B 'content':111B 'creatur':16B 'current':132B 'damag':266B 'despit':319B 'discoveri':195B,281B 'dislik':223B 'drawback':123B,173B,190B,310B,378B,429B 'drink':98B,109B,185B,254B 'due':174B 'durat':86B,270B 'effect':230B,248B,296B,343B,391B,403B,415B 'elixir':162B,177B 'end':228B 'equal':59B,274B 'expir':87B 'fact':321B 'feat':179B 'field':3A,41B,105B,194B,258B,280B,433B 'first':90B 'flow':199B 'focus':5B 'former':367B 'formula':27B 'fortitud':212B 'fortun':244B 'function':336B 'gain':52B,94B,160B,262B,305B 'greater':279B 'half':67B,276B 'hit':57B,72B 'hp':96B 'imbib':285B 'intellig':62B 'item':118B 'last':74B 'level':32B,69B,278B 'link':34B,38B,48B,83B,117B,129B,146B,150B,155B,163B,178B,219B,234B,245B,288B,300B,314B,328B,348B,356B,369B,383B,395B,408B,412B,423B,440B 'lose':143B,360B,417B 'minimum':64B 'minut':77B,104B,137B 'modifi':63B 'mutagen':8B,37B,47B,81B,100B,128B,198B,218B,233B,287B,299B,313B,347B,355B,368B,382B,394B,407B,422B,439B 'mutagenist':1A 'non':406B 'normal':335B 'number':54B 'one':12B,113B,127B,172B,189B,255B,364B,438B 'order':23B 'physic':18B,265B 'plus':66B 'point':58B,73B 'polymorph':327B,411B 'psycholog':20B 'rerol':238B 'research':2A 'resist':263B,272B 'result':225B 'retain':376B,427B 'roll':210B 'sacrific':11B 'save':213B,240B 'similar':183B 'splash':154B 'strengthen':25B 'suppress':121B,188B 'take':125B 'temporari':56B,71B,95B 'togeth':337B 'trait':35B,39B,49B,84B,130B,147B,151B,156B,158B,164B,166B,220B,235B,246B,289B,301B,315B,329B,331B,349B,357B,370B,384B,396B,409B,413B,424B,441B 'transform':9B 'two':28B,354B,393B 'use':45B,140B 'versatil':115B 'vial':106B,116B,139B,187B,250B,259B,434B 'way':142B 'whichev':88B 'would':333B",
+     "updated_at": "2024-08-08T21:13:26.407075+00:00"
+    }
+   ],
+   "classFeatures": [
+    {
+     "id": 31207,
+     "created_at": "2024-07-31T22:14:18.398435+00:00",
+     "operations": [
+      {
+       "id": "07e40798-34d1-488e-be8f-29262bfd704c",
+       "type": "giveAbilityBlock",
+       "data": {
+        "type": "feat",
+        "abilityBlockId": 19894
+       }
+      },
+      {
+       "id": "83dd9fd5-b6d5-4e9d-9e7b-6cfb3bea4e93",
+       "type": "giveAbilityBlock",
+       "data": {
+        "type": "feat",
+        "abilityBlockId": 31176
+       }
+      },
+      {
+       "id": "1b22b10f-0e12-4eb4-9c5e-b3f3c2db3998",
+       "type": "conditional",
+       "data": {
+        "conditions": [
+         {
+          "id": "056b90f9-b262-4706-8abc-d6b5af0e71c2",
+          "name": "LEVEL",
+          "data": {
+           "name": "LEVEL",
+           "type": "num",
+           "value": 0
+          },
+          "type": "num",
+          "operator": "LESS_THAN",
+          "value": 4
+         }
+        ],
+        "trueOperations": [
+         {
+          "id": "1fe3ceef-0cc1-40bd-8587-fe02044d07af",
+          "type": "giveItem",
+          "data": {
+           "itemId": 15516
+          }
+         }
+        ],
+        "falseOperations": []
+       }
+      },
+      {
+       "id": "c680873d-d6a4-48cf-b3ae-6ab4840c6cb2",
+       "type": "conditional",
+       "data": {
+        "conditions": [
+         {
+          "id": "6c22d1ac-0c78-4329-9a1d-eed21c6315e5",
+          "name": "LEVEL",
+          "data": {
+           "name": "LEVEL",
+           "type": "num",
+           "value": 0
+          },
+          "type": "num",
+          "operator": "GREATER_THAN_OR_EQUALS",
+          "value": 4
+         },
+         {
+          "id": "68985b98-ae4f-4f95-aee7-9f3b136788a6",
+          "name": "LEVEL",
+          "data": {
+           "name": "LEVEL",
+           "type": "num",
+           "value": 0
+          },
+          "type": "num",
+          "operator": "LESS_THAN",
+          "value": 12
+         }
+        ],
+        "trueOperations": [
+         {
+          "id": "6261b2e7-2eb7-4331-98d4-ad42e272f8a2",
+          "type": "giveItem",
+          "data": {
+           "itemId": 15517
+          }
+         }
+        ],
+        "falseOperations": []
+       }
+      },
+      {
+       "id": "53ff98a5-9839-4dba-be8f-5f52d838a09b",
+       "type": "conditional",
+       "data": {
+        "conditions": [
+         {
+          "id": "ddbd60f7-182f-4413-b6a3-236fd8aed1c4",
+          "name": "LEVEL",
+          "data": {
+           "name": "LEVEL",
+           "type": "num",
+           "value": 0
+          },
+          "type": "num",
+          "operator": "GREATER_THAN_OR_EQUALS",
+          "value": 12
+         },
+         {
+          "id": "d1d68935-434b-42eb-a456-72d822785b3f",
+          "name": "LEVEL",
+          "data": {
+           "name": "LEVEL",
+           "type": "num",
+           "value": 0
+          },
+          "type": "num",
+          "operator": "LESS_THAN",
+          "value": 18
+         }
+        ],
+        "trueOperations": [
+         {
+          "id": "ee1e4bba-7973-4e86-a14a-5c85f1791c8e",
+          "type": "giveItem",
+          "data": {
+           "itemId": 15518
+          }
+         }
+        ],
+        "falseOperations": []
+       }
+      },
+      {
+       "id": "2b7e96e5-36d9-4d17-8516-823d7c3b1376",
+       "type": "conditional",
+       "data": {
+        "conditions": [
+         {
+          "id": "979cb37f-7db3-42ed-acdf-19fed2154250",
+          "name": "LEVEL",
+          "data": {
+           "name": "LEVEL",
+           "type": "num",
+           "value": 0
+          },
+          "type": "num",
+          "operator": "GREATER_THAN_OR_EQUALS",
+          "value": 18
+         }
+        ],
+        "trueOperations": [
+         {
+          "id": "f734f28d-bc1b-4c88-8a3c-05cc2fb6c37f",
+          "type": "giveItem",
+          "data": {
+           "itemId": 15519
+          }
+         }
+        ],
+        "falseOperations": []
+       }
+      }
+     ],
+     "name": "Alchemy",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You understand the reactions between all manner of reagents and can concoct alchemical items to meet your needs. You can do this using normal reagents and the [Craft](link_action_19617) activity, or you can use specially prepared chemicals that allow you to craft temporary items quickly and at no cost. Over time, you can create more and more alchemical items for free, and since each of them becomes more and more powerful, you advance in power dramatically, leaving behind those who don’t understand your strange science.\n\nYou gain the [Alchemical Crafting](link_feat_19894) feat, and you can automatically identify alchemical items that you have the formula for.\n\n### Formula Book\n\nAn alchemist keeps meticulous formulas for every item they can create. You start with a standard [formula book](link_item_6972) for free. The [formula book](link_item_6972) contains the formulas for two common 1st-level [alchemical](link_trait_1529) items of your choice, in addition to any formulas you gained from [Alchemical Crafting](link_feat_19894) and your research field.\n\nEach time you gain a level, you can add the formulas for two common [alchemical](link_trait_1529) items to your [formula book](link_item_6972). These new formulas can be for any level of item you can create. You learn these formulas automatically, but it’s also possible to find or buy additional formulas in settlements or from other alchemists, or to select the [Inventor](link_feat_20270) skill feat so you can invent them.\n\nAs normal, having the base formula is sufficient when [Crafting](link_action_19617) upgraded types of the item—you don’t need to learn higher-level formulas. For instance, if you have the 1st-level formula for a minor [elixir of life](link_item_6905), you can create a [minor](link_item_6905), [lesser](link_item_6903), [moderate](link_item_6906), [greater](link_item_6902), [major](link_item_6904), or [true elixir of life](link_item_6907) as long as you meet the level and other prerequisites. Items with type entries that have widely varied functions require separate formulas, but most [alchemical](link_trait_1529) items have a structure similar to [elixir of life](link_item_6905).\n\n### Advanced Alchemy\n\nDuring your daily preparations, you spend some time to create [alchemical](link_trait_1529) items that can be used over the course of the day. You don’t need to attempt a Crafting check to do this, you can use an [alchemist’s toolkit](link_item_6694) instead of an [alchemist’s lab](link_item_6693), and you ignore both the number of days typically required to create the items and any [alchemical](link_trait_1529) raw materials requirements. You can [Craft](link_action_19617) a number of [alchemical](link_trait_1529) items up to 4 + your Intelligence modifier (⬆️{{4+attribute\\_int}}). Each item must be in your formula book, have an item level equal to or lower than your level, and have the [consumable](link_trait_1531) trait. These items have the [infused](link_trait_3540) trait and remain potent for 24 hours or until your next daily preparations, whichever comes first.\n\n### Versatile Vials\n\nYou know how to prepare fast-acting chemicals into [versatile vials](link_item_15516), special items that can be used as bombs and be turned into other alchemical items by introducing special reagents. During your daily preparations, you can create a number of [versatile vials](link_item_15516) up to 2 + your Intelligence modifier (⬆️{{2+attribute\\_int}}), which is also your maximum number of vials. If you’re below your maximum number, you can gather reagents from the environment around you. For every 10 minutes you spend in exploration mode, you regain 2 vials; this doesn’t prevent you from participating in other exploration activities.\n\n[Versatile vials](link_item_15516) are [infused](link_trait_3540) items, and are destroyed if not used by the next time you make your daily preparations. A vial you create is always the highest type you could [Craft](link_action_19617). You can also use vials for [Quick Alchemy](link_feat_31176) and your research field can add to the ways you can use a vial.\n\nYou can store all your [versatile vials](link_item_15516) within your [alchemist’s toolkit](link_item_6694), with no increase to its Bulk. Though [versatile vials](link_item_15516) are physical objects, they can’t be duplicated or preserved in any way.\n\n### Quick Alchemy\n\nYou gain the [Quick Alchemy](link_feat_31176) action to make the items you need on the fly.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Classes.aspx?ID=56",
+       "book": "Player Core 2",
+       "page": "56"
+      }
+     },
+     "traits": [
+      3626
+     ],
+     "content_source_id": 256,
+     "version": null,
+     "uuid": 7667553238129080,
+     "availability": null,
+     "search_tsv": "'10':613B '1529':155B,194B,359B,387B,449B,465B '1531':501B '15516':543B,577B,639B,710B,730B '19617':32B,265B,458B,675B '19894':97B,172B '1st':150B,288B '1st-level':149B,287B '2':580B,584B,622B '20270':245B '24':516B '31176':686B,753B '3540':510B,644B '4':469B,473B '6693':429B '6694':420B,718B '6902':319B '6903':311B '6904':323B '6905':299B,307B,371B '6906':315B '6907':331B '6972':134B,142B,202B 'act':536B 'action':31B,264B,457B,674B,754B 'activ':33B,634B 'add':185B,692B 'addit':161B,230B 'advanc':76B,372B 'alchem':14B,61B,93B,104B,152B,168B,191B,356B,384B,446B,462B,557B 'alchemi':1A,373B,683B,745B,750B 'alchemist':115B,237B,415B,424B,713B 'allow':42B 'also':224B,589B,678B 'alway':666B 'around':609B 'attempt':404B 'attribut':474B,585B 'automat':102B,220B 'base':257B 'becom':70B 'behind':81B 'bomb':551B 'book':113B,131B,139B,199B,483B 'bulk':724B 'buy':229B 'check':407B 'chemic':40B,537B 'choic':159B 'come':525B 'common':148B,190B 'concoct':13B 'consum':498B 'contain':143B 'cost':52B 'could':671B 'cours':395B 'craft':29B,45B,94B,169B,262B,406B,455B,672B 'creat':57B,124B,215B,302B,383B,441B,569B,664B 'daili':376B,522B,565B,659B 'day':398B,437B 'destroy':648B 'doesn':625B 'dramat':79B 'duplic':738B 'elixir':294B,326B,366B 'entri':345B 'environ':608B 'equal':488B 'everi':120B,612B 'explor':618B,633B 'fast':535B 'fast-act':534B 'feat':96B,98B,171B,244B,247B,685B,752B 'field':176B,690B 'find':227B 'first':526B 'fli':763B 'formula':110B,112B,118B,130B,138B,145B,164B,187B,198B,205B,219B,231B,258B,280B,290B,353B,482B 'free':64B,136B 'function':350B 'gain':91B,166B,180B,747B 'gather':604B 'greater':316B 'higher':278B 'higher-level':277B 'highest':668B 'hour':517B 'identifi':103B 'ignor':432B 'increas':721B 'infus':507B,641B 'instanc':282B 'instead':421B 'int':475B,586B 'intellig':471B,582B 'introduc':560B 'invent':251B 'inventor':242B 'item':15B,47B,62B,105B,121B,133B,141B,156B,195B,201B,212B,270B,298B,306B,310B,314B,318B,322B,330B,342B,360B,370B,388B,419B,428B,443B,466B,477B,486B,504B,542B,545B,558B,576B,638B,645B,709B,717B,729B,758B 'keep':116B 'know':530B 'lab':426B 'learn':217B,276B 'leav':80B 'lesser':308B 'level':151B,182B,210B,279B,289B,338B,487B,494B 'life':296B,328B,368B 'link':30B,95B,132B,140B,153B,170B,192B,200B,243B,263B,297B,305B,309B,313B,317B,321B,329B,357B,369B,385B,418B,427B,447B,456B,463B,499B,508B,541B,575B,637B,642B,673B,684B,708B,716B,728B,751B 'long':333B 'lower':491B 'major':320B 'make':657B,756B 'manner':8B 'materi':451B 'maximum':591B,600B 'meet':17B,336B 'meticul':117B 'minor':293B,304B 'minut':614B 'mode':619B 'moder':312B 'modifi':472B,583B 'must':478B 'need':19B,274B,402B,760B 'new':204B 'next':521B,654B 'normal':25B,254B 'number':435B,460B,571B,592B,601B 'object':733B 'particip':630B 'physic':732B 'possibl':225B 'potent':514B 'power':74B,78B 'prepar':39B,377B,523B,533B,566B,660B 'prerequisit':341B 'preserv':740B 'prevent':627B 'quick':48B,682B,744B,749B 'raw':450B 're':597B 'reaction':5B 'reagent':10B,26B,562B,605B 'regain':621B 'remain':513B 'requir':351B,439B,452B 'research':175B,689B 'scienc':89B 'select':240B 'separ':352B 'settlement':233B 'similar':364B 'sinc':66B 'skill':246B 'special':38B,544B,561B 'spend':379B,616B 'standard':129B 'start':126B 'store':703B 'strang':88B 'structur':363B 'suffici':260B 'temporari':46B 'though':725B 'time':54B,178B,381B,655B 'toolkit':417B,715B 'trait':154B,193B,358B,386B,448B,464B,500B,502B,509B,511B,643B 'true':325B 'turn':554B 'two':147B,189B 'type':267B,344B,669B 'typic':438B 'understand':3B,86B 'upgrad':266B 'use':24B,37B,392B,413B,549B,651B,679B,698B 'vari':349B 'versatil':527B,539B,573B,635B,706B,726B 'vial':528B,540B,574B,594B,623B,636B,662B,680B,700B,707B,727B 'way':695B,743B 'whichev':524B 'wide':348B 'within':711B",
+     "updated_at": "2026-08-27T16:49:29.077051+00:00"
+    },
+    {
+     "id": 31299,
+     "created_at": "2024-08-01T18:22:51.3094+00:00",
+     "operations": [
+      {
+       "id": "0e582969-7d82-4a55-9f3c-03c8a3f35c91",
+       "type": "select",
+       "data": {
+        "title": "Select a Research Field",
+        "modeType": "FILTERED",
+        "optionType": "ABILITY_BLOCK",
+        "optionsPredefined": [],
+        "optionsFilters": {
+         "id": "b5d3cc33-7058-4a18-90e6-80d8ac85ae55",
+         "type": "ABILITY_BLOCK",
+         "level": {},
+         "traits": [
+          "Alchemist Research Field"
+         ],
+         "abilityBlockType": "feat"
+        }
+       }
+      }
+     ],
+     "name": "Research Field",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "Your inquiries into the alchemical nature of the universe have led you to focus on a particular field of research. At 1st level, you choose your research field. This choice gives you more formulas, a special benefit, other abilities for your [versatile vials](link_item_15516), and other benefits as you level up.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Classes.aspx?ID=56",
+       "book": "Player Core 2",
+       "page": "56"
+      }
+     },
+     "traits": [
+      3626
+     ],
+     "content_source_id": 256,
+     "version": null,
+     "uuid": 768264936766561,
+     "availability": null,
+     "search_tsv": "'15516':48B '1st':24B 'abil':41B 'alchem':7B 'benefit':39B,51B 'choic':32B 'choos':27B 'field':2A,20B,30B 'focus':16B 'formula':36B 'give':33B 'inquiri':4B 'item':47B 'led':13B 'level':25B,54B 'link':46B 'natur':8B 'particular':19B 'research':1A,22B,29B 'special':38B 'univers':11B 'versatil':44B 'vial':45B",
+     "updated_at": "2026-08-27T16:49:29.077051+00:00"
+    }
+   ],
+   "physicalFeatures": [],
+   "heritages": [
+    {
+     "id": 35351,
+     "created_at": "2024-09-10T17:55:27.066409+00:00",
+     "operations": [
+      {
+       "id": "01557043-7e78-40df-8727-f71a6eb9e807",
+       "type": "giveTrait",
+       "data": {
+        "traitId": 1654
+       }
+      },
+      {
+       "id": "6c106bcc-9c1f-423b-b047-8d468fd6f79e",
+       "type": "adjValue",
+       "data": {
+        "variable": "SPELL_ATTACK",
+        "value": {
+         "value": "T"
+        }
+       }
+      },
+      {
+       "id": "f647e3ca-8d86-45c0-b82e-0bfc4c96431c",
+       "type": "adjValue",
+       "data": {
+        "variable": "SPELL_DC",
+        "value": {
+         "value": "T"
+        }
+       }
+      },
+      {
+       "id": "37b32d72-807c-47b7-9cd2-d4a21f016507",
+       "type": "conditional",
+       "data": {
+        "conditions": [
+         {
+          "id": "ecf8f1ea-46f5-467c-b02b-d2af996e3b60",
+          "name": "LEVEL",
+          "data": {
+           "name": "LEVEL",
+           "type": "num",
+           "value": 0
+          },
+          "type": "num",
+          "operator": "GREATER_THAN_OR_EQUALS",
+          "value": 12
+         }
+        ],
+        "trueOperations": [
+         {
+          "id": "f04353fe-9c78-478d-b2df-67f452373cc3",
+          "type": "adjValue",
+          "data": {
+           "variable": "SPELL_ATTACK",
+           "value": {
+            "value": "E"
+           }
+          }
+         },
+         {
+          "id": "6b4d846a-c470-4e1a-85e1-b8e301e4a16b",
+          "type": "adjValue",
+          "data": {
+           "variable": "SPELL_DC",
+           "value": {
+            "value": "E"
+           }
+          }
+         }
+        ],
+        "falseOperations": []
+       }
+      },
+      {
+       "id": "400b3e79-fc3b-492e-b999-905235a2539f",
+       "type": "select",
+       "data": {
+        "title": "Select a Cantrip",
+        "modeType": "FILTERED",
+        "optionType": "SPELL",
+        "optionsPredefined": [],
+        "optionsFilters": {
+         "id": "cb2532ad-e767-44c9-bd7e-ba174d04361c",
+         "type": "SPELL",
+         "level": {},
+         "traits": [
+          "Cantrip"
+         ],
+         "traditions": [
+          "Primal"
+         ],
+         "spellData": {
+          "type": "INNATE",
+          "tradition": "PRIMAL"
+         }
+        }
+       }
+      }
+     ],
+     "name": "Respite of Loam and Leaf",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You swore a vow to preserve the very foundation of sanctuary: the great earth and all that grows upon it. Your vow grants you the land's spiritual power; you gain one [cantrip](link_trait_1858) from the [primal](link_trait_1454) spell list. You can cast this spell as an innate primal spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up. Your roots in the world grant you the [plant](link_trait_1654) trait.\n\n**Additional Edict** cure or remove blight and pollution from the plants and soil you encounter.",
+     "special": "",
+     "type": "heritage",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Heritages.aspx?ID=410",
+       "book": "Tian Xia Character Guide",
+       "page": "78"
+      }
+     },
+     "traits": [
+      3891
+     ],
+     "content_source_id": 318,
+     "version": null,
+     "uuid": 1197339203973050,
+     "availability": null,
+     "search_tsv": "'1454':47B '1654':88B '1858':41B 'addit':90B 'blight':95B 'cantrip':38B,63B 'cast':52B 'cure':92B 'earth':19B 'edict':91B 'encount':104B 'equal':70B 'foundat':14B 'gain':36B 'grant':28B,82B 'great':18B 'grow':23B 'half':72B 'heighten':65B 'innat':57B 'land':31B 'leaf':5A 'level':74B 'link':39B,45B,86B 'list':49B 'loam':3A 'one':37B 'plant':85B,100B 'pollut':97B 'power':34B 'preserv':11B 'primal':44B,58B 'rank':69B 'remov':94B 'respit':1A 'root':78B 'round':75B 'sanctuari':16B 'soil':102B 'spell':48B,54B,59B,68B 'spiritu':33B 'swore':7B 'trait':40B,46B,87B,89B 'upon':24B 'vow':9B,27B 'world':81B",
+     "updated_at": "2026-08-27T16:49:30.462716+00:00"
+    }
+   ],
+   "baseAbilities": [],
+   "addedAbilities": []
+  },
+  "character_traits": [
+   {
+    "id": 1556,
+    "created_at": "2023-12-03T18:51:41.851001+00:00",
+    "name": "Spirit",
+    "description": "Effects with this trait can affect creatures with spiritual essence and might deal spirit damage. A creature with this trait is defined by its spiritual essence. Spirit creatures often lack a material form.",
+    "meta_data": {
+     "source": {
+      "url": "https://2e.aonprd.com/Traits.aspx?ID=737",
+      "book": "Player Core",
+      "page": "461"
+     },
+     "important": false,
+     "class_trait": false,
+     "unselectable": false,
+     "ancestry_trait": false,
+     "creature_trait": true,
+     "archetype_trait": false,
+     "versatile_heritage_trait": false
+    },
+    "content_source_id": 3,
+    "uuid": 4512353997209738,
+    "search_tsv": "'affect':7B 'creatur':8B,18B,29B 'damag':16B 'deal':14B 'defin':23B 'effect':2B 'essenc':11B,27B 'form':34B 'lack':31B 'materi':33B 'might':13B 'often':30B 'spirit':1A,15B,28B 'spiritu':10B,26B 'trait':5B,21B",
+    "updated_at": "2026-08-27T16:53:39.273543+00:00"
+   },
+   {
+    "id": 3891,
+    "created_at": "2024-08-29T18:43:09.882024+00:00",
+    "name": "Yaksha",
+    "description": "This indicates content from the yaksha ancestry.",
+    "meta_data": {
+     "source": {
+      "url": "https://2e.aonprd.com/Traits.aspx?ID=832",
+      "book": "Tian Xia Character Guide",
+      "page": "134"
+     },
+     "ancestry_trait": true
+    },
+    "content_source_id": 318,
+    "uuid": 2010649119947607,
+    "search_tsv": "'ancestri':8B 'content':4B 'indic':3B 'yaksha':1A,7B",
+    "updated_at": "2026-08-27T16:49:13.252728+00:00"
+   },
+   {
+    "id": 1654,
+    "created_at": "2023-12-03T19:04:52.529598+00:00",
+    "name": "Plant (creature)",
+    "description": "Vegetable creatures have the plant trait. They are distinct from normal plants. This is different than the [plant](link_trait_2913) trait for magical effects.",
+    "meta_data": {
+     "important": false,
+     "class_trait": false,
+     "unselectable": false,
+     "ancestry_trait": false,
+     "creature_trait": true,
+     "archetype_trait": false,
+     "versatile_heritage_trait": false
+    },
+    "content_source_id": 3,
+    "uuid": 7958301339495760,
+    "search_tsv": "'2913':23B 'creatur':2A,4B 'differ':17B 'distinct':11B 'effect':27B 'link':21B 'magic':26B 'normal':13B 'plant':1A,7B,14B,20B 'trait':8B,22B,24B 'veget':3B",
+    "updated_at": "2023-12-03T19:04:52.529598+00:00"
+   }
+  ],
+  "languages": [
+   "COMMON",
+   "FEY",
+   "YAKSHA",
+   "TANUKI"
+  ],
+  "senses": {
+   "precise": [
+    {
+     "sense": {
+      "id": 19330,
+      "created_at": "2023-12-03T05:16:56.429526+00:00",
+      "operations": [
+       {
+        "id": "a53b5ac3-0df4-49d2-b924-14e8f6e221e2",
+        "type": "adjValue",
+        "data": {
+         "variable": "SENSES_PRECISE",
+         "value": "low-light vision"
+        }
+       }
+      ],
+      "name": "Low-Light Vision",
+      "actions": null,
+      "level": 1,
+      "rarity": "COMMON",
+      "prerequisites": [],
+      "frequency": "",
+      "cost": "",
+      "trigger": "",
+      "requirements": "",
+      "access": "",
+      "description": "You can see in dim light as though it were bright light, so you ignore the concealed condition due to dim light.",
+      "special": "",
+      "type": "sense",
+      "meta_data": {
+       "unselectable": true
+      },
+      "traits": [],
+      "content_source_id": 3,
+      "version": "1.0",
+      "uuid": 8382024518549176,
+      "availability": null,
+      "search_tsv": "'bright':15B 'conceal':21B 'condit':22B 'dim':9B,25B 'due':23B 'ignor':19B 'light':3A,10B,16B,26B 'low':2A 'low-light':1A 'see':7B 'though':12B 'vision':4A",
+      "updated_at": "2023-12-03T05:16:56.429526+00:00"
+     },
+     "senseName": "Low-Light Vision",
+     "range": "",
+     "type": "precise"
+    }
+   ],
+   "imprecise": [
+    {
+     "sense": {
+      "id": 21081,
+      "created_at": "2024-04-05T21:29:53.369732+00:00",
+      "operations": [
+       {
+        "id": "d093403b-7e30-48b0-865b-d823f756f54c",
+        "type": "adjValue",
+        "data": {
+         "variable": "SENSES_IMPRECISE",
+         "value": "hearing"
+        }
+       }
+      ],
+      "name": "Hearing",
+      "actions": null,
+      "level": 1,
+      "rarity": "COMMON",
+      "prerequisites": [],
+      "frequency": "",
+      "cost": "",
+      "trigger": "",
+      "requirements": "",
+      "access": "",
+      "description": "Hearing is the ability to perceive sound by detecting vibrations through an organ such as the ear. A creature might be undetected by you if it’s in an environment that distorts the sense, such as a noisy room. In those cases, you have to use the [Seek](link_action_19845) basic action to detect the creature.",
+      "special": "",
+      "type": "sense",
+      "meta_data": {
+       "unselectable": true
+      },
+      "traits": [],
+      "content_source_id": 3,
+      "version": "1.0",
+      "uuid": 7294419213926000,
+      "availability": null,
+      "search_tsv": "'19845':52B 'abil':5B 'action':51B,54B 'basic':53B 'case':43B 'creatur':20B,58B 'detect':10B,56B 'distort':33B 'ear':18B 'environ':31B 'hear':1A,2B 'link':50B 'might':21B 'noisi':39B 'organ':14B 'perceiv':7B 'room':40B 'seek':49B 'sens':35B 'sound':8B 'undetect':23B 'use':47B 'vibrat':11B",
+      "updated_at": "2024-04-05T21:29:53.369732+00:00"
+     },
+     "senseName": "Hearing",
+     "range": "",
+     "type": "imprecise"
+    }
+   ],
+   "vague": [
+    {
+     "sense": {
+      "id": 21082,
+      "created_at": "2024-04-05T21:31:08.459485+00:00",
+      "operations": [
+       {
+        "id": "d093403b-7e30-48b0-865b-d823f756f54c",
+        "type": "adjValue",
+        "data": {
+         "variable": "SENSES_VAGUE",
+         "value": "smell"
+        }
+       }
+      ],
+      "name": "Smell",
+      "actions": null,
+      "level": 1,
+      "rarity": "COMMON",
+      "prerequisites": [],
+      "frequency": "",
+      "cost": "",
+      "trigger": "",
+      "requirements": "",
+      "access": "",
+      "description": "Smell allows you to detect and identify chemical substances in your environment through your [olfactory](link_trait_2131) system. This involves the detection of odor molecules by receptor cells in the nose.",
+      "special": "",
+      "type": "sense",
+      "meta_data": {
+       "unselectable": true
+      },
+      "traits": [],
+      "content_source_id": 3,
+      "version": "1.0",
+      "uuid": 5653374427219146,
+      "availability": null,
+      "search_tsv": "'2131':19B 'allow':3B 'cell':30B 'chemic':9B 'detect':6B,24B 'environ':13B 'identifi':8B 'involv':22B 'link':17B 'molecul':27B 'nose':33B 'odor':26B 'olfactori':16B 'receptor':29B 'smell':1A,2B 'substanc':10B 'system':20B 'trait':18B",
+      "updated_at": "2024-04-05T21:31:08.459485+00:00"
+     },
+     "senseName": "Smell",
+     "range": "",
+     "type": "vague"
+    }
+   ]
+  },
+  "weapons": [
+   {
+    "item": {
+     "id": 9252,
+     "created_at": "2024-03-24T22:44:19.105898+00:00",
+     "updated_at": "2026-08-27T16:49:04.220135+00:00",
+     "name": "Fist",
+     "price": {},
+     "bulk": "0",
+     "level": 0,
+     "rarity": "COMMON",
+     "availability": null,
+     "traits": [
+      1569,
+      1570,
+      1571,
+      2398
+     ],
+     "description": "_Sometimes, the only way you can make someone listen is with your fist._",
+     "group": "WEAPON",
+     "hands": "1",
+     "size": "MEDIUM",
+     "craft_requirements": "",
+     "usage": "",
+     "meta_data": {
+      "image_url": "",
+      "category": "unarmed_attack",
+      "group": "brawling",
+      "damage": {
+       "damageType": "bludgeoning",
+       "dice": 1,
+       "die": "d4",
+       "extra": ""
+      },
+      "bulk": {},
+      "charges": {},
+      "hardness": 0,
+      "hp_max": 0,
+      "broken_threshold": 0,
+      "is_shoddy": false,
+      "unselectable": true,
+      "quantity": 1,
+      "material": {},
+      "runes": {
+       "property": []
+      },
+      "starfinder": {
+       "slots": []
+      },
+      "foundry": {}
+     },
+     "operations": [],
+     "content_source_id": 1,
+     "version": "1.0"
+    },
+    "stats": {
+     "attack_bonus": {
+      "total": [
+       6,
+       2,
+       -2
+      ],
+      "parts": {},
+      "conditionals": []
+     },
+     "damage": {
+      "dice": 1,
+      "die": "d4",
+      "damageType": "B",
+      "bonus": {
+       "total": 1,
+       "parts": {},
+       "conditionals": []
+      },
+      "other": [],
+      "extra": ""
+     }
+    }
+   },
+   {
+    "item": {
+     "id": 15516,
+     "created_at": "2024-07-30T17:17:31.183639+00:00",
+     "updated_at": "2026-08-02T21:57:32.458046+00:00",
+     "name": "Versatile Vial (Lesser)",
+     "price": {},
+     "bulk": "0",
+     "level": 1,
+     "rarity": "COMMON",
+     "availability": null,
+     "traits": [
+      1528,
+      1529,
+      1530,
+      1531,
+      3540,
+      1532
+     ],
+     "description": "**Activate** <abbr cost=\"ONE-ACTION\" class=\"action-symbol\">1</abbr> [Strike](link_action_19856)\n\n* * *\n\nThis tiny glass flask contains volatile chemicals that can be used offensively in a pinch. The bomb deals 1d6 acid damage and 1 acid splash damage.",
+     "group": "WEAPON",
+     "hands": null,
+     "size": "MEDIUM",
+     "craft_requirements": "",
+     "usage": "held in 1 hand",
+     "meta_data": {
+      "image_url": "",
+      "category": "martial",
+      "group": "bomb",
+      "damage": {
+       "damageType": "acid",
+       "dice": 1,
+       "die": "d6",
+       "extra": ""
+      },
+      "bulk": {},
+      "charges": {},
+      "hardness": 0,
+      "hp_max": 0,
+      "broken_threshold": 0,
+      "is_shoddy": false,
+      "unselectable": false,
+      "quantity": 1,
+      "material": {},
+      "range": 20,
+      "reload": "—",
+      "runes": {
+       "property": []
+      },
+      "starfinder": {},
+      "foundry": {}
+     },
+     "operations": [],
+     "content_source_id": 256,
+     "version": "1.0"
+    },
+    "stats": {
+     "attack_bonus": {
+      "total": [
+       6,
+       1,
+       -4
+      ],
+      "parts": {},
+      "conditionals": []
+     },
+     "damage": {
+      "dice": 1,
+      "die": "d6",
+      "damageType": "acid",
+      "bonus": {
+       "total": 0,
+       "parts": {},
+       "conditionals": []
+      },
+      "other": [],
+      "extra": ""
+     }
+    }
+   }
+  ],
+  "inventory_flat": [
+   {
+    "id": "extra-item-15516",
+    "item": {
+     "id": 15516,
+     "created_at": "2024-07-30T17:17:31.183639+00:00",
+     "updated_at": "2026-08-02T21:57:32.458046+00:00",
+     "name": "Versatile Vial (Lesser)",
+     "price": {},
+     "bulk": "0",
+     "level": 1,
+     "rarity": "COMMON",
+     "availability": null,
+     "traits": [
+      1528,
+      1529,
+      1530,
+      1531,
+      3540,
+      1532
+     ],
+     "description": "**Activate** <abbr cost=\"ONE-ACTION\" class=\"action-symbol\">1</abbr> [Strike](link_action_19856)\n\n* * *\n\nThis tiny glass flask contains volatile chemicals that can be used offensively in a pinch. The bomb deals 1d6 acid damage and 1 acid splash damage.",
+     "group": "WEAPON",
+     "hands": null,
+     "size": "MEDIUM",
+     "craft_requirements": "",
+     "usage": "held in 1 hand",
+     "meta_data": {
+      "image_url": "",
+      "category": "martial",
+      "group": "bomb",
+      "damage": {
+       "damageType": "acid",
+       "dice": 1,
+       "die": "d6",
+       "extra": ""
+      },
+      "bulk": {},
+      "charges": {},
+      "hardness": 0,
+      "hp_max": 0,
+      "broken_threshold": 0,
+      "is_shoddy": false,
+      "unselectable": false,
+      "quantity": 1,
+      "material": {},
+      "range": 20,
+      "reload": "—",
+      "runes": {
+       "property": []
+      },
+      "starfinder": {},
+      "foundry": {}
+     },
+     "operations": [],
+     "content_source_id": 256,
+     "version": "1.0"
+    },
+    "is_formula": false,
+    "is_equipped": true,
+    "is_invested": false,
+    "is_implanted": false,
+    "container_contents": []
+   },
+   {
+    "id": "extra-item-9252",
+    "item": {
+     "id": 9252,
+     "created_at": "2024-03-24T22:44:19.105898+00:00",
+     "updated_at": "2026-08-27T16:49:04.220135+00:00",
+     "name": "Fist",
+     "price": {},
+     "bulk": "0",
+     "level": 0,
+     "rarity": "COMMON",
+     "availability": null,
+     "traits": [
+      1569,
+      1570,
+      1571,
+      2398
+     ],
+     "description": "_Sometimes, the only way you can make someone listen is with your fist._",
+     "group": "WEAPON",
+     "hands": "1",
+     "size": "MEDIUM",
+     "craft_requirements": "",
+     "usage": "",
+     "meta_data": {
+      "image_url": "",
+      "category": "unarmed_attack",
+      "group": "brawling",
+      "damage": {
+       "damageType": "bludgeoning",
+       "dice": 1,
+       "die": "d4",
+       "extra": ""
+      },
+      "bulk": {},
+      "charges": {},
+      "hardness": 0,
+      "hp_max": 0,
+      "broken_threshold": 0,
+      "is_shoddy": false,
+      "unselectable": true,
+      "quantity": 1,
+      "material": {},
+      "runes": {
+       "property": []
+      },
+      "starfinder": {
+       "slots": []
+      },
+      "foundry": {}
+     },
+     "operations": [],
+     "content_source_id": 1,
+     "version": "1.0"
+    },
+    "is_formula": false,
+    "is_equipped": true,
+    "is_invested": false,
+    "is_implanted": false,
+    "container_contents": []
+   }
+  ],
+  "total_bulk": "0",
+  "spell_raw_data": {
+   "slots": [],
+   "list": [],
+   "focus": [],
+   "innate": [],
+   "sources": []
+  },
+  "spell_sources": [],
+  "spell_slots": [],
+  "spells": {
+   "all": [],
+   "cantrips": [],
+   "normal": [],
+   "rituals": []
+  },
+  "focus_spells": [],
+  "innate_spells": [],
+  "size": "Medium",
+  "speeds": [
+   {
+    "name": "SPEED",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 25,
+     "value": 25
+    }
+   },
+   {
+    "name": "SPEED_FLY",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 5,
+     "value": 0
+    }
+   },
+   {
+    "name": "SPEED_CLIMB",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 5,
+     "value": 0
+    }
+   },
+   {
+    "name": "SPEED_BURROW",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 5,
+     "value": 0
+    }
+   },
+   {
+    "name": "SPEED_SWIM",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 5,
+     "value": 0
+    }
+   }
+  ],
+  "max_hp": 41,
+  "ac": 16,
+  "shield_item": null,
+  "armor_item": null,
+  "resist_weaks": {
+   "resists": [],
+   "weaks": [],
+   "immunes": []
+  },
+  "proficiencies": {
+   "SAVE_FORT": {
+    "total": "+10",
+    "parts": {
+     "level": 3,
+     "profValue": 4,
+     "attributeMod": 3,
+     "hasConditionals": true,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": [
+       {
+        "text": "+2 circumstance bonus against linguistic effects",
+        "source": "Tangle-Tongue's Wit"
+       }
+      ]
+     }
+    }
+   },
+   "SAVE_REFLEX": {
+    "total": "+8",
+    "parts": {
+     "level": 3,
+     "profValue": 4,
+     "attributeMod": 1,
+     "hasConditionals": true,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": [
+       {
+        "text": "+2 circumstance bonus against linguistic effects",
+        "source": "Tangle-Tongue's Wit"
+       }
+      ]
+     }
+    }
+   },
+   "SAVE_WILL": {
+    "total": "+7",
+    "parts": {
+     "level": 3,
+     "profValue": 2,
+     "attributeMod": 2,
+     "hasConditionals": true,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": [
+       {
+        "text": "+2 circumstance bonus against linguistic effects",
+        "source": "Tangle-Tongue's Wit"
+       }
+      ]
+     }
+    }
+   },
+   "SKILL_ACROBATICS": {
+    "total": "+6",
+    "parts": {
+     "level": 3,
+     "profValue": 2,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_ARCANA": {
+    "total": "+5",
+    "parts": {
+     "level": 3,
+     "profValue": 2,
+     "attributeMod": 0,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_ATHLETICS": {
+    "total": "+1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_CRAFTING": {
+    "total": "+5",
+    "parts": {
+     "level": 3,
+     "profValue": 2,
+     "attributeMod": 0,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_DECEPTION": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_DIPLOMACY": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_INTIMIDATION": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_MEDICINE": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_NATURE": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_OCCULTISM": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 0,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_PERFORMANCE": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_RELIGION": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_SOCIETY": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 0,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_STEALTH": {
+    "total": "+1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_SURVIVAL": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_THIEVERY": {
+    "total": "+6",
+    "parts": {
+     "level": 3,
+     "profValue": 2,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_LORE____": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 0,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SPELL_ATTACK": {
+    "total": "+5",
+    "parts": {
+     "level": 3,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SPELL_DC": {
+    "total": "+5",
+    "parts": {
+     "level": 3,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "LIGHT_ARMOR": {
+    "total": "+5",
+    "parts": {
+     "level": 3,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "MEDIUM_ARMOR": {
+    "total": "+5",
+    "parts": {
+     "level": 3,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "HEAVY_ARMOR": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "UNARMORED_DEFENSE": {
+    "total": "+5",
+    "parts": {
+     "level": 3,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "LIGHT_BARDING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "HEAVY_BARDING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SIMPLE_WEAPONS": {
+    "total": "+5",
+    "parts": {
+     "level": 3,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "MARTIAL_WEAPONS": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ADVANCED_WEAPONS": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "UNARMED_ATTACKS": {
+    "total": "+5",
+    "parts": {
+     "level": 3,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "PERCEPTION": {
+    "total": "+7",
+    "parts": {
+     "level": 3,
+     "profValue": 2,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "CLASS_DC": {
+    "total": "+5",
+    "parts": {
+     "level": 3,
+     "profValue": 2,
+     "attributeMod": 0,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_AXE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_BOMB": {
+    "total": "+5",
+    "parts": {
+     "level": 3,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_BOW": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_BRAWLING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_CLUB": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_CROSSBOW": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_DART": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_FIREARM": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_FLAIL": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_HAMMER": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_KNIFE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_PICK": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_POLEARM": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_SHIELD": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_SLING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_SPEAR": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_SWORD": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_LASER": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_PROJECTILE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_GUN": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_GUN_SIMPLE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_GUN_MARTIAL": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_GUN_ADVANCED": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_ONE_HANDED_AGILE_FINESSE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_CLOTH": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_CHAIN": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_COMPOSITE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_LEATHER": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_PLATE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_CERAMIC": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_POLYMER": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_SKELETAL": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_WOOD": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_COMPUTERS": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 0,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_PILOTING": {
+    "total": "+6",
+    "parts": {
+     "level": 3,
+     "profValue": 2,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_LORE_SAILING": {
+    "total": "+5",
+    "parts": {
+     "level": 3,
+     "profValue": 2,
+     "attributeMod": 0,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "INNATE_SPELL_ATTACK": {
+    "total": "+7",
+    "parts": {
+     "level": 3,
+     "profValue": 2,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "INNATE_SPELL_DC": {
+    "total": "17",
+    "parts": {
+     "level": 3,
+     "profValue": 2,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   }
+  },
+  "attributes": {
+   "ATTRIBUTE_STR": {
+    "value": 1,
+    "partial": false
+   },
+   "ATTRIBUTE_DEX": {
+    "value": 1,
+    "partial": false
+   },
+   "ATTRIBUTE_CON": {
+    "value": 3,
+    "partial": false
+   },
+   "ATTRIBUTE_INT": {
+    "value": 0,
+    "partial": false
+   },
+   "ATTRIBUTE_WIS": {
+    "value": 2,
+    "partial": false
+   },
+   "ATTRIBUTE_CHA": {
+    "value": 2,
+    "partial": false
+   }
+  }
+ },
+ "_sanitized": "user_id, timestamps, api_clients and library dumps (all_traits, all_sources, all_spells, raw_data_dump) removed"
+}

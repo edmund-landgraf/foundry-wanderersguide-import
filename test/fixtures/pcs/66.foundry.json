@@ -1,0 +1,361 @@
+{
+ "note": "Compendium index rows relevant to this PC and summarizeActor() of the imported actor, captured from local Foundry v14 / PF2e 8.6.1 on 2026-10-27.",
+ "index": [
+  {
+   "type": "ancestry",
+   "slug": "leshy",
+   "name": "Leshy",
+   "level": null,
+   "uuid": "Compendium.pf2e.ancestries.Item.cdhgByGG1WtuaK73"
+  },
+  {
+   "type": "background",
+   "slug": "herbalist",
+   "name": "Herbalist",
+   "level": null,
+   "uuid": "Compendium.pf2e.backgrounds.Item.ZdhPKEY9FfaOS8Wy"
+  },
+  {
+   "type": "class",
+   "slug": "druid",
+   "name": "Druid",
+   "level": null,
+   "uuid": "Compendium.pf2e.classes.Item.7s57JDCaiYYCAdFx"
+  },
+  {
+   "type": "feat",
+   "slug": "shield-block",
+   "name": "Shield Block",
+   "level": null,
+   "uuid": "Compendium.pf2e.classfeatures.Item.eZNCckLzbH3GyncH"
+  },
+  {
+   "type": "feat",
+   "slug": "leaf-order",
+   "name": "Leaf Order",
+   "level": null,
+   "uuid": "Compendium.pf2e.classfeatures.Item.u4nlOzPj2WHkIj9l"
+  },
+  {
+   "type": "feat",
+   "slug": "leshy-familiar",
+   "name": "Leshy Familiar",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.7y1BCJLrdk9mKXlc"
+  },
+  {
+   "type": "feat",
+   "slug": "natural-medicine",
+   "name": "Natural Medicine",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.WC4xLBGmBsdOdHWu"
+  },
+  {
+   "type": "feat",
+   "slug": "plant-empathy",
+   "name": "Plant Empathy",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.ahyQpMVDIqhvXkQ4"
+  },
+  {
+   "type": "feat",
+   "slug": "seedpod",
+   "name": "Seedpod",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.dWGa6cFSVrASTEfd"
+  },
+  {
+   "type": "feat",
+   "slug": "shield-block",
+   "name": "Shield Block",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.jM72TjJ965jocBV8"
+  },
+  {
+   "type": "heritage",
+   "slug": "leaf-leshy",
+   "name": "Leaf Leshy",
+   "level": null,
+   "uuid": "Compendium.pf2e.heritages.Item.dQqurQys37aJYb26"
+  },
+  {
+   "type": "spell",
+   "slug": "cornucopia",
+   "name": "Cornucopia",
+   "level": null,
+   "uuid": "Compendium.pf2e.spells-srd.Item.vQuwLqtFFYt0K15N"
+  }
+ ],
+ "actor": {
+  "name": "Thorncup",
+  "level": 1,
+  "hpMax": 19,
+  "attributes": {
+   "str": 1,
+   "dex": 2,
+   "con": 3,
+   "int": -1,
+   "wis": 4,
+   "cha": 0
+  },
+  "languages": [
+   "common",
+   "fey",
+   "wildsong"
+  ],
+  "items": [
+   {
+    "type": "ancestry",
+    "name": "Leshy",
+    "slug": "leshy",
+    "kind": "ancestry",
+    "wgContentId": 9,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Plant Nourishment",
+    "slug": "plant-nourishment",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "heritage",
+    "name": "Leaf Leshy",
+    "slug": "leaf-leshy",
+    "kind": "heritage",
+    "wgContentId": 20743,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "background",
+    "name": "Herbalist",
+    "slug": "herbalist",
+    "kind": "background",
+    "wgContentId": 747,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Natural Medicine",
+    "slug": "natural-medicine",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "class",
+    "name": "Druid",
+    "slug": "druid",
+    "kind": "class",
+    "wgContentId": 23,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Druidic Order",
+    "slug": "druidic-order",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Shield Block",
+    "slug": "shield-block",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Voice of Nature",
+    "slug": "voice-of-nature",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Leaf Order",
+    "slug": "leaf-order",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Leshy Familiar",
+    "slug": "leshy-familiar",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Pet",
+    "slug": "pet",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Shield Block",
+    "slug": "shield-block",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Plant Empathy",
+    "slug": "plant-empathy",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Anathema (Druid)",
+    "slug": "anathema-druid",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Druid Spellcasting",
+    "slug": "druid-spellcasting",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Wildsong",
+    "slug": "wildsong",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Seedpod",
+    "slug": "seedpod",
+    "kind": "feat",
+    "wgContentId": 20520,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "spellcastingEntry",
+    "name": "Druid Spells",
+    "slug": "druid-spells",
+    "kind": "spellcasting",
+    "wgContentId": null,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "spellcastingEntry",
+    "name": "Druid Focus Spells",
+    "slug": "druid-focus-spells",
+    "kind": "spellcasting",
+    "wgContentId": null,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "spell",
+    "name": "Cornucopia",
+    "slug": "cornucopia",
+    "kind": "spell",
+    "wgContentId": 4538,
+    "ours": true,
+    "rank": 1,
+    "entryMode": "focus",
+    "runes": null,
+    "material": null
+   }
+  ]
+ }
+}

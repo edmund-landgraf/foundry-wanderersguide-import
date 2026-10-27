@@ -1,0 +1,206 @@
+{
+ "plan": {
+  "wgId": 76,
+  "name": "Thorncup (P3)",
+  "level": 1,
+  "maxHp": 19,
+  "coins": {
+   "cp": 0,
+   "sp": 150,
+   "gp": 0,
+   "pp": 0
+  },
+  "heroPoints": 1,
+  "imageUrl": "https://api.wanderersguide.app/storage/v1/object/public/portraits/default/Druid%20-%20Lini.png",
+  "languages": [
+   "common",
+   "fey",
+   "wildsong"
+  ],
+  "attributes": {
+   "str": 1,
+   "dex": 2,
+   "con": 3,
+   "int": -1,
+   "wis": 4,
+   "cha": 0
+  },
+  "entries": [
+   {
+    "kind": "ancestry",
+    "packType": "ancestry",
+    "name": "Leshy",
+    "slug": "leshy",
+    "wgContentId": 9
+   },
+   {
+    "kind": "heritage",
+    "packType": "heritage",
+    "name": "Leaf Leshy",
+    "slug": "leaf-leshy",
+    "wgContentId": 20743
+   },
+   {
+    "kind": "background",
+    "packType": "background",
+    "name": "Herbalist",
+    "slug": "herbalist",
+    "wgContentId": 747
+   },
+   {
+    "kind": "class",
+    "packType": "class",
+    "name": "Druid",
+    "slug": "druid",
+    "wgContentId": 23
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Seedpod",
+    "slug": "seedpod",
+    "wgContentId": 20520,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Leshy Familiar",
+    "slug": "leshy-familiar",
+    "wgContentId": 20300,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Plant Empathy",
+    "slug": "plant-empathy",
+    "wgContentId": 20412,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Natural Medicine",
+    "slug": "natural-medicine",
+    "wgContentId": 20362,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Shield Block",
+    "slug": "shield-block",
+    "wgContentId": 20534,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Leaf Order",
+    "slug": "leaf-order",
+    "wgContentId": 33033,
+    "level": 1
+   },
+   {
+    "kind": "spell",
+    "packType": "spell",
+    "name": "Cornucopia",
+    "slug": "cornucopia",
+    "wgContentId": 4538,
+    "rank": 1,
+    "castingSource": "DRUID",
+    "focus": true
+   }
+  ]
+ },
+ "match": [
+  "ancestry: Leshy -> Compendium.pf2e.ancestries.Item.cdhgByGG1WtuaK73 (slug)",
+  "heritage: Leaf Leshy -> Compendium.pf2e.heritages.Item.dQqurQys37aJYb26 (slug)",
+  "background: Herbalist -> Compendium.pf2e.backgrounds.Item.ZdhPKEY9FfaOS8Wy (slug)",
+  "class: Druid -> Compendium.pf2e.classes.Item.7s57JDCaiYYCAdFx (slug)",
+  "feat: Seedpod -> Compendium.pf2e.feats-srd.Item.dWGa6cFSVrASTEfd (slug)",
+  "feat: Leshy Familiar -> Compendium.pf2e.feats-srd.Item.7y1BCJLrdk9mKXlc (slug)",
+  "feat: Plant Empathy -> Compendium.pf2e.feats-srd.Item.ahyQpMVDIqhvXkQ4 (slug)",
+  "feat: Natural Medicine -> Compendium.pf2e.feats-srd.Item.WC4xLBGmBsdOdHWu (slug)",
+  "feat: Shield Block -> Compendium.pf2e.classfeatures.Item.eZNCckLzbH3GyncH (slug)",
+  "feat: Leaf Order -> Compendium.pf2e.classfeatures.Item.u4nlOzPj2WHkIj9l (slug)",
+  "spell: Cornucopia -> Compendium.pf2e.spells-srd.Item.vQuwLqtFFYt0K15N (slug)"
+ ],
+ "misses": [],
+ "choiceHints": {
+  "druidic-order": [
+   "Leaf Order"
+  ]
+ },
+ "spellcasting": [
+  {
+   "key": "src:DRUID",
+   "source": "DRUID",
+   "name": "Druid Spells",
+   "mode": "prepared",
+   "tradition": "primal",
+   "ability": "wis",
+   "slots": {
+    "0": 5,
+    "1": 2
+   }
+  },
+  {
+   "key": "focus:DRUID",
+   "source": "DRUID",
+   "name": "Druid Focus Spells",
+   "mode": "focus",
+   "tradition": "primal",
+   "ability": "wis",
+   "slots": {}
+  }
+ ],
+ "preview": {
+  "insert": {
+   "insert": true,
+   "fields": [],
+   "add": [
+    "ancestry: Leshy",
+    "heritage: Leaf Leshy",
+    "background: Herbalist",
+    "class: Druid",
+    "feat: Seedpod",
+    "feat: Leshy Familiar",
+    "feat: Plant Empathy",
+    "feat: Natural Medicine",
+    "feat: Shield Block",
+    "feat: Leaf Order",
+    "spell: Cornucopia"
+   ],
+   "remove": [],
+   "keep": []
+  },
+  "update": {
+   "insert": false,
+   "fields": [],
+   "add": [],
+   "remove": [],
+   "keep": [
+    "ancestry: Leshy",
+    "heritage: Leaf Leshy",
+    "background: Herbalist",
+    "class: Druid",
+    "feat: Seedpod",
+    "feat: Leshy Familiar",
+    "feat: Plant Empathy",
+    "feat: Natural Medicine",
+    "feat: Shield Block",
+    "feat: Leaf Order",
+    "spell: Cornucopia"
+   ]
+  },
+  "html": "<h3>WG preview: Thorncup (P3) (Update)</h3><p>No field changes.</p><p>Add (0):</p><p>none</p><p>Remove (0):</p><p>none</p><p>Unchanged: 11. Would become homebrew: 0.</p>"
+ },
+ "parity": {
+  "ok": true,
+  "passed": 11,
+  "failed": [],
+  "html": "<h4>Parity check</h4><p>All checks match the export.</p>"
+ }
+}

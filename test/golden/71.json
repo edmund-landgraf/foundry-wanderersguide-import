@@ -1,0 +1,223 @@
+{
+ "plan": {
+  "wgId": 71,
+  "name": "Inkwhisk",
+  "level": 2,
+  "maxHp": 28,
+  "coins": {
+   "cp": 0,
+   "sp": 150,
+   "gp": 0,
+   "pp": 0
+  },
+  "heroPoints": 1,
+  "imageUrl": "https://api.wanderersguide.app/storage/v1/object/public/portraits/default/Vigilante%20-%20Aric.png",
+  "languages": [
+   "common",
+   "fey",
+   "gnomish"
+  ],
+  "attributes": {
+   "str": 0,
+   "dex": 2,
+   "con": 2,
+   "int": 1,
+   "wis": 1,
+   "cha": 3
+  },
+  "entries": [
+   {
+    "kind": "ancestry",
+    "packType": "ancestry",
+    "name": "Gnome",
+    "slug": "gnome",
+    "wgContentId": 5
+   },
+   {
+    "kind": "heritage",
+    "packType": "heritage",
+    "name": "Chameleon Gnome",
+    "slug": "chameleon-gnome",
+    "wgContentId": 20728
+   },
+   {
+    "kind": "background",
+    "packType": "background",
+    "name": "Entertainer",
+    "slug": "entertainer",
+    "wgContentId": 740
+   },
+   {
+    "kind": "class",
+    "packType": "class",
+    "name": "Bard",
+    "slug": "bard",
+    "wgContentId": 21
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Animal Accomplice",
+    "slug": "animal-accomplice",
+    "wgContentId": 19903,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Martial Performance",
+    "slug": "martial-performance",
+    "wgContentId": 20326,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Versatile Performance",
+    "slug": "versatile-performance",
+    "wgContentId": 20684,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Fascinating Performance",
+    "slug": "fascinating-performance",
+    "wgContentId": 20141,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Polymath Muse",
+    "slug": "polymath-muse",
+    "wgContentId": 34062,
+    "level": 1
+   },
+   {
+    "kind": "spell",
+    "packType": "spell",
+    "name": "Phantasmal Minion",
+    "slug": "phantasmal-minion",
+    "wgContentId": 4764,
+    "rank": 1,
+    "castingSource": "BARD",
+    "focus": false
+   },
+   {
+    "kind": "spell",
+    "packType": "spell",
+    "name": "Courageous Anthem",
+    "slug": "courageous-anthem",
+    "wgContentId": 4540,
+    "rank": 0,
+    "castingSource": "BARD",
+    "focus": true
+   },
+   {
+    "kind": "spell",
+    "packType": "spell",
+    "name": "Counter Performance",
+    "slug": "counter-performance",
+    "wgContentId": 4539,
+    "rank": 1,
+    "castingSource": "BARD",
+    "focus": true
+   }
+  ]
+ },
+ "match": [
+  "ancestry: Gnome -> Compendium.pf2e.ancestries.Item.CYlfsYLJcBOgqKtD (slug)",
+  "heritage: Chameleon Gnome -> Compendium.pf2e.heritages.Item.XeXWsvcWU3Zaj5WC (slug)",
+  "background: Entertainer -> Compendium.pf2e.backgrounds.Item.i4hN6OYv8qmi3GLW (slug)",
+  "class: Bard -> Compendium.pf2e.classes.Item.3gweRQ5gn7szIWAv (slug)",
+  "feat: Animal Accomplice -> Compendium.pf2e.feats-srd.Item.ED58GzldWb82yc2q (slug)",
+  "feat: Martial Performance -> Compendium.pf2e.feats-srd.Item.q1iP3SjAF5uceI0M (slug)",
+  "feat: Versatile Performance -> Compendium.pf2e.feats-srd.Item.jBp91q4uzwd4FeSX (slug)",
+  "feat: Fascinating Performance -> Compendium.pf2e.feats-srd.Item.7LB00jkh6JaJr3vS (slug)",
+  "feat: Polymath Muse -> MISS (miss)",
+  "spell: Phantasmal Minion -> Compendium.pf2e.spells-srd.Item.xqmHD8JIjak15lRk (slug)",
+  "spell: Courageous Anthem -> Compendium.pf2e.spells-srd.Item.IAjvwqgiDr3qGYxY (slug)",
+  "spell: Counter Performance -> Compendium.pf2e.spells-srd.Item.WILXkjU5Yq3yw10r (slug)"
+ ],
+ "misses": [
+  "feat: Polymath Muse"
+ ],
+ "choiceHints": {
+  "muses": [
+   "Polymath Muse"
+  ]
+ },
+ "spellcasting": [
+  {
+   "key": "src:BARD",
+   "source": "BARD",
+   "name": "Bard Spells",
+   "mode": "spontaneous",
+   "tradition": "occult",
+   "ability": "cha",
+   "slots": {
+    "0": 5,
+    "1": 3
+   }
+  },
+  {
+   "key": "focus:BARD",
+   "source": "BARD",
+   "name": "Bard Focus Spells",
+   "mode": "focus",
+   "tradition": "occult",
+   "ability": "cha",
+   "slots": {}
+  }
+ ],
+ "preview": {
+  "insert": {
+   "insert": true,
+   "fields": [],
+   "add": [
+    "ancestry: Gnome",
+    "heritage: Chameleon Gnome",
+    "background: Entertainer",
+    "class: Bard",
+    "feat: Animal Accomplice",
+    "feat: Martial Performance",
+    "feat: Versatile Performance",
+    "feat: Fascinating Performance",
+    "feat: Polymath Muse",
+    "spell: Phantasmal Minion",
+    "spell: Courageous Anthem",
+    "spell: Counter Performance"
+   ],
+   "remove": [],
+   "keep": []
+  },
+  "update": {
+   "insert": false,
+   "fields": [],
+   "add": [],
+   "remove": [],
+   "keep": [
+    "ancestry: Gnome",
+    "heritage: Chameleon Gnome",
+    "background: Entertainer",
+    "class: Bard",
+    "feat: Animal Accomplice",
+    "feat: Martial Performance",
+    "feat: Versatile Performance",
+    "feat: Fascinating Performance",
+    "feat: Polymath Muse",
+    "spell: Phantasmal Minion",
+    "spell: Courageous Anthem",
+    "spell: Counter Performance"
+   ]
+  },
+  "html": "<h3>WG preview: Inkwhisk (Update)</h3><p>No field changes.</p><p>Add (0):</p><p>none</p><p>Remove (0):</p><p>none</p><p>Unchanged: 12. Would become homebrew: 1.</p>"
+ },
+ "parity": {
+  "ok": true,
+  "passed": 14,
+  "failed": [],
+  "html": "<h4>Parity check</h4><p>All checks match the export.</p>"
+ }
+}

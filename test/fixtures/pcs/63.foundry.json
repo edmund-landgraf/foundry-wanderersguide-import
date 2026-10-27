@@ -1,0 +1,379 @@
+{
+ "note": "Compendium index rows relevant to this PC and summarizeActor() of the imported actor, captured from local Foundry v14 / PF2e 8.6.1 on 2026-10-27.",
+ "index": [
+  {
+   "type": "ancestry",
+   "slug": "yaksha",
+   "name": "Yaksha",
+   "level": null,
+   "uuid": "Compendium.pf2e.ancestries.Item.k3zyr6du4gV0Ftuh"
+  },
+  {
+   "type": "background",
+   "slug": "deckhand",
+   "name": "Deckhand",
+   "level": null,
+   "uuid": "Compendium.pf2e.backgrounds.Item.IObZEUz8wneEMgR3"
+  },
+  {
+   "type": "class",
+   "slug": "alchemist",
+   "name": "Alchemist",
+   "level": null,
+   "uuid": "Compendium.pf2e.classes.Item.XwfcJuskrhI9GIjX"
+  },
+  {
+   "type": "feat",
+   "slug": "quick-alchemy",
+   "name": "Quick Alchemy",
+   "level": null,
+   "uuid": "Compendium.pf2e.classfeatures.Item.sPtl05wwTpqFI0lL"
+  },
+  {
+   "type": "feat",
+   "slug": "familiar-oddities",
+   "name": "Familiar Oddities",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.5f8gQxVdioUcgsTD"
+  },
+  {
+   "type": "feat",
+   "slug": "improvise-admixture",
+   "name": "Improvise Admixture",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.H6SL2F11nlMfqCQC"
+  },
+  {
+   "type": "feat",
+   "slug": "cat-fall",
+   "name": "Cat Fall",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.LQw0yIMDUJJkq1nD"
+  },
+  {
+   "type": "feat",
+   "slug": "eye-of-the-arclords",
+   "name": "Eye of the Arclords",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.OtV7esAwza1U6Kwr"
+  },
+  {
+   "type": "feat",
+   "slug": "alchemical-crafting",
+   "name": "Alchemical Crafting",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.is3Oz9wt11lNq62K"
+  },
+  {
+   "type": "feat",
+   "slug": "alchemical-assessment",
+   "name": "Alchemical Assessment",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.ypir96PNY6LBSIWT"
+  },
+  {
+   "type": "feat",
+   "slug": "tangle-tongues-wit",
+   "name": "Tangle-Tongue's Wit",
+   "level": null,
+   "uuid": "Compendium.pf2e.feats-srd.Item.zxozwMyJgOzxADHh"
+  },
+  {
+   "type": "heritage",
+   "slug": "respite-of-loam-and-leaf",
+   "name": "Respite of Loam and Leaf",
+   "level": null,
+   "uuid": "Compendium.pf2e.heritages.Item.WczVM4KQq7xybsPZ"
+  }
+ ],
+ "actor": {
+  "name": "Ernmpo",
+  "level": 3,
+  "hpMax": 41,
+  "attributes": {
+   "str": 1,
+   "dex": 1,
+   "con": 3,
+   "int": 0,
+   "wis": 2,
+   "cha": 2
+  },
+  "languages": [
+   "common",
+   "fey",
+   "yaksha",
+   "tanuki"
+  ],
+  "items": [
+   {
+    "type": "weapon",
+    "name": "Versatile Vial",
+    "slug": "versatile-vial",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": {
+     "potency": 0,
+     "striking": 0,
+     "resilient": 0,
+     "property": []
+    },
+    "material": null
+   },
+   {
+    "type": "ancestry",
+    "name": "Yaksha",
+    "slug": "yaksha",
+    "kind": "ancestry",
+    "wgContentId": 189,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "heritage",
+    "name": "Respite of Loam and Leaf",
+    "slug": "respite-of-loam-and-leaf",
+    "kind": "heritage",
+    "wgContentId": 35351,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "background",
+    "name": "Deckhand",
+    "slug": "deckhand",
+    "kind": "background",
+    "wgContentId": 1007,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Cat Fall",
+    "slug": "cat-fall",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "class",
+    "name": "Alchemist",
+    "slug": "alchemist",
+    "kind": "class",
+    "wgContentId": 107,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Alchemy",
+    "slug": "alchemy",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Research Field",
+    "slug": "research-field",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Alchemical Crafting",
+    "slug": "alchemical-crafting",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Formula Book",
+    "slug": "formula-book",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "equipment",
+    "name": "Formula Book (Blank)",
+    "slug": "formula-book-blank",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Advanced Alchemy",
+    "slug": "advanced-alchemy",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Versatile Vials",
+    "slug": "versatile-vials",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Quick Alchemy",
+    "slug": "quick-alchemy",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "action",
+    "name": "Quick Alchemy",
+    "slug": "quick-alchemy",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Mutagenist",
+    "slug": "mutagenist",
+    "kind": null,
+    "wgContentId": null,
+    "ours": false,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Tangle-Tongue's Wit",
+    "slug": "tangle-tongues-wit",
+    "kind": "feat",
+    "wgContentId": 35360,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Alchemical Assessment",
+    "slug": "alchemical-assessment",
+    "kind": "feat",
+    "wgContentId": 31818,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Improvise Admixture",
+    "slug": "improvise-admixture",
+    "kind": "feat",
+    "wgContentId": 31448,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Eye of the Arclords",
+    "slug": "eye-of-the-arclords",
+    "kind": "feat",
+    "wgContentId": 25458,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "feat",
+    "name": "Familiar Oddities",
+    "slug": "familiar-oddities",
+    "kind": "feat",
+    "wgContentId": 21362,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   },
+   {
+    "type": "equipment",
+    "name": "Versatile Vial (Lesser)",
+    "slug": "versatile-vial-lesser",
+    "kind": "equipment",
+    "wgContentId": 15516,
+    "ours": true,
+    "rank": null,
+    "entryMode": null,
+    "runes": null,
+    "material": null
+   }
+  ]
+ }
+}

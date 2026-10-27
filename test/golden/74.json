@@ -1,0 +1,310 @@
+{
+ "plan": {
+  "wgId": 74,
+  "name": "Azarra (P2)",
+  "level": 7,
+  "maxHp": 99,
+  "coins": {
+   "cp": 0,
+   "sp": 0,
+   "gp": 0,
+   "pp": 0
+  },
+  "heroPoints": 1,
+  "imageUrl": "https://api.wanderersguide.app/storage/v1/object/public/portraits/default/Warpriest%20-%20Oloch.png",
+  "languages": [
+   "anadi",
+   "mwangi",
+   "amurrun",
+   "pahtra"
+  ],
+  "attributes": {
+   "str": 3,
+   "dex": 2,
+   "con": 1,
+   "int": 2,
+   "wis": 4,
+   "cha": 1
+  },
+  "entries": [
+   {
+    "kind": "ancestry",
+    "packType": "ancestry",
+    "name": "Anadi",
+    "slug": "anadi",
+    "wgContentId": 115
+   },
+   {
+    "kind": "heritage",
+    "packType": "heritage",
+    "name": "Snaring Anadi",
+    "slug": "snaring-anadi",
+    "wgContentId": 29468
+   },
+   {
+    "kind": "background",
+    "packType": "background",
+    "name": "Dauntless",
+    "slug": "dauntless",
+    "wgContentId": 1116
+   },
+   {
+    "kind": "class",
+    "packType": "class",
+    "name": "Barbarian (legacy)",
+    "slug": "barbarian",
+    "wgContentId": 68
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Web Walker",
+    "slug": "web-walker",
+    "wgContentId": 29475,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Web Weaver",
+    "slug": "web-weaver",
+    "wgContentId": 29476,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Draconic Arrogance",
+    "slug": "draconic-arrogance",
+    "wgContentId": 31322,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Quick-Tempered",
+    "slug": "quick-tempered",
+    "wgContentId": 31200,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Rage",
+    "slug": "rage",
+    "wgContentId": 31184,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Sudden Charge",
+    "slug": "sudden-charge",
+    "wgContentId": 31273,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Intimidating Strike",
+    "slug": "intimidating-strike",
+    "wgContentId": 31328,
+    "level": 2
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Second Wind",
+    "slug": "second-wind",
+    "wgContentId": 31330,
+    "level": 2
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Crystal Healing",
+    "slug": "crystal-healing",
+    "wgContentId": 22680,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Ride",
+    "slug": "ride",
+    "wgContentId": 20492,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Sparkling Performance",
+    "slug": "sparkling-performance",
+    "wgContentId": 35194,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Specialty Crafting",
+    "slug": "specialty-crafting",
+    "wgContentId": 20570,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Urban Survivalist",
+    "slug": "urban-survivalist",
+    "wgContentId": 46748,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "In Plain Sight",
+    "slug": "in-plain-sight",
+    "wgContentId": 22733,
+    "level": 4
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Indomitable Act",
+    "slug": "indomitable-act",
+    "wgContentId": 29795,
+    "level": 1
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Spirit Instinct",
+    "slug": "spirit-instinct",
+    "wgContentId": 31314,
+    "level": 1
+   },
+   {
+    "kind": "equipment",
+    "packType": "equipment",
+    "name": "Anadi Fangs",
+    "slug": "anadi-fangs",
+    "wgContentId": 14437,
+    "quantity": 1,
+    "equipped": true,
+    "runes": null,
+    "material": null
+   }
+  ]
+ },
+ "match": [
+  "ancestry: Anadi -> Compendium.pf2e.ancestries.Item.TQEqWqc7BYiadUdY (slug)",
+  "heritage: Snaring Anadi -> Compendium.pf2e.heritages.Item.cwOUw7kofcAiY01I (slug)",
+  "background: Dauntless -> Compendium.pf2e.backgrounds.Item.0ncxOTCDptu01nR8 (slug)",
+  "class: Barbarian (legacy) -> Compendium.pf2e.classes.Item.YDRiP7uVvr9WRhOI (slug)",
+  "feat: Web Walker -> Compendium.pf2e.feats-srd.Item.KXUVAI6SDtxwjO7t (slug)",
+  "feat: Web Weaver -> Compendium.pf2e.feats-srd.Item.CUrxG9CzT1hSfuhP (slug)",
+  "feat: Draconic Arrogance -> Compendium.pf2e.feats-srd.Item.EOmTf95t03y4IGdp (slug)",
+  "feat: Quick-Tempered -> Compendium.pf2e.classfeatures.Item.04lXNnt73rF3RNc4 (slug)",
+  "feat: Rage -> Compendium.pf2e.classfeatures.Item.WZUCvxqbigXos1L9 (slug)",
+  "feat: Sudden Charge -> Compendium.pf2e.feats-srd.Item.qQt3CMrhLkUV1wCv (slug)",
+  "feat: Intimidating Strike -> Compendium.pf2e.feats-srd.Item.lkcM4V3VDAtjlR9P (slug)",
+  "feat: Second Wind -> Compendium.pf2e.feats-srd.Item.4bvoePh1p3ZGgqhP (slug)",
+  "feat: Crystal Healing -> Compendium.pf2e.feats-srd.Item.6O8MoMheHs5hNHX1 (slug)",
+  "feat: Ride -> Compendium.pf2e.feats-srd.Item.Rq5wkA8DtsmbzoGV (slug)",
+  "feat: Sparkling Performance -> MISS (miss)",
+  "feat: Specialty Crafting -> Compendium.pf2e.feats-srd.Item.QLeMH5mQgh28sa5o (slug)",
+  "feat: Urban Survivalist -> MISS (miss)",
+  "feat: In Plain Sight -> Compendium.pf2e.feats-srd.Item.ZC9C6rxPJKrw6Ktx (slug)",
+  "feat: Indomitable Act -> MISS (miss)",
+  "feat: Spirit Instinct -> Compendium.pf2e.classfeatures.Item.TQqv9Q5mB4PW6LH9 (slug)",
+  "equipment: Anadi Fangs -> MISS (miss)"
+ ],
+ "misses": [
+  "feat: Sparkling Performance",
+  "feat: Urban Survivalist",
+  "feat: Indomitable Act",
+  "equipment: Anadi Fangs"
+ ],
+ "choiceHints": {
+  "specialty-crafting": [
+   "Woodworking"
+  ],
+  "barbarian-feat": [
+   "Draconic Arrogance",
+   "Second Wind",
+   "Sudden Charge",
+   "Intimidating Strike"
+  ],
+  "instinct": [
+   "Spirit Instinct"
+  ]
+ },
+ "spellcasting": [],
+ "preview": {
+  "insert": {
+   "insert": true,
+   "fields": [],
+   "add": [
+    "ancestry: Anadi",
+    "heritage: Snaring Anadi",
+    "background: Dauntless",
+    "class: Barbarian (legacy)",
+    "feat: Web Walker",
+    "feat: Web Weaver",
+    "feat: Draconic Arrogance",
+    "feat: Quick-Tempered",
+    "feat: Rage",
+    "feat: Sudden Charge",
+    "feat: Intimidating Strike",
+    "feat: Second Wind",
+    "feat: Crystal Healing",
+    "feat: Ride",
+    "feat: Sparkling Performance",
+    "feat: Specialty Crafting",
+    "feat: Urban Survivalist",
+    "feat: In Plain Sight",
+    "feat: Indomitable Act",
+    "feat: Spirit Instinct",
+    "equipment: Anadi Fangs"
+   ],
+   "remove": [],
+   "keep": []
+  },
+  "update": {
+   "insert": false,
+   "fields": [],
+   "add": [],
+   "remove": [],
+   "keep": [
+    "ancestry: Anadi",
+    "heritage: Snaring Anadi",
+    "background: Dauntless",
+    "class: Barbarian (legacy)",
+    "feat: Web Walker",
+    "feat: Web Weaver",
+    "feat: Draconic Arrogance",
+    "feat: Quick-Tempered",
+    "feat: Rage",
+    "feat: Sudden Charge",
+    "feat: Intimidating Strike",
+    "feat: Second Wind",
+    "feat: Crystal Healing",
+    "feat: Ride",
+    "feat: Sparkling Performance",
+    "feat: Specialty Crafting",
+    "feat: Urban Survivalist",
+    "feat: In Plain Sight",
+    "feat: Indomitable Act",
+    "feat: Spirit Instinct",
+    "equipment: Anadi Fangs"
+   ]
+  },
+  "html": "<h3>WG preview: Azarra (P2) (Update)</h3><p>No field changes.</p><p>Add (0):</p><p>none</p><p>Remove (0):</p><p>none</p><p>Unchanged: 21. Would become homebrew: 4.</p>"
+ },
+ "parity": {
+  "ok": true,
+  "passed": 10,
+  "failed": [],
+  "html": "<h4>Parity check</h4><p>All checks match the export.</p>"
+ }
+}
