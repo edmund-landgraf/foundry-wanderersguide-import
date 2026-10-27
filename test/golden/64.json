@@ -66,6 +66,7 @@
     "slug": "web-walker",
     "wgContentId": 29475,
     "level": 1,
+    "featGroup": "ancestry",
     "sourcePath": "content.feats_features.ancestryFeats[0]"
    },
    {
@@ -75,6 +76,7 @@
     "slug": "web-weaver",
     "wgContentId": 29476,
     "level": 1,
+    "featGroup": "ancestry",
     "sourcePath": "content.feats_features.ancestryFeats[1]"
    },
    {
@@ -84,6 +86,7 @@
     "slug": "draconic-arrogance",
     "wgContentId": 31322,
     "level": 1,
+    "featGroup": "class",
     "sourcePath": "content.feats_features.classFeats[0]"
    },
    {
@@ -93,6 +96,7 @@
     "slug": "quick-tempered",
     "wgContentId": 31200,
     "level": 1,
+    "featGroup": "class",
     "sourcePath": "content.feats_features.classFeats[1]"
    },
    {
@@ -102,6 +106,7 @@
     "slug": "rage",
     "wgContentId": 31184,
     "level": 1,
+    "featGroup": "class",
     "sourcePath": "content.feats_features.classFeats[2]"
    },
    {
@@ -111,6 +116,7 @@
     "slug": "sudden-charge",
     "wgContentId": 31273,
     "level": 1,
+    "featGroup": "class",
     "sourcePath": "content.feats_features.classFeats[3]"
    },
    {
@@ -120,6 +126,7 @@
     "slug": "intimidating-strike",
     "wgContentId": 31328,
     "level": 2,
+    "featGroup": "class",
     "sourcePath": "content.feats_features.classFeats[4]"
    },
    {
@@ -129,6 +136,7 @@
     "slug": "second-wind",
     "wgContentId": 31330,
     "level": 2,
+    "featGroup": "class",
     "sourcePath": "content.feats_features.classFeats[5]"
    },
    {
@@ -138,6 +146,7 @@
     "slug": "crystal-healing",
     "wgContentId": 22680,
     "level": 1,
+    "featGroup": null,
     "sourcePath": "content.feats_features.generalAndSkillFeats[0]"
    },
    {
@@ -147,6 +156,7 @@
     "slug": "ride",
     "wgContentId": 20492,
     "level": 1,
+    "featGroup": null,
     "sourcePath": "content.feats_features.generalAndSkillFeats[1]"
    },
    {
@@ -156,6 +166,7 @@
     "slug": "sparkling-performance",
     "wgContentId": 35194,
     "level": 1,
+    "featGroup": null,
     "sourcePath": "content.feats_features.generalAndSkillFeats[2]"
    },
    {
@@ -165,6 +176,7 @@
     "slug": "specialty-crafting",
     "wgContentId": 20570,
     "level": 1,
+    "featGroup": null,
     "sourcePath": "content.feats_features.generalAndSkillFeats[3]"
    },
    {
@@ -174,6 +186,7 @@
     "slug": "urban-survivalist",
     "wgContentId": 46748,
     "level": 1,
+    "featGroup": null,
     "sourcePath": "content.feats_features.generalAndSkillFeats[4]"
    },
    {
@@ -183,6 +196,7 @@
     "slug": "in-plain-sight",
     "wgContentId": 22733,
     "level": 4,
+    "featGroup": null,
     "sourcePath": "content.feats_features.generalAndSkillFeats[5]"
    },
    {
@@ -192,6 +206,7 @@
     "slug": "indomitable-act",
     "wgContentId": 29795,
     "level": 1,
+    "featGroup": null,
     "sourcePath": "content.feats_features.otherFeats[0]"
    },
    {
@@ -201,6 +216,7 @@
     "slug": "spirit-instinct",
     "wgContentId": 31314,
     "level": 1,
+    "featGroup": null,
     "sourcePath": "content.feats_features.otherFeats[1]"
    },
    {

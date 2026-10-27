@@ -31,7 +31,7 @@ Screenshots (`D:\tmp\wgui-newpc\`): `85-sheet-after.png`, `85-feats.png`, `85-ac
 | # | Problem | Expected | Actual | Layer | State |
 |---|---|---|---|---|---|
 | R1 | Feat slots | Dwarven Weapon Familiarity in Ancestry Feats 1, Engraving Strike in Class Feats 1 | both on the actor with no slot; sheet shows "Empty Slot" for both | importer | open ([#26](https://github.com/edmund-landgraf/foundry-wanderersguide-import/issues/26)) |
-| R2 | Runesmith skill ChoiceSet | answered from the WG class selection (Arcana) | import blocks on the "Runesmith" prompt; WG selection dropped as a skill | importer | open ([#28](https://github.com/edmund-landgraf/foundry-wanderersguide-import/issues/28), same family as #22) |
+| R2 | Runesmith skill ChoiceSet | answered from the WG class selection (Arcana) | importer exposes the explicit `SKILL_ARCANA` answer as a ChoiceSet hint while keeping direct skill writes dropped | importer | fixed in #28; Foundry character-85 recheck required |
 | R3 | Runes | PF2e rune items | created as homebrew feats; PF2e 8.6.1 ships no Atryl/Esvadir/Marssyl/Sertum items, so homebrew is the right fallback | none (PF2e content) | not a bug |
 | R4 | Current HP | 20 on a fresh import | sheet shows 12 / 20 | importer (verify) | open (#24, same as N6) |
 | R5 | Change a saved choice | `choose` can replace an answered selection | "That choice is not open." (NOT_FOUND) | connector | open ([WandersGuideUI #9](https://github.com/edmund-landgraf/WandersGuideUI/issues/9)) |

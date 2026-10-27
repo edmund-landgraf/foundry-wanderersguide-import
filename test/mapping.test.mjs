@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { buildPlan, matchEntries, missReport, sluggify } from "../scripts/mapping.js";
+import { applyFeatSlotData } from "../scripts/importer.js";
 import { summarizeCharacters, callFunction, parseClientId, resolveFunctionsUrl, listCharacters, listCampaigns, getCampaign, campaignLabel, friendlyError } from "../scripts/api.js";
 
 const exp = JSON.parse(readFileSync(new URL("./fixtures/sample-v4.json", import.meta.url)));
@@ -20,6 +21,18 @@ test("buildPlan maps core fields", () => {
   assert.deepEqual(p.languages, ["common", "tempestine"]);
   assert.equal(p.entries.filter((e) => e.kind === "feat").length, 4);
   assert.equal(p.entries.filter((e) => e.kind === "equipment").length, 2);
+});
+
+test("selected feats carry PF2e feat-slot locations", () => {
+  const ancestry = { kind: "feat", featGroup: "ancestry", level: 1, data: { type: "feat", system: { category: "ancestry", level: { value: 1 } } } };
+  const classFeat = { kind: "feat", featGroup: "class", level: 1, data: { type: "feat", system: { category: "class", level: { value: 1 } } } };
+  const skill = { kind: "feat", level: 1, data: { type: "feat", system: { category: "skill", level: { value: 1 } } } };
+  const feature = { kind: "feat", featGroup: "class", level: 1, data: { type: "feat", system: { category: "classfeature", level: { value: 1 } } } };
+  assert.equal(applyFeatSlotData(ancestry, ancestry.data).system.location, "ancestry");
+  assert.equal(applyFeatSlotData(classFeat, classFeat.data).system.location, "class");
+  assert.equal(applyFeatSlotData(skill, skill.data).system.location, "skill");
+  assert.equal(applyFeatSlotData(feature, feature.data).system.location, undefined);
+  assert.equal(feature.data.system.level.taken, undefined);
 });
 
 test("matchEntries slug -> name -> miss", () => {
@@ -171,6 +184,12 @@ test("wgChoiceHints reads WG select answers per feature", () => {
   assert.deepEqual(h.get("specialty-crafting"), ["Woodworking"]);
   assert.deepEqual(h.get("muses"), ["Polymath Muse"]);
   assert.deepEqual(wgChoiceHints(real).get("muses"), ["Polymath Muse"]);
+});
+
+test("wgChoiceHints names selected skill adjValue options", () => {
+  const exp2 = { character: { operation_data: { selections: { "class-feature-1_skill-op": "arcana-option" } }, details: {} },
+    content: { feats_features: { classFeatures: [{ id: 1, name: "Runesmith", operations: [{ id: "skill-op", type: "select", data: { optionsPredefined: [{ id: "arcana-option", operation: { type: "adjValue", data: { variable: "SKILL_ARCANA" } } }] } }] }] } } };
+  assert.deepEqual(wgChoiceHints(exp2).get("runesmith"), ["Arcana"]);
 });
 
 test("matchChoice and defaultFlag", () => {

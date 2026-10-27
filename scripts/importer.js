@@ -94,7 +94,25 @@ function choiceContext(exp, plan, index, actor) {
   }
   const used = new Set();
   const markUsed = (owner) => { for (const k of hints.keys?.get(sluggify(owner)) ?? []) used.add(k); };
-  return { hints, index, uuidName, previous, used, markUsed, conflicts: new Map(), unresolved: [], specific: (owner) => hints.get(sluggify(owner)) ?? [] };
+  const assigned = new Map();
+  const specific = (owner) => hints.get(sluggify(owner)) ?? [];
+  const consume = (owner, hint) => {
+    const key = sluggify(owner);
+    const set = assigned.get(key) ?? new Set();
+    set.add(sluggify(hint));
+    assigned.set(key, set);
+  };
+  const pick = (owner, labels) => {
+    const alreadyUsed = assigned.get(sluggify(owner)) ?? new Set();
+    const candidate = specific(owner)
+      .filter((hint) => !alreadyUsed.has(sluggify(hint)))
+      .map((hint) => ({ hint, index: matchChoice(labels, [hint]) }))
+      .find((x) => x.index >= 0);
+    if (!candidate) return null;
+    consume(owner, candidate.hint);
+    return candidate.index;
+  };
+  return { hints, index, uuidName, previous, used, markUsed, conflicts: new Map(), unresolved: [], specific, consume, pick, assigned };
 }
 
 /** Index of the single option matching the hints, or -1 when none or more than one match. */
@@ -129,9 +147,9 @@ async function resolveChoiceSet(rule, ownerName, ctx, { sourceUuid = null, flag 
       return { value, label: typeof value === "string" && ctx.uuidName.has(value) ? ctx.uuidName.get(value) : label };
     });
     if (specific.length) {
-      let i = uniqueChoice(opts.map((o) => o.label), specific);
-      if (i < 0) i = uniqueChoice(opts.map((o) => String(o.value)), specific);
-      if (i >= 0) return { value: opts[i].value, label: opts[i].label, via: "WG selection" };
+      let i = ctx.pick(ownerName, opts.map((o) => o.label));
+      if (i == null) i = ctx.pick(ownerName, opts.map((o) => String(o.value)));
+      if (i != null) return { value: opts[i].value, label: opts[i].label, via: "WG selection" };
     }
     if (prev !== undefined) {
       const o = opts.find((x) => JSON.stringify(x.value) === JSON.stringify(prev));
@@ -142,14 +160,33 @@ async function resolveChoiceSet(rule, ownerName, ctx, { sourceUuid = null, flag 
   if (c && typeof c === "object" && Array.isArray(c.filter)) {
     const type = c.itemType ?? "feat";
     for (const h of specific) {
+      if ((ctx.assigned?.get(sluggify(ownerName)) ?? new Set()).has(sluggify(h))) continue;
       const rows = ctx.index.filter((r) => r.type === type && sluggify(r.name) === sluggify(h));
       const legal = [];
       for (const r of rows) if (await filterAccepts(c, r.uuid)) legal.push(r);
-      if (legal.length === 1) return { value: legal[0].uuid, label: legal[0].name, via: "WG selection" };
+      if (legal.length === 1) {
+        ctx.consume(ownerName, h);
+        return { value: legal[0].uuid, label: legal[0].name, via: "WG selection" };
+      }
     }
     if (typeof prev === "string" && await filterAccepts(c, prev)) return { value: prev, label: ctx.uuidName.get(prev) ?? prev, via: "existing Foundry selection (still legal)" };
   }
   return null;
+}
+
+/** Apply PF2e's character-sheet location for a WG feat-slot entry. */
+export function applyFeatSlotData(entry, data) {
+  if (entry.kind !== "feat" || !data?.system || data.type !== "feat") return data;
+  const category = data.system.category;
+  const group = ["ancestry", "class"].includes(category) && entry.featGroup
+    ? entry.featGroup
+    : category === "skill" ? "skill" : category === "general" ? "general" : null;
+  // Class/ancestry features and actions are exported alongside selected feats,
+  // but must remain in their feature/action groups rather than occupying slots.
+  if (!group || !["ancestry", "class", "skill", "general"].includes(group) || !Number.isFinite(Number(entry.level))) return data;
+  data.system.location = group;
+  data.system.level = { ...(data.system.level ?? {}), taken: Number(entry.level) };
+  return data;
 }
 
 async function prefillChoices(data, ctx, notes) {
@@ -221,6 +258,7 @@ async function itemDataFor(entry, folderId, ctx, notes) {
     if (entry.innate && entry.uses) loc.uses = { value: entry.uses, max: entry.uses };
     data.system.location = { ...(data.system.location ?? {}), ...loc };
   }
+  applyFeatSlotData(entry, data);
   if (["ancestry", "heritage", "background", "class", "feat"].includes(entry.kind)) await prefillChoices(data, ctx, notes);
   return data;
 }
@@ -239,9 +277,9 @@ function watchPrompts(ctx, notes) {
       const labels = app.choices.map((c) => c.label ?? "");
       const owner = app.item?.name ?? app.options?.item?.name ?? "";
       const specific = ctx.specific(owner);
-      let i = specific.length ? uniqueChoice(labels, specific) : -1;
+      let i = specific.length ? ctx.pick(owner, labels) : null;
       let via = "WG selection";
-      if (i < 0) {
+      if (i == null) {
         const src = app.item?._stats?.compendiumSource ?? app.item?.sourceId ?? null;
         const prev = Object.values(ctx.previous.get(src) ?? {});
         const hits = app.choices.map((c, k) => (prev.some((v) => JSON.stringify(v) === JSON.stringify(c.value)) ? k : -1)).filter((k) => k >= 0);
@@ -590,7 +628,12 @@ async function applyImport(p, { onStep, parity, failAfter }) {
       const hpPatch = {};
       if (hpValue != null) hpPatch["system.attributes.hp.value"] = hpValue;
       if (existing && runtime?.tempHp != null) hpPatch["system.attributes.hp.temp"] = runtime.tempHp;
-      if (Object.keys(hpPatch).length) await actor.update(hpPatch);
+      if (Object.keys(hpPatch).length) {
+        // Do this after the HP adjustment effect is embedded. PF2e prepares the
+        // actor again when that effect is created, and a fresh actor otherwise
+        // retains the system default current HP (the source of low fresh-import HP).
+        await actor.update(hpPatch, { diff: false, recursive: false, render: false });
+      }
     }
   } catch (err) {
     stopPrompts();

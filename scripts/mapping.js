@@ -37,7 +37,12 @@ export function buildPlan(exp) {
   add("background", "background", ch.details?.background?.name, { wgContentId: ch.details?.background?.id, sourcePath: "character.details.background" });
   add("class", "class", ch.details?.class?.name, { wgContentId: ch.details?.class?.id, sourcePath: "character.details.class" });
   for (const group of ["ancestryFeats", "classFeats", "generalAndSkillFeats", "otherFeats"]) {
-    (ff[group] ?? []).forEach((f, i) => add("feat", "feat", f.name, { wgContentId: f.id, level: f.level ?? null, sourcePath: `content.feats_features.${group}[${i}]` }));
+    (ff[group] ?? []).forEach((f, i) => add("feat", "feat", f.name, {
+      wgContentId: f.id,
+      level: f.level ?? null,
+      featGroup: group === "ancestryFeats" ? "ancestry" : group === "classFeats" ? "class" : null,
+      sourcePath: `content.feats_features.${group}[${i}]`,
+    }));
   }
   const seenSpells = new Set();
   const focusIds = new Set((ct.focus_spells ?? []).map((s) => s.id));
@@ -178,9 +183,15 @@ export function wgChoiceHints(exp) {
         const v = key ? sel[key] : null;
         if (v != null) {
           const pre = (op.data?.optionsPredefined ?? []).find((o) => o.id === v);
-          const name = pre?.title ?? byId.get(String(v))?.name ?? null;
+          const operation = pre?.operation ?? null;
+          const variable = operation?.type === "adjValue" ? operation.data?.variable : null;
+          const variableName = variable
+            ? String(variable).replace(/^SKILL_|^ATTRIBUTE_/, "").toLowerCase().replace(/(^|_)([a-z])/g, (_, p, c) => `${p ? " " : ""}${c.toUpperCase()}`)
+            : null;
+          const name = pre?.title ?? byId.get(String(v))?.name ?? variableName;
           if (name) push(owner, name, key);
           if (pre?.operations) visit(owner, pre.operations, depth + 1);
+          if (pre?.operation) visit(owner, [pre.operation], depth + 1);
         }
       }
       if (op.type === "conditional") { visit(owner, op.data?.trueOperations, depth + 1); visit(owner, op.data?.falseOperations, depth + 1); }

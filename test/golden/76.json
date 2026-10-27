@@ -65,6 +65,7 @@
     "slug": "seedpod",
     "wgContentId": 20520,
     "level": 1,
+    "featGroup": "ancestry",
     "sourcePath": "content.feats_features.ancestryFeats[0]"
    },
    {
@@ -74,6 +75,7 @@
     "slug": "leshy-familiar",
     "wgContentId": 20300,
     "level": 1,
+    "featGroup": "class",
     "sourcePath": "content.feats_features.classFeats[0]"
    },
    {
@@ -83,6 +85,7 @@
     "slug": "plant-empathy",
     "wgContentId": 20412,
     "level": 1,
+    "featGroup": "class",
     "sourcePath": "content.feats_features.classFeats[1]"
    },
    {
@@ -92,6 +95,7 @@
     "slug": "natural-medicine",
     "wgContentId": 20362,
     "level": 1,
+    "featGroup": null,
     "sourcePath": "content.feats_features.generalAndSkillFeats[0]"
    },
    {
@@ -101,6 +105,7 @@
     "slug": "shield-block",
     "wgContentId": 20534,
     "level": 1,
+    "featGroup": null,
     "sourcePath": "content.feats_features.generalAndSkillFeats[1]"
    },
    {
@@ -110,6 +115,7 @@
     "slug": "leaf-order",
     "wgContentId": 33033,
     "level": 1,
+    "featGroup": null,
     "sourcePath": "content.feats_features.otherFeats[0]"
    },
    {

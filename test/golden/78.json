@@ -65,6 +65,7 @@
     "slug": "animal-accomplice",
     "wgContentId": 19903,
     "level": 1,
+    "featGroup": "ancestry",
     "sourcePath": "content.feats_features.ancestryFeats[0]"
    },
    {
@@ -74,6 +75,7 @@
     "slug": "martial-performance",
     "wgContentId": 20326,
     "level": 1,
+    "featGroup": "class",
     "sourcePath": "content.feats_features.classFeats[0]"
    },
    {
@@ -83,6 +85,7 @@
     "slug": "versatile-performance",
     "wgContentId": 20684,
     "level": 1,
+    "featGroup": "class",
     "sourcePath": "content.feats_features.classFeats[1]"
    },
    {
@@ -92,6 +95,7 @@
     "slug": "fascinating-performance",
     "wgContentId": 20141,
     "level": 1,
+    "featGroup": null,
     "sourcePath": "content.feats_features.generalAndSkillFeats[0]"
    },
    {
@@ -101,6 +105,7 @@
     "slug": "polymath-muse",
     "wgContentId": 34062,
     "level": 1,
+    "featGroup": null,
     "sourcePath": "content.feats_features.otherFeats[0]"
    },
    {

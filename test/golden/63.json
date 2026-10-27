@@ -66,6 +66,7 @@
     "slug": "tangle-tongues-wit",
     "wgContentId": 35360,
     "level": 1,
+    "featGroup": "ancestry",
     "sourcePath": "content.feats_features.ancestryFeats[0]"
    },
    {
@@ -75,6 +76,7 @@
     "slug": "alchemical-assessment",
     "wgContentId": 31818,
     "level": 1,
+    "featGroup": "class",
     "sourcePath": "content.feats_features.classFeats[0]"
    },
    {
@@ -84,6 +86,7 @@
     "slug": "quick-alchemy",
     "wgContentId": 31176,
     "level": 1,
+    "featGroup": "class",
     "sourcePath": "content.feats_features.classFeats[1]"
    },
    {
@@ -93,6 +96,7 @@
     "slug": "improvise-admixture",
     "wgContentId": 31448,
     "level": 2,
+    "featGroup": "class",
     "sourcePath": "content.feats_features.classFeats[2]"
    },
    {
@@ -102,6 +106,7 @@
     "slug": "alchemical-crafting",
     "wgContentId": 19894,
     "level": 1,
+    "featGroup": null,
     "sourcePath": "content.feats_features.generalAndSkillFeats[0]"
    },
    {
@@ -111,6 +116,7 @@
     "slug": "cat-fall",
     "wgContentId": 19983,
     "level": 1,
+    "featGroup": null,
     "sourcePath": "content.feats_features.generalAndSkillFeats[1]"
    },
    {
@@ -120,6 +126,7 @@
     "slug": "eye-of-the-arclords",
     "wgContentId": 25458,
     "level": 2,
+    "featGroup": null,
     "sourcePath": "content.feats_features.generalAndSkillFeats[2]"
    },
    {
@@ -129,6 +136,7 @@
     "slug": "familiar-oddities",
     "wgContentId": 21362,
     "level": 2,
+    "featGroup": null,
     "sourcePath": "content.feats_features.generalAndSkillFeats[3]"
    },
    {
@@ -138,6 +146,7 @@
     "slug": "mutagenist-research-field",
     "wgContentId": 32987,
     "level": 1,
+    "featGroup": null,
     "sourcePath": "content.feats_features.otherFeats[0]"
    },
    {
