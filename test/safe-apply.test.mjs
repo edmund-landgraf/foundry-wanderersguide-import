@@ -43,6 +43,19 @@ test("dedupe: only explicit grants from this run's items, same compendium source
 import { auditImportCoverage, leftoverValues, CLASS_SUPPORT_NOTE } from "../scripts/coverage.js";
 import { buildPlan, sluggify } from "../scripts/mapping.js";
 import { readFileSync as rf } from "node:fs";
+test("duplicate diagnostics distinguish a PF2e grant pair from an unexplained duplicate", () => {
+  const pair = [
+    { id: "feature", type: "feat", name: "Shield Block", system: {}, flags: {} },
+    { id: "granted", type: "feat", name: "Shield Block", system: {}, flags: { pf2e: { grantedBy: { id: "feature" } } } },
+  ];
+  const unexplained = [
+    { id: "a", type: "feat", name: "Shield Block", system: {}, flags: {} },
+    { id: "b", type: "feat", name: "Shield Block", system: {}, flags: {} },
+  ];
+  assert.equal(duplicateItemDiagnostics(pair)[0].expectedGrantPair, true);
+  assert.equal(duplicateItemDiagnostics(unexplained)[0].expectedGrantPair, false);
+});
+
 test("coverage ledger: every source path once, built from plan actions, classes experimental", () => {
   const exp = JSON.parse(rf(new URL("./fixtures/pcs/64.json", import.meta.url)));
   const plan = buildPlan(exp);
