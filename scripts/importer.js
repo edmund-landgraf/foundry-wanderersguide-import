@@ -327,6 +327,34 @@ export function managedTree(items) {
   return ours;
 }
 
+/** Items explicitly granted by an item that is not in `old` (i.e. created by this run). */
+export function explicitGrants(items, old) {
+  const list = [...items];
+  const byId = new Map(list.map((i) => [i.id, i]));
+  const run = new Set(list.filter((i) => !old.has(i.id)).map((i) => i.id));
+  const out = [];
+  for (const i of list) {
+    if (!run.has(i.id)) continue;
+    let parent = null;
+    const by = i.flags?.pf2e?.grantedBy?.id;
+    if (by && run.has(by)) parent = byId.get(by);
+    const loc = i.system?.location;
+    if (!parent && typeof loc === "string" && run.has(loc)) parent = byId.get(loc);
+    if (!parent) parent = list.find((q) => run.has(q.id) && Object.values(q.flags?.pf2e?.itemGrants ?? {}).some((v) => v?.id === i.id)) ?? null;
+    if (parent && parent.id !== i.id) out.push({ item: i, parent });
+  }
+  return out;
+}
+
+const KIND_ITEM_TYPES = { ancestry: ["ancestry"], heritage: ["heritage"], background: ["background"], class: ["class"], feat: ["feat", "action"], spell: ["spell"] };
+/** Same compendium source, or (when WG's entry has no match of that item type) the same slug. No prefix or fuzzy matching. */
+export function sameThing(entry, item) {
+  if (!(KIND_ITEM_TYPES[entry.kind] ?? []).includes(item.type)) return false;
+  const src = item._stats?.compendiumSource ?? item.flags?.core?.sourceId ?? null;
+  if (entry.match?.uuid && src) return src === entry.match.uuid;
+  const slug = item.system?.slug || sluggify(item.name);
+  return slug === entry.slug && (!entry.match || entry.match.type !== item.type);
+}
 export class InjectedFailure extends Error {}
 
 function forcedFields(plan, host, actor, existing) {
@@ -449,21 +477,34 @@ async function applyImport(p, { onStep, parity, failAfter }) {
         await createItems(entryData, { keepId: true });
         await restoreSpellcastingState(actor, runtime?.spellcasting);
       }
+      // Items with GrantItem rules go first so their grants exist before the rest are checked
+      // (e.g. Web Weaver grants Specialty Crafting, which WG also lists as a feat).
+      const grants = (e) => (e.data.system?.rules ?? []).some((r) => r?.key === "GrantItem");
+      const todo = matched.filter((x) => x.kind === kind && x.data);
+      for (const pass of [todo.filter(grants), todo.filter((e) => !grants(e))]) {
       const batch = [];
-      // Only items created by this run count as "already present"; old managed items are about to go.
-      const fresh = actor.items.filter((i) => !old.has(i.id) && i.type !== "spellcastingEntry");
-      const have = new Set(fresh.map((i) => sluggify(i.name)));
-      for (const e of matched.filter((x) => x.kind === kind && x.data)) {
-        if (kind !== "equipment" && kind !== "spell" && (have.has(sluggify(e.name)) || (kind === "feat" && [...have].some((h) => sluggify(e.name).startsWith(`${h}-`))))) { const k = misses.findIndex((m) => m === `${e.kind}: ${e.name}`); if (k >= 0) misses.splice(k, 1); continue; }
-        if (kind === "spell") {
-          const g = fresh.find((i) => i.type === "spell" && sluggify(i.name) === sluggify(e.name));
-          if (g) { if (e.entryId && g.system.location?.value !== e.entryId) await g.update({ "system.location.value": e.entryId }); const k = misses.findIndex((m) => m === `${e.kind}: ${e.name}`); if (k >= 0) misses.splice(k, 1); continue; }
+      // Dedupe only against items PF2e explicitly granted from something this run created
+      // (grantedBy, the parent's itemGrants, or an ABC feature's system.location) and only when it is
+      // the same compendium item (or, for a WG entry with no same-type match, the same slug).
+      const granted = explicitGrants(actor.items, old);
+      for (const e of pass) {
+        const g = kind === "equipment" ? null : granted.find(({ item }) => sameThing(e, item));
+        if (g) {
+          e.outcome = "granted"; e.grantedBy = g.parent.name;
+          const k = misses.findIndex((m) => m === `${e.kind}: ${e.name}`); if (k >= 0) misses.splice(k, 1);
+          if (kind === "spell" && e.entryId && g.item.system.location?.value !== e.entryId) await g.item.update({ "system.location.value": e.entryId });
+          const hints = p.ctx.specific(e.name);
+          const sel = [...Object.values(g.item._source.flags?.pf2e?.rulesSelections ?? {}), ...(g.item._source.system?.rules ?? []).filter((r) => r?.key === "ChoiceSet" && r.selection != null).map((r) => r.selection)].map(String);
+          if (hints.length && !hints.some((h) => sel.some((v) => sluggify(v) === sluggify(h) || sluggify(g.item.name).includes(sluggify(h))))) {
+            p.ctx.unresolved.push({ owner: g.item.name, flag: null, reason: `WG answer ${hints.join(", ")} differs from PF2e's grant via ${g.parent.name}; kept PF2e's grant` });
+          }
+          continue;
         }
+        e.outcome = e.match ? "created" : "homebrew";
         batch.push(foundry.utils.deepClone(e.data));
-
-      }
-      step(`build ${kind} ${batch.length}`);
+      }      step(`build ${kind} ${batch.length}`);
       await createItems(batch);
+      }
       step(`created ${kind}`);
     }
     // Replacements exist: now remove the previous module-managed items.
