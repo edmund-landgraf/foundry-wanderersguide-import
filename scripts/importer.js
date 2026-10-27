@@ -1,7 +1,7 @@
 // Foundry-side import. Uses Foundry/PF2e globals (game, Actor, Item, Folder, ChatMessage).
 import { MODULE_ID, HOMEBREW_FOLDER } from "./constants.js";
 import { auditImportCoverage, leftoverValues, CLASS_SUPPORT_NOTE } from "./coverage.js";
-import { buildPlan, matchEntries, missReport, sluggify, resolveImageUrl, FALLBACK_IMG, wgChoiceHints, matchChoice, defaultFlag, spellcastingPlan, entryKeyFor, diffPlan, parityCheck } from "./mapping.js";
+import { buildPlan, matchEntries, missReport, sluggify, resolveImageUrl, FALLBACK_IMG, wgChoiceHints, matchChoice, defaultFlag, spellcastingPlan, spellSlotWarnings, preparedSlotUpdates, entryKeyFor, diffPlan, parityCheck } from "./mapping.js";
 
 const PACK_TYPES = new Set(["ancestry", "heritage", "background", "class", "feat", "spell", "weapon", "armor", "shield", "equipment", "consumable", "treasure", "backpack", "kit"]);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -441,10 +441,11 @@ export async function planImport(exp, { host }) {
     try { e.data = await itemDataFor(e, null, ctx, notes); e.notes = notes.slice(n0); }
     catch (err) { e.error = err.message; problems.push(`${e.kind}: ${e.name} (${err.message})`); }
   }
+  const warnings = spellSlotWarnings(exp, matched);
   const diff = diffPlan(plan, summarizeActor(actor));
   const homebrew = matched.filter((e) => !e.match && e.data);
   const coverage = auditImportCoverage(exp, { ...plan, entries: matched }, { applied: false, grantedSlugs: grantedSlugsOf(actor), choiceUsed: ctx.used, slug: sluggify });
-  return { coverage, exp, plan, host, index, ctx, matched, misses, notes, problems, actor, entryData, diff, homebrew, valid: problems.length === 0 };
+  return { coverage, exp, plan, host, index, ctx, matched, misses, notes, problems, warnings, actor, entryData, diff, homebrew, valid: problems.length === 0 };
 }
 
 function grantedSlugsOf(actor) {
@@ -469,6 +470,7 @@ export function reviewHtml(p) {
     + (p.homebrew.length ? `<p>World homebrew items to create or reuse (folder "${esc(HOMEBREW_FOLDER)}"):</p>${li(p.homebrew.map((e) => `${e.kind}: ${e.name}`))}` : "")
     + (p.notes.length ? `<p>Choices:</p>${li(p.notes)}` : "")
     + (p.ctx.unresolved.length ? `<p><strong>Unresolved (PF2e will ask you; nothing is guessed):</strong></p>${li(p.ctx.unresolved.map((u) => `${u.owner}${u.flag ? ` [${u.flag}]` : ""}: ${u.reason}`))}` : "")
+    + (p.warnings?.length ? `<p><strong>Warnings:</strong></p>${li(p.warnings)}` : "")
     + (p.problems.length ? `<p><strong>Plan problems (import blocked):</strong></p>${li(p.problems)}` : "")
     + coverageHtml(p.coverage);
 }
@@ -529,6 +531,7 @@ async function applyImport(p, { onStep, parity, failAfter }) {
       const todo = matched.filter((x) => x.kind === kind && x.data);
       for (const pass of [todo.filter(grants), todo.filter((e) => !grants(e))]) {
       const batch = [];
+      const batchEntries = [];
       // Dedupe only against items PF2e explicitly granted from something this run created
       // (grantedBy, the parent's itemGrants, or an ABC feature's system.location) and only when it is
       // the same compendium item (or, for a WG entry with no same-type match, the same slug).
@@ -536,7 +539,7 @@ async function applyImport(p, { onStep, parity, failAfter }) {
       for (const e of pass) {
         const g = kind === "equipment" ? null : granted.find(({ item }) => sameThing(e, item));
         if (g) {
-          e.outcome = "granted"; e.grantedBy = g.parent.name;
+          e.outcome = "granted"; e.grantedBy = g.parent.name; e.itemId = g.item.id;
           // The planned pre-fill never reached the actor; drop its note so the report only shows applied choices.
           for (const n of e.notes ?? []) { const j = notes.indexOf(n); if (j >= 0) notes.splice(j, 1); }
           const k = misses.findIndex((m) => m === `${e.kind}: ${e.name}`); if (k >= 0) misses.splice(k, 1);
@@ -551,11 +554,17 @@ async function applyImport(p, { onStep, parity, failAfter }) {
         }
         e.outcome = e.match ? "created" : "homebrew";
         batch.push(foundry.utils.deepClone(e.data));
+        batchEntries.push(e);
       }      step(`build ${kind} ${batch.length}`);
-      await createItems(batch);
+      const made = await createItems(batch);
+      made.forEach((doc, i) => { if (batchEntries[i]) batchEntries[i].itemId = doc.id; });
       }
       step(`created ${kind}`);
     }
+    // Prepared casters: fill each entry's slots with the spells WG prepared in them.
+    const prepared = preparedSlotUpdates(matched);
+    if (prepared.length) await actor.updateEmbeddedDocuments("Item", prepared, { render: false });
+    step("prepared slots");
     // Leftovers (coverage status leftover-preserved) are kept verbatim on the actor.
     // Use Document flag APIs when available. The -= embedded-key update form
     // is deprecated in newer Foundry versions and will be removed in v16.
@@ -662,7 +671,7 @@ export async function importCharacter(exp, { host, onStep = () => {}, parity = f
     : "";
   await ChatMessage.create({
     whisper: [game.user.id],
-    content: `<h3>WG import: ${esc(plan.name)}</h3><p>${matched.length - misses.length} matched, ${misses.length} created as homebrew or missed.</p>${misses.length ? `<ul>${misses.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${notes.length ? `<p>Choices:</p><ul>${notes.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${p.ctx.unresolved.length ? `<p>Unresolved choices:</p><ul>${p.ctx.unresolved.map((u) => `<li>${esc(u.owner)}${u.flag ? ` [${esc(u.flag)}]` : ""}: ${esc(u.reason)}</li>`).join("")}</ul>` : ""}${duplicateHtml}${parityResult ? parityHtml(plan.name, parityResult) : ""}${coverageHtml(p.coverage)}`,
+    content: `<h3>WG import: ${esc(plan.name)}</h3><p>${matched.length - misses.length} matched, ${misses.length} created as homebrew or missed.</p>${misses.length ? `<ul>${misses.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${notes.length ? `<p>Choices:</p><ul>${notes.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${p.ctx.unresolved.length ? `<p>Unresolved choices:</p><ul>${p.ctx.unresolved.map((u) => `<li>${esc(u.owner)}${u.flag ? ` [${esc(u.flag)}]` : ""}: ${esc(u.reason)}</li>`).join("")}</ul>` : ""}${p.warnings.length ? `<p><strong>Warnings:</strong></p><ul>${p.warnings.map((w) => `<li>${esc(w)}</li>`).join("")}</ul>` : ""}${duplicateHtml}${parityResult ? parityHtml(plan.name, parityResult) : ""}${coverageHtml(p.coverage)}`,
   });
-  return { actor, misses, notes, unresolved: p.ctx.unresolved, coverage: p.coverage, matched: matched.length - misses.length, parity: parityResult };
+  return { actor, misses, notes, warnings: p.warnings, unresolved: p.ctx.unresolved, coverage: p.coverage, matched: matched.length - misses.length, parity: parityResult };
 }

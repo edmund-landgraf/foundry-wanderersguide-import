@@ -48,6 +48,20 @@ export function buildPlan(exp) {
     seenSpells.add(key);
     add("spell", "spell", s.name, { wgContentId: s.id, rank: s.rank, castingSource: s.casting_source, focus: focusIds.has(s.id) && !(ct.spells?.all ?? []).some((x) => x.id === s.id), sourcePath });
   }
+  // Prepared casters: WG keeps the day's preparation in content.spell_slots (spell_id plus the spell
+  // record), not in content.spells.all. Each prepared slot becomes a spell on its source's entry.
+  const preparedBy = new Map();
+  (ct.spell_slots ?? []).forEach((sl, i) => {
+    if (sl?.spell_id == null || !sl.spell?.name) return;
+    const key = `${sl.source}:${sl.spell_id}:${sl.rank}`;
+    let e = preparedBy.get(key) ?? entries.find((x) => x.kind === "spell" && !x.innate && !x.focus && x.wgContentId === sl.spell_id && x.rank === sl.rank && x.castingSource === sl.source);
+    if (!e) {
+      add("spell", "spell", sl.spell.name, { wgContentId: sl.spell_id, rank: sl.rank, castingSource: sl.source, focus: false, sourcePath: `content.spell_slots[${i}]` });
+      e = entries[entries.length - 1];
+    }
+    preparedBy.set(key, e);
+    e.prepared = (e.prepared ?? 0) + 1;
+  });
   (ct.innate_spells ?? []).forEach((s, i) => add("spell", "spell", s.spell?.name, { wgContentId: s.spell?.id, rank: s.rank, innate: true, tradition: String(s.tradition ?? "").toLowerCase() || null, uses: s.casts_max ?? null, sourcePath: `content.innate_spells[${i}]` }));
   for (const [invIndex, inv] of (ct.inventory_flat ?? []).entries()) {
     const it = inv.item ?? inv;
@@ -266,6 +280,31 @@ export function entryKeyFor(e) {
   if (e.innate) return `innate:${e.tradition ?? null}`;
   if (e.focus) return `focus:${e.castingSource ?? null}`;
   return `src:${e.castingSource}`;
+}
+/** Import-report warnings: a slotted spellcasting entry with no spells from its WG source. */
+export function spellSlotWarnings(exp, entries) {
+  const out = [];
+  for (const se of spellcastingPlan(exp)) {
+    if (se.mode !== "prepared" && se.mode !== "spontaneous") continue;
+    const total = Object.values(se.slots).reduce((a, b) => a + b, 0);
+    if (!total) continue;
+    const own = entries.filter((e) => e.kind === "spell" && !e.focus && !e.innate && entryKeyFor(e) === se.key);
+    if (se.mode === "prepared" && !own.some((e) => e.prepared)) out.push(`${se.name}: ${total} spell slots but no prepared spells from WG source ${se.source}. Prepare spells in Wanderer's Guide and re-export.`);
+    else if (se.mode === "spontaneous" && !own.length) out.push(`${se.name}: ${total} spell slots but no spells from WG source ${se.source}. Add spells in Wanderer's Guide (Manage Spells) and re-export.`);
+  }
+  return out;
+}
+/** Item updates that put prepared spells into their entry's slots. Entries need entryId and itemId. */
+export function preparedSlotUpdates(entries) {
+  const byEntry = new Map();
+  for (const e of entries) {
+    if (e.kind !== "spell" || !e.prepared || !e.entryId || !e.itemId) continue;
+    const slots = byEntry.get(e.entryId) ?? {};
+    byEntry.set(e.entryId, slots);
+    const list = (slots[Number(e.rank ?? 0)] ??= []);
+    for (let n = 0; n < e.prepared; n++) list.push({ id: e.itemId, expended: false });
+  }
+  return [...byEntry].map(([_id, slots]) => ({ _id, ...Object.fromEntries(Object.entries(slots).map(([r, list]) => [`system.slots.slot${r}.prepared`, list])) }));
 }
 function titleCase(s) { return String(s ?? "").toLowerCase().replace(/(^|[\s_-])([a-z])/g, (_, a, b) => `${a === "_" ? " " : a}${b.toUpperCase()}`); }
 
