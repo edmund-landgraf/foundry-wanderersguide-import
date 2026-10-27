@@ -38,6 +38,45 @@ function homebrewItemData(entry, folderId) {
   };
 }
 
+// Runtime state that must survive an idempotent re-import. Keep this separate from the
+// PF2e document mutation code so the preservation rules can be tested without Foundry.
+export function captureRuntimeState(actor) {
+  if (!actor) return null;
+  const items = [...(actor.items ?? [])];
+  const getFlag = (item, key) => item.getFlag?.(MODULE_ID, key) ?? item.flags?.[MODULE_ID]?.[key];
+  const slots = {};
+  for (const item of items) {
+    if (getFlag(item, "kind") !== "spellcasting") continue;
+    const source = getFlag(item, "wgSource") ?? item.name;
+    slots[source] = Object.fromEntries(Object.entries(item.system?.slots ?? {}).map(([rank, value]) => [rank, {
+      value: value?.value,
+      prepared: Array.isArray(value?.prepared) ? [...value.prepared] : value?.prepared,
+    }]));
+  }
+  return {
+    currentHp: actor.system?.attributes?.hp?.value ?? null,
+    maxHp: actor.system?.attributes?.hp?.max ?? null,
+    tempHp: actor.system?.attributes?.hp?.temp ?? null,
+    spellcasting: slots,
+  };
+}
+
+export function preservedCurrentHp(state, newMaxHp, existing) {
+  if (!existing) return newMaxHp;
+  if (state?.currentHp == null || newMaxHp == null) return null;
+  return Math.max(0, Math.min(Number(state.currentHp), Number(newMaxHp)));
+}
+
+async function restoreSpellcastingState(actor, state) {
+  if (!state || !Object.keys(state).length) return;
+  for (const item of [...(actor.items ?? [])]) {
+    const source = item.getFlag?.(MODULE_ID, "wgSource") ?? item.flags?.[MODULE_ID]?.wgSource ?? item.name;
+    const saved = state[source];
+    if (!saved || item.type !== "spellcastingEntry") continue;
+    await item.update({ "system.slots": saved });
+  }
+}
+
 // ---- ChoiceSets answered from WG (PLAN 7.2) ------------------------------------------------
 // WG records each select operation's answer (character.operation_data.selections). For a ChoiceSet
 // on an item we create, or on an item granted by its GrantItem rules, we look up the WG answer for
@@ -298,6 +337,8 @@ export async function importCharacter(exp, { host, onStep = () => {}, parity = f
     const ids = [...ours].filter((id) => actor.items.has(id));
     if (ids.length) await actor.deleteEmbeddedDocuments("Item", ids);
   }
+  const existing = !!actor;
+  const runtime = captureRuntimeState(actor);
   const notes = [];
   const stopPrompts = autoAnswerPrompts(ctx, notes);
   try {
@@ -319,7 +360,10 @@ export async function importCharacter(exp, { host, onStep = () => {}, parity = f
         for (let r = 0; r <= 10; r++) { const n = se.slots[r] ?? 0; slots[`slot${r}`] = { max: n, value: n, prepared: [] }; }
         return { _id, name: se.name, type: "spellcastingEntry", system: { ability: { value: se.ability }, tradition: { value: se.tradition ?? "" }, prepared: { value: se.mode, flexible: false }, showSlotlessLevels: { value: false }, slots }, flags: { [MODULE_ID]: { kind: "spellcasting", wgSource: se.key } } };
       });
-      if (entryData.length) await actor.createEmbeddedDocuments("Item", entryData, { keepId: true, render: false });
+      if (entryData.length) {
+        await actor.createEmbeddedDocuments("Item", entryData, { keepId: true, render: false });
+        await restoreSpellcastingState(actor, runtime?.spellcasting);
+      }
       for (const e of sorted) if (e.kind === "spell") e.entryId = entryIds[entryKeyFor(e)] ?? (e.focus || e.innate ? null : Object.values(entryIds)[0] ?? null);
     }
     const batch = [];
@@ -361,7 +405,11 @@ export async function importCharacter(exp, { host, onStep = () => {}, parity = f
       }], { render: false });
       notes.push(`HP: PF2e computed ${computed}, WG ${plan.maxHp}; adjustment ${delta > 0 ? "+" : ""}${delta}`);
     }
-    await actor.update({ "system.attributes.hp.value": plan.maxHp });
+    const hpValue = preservedCurrentHp(runtime, plan.maxHp, existing);
+    const hpPatch = {};
+    if (hpValue != null) hpPatch["system.attributes.hp.value"] = hpValue;
+    if (existing && runtime?.tempHp != null) hpPatch["system.attributes.hp.temp"] = runtime.tempHp;
+    if (Object.keys(hpPatch).length) await actor.update(hpPatch);
   }
 
   // Parity check against the export (PLAN 7.3); optional, off by default.

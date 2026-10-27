@@ -106,7 +106,7 @@ test("campaigns: list names and fetch one", async () => {
   const fetchImpl = async (_u, init) => { const b = JSON.parse(init.body); bodies.push(b);
     return b.campaign_id ? ok({ campaign: { id: 5, name: "Abomination Vaults" }, characters: [{ id: 9, name: "Z", level: 3 }] }) : ok({ campaigns: [{ id: 5, name: "Abomination Vaults", character_ids: [9] }] }); };
   const list = await listCampaigns({ baseUrl: "http://h", apiKey: KEY, fetchImpl });
-  assert.deepEqual(list, [{ id: 5, name: "Abomination Vaults", characterIds: [9], owned: false }]);
+  assert.deepEqual(list, [{ id: 5, name: "Abomination Vaults", imageUrl: null, imageFocusY: null, characterIds: [9], owned: false }]);
   const one = await getCampaign({ baseUrl: "http://h", apiKey: KEY, fetchImpl }, "5");
   assert.equal(one.campaign.name, "Abomination Vaults");
   assert.equal(one.characters[0].id, 9);
@@ -206,4 +206,10 @@ test("diffPlan and parityCheck", () => {
   assert.equal(pc.ok, false);
   assert.ok(pc.failed.some((r) => r.check === "max HP"));
   assert.equal(diffPlan(plan, worse).add.length, 1);
+});
+
+test("summarizeCampaign carries WG campaign art", async () => {
+  const { summarizeCampaign } = await import("../scripts/api.js");
+  assert.deepEqual(summarizeCampaign({ id: 42, name: "C", image_url: "https://x/a.png", image_focus_y: 40, character_ids: [1], owned: true }), { id: 42, name: "C", imageUrl: "https://x/a.png", imageFocusY: 40, characterIds: [1], owned: true });
+  assert.equal(summarizeCampaign(null), null);
 });
