@@ -2,6 +2,8 @@
 
 Status: implemented experimental MVP. The repository is GitHub-backed; see the README for current supported behavior and known limitations. This plan remains the target-state roadmap rather than a claim that every PF2e parity field is complete.
 
+For the implementation sequence that preserves AMBA's WG v4 decoding and selection methods, see [AMBA reuse plan](AMBA_REUSE_PLAN.md). That plan takes precedence over this document where this older roadmap proposes reimplementing WG parsing in the Foundry module.
+
 ## 1. Goal
 
 A Foundry VTT module, run by a player or GM in the current world, that pulls a Pathfinder 2e character from Wanderer's Guide (`https://wgui.wandersguide.site`) and creates or updates a PF2e `character` actor:
