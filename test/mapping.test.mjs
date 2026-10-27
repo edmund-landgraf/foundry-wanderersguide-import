@@ -60,6 +60,8 @@ test("real local export (test2 Inkwhisk, Gnome Bard 2) maps", () => {
   assert.equal(p.name, "Inkwhisk");
   assert.equal(p.level, 2);
   assert.equal(p.maxHp, 28);
+  assert.deepEqual(p.coins, { cp: 0, sp: 150, gp: 0, pp: 0 });
+  assert.equal(p.heroPoints, 1);
   assert.deepEqual(p.attributes, { str: 0, dex: 2, con: 2, int: 1, wis: 1, cha: 3 });
   assert.deepEqual(p.languages, ["common", "fey", "gnomish"]);
   const names = (k) => p.entries.filter((e) => e.kind === k).map((e) => e.name);

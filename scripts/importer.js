@@ -317,6 +317,12 @@ export async function importCharacter(exp, { host, onStep = () => {}, parity = f
     "system.build.attributes.manual": true,
     ...Object.fromEntries(Object.entries(plan.attributes).map(([k, v]) => [`system.abilities.${k}.mod`, v])),
   };
+  // Currency and hero points are initialized from WG, but existing Foundry runtime
+  // state remains authoritative on re-import.
+  if (!existing) {
+    Object.assign(forced, Object.fromEntries(Object.entries(plan.coins ?? {}).map(([k, v]) => [`system.currency.${k}`, v])));
+    forced["system.resources.heroPoints.value"] = plan.heroPoints ?? 0;
+  }
   if (!actor) {
     actor = await Actor.create({
       name: plan.name,

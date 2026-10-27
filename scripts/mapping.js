@@ -67,6 +67,8 @@ export function buildPlan(exp) {
     name: ch.name ?? "Unnamed",
     level: Number(ch.level ?? 1),
     maxHp: typeof ct.max_hp === "number" ? ct.max_hp : null,
+    coins: Object.fromEntries(["cp", "sp", "gp", "pp"].map((k) => [k, Number(ch.inventory?.coins?.[k] ?? 0)])),
+    heroPoints: Number(ch.hero_points ?? 0),
     imageUrl: ch.details?.image_url || ch.details?.info?.image_url || null,
     languages: (ct.languages ?? []).map((l) => sluggify(l)),
     attributes,
