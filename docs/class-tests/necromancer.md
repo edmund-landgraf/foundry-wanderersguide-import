@@ -22,14 +22,14 @@ The import completed after two PF2e prompts were answered by the test script: Cl
 
 | # | Problem | Expected | Actual | Layer | State |
 |---|---|---|---|---|---|
-| N1 | Prepared spells / spellbook | choices for cantrips + rank-1 spellbook entries | no spell choice offered; 5 cantrip + 1 rank-1 slots empty | WGUI / connector | open |
+| N1 | Prepared spells / spellbook | choices for cantrips + rank-1 spellbook entries | no spell choice offered; 5 cantrip + 1 rank-1 slots empty | WGUI / connector | fixed (PR #4 + #18) |
 | N2 | Dwarf Clan Weapon ChoiceSet | answered from WG (Clan Dagger is fixed in WG) | import blocks on the "Clan Weapon" prompt | importer | open |
 | N3 | Scholar skill ChoiceSet | answered from the WG background selection (Occultism) | import blocks on the "Scholar" prompt | importer | open |
 | N4 | Consume Thrall class feat | imported | in WG `classFeats`, not on the Foundry actor | importer | open |
 | N5 | Thrall | thrall support (focus spell plus summon) | only the Create Thrall cantrip; no thrall actor | WGUI / importer (by design?) | open |
 | N6 | Current HP | 21 on a fresh import | the sheet shows 13 / 21 | importer (verify) | open |
 | N7 | Focus pool | 1 point at level 1 | the sheet shows an empty focus pool | importer (verify) | open |
-| N8 | WG import chat card | posted | the scripted run found no "WG import:" card | importer (verify) | open |
+| N8 | WG import chat card | posted | the scripted run found no "WG import:" card | importer (verify) | resolved: card posts (seen in 81-import-report.png) |
 | N9 | `set_identity` with an ancestry outside the enabled books (Kholo) | rejected | reports "saved", stores nothing | connector | open (same as Summoner S4) |
 | N10 | Fort expert at level 1 | rules check | Fort +8 expert | WGUI (verify) | open |
 
@@ -48,3 +48,13 @@ The import completed after two PF2e prompts were answered by the test script: Cl
 - **Importer:**
   - Add a fixture that has real `spells.list` entries, for a spontaneous caster and a prepared caster, and assert that they land in the right spellcasting entry and rank.
   - Add a coverage warning when `spell_slots` exist but `spells.all` holds no spells of that source ("caster has empty repertoire").
+
+## Spell fix outcome (2026-10-27)
+
+- **Connector** (WandersGuideUI PR #4, not merged): `list_spell_options`, `add_spell`, `remove_spell`, `set_spells`. Sources and slot counts come from the builder operation pass; spell lookups include the common core book (id 3); list entries match ManageSpellsModal `{ spell_id, rank, source }`; prepared slots are `{ rank, source, spell_id }`. Rejections checked live (off-tradition Daze, unknown id).
+- **Importer** (foundry-wanderersguide-import PR #18, not merged): prepared spells are read from `content.spell_slots` and placed into the entry's slots; new warning when a slotted caster has no spells from its source; fixtures 80/81 plus `test/spells.test.mjs`.
+- **Tests:** module 49/49; tactics-mcp 38/39 (the one failure, focus-spells "Kota", fails the same way on main).
+- **Importer bug found live:** prepared spells were never imported, because the importer only read `content.spells.all` and WG keeps the day's preparation in `spell_slots`. Fixed in PR #18.
+- **Spells prepared (via set_spells):** cantrips Void Warp, Daze, Telekinetic Projectile, Detect Magic, Shield; rank 1 Grim Tendrils.
+- **Live re-import:** Necromancer Spells (prepared, occult) slot 0 holds the five cantrips and slot 1 holds Grim Tendrils; Harm is on the entry; the four focus spells are on the focus entry. No warnings. Screenshots: `D:\tmp\wgui-newpc\81-spells-after.png`, `81-import-report.png`.
+- **Still open:** N2/N3 (the Clan Weapon prompt still needed the script; Assurance is reported unresolved), N4, N5, N6 (HP 13/21), N7, N10.

@@ -23,7 +23,7 @@ Str +0, Dex +2, Con +0, Int +1, Wis +1, Cha +3. HP 16, AC 15, Perception +4, For
 | # | Problem | Expected | Actual | Layer | State |
 |---|---|---|---|---|---|
 | S1 | Con modifier | +1 (elf -1, Feybound +1, class free +1) | +0, so HP 16 not 17 | WGUI | open |
-| S2 | Spell repertoire | choices for 5 cantrips + 2 rank-1 spells | slots exist, no choice offered, repertoire empty | WGUI / connector | open |
+| S2 | Spell repertoire | choices for 5 cantrips + 2 rank-1 spells | slots exist, no choice offered, repertoire empty | WGUI / connector | fixed (PR #4 + #18) |
 | S3 | Eidolon stat block | eidolon companion in the export and in Foundry | `companions` null; no eidolon actor | WGUI / importer | open |
 | S4 | `set_identity` with a class outside the enabled books | rejected | reports "saved", stores nothing | connector | open |
 | S5 | `export_character` over the MCP tool | returns JSON | ~4 MB export kills the local stdio server; the edge function works | connector | open |
@@ -44,3 +44,12 @@ Str +0, Dex +2, Con +0, Int +1, Wis +1, Cha +3. HP 16, AC 15, Perception +4, For
 - **Importer:**
   - Add a fixture that has real `spells.list` entries, for a spontaneous caster and a prepared caster, and assert that they land in the right spellcasting entry and rank.
   - Add a coverage warning when `spell_slots` exist but `spells.all` holds no spells of that source ("caster has empty repertoire").
+
+## Spell fix outcome (2026-10-27)
+
+- **Connector** (WandersGuideUI PR #4, not merged): `list_spell_options`, `add_spell`, `remove_spell`, `set_spells`. Sources and slot counts come from the builder operation pass; spell lookups include the common core book (id 3); list entries match ManageSpellsModal `{ spell_id, rank, source }`; prepared slots are `{ rank, source, spell_id }`. Rejections checked live (off-tradition Daze, unknown id).
+- **Importer** (foundry-wanderersguide-import PR #18, not merged): prepared spells are read from `content.spell_slots` and placed into the entry's slots; new warning when a slotted caster has no spells from its source; fixtures 80/81 plus `test/spells.test.mjs`.
+- **Tests:** module 49/49; tactics-mcp 38/39 (the one failure, focus-spells "Kota", fails the same way on main).
+- **Spells given (via set_spells):** cantrips Tangle Vine, Electric Arc, Detect Magic, Light, Guidance; rank 1 Fear.
+- **Live re-import:** Summoner Spells (spontaneous, primal) shows all six; focus Boost Eidolon and Evolution Surge; innate Shield. No warnings. Screenshots: `D:\tmp\wgui-newpc\80-spells-after.png`, `80-import-report.png`.
+- **Open question:** WG computes 1 rank-1 slot; check whether a level 1 Summoner repertoire should hold one or two rank-1 spells.
