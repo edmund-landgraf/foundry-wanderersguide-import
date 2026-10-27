@@ -1,7 +1,7 @@
 import { MODULE_ID } from "./constants.js";
 import { applyCampaignArt, campaignArtUrl } from "./campaign.js";
 import { listCharacters, listCampaigns, getCampaign, campaignLabel, exportCharacter, resolveFunctionsUrl } from "./api.js";
-import { importCharacter, previewImport, diffHtml } from "./importer.js";
+import { importCharacter, previewImport, diffHtml, reviewHtml } from "./importer.js";
 
 function opts() {
   return { baseUrl: resolveFunctionsUrl(game.settings.get(MODULE_ID, "wgServer"), game.settings.get(MODULE_ID, "functionsUrl")), apiKey: game.settings.get(MODULE_ID, "apiKey") };
@@ -19,22 +19,46 @@ function charTable(rows, host, { checked = false, tab, names }) {
   return `<table class="wgi-table" data-tab="${tab}"><thead><tr><th></th><th>Name</th><th>Lvl</th><th>Ancestry</th><th>Class</th><th>Campaign</th><th>WG id</th><th>Action</th></tr></thead><tbody>${rows.map(tr).join("") || '<tr><td colspan="8">No characters.</td></tr>'}</tbody></table>`;
 }
 
-async function runImport(ids, host, { dryRun = false, parity = false } = {}) {
+// Review step (AMBA_REUSE_PLAN 5): the full plan is shown before anything is written; Cancel changes nothing.
+async function confirmPlan(p) {
+  const DialogV2 = foundry.applications?.api?.DialogV2;
+  if (!DialogV2) return true;
+  return !!(await DialogV2.confirm({
+    window: { title: `Apply Wanderer's Guide import: ${p.plan.name}?` },
+    position: { width: 620 },
+    content: `<div class="wgi-review" style="max-height:560px;overflow:auto">${reviewHtml(p)}</div>`,
+    yes: { label: "Apply", default: true }, no: { label: "Cancel" },
+    rejectClose: false,
+  }));
+}
+
+async function runImport(ids, host, { dryRun = false, parity = false, review = true } = {}) {
   if (dryRun) { await runPreview(ids, host); return []; }
   const actors = [];
+  // Test hook: CONFIG.wgiTest = { failAfter: n } injects a failure after n created items.
+  const failAfter = CONFIG.wgiTest?.failAfter ?? null;
   for (const id of ids) {
     // One character at a time (PLAN 4.2).
     try {
       ui.notifications.info(`Wanderer's Guide: importing ${id}...`);
       const exp = await exportCharacter(opts(), id);
-      const { actor, misses } = await importCharacter(exp, { host, parity });
-      ui.notifications.info(`Imported ${actor.name} (${misses.length} misses).`);
-      actors.push(actor);
+      const res = await importCharacter(exp, { host, parity, confirm: review ? confirmPlan : null, failAfter });
+      if (res.cancelled) {
+        ui.notifications.info(`Wanderer's Guide: import of ${res.plan.name} cancelled; nothing changed.`);
+        await ChatMessage.create({ whisper: [game.user.id], content: `<h3>WG import cancelled: ${esc(res.plan.name)}</h3><p>Nothing was written.</p>` }).catch(() => {});
+        continue;
+      }
+      ui.notifications.info(`Imported ${res.actor.name}.`);
+      actors.push(res.actor);
     } catch (e) {
       ui.notifications.error(`Wanderer's Guide ${id}: ${e.message}`);
       // Toasts vanish; leave a whispered card so a failed import is visible afterwards (and scripted runs can see it).
       console.error(`${MODULE_ID} | import ${id} failed`, e);
-      await ChatMessage.create({ whisper: [game.user.id], content: `<h3>WG import failed: WG id ${esc(id)}</h3><p>${esc(e.message)}</p>` }).catch(() => {});
+      const rb = e.rollback;
+      const rbText = !rb ? "Nothing was written (failed during planning)."
+        : rb.restored ? "All changes were rolled back; the actor is as it was before the import."
+        : `Restore failed (${esc(rb.restoreError ?? "")}); ${rb.backup ? `a backup actor "(WG backup)" (${esc(rb.backup)}) holds the pre-import state.` : `no backup could be created (${esc(rb.backupError ?? "")}).`}`;
+      await ChatMessage.create({ whisper: [game.user.id], content: `<h3>WG import failed: WG id ${esc(id)}</h3><p>${esc(e.message)}</p><p>${rbText}</p>` }).catch(() => {});
     }
   }
   return actors;
@@ -46,8 +70,8 @@ async function runPreview(ids, host) {
   for (const id of ids) {
     try {
       const exp = await exportCharacter(opts(), id);
-      const { plan, diff, misses } = await previewImport(exp, { host });
-      parts.push(diffHtml(plan, diff, misses));
+      const { review } = await previewImport(exp, { host });
+      parts.push(review);
     } catch (e) {
       parts.push(`<h3>WG ${id}</h3><p>${esc(e.message)}</p>`);
     }
@@ -61,6 +85,7 @@ async function runPreview(ids, host) {
 const flagsFrom = (root) => ({
   dryRun: !!root?.querySelector?.('input[name="wgi-dryrun"]')?.checked,
   parity: !!root?.querySelector?.('input[name="wgi-parity"]')?.checked,
+  review: root?.querySelector?.('input[name="wgi-review"]')?.checked ?? true,
   art: {
     journal: !!root?.querySelector?.('input[name="wgi-art-journal"]')?.checked,
     scene: !!root?.querySelector?.('input[name="wgi-art-scene"]')?.checked,
@@ -101,7 +126,8 @@ export async function openImportDialog() {
   <p class="notes">If you are the campaign's GM (your WG account owns it), every PC that joined it with the join key is listed. Otherwise only characters granted to this API key appear.</p></section>
 <fieldset class="wgi-options" style="margin-top:.5rem"><legend>Optional</legend>
   <label style="display:block"><input type="checkbox" name="wgi-dryrun"> Preview changes only (dry-run diff, nothing is written)</label>
-  <label style="display:block"><input type="checkbox" name="wgi-parity"> Check parity against the export after importing</label></fieldset>`;
+  <label style="display:block"><input type="checkbox" name="wgi-parity"> Check parity against the export after importing</label>
+  <label style="display:block"><input type="checkbox" name="wgi-review" checked> Review each plan before anything is written (Cancel changes nothing)</label></fieldset>`;
 
   let currentCampaign = null;
   const onRender = (root, app) => {

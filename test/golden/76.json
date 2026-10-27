@@ -1,0 +1,335 @@
+{
+ "plan": {
+  "wgId": 76,
+  "name": "Thorncup (P3)",
+  "level": 1,
+  "maxHp": 19,
+  "coins": {
+   "cp": 0,
+   "sp": 150,
+   "gp": 0,
+   "pp": 0
+  },
+  "heroPoints": 1,
+  "imageUrl": "https://api.wanderersguide.app/storage/v1/object/public/portraits/default/Druid%20-%20Lini.png",
+  "languages": [
+   "common",
+   "fey",
+   "wildsong"
+  ],
+  "attributes": {
+   "str": 1,
+   "dex": 2,
+   "con": 3,
+   "int": -1,
+   "wis": 4,
+   "cha": 0
+  },
+  "entries": [
+   {
+    "kind": "ancestry",
+    "packType": "ancestry",
+    "name": "Leshy",
+    "slug": "leshy",
+    "wgContentId": 9,
+    "sourcePath": "character.details.ancestry"
+   },
+   {
+    "kind": "heritage",
+    "packType": "heritage",
+    "name": "Leaf Leshy",
+    "slug": "leaf-leshy",
+    "wgContentId": 20743,
+    "sourcePath": "content.feats_features.heritages[0]"
+   },
+   {
+    "kind": "background",
+    "packType": "background",
+    "name": "Herbalist",
+    "slug": "herbalist",
+    "wgContentId": 747,
+    "sourcePath": "character.details.background"
+   },
+   {
+    "kind": "class",
+    "packType": "class",
+    "name": "Druid",
+    "slug": "druid",
+    "wgContentId": 23,
+    "sourcePath": "character.details.class"
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Seedpod",
+    "slug": "seedpod",
+    "wgContentId": 20520,
+    "level": 1,
+    "sourcePath": "content.feats_features.ancestryFeats[0]"
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Leshy Familiar",
+    "slug": "leshy-familiar",
+    "wgContentId": 20300,
+    "level": 1,
+    "sourcePath": "content.feats_features.classFeats[0]"
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Plant Empathy",
+    "slug": "plant-empathy",
+    "wgContentId": 20412,
+    "level": 1,
+    "sourcePath": "content.feats_features.classFeats[1]"
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Natural Medicine",
+    "slug": "natural-medicine",
+    "wgContentId": 20362,
+    "level": 1,
+    "sourcePath": "content.feats_features.generalAndSkillFeats[0]"
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Shield Block",
+    "slug": "shield-block",
+    "wgContentId": 20534,
+    "level": 1,
+    "sourcePath": "content.feats_features.generalAndSkillFeats[1]"
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Leaf Order",
+    "slug": "leaf-order",
+    "wgContentId": 33033,
+    "level": 1,
+    "sourcePath": "content.feats_features.otherFeats[0]"
+   },
+   {
+    "kind": "spell",
+    "packType": "spell",
+    "name": "Cornucopia",
+    "slug": "cornucopia",
+    "wgContentId": 4538,
+    "rank": 1,
+    "castingSource": "DRUID",
+    "focus": true,
+    "sourcePath": "content.focus_spells[0]"
+   }
+  ]
+ },
+ "match": [
+  "ancestry: Leshy -> Compendium.pf2e.ancestries.Item.cdhgByGG1WtuaK73 (slug)",
+  "heritage: Leaf Leshy -> Compendium.pf2e.heritages.Item.dQqurQys37aJYb26 (slug)",
+  "background: Herbalist -> Compendium.pf2e.backgrounds.Item.ZdhPKEY9FfaOS8Wy (slug)",
+  "class: Druid -> Compendium.pf2e.classes.Item.7s57JDCaiYYCAdFx (slug)",
+  "feat: Seedpod -> Compendium.pf2e.feats-srd.Item.dWGa6cFSVrASTEfd (slug)",
+  "feat: Leshy Familiar -> Compendium.pf2e.feats-srd.Item.7y1BCJLrdk9mKXlc (slug)",
+  "feat: Plant Empathy -> Compendium.pf2e.feats-srd.Item.ahyQpMVDIqhvXkQ4 (slug)",
+  "feat: Natural Medicine -> Compendium.pf2e.feats-srd.Item.WC4xLBGmBsdOdHWu (slug)",
+  "feat: Shield Block -> Compendium.pf2e.classfeatures.Item.eZNCckLzbH3GyncH (slug)",
+  "feat: Leaf Order -> Compendium.pf2e.classfeatures.Item.u4nlOzPj2WHkIj9l (slug)",
+  "spell: Cornucopia -> Compendium.pf2e.spells-srd.Item.vQuwLqtFFYt0K15N (slug)"
+ ],
+ "misses": [],
+ "choiceHints": {
+  "druidic-order": [
+   "Leaf Order"
+  ]
+ },
+ "spellcasting": [
+  {
+   "key": "src:DRUID",
+   "source": "DRUID",
+   "name": "Druid Spells",
+   "mode": "prepared",
+   "tradition": "primal",
+   "ability": "wis",
+   "slots": {
+    "0": 5,
+    "1": 2
+   }
+  },
+  {
+   "key": "focus:DRUID",
+   "source": "DRUID",
+   "name": "Druid Focus Spells",
+   "mode": "focus",
+   "tradition": "primal",
+   "ability": "wis",
+   "slots": {}
+  }
+ ],
+ "preview": {
+  "insert": {
+   "insert": true,
+   "fields": [],
+   "add": [
+    "ancestry: Leshy",
+    "heritage: Leaf Leshy",
+    "background: Herbalist",
+    "class: Druid",
+    "feat: Seedpod",
+    "feat: Leshy Familiar",
+    "feat: Plant Empathy",
+    "feat: Natural Medicine",
+    "feat: Shield Block",
+    "feat: Leaf Order",
+    "spell: Cornucopia"
+   ],
+   "remove": [],
+   "keep": []
+  },
+  "update": {
+   "insert": false,
+   "fields": [],
+   "add": [],
+   "remove": [],
+   "keep": [
+    "ancestry: Leshy",
+    "heritage: Leaf Leshy",
+    "background: Herbalist",
+    "class: Druid",
+    "feat: Seedpod",
+    "feat: Leshy Familiar",
+    "feat: Plant Empathy",
+    "feat: Natural Medicine",
+    "feat: Shield Block",
+    "feat: Leaf Order",
+    "spell: Cornucopia"
+   ]
+  },
+  "html": "<h3>WG preview: Thorncup (P3) (Update)</h3><p>No field changes.</p><p>Add (0):</p><p>none</p><p>Remove (0):</p><p>none</p><p>Unchanged: 11. Would become homebrew: 0.</p>"
+ },
+ "coverage": {
+  "counts": {
+   "mapped": 23,
+   "included": 10,
+   "unresolved": 2,
+   "leftover-preserved": 23,
+   "dropped": 19
+  },
+  "unresolved": [
+   {
+    "path": "character.operation_data.selections.background_b45f0fc2-ca52-4d47-83fb-5d00e2c8ccc5",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-21217_f78123ba-0c0a-4a65-8de5-f33d5523257c",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   }
+  ],
+  "dropped": [
+   {
+    "path": "character.operation_data.selections.background_f63229a4-0339-42fe-80d3-35b4d6079aca",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-0",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-1",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "content._README",
+    "status": "dropped",
+    "reason": "library reference data, not character state"
+   },
+   {
+    "path": "content.character_traits",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.senses",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.weapons",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.total_bulk",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.spell_raw_data",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.spells.cantrips",
+    "status": "dropped",
+    "reason": "derived spell view; PF2e recomputes"
+   },
+   {
+    "path": "content.spells.normal",
+    "status": "dropped",
+    "reason": "derived spell view; PF2e recomputes"
+   },
+   {
+    "path": "content.spells.rituals",
+    "status": "dropped",
+    "reason": "derived spell view; PF2e recomputes"
+   },
+   {
+    "path": "content.size",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.speeds",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.ac",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.shield_item",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.armor_item",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.resist_weaks",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.proficiencies",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   }
+  ]
+ },
+ "parity": {
+  "ok": true,
+  "passed": 11,
+  "failed": [],
+  "html": "<h4>Parity check</h4><p>All checks match the export.</p>"
+ }
+}

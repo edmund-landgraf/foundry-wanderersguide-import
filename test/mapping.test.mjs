@@ -34,7 +34,7 @@ test("matchEntries slug -> name -> miss", () => {
     { type: "weapon", slug: "longsword", name: "Longsword" },
   ];
   const m = matchEntries(buildPlan(exp).entries, index);
-  assert.equal(m.find((x) => x.name === "Sudden Charge").via, "name+level");
+  assert.equal(m.find((x) => x.name === "Sudden Charge").via, "name");
   assert.equal(m.find((x) => x.name === "Longsword").via, "slug");
   assert.deepEqual(missReport(m), ["feat: Stormwarden Dedication", "equipment: Stormforge Covenant Blade"]);
 });
@@ -126,11 +126,25 @@ test("wgui-ext fail codes become friendly messages without the key", async () =>
   assert.match(friendlyError(404, null), /not found/);
 });
 
-test("pickChoice maps a PF2e ChoiceSet label to the WG feature name", async () => {
-  globalThis.foundry ??= {};
-  const { pickChoice } = await import("../scripts/importer.js");
-  assert.equal(pickChoice(["Enigma", "Maestro", "Polymath"], ["Bard Muse", "Polymath Muse"]), 2);
-  assert.equal(pickChoice(["Enigma", "Maestro"], ["Bard Muse"]), -1);
+test("name match confidence gate: ambiguous names are unresolved, never list[0]", () => {
+  const e = [{ kind: "feat", packType: "feat", name: "Twin", slug: "twin-x", level: 2 }];
+  const two = [{ type: "feat", slug: "a", name: "Twin", level: 1, uuid: "U1" }, { type: "feat", slug: "b", name: "Twin", level: 4, uuid: "U2" }];
+  const m = matchEntries(e, two)[0];
+  assert.equal(m.via, "ambiguous");
+  assert.equal(m.match, null);
+  assert.deepEqual(m.candidates, ["U1", "U2"]);
+  const lvl = matchEntries([{ ...e[0], level: 4 }], two)[0];
+  assert.equal(lvl.via, "name+level");
+  assert.equal(lvl.match.uuid, "U2");
+});
+
+test("uniqueChoice: only an explicit WG answer naming exactly one legal option", async () => {
+  const { uniqueChoice } = await import("../scripts/importer.js");
+  assert.equal(uniqueChoice(["Enigma", "Maestro", "Polymath"], ["Polymath Muse"]), 2);
+  assert.equal(uniqueChoice(["Enigma", "Maestro"], ["Bard Muse"]), -1);
+  assert.equal(uniqueChoice(["Enigma", "Maestro"], []), -1, "no answer -> unresolved, not the first option");
+  assert.equal(uniqueChoice(["Fire", "Fire"], ["Fire"]), -1, "two legal options fit -> unresolved");
+  assert.equal(uniqueChoice(["Enigma", "Maestro"], ["Enigma", "Maestro"]), -1, "conflicting answers -> unresolved");
 });
 
 test("portrait: image_url from v4 export, resolved for Foundry", async () => {

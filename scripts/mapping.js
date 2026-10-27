@@ -31,29 +31,30 @@ export function buildPlan(exp) {
     entries.push({ kind, packType, name, slug: sluggify(name), ...extra });
   };
 
-  add("ancestry", "ancestry", ch.details?.ancestry?.name, { wgContentId: ch.details?.ancestry?.id });
-  for (const h of ff.heritages ?? []) add("heritage", "heritage", h.name, { wgContentId: h.id });
-  add("background", "background", ch.details?.background?.name, { wgContentId: ch.details?.background?.id });
-  add("class", "class", ch.details?.class?.name, { wgContentId: ch.details?.class?.id });
+  add("ancestry", "ancestry", ch.details?.ancestry?.name, { wgContentId: ch.details?.ancestry?.id, sourcePath: "character.details.ancestry" });
+  (ff.heritages ?? []).forEach((h, i) => add("heritage", "heritage", h.name, { wgContentId: h.id, sourcePath: `content.feats_features.heritages[${i}]` }));
+  add("background", "background", ch.details?.background?.name, { wgContentId: ch.details?.background?.id, sourcePath: "character.details.background" });
+  add("class", "class", ch.details?.class?.name, { wgContentId: ch.details?.class?.id, sourcePath: "character.details.class" });
   for (const group of ["ancestryFeats", "classFeats", "generalAndSkillFeats", "otherFeats"]) {
-    for (const f of ff[group] ?? []) add("feat", "feat", f.name, { wgContentId: f.id, level: f.level ?? null });
+    (ff[group] ?? []).forEach((f, i) => add("feat", "feat", f.name, { wgContentId: f.id, level: f.level ?? null, sourcePath: `content.feats_features.${group}[${i}]` }));
   }
   const seenSpells = new Set();
   const focusIds = new Set((ct.focus_spells ?? []).map((s) => s.id));
-  for (const s of [...(ct.spells?.all ?? []), ...(ct.focus_spells ?? [])]) {
+  const spellList = [...(ct.spells?.all ?? []).map((s, i) => [s, `content.spells.all[${i}]`]), ...(ct.focus_spells ?? []).map((s, i) => [s, `content.focus_spells[${i}]`])];
+  for (const [s, sourcePath] of spellList) {
     const key = `${s.id}:${s.rank}`;
     if (seenSpells.has(key)) continue;
     seenSpells.add(key);
-    add("spell", "spell", s.name, { wgContentId: s.id, rank: s.rank, castingSource: s.casting_source, focus: focusIds.has(s.id) && !(ct.spells?.all ?? []).some((x) => x.id === s.id) });
+    add("spell", "spell", s.name, { wgContentId: s.id, rank: s.rank, castingSource: s.casting_source, focus: focusIds.has(s.id) && !(ct.spells?.all ?? []).some((x) => x.id === s.id), sourcePath });
   }
-  for (const s of ct.innate_spells ?? []) add("spell", "spell", s.spell?.name, { wgContentId: s.spell?.id, rank: s.rank, innate: true, tradition: String(s.tradition ?? "").toLowerCase() || null, uses: s.casts_max ?? null });
-  for (const inv of ct.inventory_flat ?? []) {
+  (ct.innate_spells ?? []).forEach((s, i) => add("spell", "spell", s.spell?.name, { wgContentId: s.spell?.id, rank: s.rank, innate: true, tradition: String(s.tradition ?? "").toLowerCase() || null, uses: s.casts_max ?? null, sourcePath: `content.innate_spells[${i}]` }));
+  for (const [invIndex, inv] of (ct.inventory_flat ?? []).entries()) {
     const it = inv.item ?? inv;
     if (SKIP_ITEMS.has(sluggify(it.name))) continue; // built-in strikes, not items
     const c = parseComposedName(it.name, it.meta_data ?? {});
     const hasRunes = c.runes.potency || c.runes.striking || c.runes.resilient || c.runes.property.length;
     add("equipment", "equipment", it.name, { wgContentId: it.id, quantity: inv.quantity ?? it.meta_data?.quantity ?? 1, equipped: !!inv.is_equipped,
-      ...(c.composed ? { baseName: c.base, baseSlug: sluggify(c.base) } : {}), runes: hasRunes ? c.runes : null, material: c.material });
+      ...(c.composed ? { baseName: c.base, baseSlug: sluggify(c.base) } : {}), runes: hasRunes ? c.runes : null, material: c.material, sourcePath: `content.inventory_flat[${invIndex}]` });
   }
 
   const attributes = {};
@@ -76,7 +77,7 @@ export function buildPlan(exp) {
   };
 }
 
-/** Match entries against a compendium index: slug first, then name, then name+level. */
+/** Match entries against a compendium index: slug first, then an unambiguous name (or name+level). */
 export function matchEntries(entries, index) {
   const bySlug = new Map();
   const byName = new Map();
@@ -99,8 +100,13 @@ export function matchEntries(entries, index) {
     for (const t of typesFor(e.packType)) {
       const list = byName.get(`${t}:${e.name.toLowerCase()}`);
       if (list?.length) {
-        const lvl = e.level != null ? list.find((r) => r.level === e.level) : null;
-        return { ...e, match: lvl ?? list[0], via: lvl ? "name+level" : "name" };
+        // Confidence gate: a name match is used only when it is unambiguous (one compendium item,
+        // or exactly one at the WG level). Otherwise the entry is unresolved, never list[0].
+        const uniq = [...new Map(list.map((r) => [r.uuid, r])).values()];
+        if (uniq.length === 1) return { ...e, match: uniq[0], via: "name" };
+        const lvl = e.level != null ? uniq.filter((r) => r.level === e.level) : [];
+        if (lvl.length === 1) return { ...e, match: lvl[0], via: "name+level" };
+        return { ...e, match: null, via: "ambiguous", candidates: uniq.map((r) => r.uuid) };
       }
     }
     return { ...e, match: null, via: "miss" };
@@ -140,8 +146,11 @@ export function wgChoiceHints(exp) {
   const byId = new Map(all.map((f) => [String(f.id), f]));
   const keys = Object.keys(sel);
   const out = new Map();
-  const push = (owner, name) => {
+  // Non-enumerable: owner slug -> selection keys, so the coverage ledger can tell which answers were used.
+  Object.defineProperty(out, "keys", { value: new Map(), enumerable: false });
+  const push = (owner, name, key) => {
     const k = sluggify(owner);
+    if (key) (out.keys.get(k) ?? out.keys.set(k, []).get(k)).push(key);
     const list = out.get(k) ?? out.set(k, []).get(k);
     if (!list.includes(name)) list.push(name);
   };
@@ -155,7 +164,7 @@ export function wgChoiceHints(exp) {
         if (v != null) {
           const pre = (op.data?.optionsPredefined ?? []).find((o) => o.id === v);
           const name = pre?.title ?? byId.get(String(v))?.name ?? null;
-          if (name) push(owner, name);
+          if (name) push(owner, name, key);
           if (pre?.operations) visit(owner, pre.operations, depth + 1);
         }
       }

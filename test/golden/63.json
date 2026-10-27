@@ -1,0 +1,419 @@
+{
+ "plan": {
+  "wgId": 63,
+  "name": "Ernmpo",
+  "level": 3,
+  "maxHp": 41,
+  "coins": {
+   "cp": 0,
+   "sp": 0,
+   "gp": 0,
+   "pp": 0
+  },
+  "heroPoints": 1,
+  "imageUrl": "https://api.wanderersguide.app/storage/v1/object/public/portraits/default/7e6ad4e6-8cfa-4088-9069-2330165a811e.png",
+  "languages": [
+   "common",
+   "fey",
+   "yaksha",
+   "tanuki"
+  ],
+  "attributes": {
+   "str": 1,
+   "dex": 1,
+   "con": 3,
+   "int": 0,
+   "wis": 2,
+   "cha": 2
+  },
+  "entries": [
+   {
+    "kind": "ancestry",
+    "packType": "ancestry",
+    "name": "Yaksha",
+    "slug": "yaksha",
+    "wgContentId": 189,
+    "sourcePath": "character.details.ancestry"
+   },
+   {
+    "kind": "heritage",
+    "packType": "heritage",
+    "name": "Respite of Loam and Leaf",
+    "slug": "respite-of-loam-and-leaf",
+    "wgContentId": 35351,
+    "sourcePath": "content.feats_features.heritages[0]"
+   },
+   {
+    "kind": "background",
+    "packType": "background",
+    "name": "Deckhand",
+    "slug": "deckhand",
+    "wgContentId": 1007,
+    "sourcePath": "character.details.background"
+   },
+   {
+    "kind": "class",
+    "packType": "class",
+    "name": "Alchemist",
+    "slug": "alchemist",
+    "wgContentId": 107,
+    "sourcePath": "character.details.class"
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Tangle-Tongue's Wit",
+    "slug": "tangle-tongues-wit",
+    "wgContentId": 35360,
+    "level": 1,
+    "sourcePath": "content.feats_features.ancestryFeats[0]"
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Alchemical Assessment",
+    "slug": "alchemical-assessment",
+    "wgContentId": 31818,
+    "level": 1,
+    "sourcePath": "content.feats_features.classFeats[0]"
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Quick Alchemy",
+    "slug": "quick-alchemy",
+    "wgContentId": 31176,
+    "level": 1,
+    "sourcePath": "content.feats_features.classFeats[1]"
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Improvise Admixture",
+    "slug": "improvise-admixture",
+    "wgContentId": 31448,
+    "level": 2,
+    "sourcePath": "content.feats_features.classFeats[2]"
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Alchemical Crafting",
+    "slug": "alchemical-crafting",
+    "wgContentId": 19894,
+    "level": 1,
+    "sourcePath": "content.feats_features.generalAndSkillFeats[0]"
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Cat Fall",
+    "slug": "cat-fall",
+    "wgContentId": 19983,
+    "level": 1,
+    "sourcePath": "content.feats_features.generalAndSkillFeats[1]"
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Eye of the Arclords",
+    "slug": "eye-of-the-arclords",
+    "wgContentId": 25458,
+    "level": 2,
+    "sourcePath": "content.feats_features.generalAndSkillFeats[2]"
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Familiar Oddities",
+    "slug": "familiar-oddities",
+    "wgContentId": 21362,
+    "level": 2,
+    "sourcePath": "content.feats_features.generalAndSkillFeats[3]"
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Mutagenist Research Field",
+    "slug": "mutagenist-research-field",
+    "wgContentId": 32987,
+    "level": 1,
+    "sourcePath": "content.feats_features.otherFeats[0]"
+   },
+   {
+    "kind": "equipment",
+    "packType": "equipment",
+    "name": "Versatile Vial (Lesser)",
+    "slug": "versatile-vial-lesser",
+    "wgContentId": 15516,
+    "quantity": 1,
+    "equipped": true,
+    "runes": null,
+    "material": null,
+    "sourcePath": "content.inventory_flat[0]"
+   }
+  ]
+ },
+ "match": [
+  "ancestry: Yaksha -> Compendium.pf2e.ancestries.Item.k3zyr6du4gV0Ftuh (slug)",
+  "heritage: Respite of Loam and Leaf -> Compendium.pf2e.heritages.Item.WczVM4KQq7xybsPZ (slug)",
+  "background: Deckhand -> Compendium.pf2e.backgrounds.Item.IObZEUz8wneEMgR3 (slug)",
+  "class: Alchemist -> Compendium.pf2e.classes.Item.XwfcJuskrhI9GIjX (slug)",
+  "feat: Tangle-Tongue's Wit -> Compendium.pf2e.feats-srd.Item.zxozwMyJgOzxADHh (slug)",
+  "feat: Alchemical Assessment -> Compendium.pf2e.feats-srd.Item.ypir96PNY6LBSIWT (slug)",
+  "feat: Quick Alchemy -> Compendium.pf2e.classfeatures.Item.sPtl05wwTpqFI0lL (slug)",
+  "feat: Improvise Admixture -> Compendium.pf2e.feats-srd.Item.H6SL2F11nlMfqCQC (slug)",
+  "feat: Alchemical Crafting -> Compendium.pf2e.feats-srd.Item.is3Oz9wt11lNq62K (slug)",
+  "feat: Cat Fall -> Compendium.pf2e.feats-srd.Item.LQw0yIMDUJJkq1nD (slug)",
+  "feat: Eye of the Arclords -> Compendium.pf2e.feats-srd.Item.OtV7esAwza1U6Kwr (slug)",
+  "feat: Familiar Oddities -> Compendium.pf2e.feats-srd.Item.5f8gQxVdioUcgsTD (slug)",
+  "feat: Mutagenist Research Field -> MISS (miss)",
+  "equipment: Versatile Vial (Lesser) -> MISS (miss)"
+ ],
+ "misses": [
+  "feat: Mutagenist Research Field",
+  "equipment: Versatile Vial (Lesser)"
+ ],
+ "choiceHints": {
+  "research-field": [
+   "Mutagenist Research Field"
+  ]
+ },
+ "spellcasting": [],
+ "preview": {
+  "insert": {
+   "insert": true,
+   "fields": [],
+   "add": [
+    "ancestry: Yaksha",
+    "heritage: Respite of Loam and Leaf",
+    "background: Deckhand",
+    "class: Alchemist",
+    "feat: Tangle-Tongue's Wit",
+    "feat: Alchemical Assessment",
+    "feat: Quick Alchemy",
+    "feat: Improvise Admixture",
+    "feat: Alchemical Crafting",
+    "feat: Cat Fall",
+    "feat: Eye of the Arclords",
+    "feat: Familiar Oddities",
+    "feat: Mutagenist Research Field",
+    "equipment: Versatile Vial (Lesser)"
+   ],
+   "remove": [],
+   "keep": []
+  },
+  "update": {
+   "insert": false,
+   "fields": [],
+   "add": [],
+   "remove": [],
+   "keep": [
+    "ancestry: Yaksha",
+    "heritage: Respite of Loam and Leaf",
+    "background: Deckhand",
+    "class: Alchemist",
+    "feat: Tangle-Tongue's Wit",
+    "feat: Alchemical Assessment",
+    "feat: Quick Alchemy",
+    "feat: Improvise Admixture",
+    "feat: Alchemical Crafting",
+    "feat: Cat Fall",
+    "feat: Eye of the Arclords",
+    "feat: Familiar Oddities",
+    "feat: Mutagenist Research Field",
+    "equipment: Versatile Vial (Lesser)"
+   ]
+  },
+  "html": "<h3>WG preview: Ernmpo (Update)</h3><p>No field changes.</p><p>Add (0):</p><p>none</p><p>Remove (0):</p><p>none</p><p>Unchanged: 14. Would become homebrew: 2.</p>"
+ },
+ "coverage": {
+  "counts": {
+   "mapped": 26,
+   "included": 22,
+   "unresolved": 9,
+   "leftover-preserved": 20,
+   "dropped": 25
+  },
+  "unresolved": [
+   {
+    "path": "character.operation_data.selections.class-feature-31082_3b6ac969-4dac-4647-96f4-0f133a169f77_31818",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-31083_d6c577fe-9e17-45dc-a38e-428d10e2d4cf_31448",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-30975_7321a331-60eb-4fc6-a9cb-e76f92b16cef_21362",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-30970_8be52fe8-0e0f-4c15-be23-13943282f27f_25458",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-0",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-0_673",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.ancestry-section-2707339574403411_9f26290c-a2db-4c45-9b34-5053e60c106d-0_35360",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.background_5b1ccf92-ae92-419a-8c69-826a0b00d71f",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.background_5b1ccf92-ae92-419a-8c69-826a0b00d71f_b4534dca-667d-44b7-8fef-3ccbb7ece8fc",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   }
+  ],
+  "dropped": [
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-0",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-0_SKILL_THIEVERY",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-1",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-1_SKILL_PILOTING",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-2",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-2_SKILL_LORE_SAILING",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-30986_b494f324-953d-4d8c-a838-6e48b2e029e2",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class-feature-30986_b494f324-953d-4d8c-a838-6e48b2e029e2_SKILL_ARCANA",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "content._README",
+    "status": "dropped",
+    "reason": "library reference data, not character state"
+   },
+   {
+    "path": "content.character_traits",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.senses",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.weapons",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.inventory_flat[1]",
+    "status": "dropped",
+    "reason": "built-in strike (fist), not an item"
+   },
+   {
+    "path": "content.total_bulk",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.spell_raw_data",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.spells.cantrips",
+    "status": "dropped",
+    "reason": "derived spell view; PF2e recomputes"
+   },
+   {
+    "path": "content.spells.normal",
+    "status": "dropped",
+    "reason": "derived spell view; PF2e recomputes"
+   },
+   {
+    "path": "content.spells.rituals",
+    "status": "dropped",
+    "reason": "derived spell view; PF2e recomputes"
+   },
+   {
+    "path": "content.size",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.speeds",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.ac",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.shield_item",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.armor_item",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.resist_weaks",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.proficiencies",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   }
+  ]
+ },
+ "parity": {
+  "ok": true,
+  "passed": 10,
+  "failed": [],
+  "html": "<h4>Parity check</h4><p>All checks match the export.</p>"
+ }
+}

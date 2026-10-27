@@ -1,0 +1,3516 @@
+{
+ "version": 4,
+ "character": {
+  "id": 76,
+  "name": "Thorncup (P3)",
+  "level": 1,
+  "experience": 0,
+  "hp_current": 1,
+  "hp_temp": 0,
+  "hero_points": 1,
+  "stamina_current": 0,
+  "resolve_current": 0,
+  "inventory": {
+   "coins": {
+    "cp": 0,
+    "sp": 150,
+    "gp": 0,
+    "pp": 0
+   },
+   "items": []
+  },
+  "notes": null,
+  "details": {
+   "ancestry": {
+    "id": 9,
+    "created_at": "2023-12-14T04:42:12.480877+00:00",
+    "name": "Leshy",
+    "rarity": "COMMON",
+    "description": "> _Leshies are immortal nature spirits placed in small plant bodies, seeking to experience the world._\n\nLeshies are immortal spirits of nature temporarily granted physical forms. As guardians and emissaries of the environment, leshies are “born” when a skilled druid or other master of [primal](link_trait_1454) magic conducts a ritual to create a suitable vessel, and then a [spirit](link_trait_1556) chooses that vessel to be their temporary home. Leshies are self-sufficient from the moment the ritual ends, though it isn't uncommon for leshies to maintain lifelong bonds with their creators. Many leshies relish the opportunity to interact with the physical world. While most leshy spirits are ancient, they rarely recall past lifetimes and see their new life as a chance to experience the wonders of the world once more.\n\nIf you want to play a character who is curious and connected to nature, you should play a leshy.",
+    "trait_id": 1449,
+    "artwork_url": "https://images.demiplane.com/elements/pathfinder-2e/ancestries/ancestry-leshy-rm-detail.png?format=webp&quality=90&width=1920",
+    "content_source_id": 1,
+    "version": "1.0",
+    "operations": [
+     {
+      "id": "2ab7d55b-60a2-4051-9307-e4c73a6d6596",
+      "type": "setValue",
+      "data": {
+       "variable": "MAX_HEALTH_ANCESTRY",
+       "value": 8
+      }
+     },
+     {
+      "id": "09cbf36d-44d6-436d-9456-5499516314aa",
+      "type": "setValue",
+      "data": {
+       "variable": "SIZE",
+       "value": "small"
+      }
+     },
+     {
+      "id": "72506287-ce22-4033-866d-ab849ac4ec9e",
+      "type": "setValue",
+      "data": {
+       "variable": "SPEED",
+       "value": 25
+      }
+     },
+     {
+      "id": "ca332abb-d0ae-43d6-915b-bb85688cf91e",
+      "type": "adjValue",
+      "data": {
+       "variable": "ATTRIBUTE_INT",
+       "value": {
+        "value": -1
+       }
+      }
+     },
+     {
+      "id": "2406087d-787e-4a0d-9807-e167794d3471",
+      "type": "giveLanguage",
+      "data": {
+       "languageId": 81
+      }
+     },
+     {
+      "id": "d6dea13c-9849-4988-910b-786afad7f468",
+      "type": "giveLanguage",
+      "data": {
+       "languageId": 90
+      }
+     },
+     {
+      "id": "e423312d-baab-4e75-91ec-11599102f395",
+      "type": "setValue",
+      "data": {
+       "variable": "CORE_LANGUAGES",
+       "value": "[\n  \"Draconic\",\n  \"Elven\",\n  \"Gnomish\",\n  \"Goblin\",\n  \"Halfling\",\n  \"Sakvroth\"\n]"
+      }
+     },
+     {
+      "id": "013967a1-ba53-4692-a13a-ceae609481af",
+      "type": "giveAbilityBlock",
+      "data": {
+       "type": "sense",
+       "abilityBlockId": 19330
+      }
+     },
+     {
+      "id": "6849b687-67e5-4e8c-a232-7726c61a63f8",
+      "type": "adjValue",
+      "data": {
+       "variable": "ATTRIBUTE_CON",
+       "value": {
+        "value": 1
+       }
+      }
+     },
+     {
+      "id": "6e1941cd-a202-4d1c-a117-e3fc8ac9c1e3",
+      "type": "adjValue",
+      "data": {
+       "variable": "ATTRIBUTE_WIS",
+       "value": {
+        "value": 1
+       }
+      }
+     },
+     {
+      "id": "eabb4cd7-5aad-4f7c-a712-95d5e272bcf3",
+      "type": "select",
+      "data": {
+       "title": "Select an Attribute",
+       "modeType": "FILTERED",
+       "optionType": "ADJ_VALUE",
+       "optionsPredefined": [],
+       "optionsFilters": {
+        "id": "8c1e7659-5029-4d00-8d77-f10f50b4688d",
+        "type": "ADJ_VALUE",
+        "group": "ATTRIBUTE",
+        "value": {
+         "value": 1
+        }
+       }
+      }
+     },
+     {
+      "id": "2d325cf3-aa2e-4049-87dc-225d0c62584c",
+      "type": "giveTrait",
+      "data": {
+       "traitId": 1654
+      }
+     },
+     {
+      "id": "96bae238-c026-46e1-8be1-8fcb45dc1d5c",
+      "type": "giveAbilityBlock",
+      "data": {
+       "type": "physical-feature",
+       "abilityBlockId": 21339
+      }
+     }
+    ],
+    "uuid": 5239594585342406,
+    "deprecated": null,
+    "search_tsv": "'1454':48B '1556':64B 'ancient':114B 'bodi':11B 'bond':94B 'born':36B 'chanc':127B 'charact':143B 'choos':65B 'conduct':50B 'connect':148B 'creat':54B 'creator':97B 'curious':146B 'druid':40B 'emissari':30B 'end':83B 'environ':33B 'experi':14B,129B 'form':26B 'grant':24B 'guardian':28B 'home':72B 'immort':4B,19B 'interact':104B 'isn':86B 'leshi':1A,2B,17B,34B,73B,90B,99B,111B,155B 'life':124B 'lifelong':93B 'lifetim':119B 'link':46B,62B 'magic':49B 'maintain':92B 'mani':98B 'master':43B 'moment':80B 'natur':5B,22B,150B 'new':123B 'opportun':102B 'past':118B 'physic':25B,107B 'place':7B 'plant':10B 'play':141B,153B 'primal':45B 'rare':116B 'recal':117B 'relish':100B 'ritual':52B,82B 'see':121B 'seek':12B 'self':76B 'self-suffici':75B 'skill':39B 'small':9B 'spirit':6B,20B,61B,112B 'suffici':77B 'suitabl':56B 'temporari':71B 'temporarili':23B 'though':84B 'trait':47B,63B 'uncommon':88B 'vessel':57B,67B 'want':139B 'wonder':131B 'world':108B,134B 'world._':16B",
+    "updated_at": "2026-08-27T16:49:19.460496+00:00",
+    "meta_data": {
+     "source": {
+      "url": "https://2e.aonprd.com/Ancestries.aspx?ID=65",
+      "book": "Player Core",
+      "page": "66"
+     }
+    }
+   },
+   "class": {
+    "id": 23,
+    "created_at": "2023-12-02T21:25:04.004494+00:00",
+    "name": "Druid",
+    "rarity": "COMMON",
+    "description": "> _The power of nature is impossible to resist. It can bring ruin to the stoutest fortress in minutes, reducing even the mightiest works to rubble, burning them to ash, burying them beneath an avalanche of snow, or drowning them beneath the waves. It can provide endless bounty and breathtaking splendor to those who respect it—and an agonizing death to those who take it too lightly. You are one of those who hear nature's call. You stand in awe of the majesty of its power and give yourself over to its service._\n\n* * *\n\n### **During Combat Encounters…**\n\nYou call upon the forces of nature to defeat your enemies and protect your allies. You cast spells that draw upon primal magic to protect yourself and your friends, heal their wounds, or summon deadly animals to fight at your side. Depending on your bond to nature, you might call upon powerful elemental magic or change shape into a terrifying beast.\n\n### **During Social Encounters…**\n\nYou represent balance and a reasoned approach to problems, looking for solutions that not only are best for the natural world, but also allow the creatures within it to live in harmony and peace. You often propose compromises that allow both sides to gain what they truly need, even if they can't have all that they desire.\n\n### **While Exploring…**\n\nYour nature skills are invaluable. You track down enemies, navigate the wilderness, and use spells to detect magical auras around you. You might even ask wild animals to lend their extraordinary senses and scouting abilities to your group.\n\n### **In Downtime…**\n\nYou might craft magic items or potions. Alternatively, your tie to nature might lead you to tend a wilderness area, befriending beasts and healing the wounds caused by civilization. You might even teach sustainable farming and animal husbandry techniques that allow others to subsist off the land without harming the natural balance.\n\n### **You Might…**\n\n*   Have a deep and meaningful respect for the power of nature.\n    \n*   Be in constant awe of the natural world, eager to share it with others but wary of their influence upon it.\n    \n*   Treat plants and animals as allies, working with them to reach your goals.\n    \n\n### **Others Probably…**\n\n*   View you as a representative of nature, and are sure you can control it.\n    \n*   Assume you're a recluse who avoids society and cities and prefers to live in the wild.\n    \n*   Consider you a mystic, similar to a priest, but answering only to the forces of nature.",
+    "operations": [
+     {
+      "id": "9f432764-ef23-41bb-b8f9-32e90a52ca0f",
+      "type": "adjValue",
+      "data": {
+       "variable": "PERCEPTION",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "25cb8ba8-5fea-4f4c-ad54-90a925ec2076",
+      "type": "adjValue",
+      "data": {
+       "variable": "SAVE_FORT",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "7455fa24-10b5-4b05-8a72-30262cf78aee",
+      "type": "adjValue",
+      "data": {
+       "variable": "SAVE_REFLEX",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "b8747434-818c-4d5a-bc29-d154dd751673",
+      "type": "adjValue",
+      "data": {
+       "variable": "SAVE_WILL",
+       "value": {
+        "value": "E"
+       }
+      }
+     },
+     {
+      "id": "3f8b5113-a180-4793-bc33-26ca959d23d0",
+      "type": "adjValue",
+      "data": {
+       "variable": "SIMPLE_WEAPONS",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "d0aa5541-a714-4fb4-8c08-0f5834c9fb55",
+      "type": "adjValue",
+      "data": {
+       "variable": "UNARMED_ATTACKS",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "d4deb603-e828-4298-bd5b-604dacce475f",
+      "type": "adjValue",
+      "data": {
+       "variable": "UNARMORED_DEFENSE",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "aebee823-c98d-48d6-8ae9-4e5ac42041bf",
+      "type": "adjValue",
+      "data": {
+       "variable": "LIGHT_ARMOR",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "2385cce5-e648-4713-99ec-a7242c4316eb",
+      "type": "adjValue",
+      "data": {
+       "variable": "MEDIUM_ARMOR",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "61a7c026-da6b-4107-9956-eb24cba2ac4e",
+      "type": "setValue",
+      "data": {
+       "variable": "MAX_HEALTH_CLASS_PER_LEVEL",
+       "value": 8
+      }
+     },
+     {
+      "id": "82e59fbd-d0e3-4a70-9748-0bc53cd4471f",
+      "type": "adjValue",
+      "data": {
+       "variable": "SKILL_NATURE",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "e6f0d036-aeeb-496a-92d0-8be1626dead6",
+      "type": "adjValue",
+      "data": {
+       "variable": "ATTRIBUTE_WIS",
+       "value": {
+        "value": 1
+       }
+      }
+     },
+     {
+      "id": "b11aca75-6336-4b9f-aec7-851fc20d6f91",
+      "type": "setValue",
+      "data": {
+       "variable": "CLASS_DC",
+       "value": {
+        "value": "T",
+        "attribute": "ATTRIBUTE_WIS"
+       }
+      }
+     },
+     {
+      "id": "fa1df5dc-2cf8-4b4e-92d3-c1f43ba98fa0",
+      "type": "adjValue",
+      "data": {
+       "variable": "SPELL_ATTACK",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "57936a7a-de00-404b-acdc-0fa793eb786b",
+      "type": "adjValue",
+      "data": {
+       "variable": "SPELL_DC",
+       "value": {
+        "value": "T"
+       }
+      }
+     }
+    ],
+    "trait_id": 1343,
+    "artwork_url": "https://images.demiplane.com/elements/pathfinder-2e/classes/class-druid-rm-detail.png?format=webp&quality=90&width=1920",
+    "content_source_id": 1,
+    "version": "1.0",
+    "uuid": 6514242596831847,
+    "skill_training_base": 2,
+    "deprecated": null,
+    "search_tsv": "'abil':256B 'agon':59B 'alli':112B,353B 'allow':185B,201B,302B 'also':184B 'altern':269B 'anim':133B,248B,298B,351B 'answer':403B 'approach':168B 'area':281B 'around':241B 'ash':30B 'ask':246B 'assum':377B 'aura':240B 'avalanch':35B 'avoid':383B 'awe':81B,330B 'balanc':164B,313B 'beast':158B,283B 'befriend':282B 'beneath':33B,41B 'best':178B 'bond':142B 'bounti':48B 'breathtak':50B 'bring':12B 'buri':31B 'burn':27B 'call':77B,99B,147B 'cast':114B 'caus':288B 'chang':153B 'citi':386B 'civil':290B 'combat':96B 'compromis':199B 'consid':394B 'constant':329B 'control':375B 'craft':264B 'creatur':187B 'dead':132B 'death':60B 'deep':318B 'defeat':106B 'depend':139B 'desir':219B 'detect':238B 'downtim':261B 'draw':117B 'drown':39B 'druid':1A 'eager':335B 'element':150B 'encount':97B,161B 'endless':47B 'enemi':108B,230B 'even':21B,210B,245B,293B 'explor':221B 'extraordinari':252B 'farm':296B 'fight':135B 'forc':102B,407B 'fortress':17B 'friend':126B 'gain':205B 'give':89B 'goal':360B 'group':259B 'harm':310B 'harmoni':193B 'heal':127B,285B 'hear':74B 'husbandri':299B 'imposs':7B 'influenc':345B 'invalu':226B 'item':266B 'land':308B 'lead':275B 'lend':250B 'light':67B 'live':191B,390B 'look':171B 'magic':120B,151B,239B,265B 'majesti':84B 'meaning':320B 'might':146B,244B,263B,274B,292B,315B 'mightiest':23B 'minut':19B 'mystic':397B 'natur':5B,75B,104B,144B,181B,223B,273B,312B,326B,333B,369B,409B 'navig':231B 'need':209B 'often':197B 'one':70B 'other':303B,340B,361B 'peac':195B 'plant':349B 'potion':268B 'power':3B,87B,149B,324B 'prefer':388B 'priest':401B 'primal':119B 'probabl':362B 'problem':170B 'propos':198B 'protect':110B,122B 'provid':46B 're':379B 'reach':358B 'reason':167B 'reclus':381B 'reduc':20B 'repres':163B,367B 'resist':9B 'respect':55B,321B 'rubbl':26B 'ruin':13B 'scout':255B 'sens':253B 'service._':94B 'shape':154B 'share':337B 'side':138B,203B 'similar':398B 'skill':224B 'snow':37B 'social':160B 'societi':384B 'solut':173B 'spell':115B,236B 'splendor':51B 'stand':79B 'stoutest':16B 'subsist':305B 'summon':131B 'sure':372B 'sustain':295B 'take':64B 'teach':294B 'techniqu':300B 'tend':278B 'terrifi':157B 'tie':271B 'track':228B 'treat':348B 'truli':208B 'upon':100B,118B,148B,346B 'use':235B 'view':363B 'wari':342B 'wave':43B 'wild':247B,393B 'wilder':233B,280B 'within':188B 'without':309B 'work':24B,354B 'world':182B,334B 'wound':129B,287B",
+    "updated_at": "2026-08-27T16:49:14.833831+00:00",
+    "meta_data": {
+     "source": {
+      "url": "https://2e.aonprd.com/Classes.aspx?ID=34",
+      "book": "Player Core",
+      "page": "122"
+     }
+    }
+   },
+   "background": {
+    "id": 747,
+    "created_at": "2024-04-07T07:53:39.200022+00:00",
+    "name": "Herbalist",
+    "rarity": "COMMON",
+    "description": "> _As a formally trained apothecary or a rural practitioner of folk medicine, you learned the healing properties of various herbs. You're adept at collecting the right natural cures in all sorts of environments and preparing them properly._\n\nChoose two attribute boosts. One must be to Constitution or Wisdom, and one is a free attribute boost.\n\nYou're trained in the Nature skill and the Herbalism Lore skill. You gain the [Natural Medicine](link_feat_20362) skill feat.",
+    "operations": [
+     {
+      "id": "b45f0fc2-ca52-4d47-83fb-5d00e2c8ccc5",
+      "type": "select",
+      "data": {
+       "title": "Select an Attribute",
+       "modeType": "PREDEFINED",
+       "optionType": "ADJ_VALUE",
+       "optionsPredefined": [
+        {
+         "id": "59506398-ae3f-4b8d-9274-831dcd14b537",
+         "type": "ADJ_VALUE",
+         "operation": {
+          "id": "5edafea5-cb60-4028-bbdf-997aa7fae28e",
+          "type": "adjValue",
+          "data": {
+           "variable": "ATTRIBUTE_CON",
+           "value": {
+            "value": 1
+           }
+          }
+         }
+        },
+        {
+         "id": "d8973687-69cb-452f-a6d4-26c288ed443d",
+         "type": "ADJ_VALUE",
+         "operation": {
+          "id": "808ee9f7-7d16-48d7-b24a-e26951eafe85",
+          "type": "adjValue",
+          "data": {
+           "variable": "ATTRIBUTE_WIS",
+           "value": {
+            "value": 1
+           }
+          }
+         }
+        }
+       ],
+       "optionsFilters": {
+        "id": "dd062570-e65f-42ff-bc99-b9672bb8560d",
+        "type": "ADJ_VALUE",
+        "group": "SKILL",
+        "value": {
+         "value": "U"
+        }
+       }
+      }
+     },
+     {
+      "id": "6b108b6f-520a-4671-b396-66bec0e9e806",
+      "type": "select",
+      "data": {
+       "title": "Select an Attribute",
+       "modeType": "FILTERED",
+       "optionType": "ADJ_VALUE",
+       "optionsPredefined": [],
+       "optionsFilters": {
+        "id": "b15fc4b1-68f8-4cd8-b91b-3f38f3661515",
+        "type": "ADJ_VALUE",
+        "group": "ATTRIBUTE",
+        "value": {
+         "value": 1
+        }
+       }
+      }
+     },
+     {
+      "id": "f63229a4-0339-42fe-80d3-35b4d6079aca",
+      "type": "adjValue",
+      "data": {
+       "variable": "SKILL_NATURE",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "d104ecd9-b199-4699-af79-631b679ede08",
+      "type": "giveAbilityBlock",
+      "data": {
+       "type": "feat",
+       "abilityBlockId": 20362
+      }
+     },
+     {
+      "id": "dd57e159-5cc1-4e28-b86e-0c6b685196f7",
+      "type": "createValue",
+      "data": {
+       "variable": "SKILL_LORE_HERBALISM",
+       "value": {
+        "value": "T",
+        "attribute": "ATTRIBUTE_INT"
+       },
+       "type": "prof"
+      }
+     }
+    ],
+    "content_source_id": 1,
+    "version": "1.0",
+    "uuid": 8377780636328274,
+    "artwork_url": null,
+    "deprecated": null,
+    "search_tsv": "'20362':77B 'adept':24B 'apothecari':6B 'attribut':42B,56B 'boost':43B,57B 'choos':40B 'collect':26B 'constitut':48B 'cure':30B 'environ':35B 'feat':76B,79B 'folk':12B 'formal':4B 'free':55B 'gain':71B 'heal':17B 'herb':21B 'herbal':67B 'herbalist':1A 'learn':15B 'link':75B 'lore':68B 'medicin':13B,74B 'must':45B 'natur':29B,63B,73B 'one':44B,52B 'practition':10B 'prepar':37B 'properly._':39B 'properti':18B 're':23B,59B 'right':28B 'rural':9B 'skill':64B,69B,78B 'sort':33B 'train':5B,60B 'two':41B 'various':20B 'wisdom':50B",
+    "updated_at": "2026-08-27T16:49:19.969852+00:00",
+    "meta_data": {
+     "source": {
+      "url": "https://2e.aonprd.com/Backgrounds.aspx?ID=428",
+      "book": "Player Core",
+      "page": "86"
+     }
+    }
+   },
+   "image_url": "https://api.wanderersguide.app/storage/v1/object/public/portraits/default/Druid%20-%20Lini.png",
+   "background_image_url": "https://i.imgur.com/XunQq5e.png"
+  },
+  "roll_history": null,
+  "custom_operations": null,
+  "meta_data": {
+   "reset_hp": true
+  },
+  "options": {
+   "dice_roller": true,
+   "auto_detect_prerequisites": true
+  },
+  "variants": null,
+  "content_sources": {
+   "enabled": [
+    1,
+    8,
+    7
+   ]
+  },
+  "operation_data": {
+   "selections": {
+    "ancestry_eabb4cd7-5aad-4f7c-a712-95d5e272bcf3": "ATTRIBUTE_DEX",
+    "background_b45f0fc2-ca52-4d47-83fb-5d00e2c8ccc5": "808ee9f7-7d16-48d7-b24a-e26951eafe85",
+    "background_6b108b6f-520a-4671-b396-66bec0e9e806": "ATTRIBUTE_CON",
+    "background_f63229a4-0339-42fe-80d3-35b4d6079aca": "SKILL_NATURE",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-0": "SKILL_NATURE",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-1": "SKILL_NATURE",
+    "ancestry-section-5742419753466526_3fd6a268-771b-49fc-93ed-9b53695d1a29": "20743",
+    "ancestry-section-2707339574403411_9f26290c-a2db-4c45-9b34-5053e60c106d-0": "20520",
+    "class-feature-19285_32f84fc9-8e95-44c0-b096-54c392fccc6a": "ATTRIBUTE_WIS",
+    "class-feature-19285_64c7f82c-f4bb-4808-a4f9-67e3a1bfdefb": "ATTRIBUTE_CON",
+    "class-feature-19285_8182a79d-0287-4417-ad1d-d0b18ace14e7": "ATTRIBUTE_DEX",
+    "class-feature-19285_9edb532b-b2df-454e-b870-4773e19abd56": "ATTRIBUTE_STR",
+    "class-feature-21216_1433e9db-be6f-4e22-a66f-360eec72366d": "33033",
+    "class-feature-21217_f78123ba-0c0a-4a65-8de5-f33d5523257c": "0ddfce1c-23f8-48bb-ab0e-b46f0362f823"
+   }
+  },
+  "spells": null,
+  "companions": null,
+  "campaign_id": 42
+ },
+ "content": {
+  "_README": "Here's some compiled data about the character. Should be fairly human-readable. The <character> section is what WG reads, this section is solely for you! Should give you an abundance of compiled stats and info about the character. If you have any questions, feel free to ask on our Discord!",
+  "feats_features": {
+   "generalAndSkillFeats": [
+    {
+     "id": 20362,
+     "created_at": "2023-12-14T02:55:15.080409+00:00",
+     "operations": null,
+     "name": "Natural Medicine",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [
+      "trained in Nature"
+     ],
+     "frequency": null,
+     "cost": null,
+     "trigger": null,
+     "requirements": null,
+     "access": null,
+     "description": "You can apply natural cures to heal your allies. You can use Nature instead of Medicine to [Treat Wounds](link_action_19864), including higher Nature proficiency letting you attempt more difficult checks. It doesn't replace Medicine for uses of the skill other than [Treat Wounds](link_action_19864) or for feat prerequisites.\n\nIf you're in the wilderness, you might have easier access to fresh ingredients, allowing you to gain a +2 circumstance bonus to your check to [Treat Wounds](link_action_19864) using Nature, subject to the GM's determination.",
+     "special": null,
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=5182",
+       "book": "Player Core",
+       "page": "258"
+      },
+      "foundry": {
+       "rules": [
+        {
+         "key": "FlatModifier",
+         "type": "circumstance",
+         "value": 2,
+         "selector": "nature",
+         "predicate": [
+          "action:treat-wounds",
+          "fresh-ingredients"
+         ]
+        }
+       ]
+      }
+     },
+     "traits": [
+      1437,
+      1438
+     ],
+     "content_source_id": 1,
+     "version": "1.0",
+     "uuid": 799310646505950,
+     "availability": null,
+     "search_tsv": "'+2':75B '19864':24B,51B,86B 'access':66B 'action':23B,50B,85B 'alli':11B 'allow':70B 'appli':5B 'attempt':31B 'bonus':77B 'check':34B,80B 'circumst':76B 'cure':7B 'determin':94B 'difficult':33B 'doesn':36B 'easier':65B 'feat':54B 'fresh':68B 'gain':73B 'gm':92B 'heal':9B 'higher':26B 'includ':25B 'ingredi':69B 'instead':16B 'let':29B 'link':22B,49B,84B 'medicin':2A,18B,39B 'might':63B 'natur':1A,6B,15B,27B,88B 'prerequisit':55B 'profici':28B 're':58B 'replac':38B 'skill':44B 'subject':89B 'treat':20B,47B,82B 'use':14B,41B,87B 'wilder':61B 'wound':21B,48B,83B",
+     "updated_at": "2026-08-27T16:49:23.919185+00:00"
+    },
+    {
+     "id": 20534,
+     "created_at": "2023-12-14T03:34:10.797344+00:00",
+     "operations": null,
+     "name": "Shield Block",
+     "actions": "REACTION",
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": null,
+     "cost": null,
+     "trigger": "While you have your shield raised, you would take physical damage (bludgeoning, piercing, or slashing) from an attack.",
+     "requirements": null,
+     "access": null,
+     "description": "You snap your shield in place to ward off a blow. Your shield prevents you from taking an amount of damage up to the shield's Hardness. You and the shield each take any remaining damage, possibly breaking or destroying the shield.",
+     "special": null,
+     "type": "feat",
+     "meta_data": {
+      "foundry": {
+       "rules": []
+      }
+     },
+     "traits": [
+      1437
+     ],
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 4880963151232844,
+     "availability": null,
+     "search_tsv": "'amount':21B 'block':2A 'blow':13B 'break':40B 'damag':23B,38B 'destroy':42B 'hard':29B 'place':8B 'possibl':39B 'prevent':16B 'remain':37B 'shield':1A,6B,15B,27B,33B,44B 'snap':4B 'take':19B,35B 'ward':10B",
+     "updated_at": "2023-12-14T03:34:10.797344+00:00"
+    }
+   ],
+   "classFeats": [
+    {
+     "id": 20300,
+     "created_at": "2023-12-14T02:41:56.201544+00:00",
+     "operations": [
+      {
+       "id": "6c8c7b54-4e87-4db9-80d2-eca6d53b3dc8",
+       "type": "adjValue",
+       "data": {
+        "variable": "PRIMARY_SHEET_TABS",
+        "value": "companions"
+       }
+      }
+     ],
+     "name": "Leshy Familiar",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [
+      "Leaf Order"
+     ],
+     "frequency": null,
+     "cost": null,
+     "trigger": null,
+     "requirements": null,
+     "access": null,
+     "description": "You call a minor spirit of nature into a plant body, creating a leshy companion to aid you in your spellcasting. You gain a familiar, which has your choice of either the [plant](link_feat_40562) or [fungus](link_feat_40555) familiar ability; this doesn’t count against your usual limit of familiar abilities (typically 2). The spirit you call has a more tenuous connection to its plant body than fully independent leshies, so it is Tiny in size like other familiars.",
+     "special": null,
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=4710",
+       "book": "Player Core",
+       "page": "127"
+      },
+      "foundry": {
+       "rules": [
+        {
+         "key": "GrantItem",
+         "uuid": "Compendium.pf2e.feats-srd.Item.Pet"
+        }
+       ]
+      }
+     },
+     "traits": [
+      1343
+     ],
+     "content_source_id": 1,
+     "version": "1.0",
+     "uuid": 6905214498271604,
+     "availability": null,
+     "search_tsv": "'2':58B '40555':43B '40562':38B 'abil':45B,56B 'aid':19B 'bodi':13B,71B 'call':4B,62B 'choic':31B 'companion':17B 'connect':67B 'count':49B 'creat':14B 'doesn':47B 'either':33B 'familiar':2A,27B,44B,55B,84B 'feat':37B,42B 'fulli':73B 'fungus':40B 'gain':25B 'independ':74B 'leshi':1A,16B,75B 'like':82B 'limit':53B 'link':36B,41B 'minor':6B 'natur':9B 'plant':12B,35B,70B 'size':81B 'spellcast':23B 'spirit':7B,60B 'tenuous':66B 'tini':79B 'typic':57B 'usual':52B",
+     "updated_at": "2026-08-27T16:49:23.919185+00:00"
+    },
+    {
+     "id": 20412,
+     "created_at": "2023-12-14T03:06:30.610437+00:00",
+     "operations": null,
+     "name": "Plant Empathy",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": null,
+     "cost": null,
+     "trigger": null,
+     "requirements": null,
+     "access": null,
+     "description": "You have a connection to flora that allows you to communicate with them on a rudimentary level. You can ask questions of, receive answers from, and use the Diplomacy skill with plants and fungus.",
+     "special": null,
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=4711",
+       "book": "Player Core",
+       "page": "127"
+      },
+      "foundry": {
+       "rules": []
+      }
+     },
+     "traits": [
+      1343
+     ],
+     "content_source_id": 1,
+     "version": "1.0",
+     "uuid": 6021249750161657,
+     "availability": null,
+     "search_tsv": "'allow':10B 'answer':26B 'ask':22B 'communic':13B 'connect':6B 'diplomaci':31B 'empathi':2A 'flora':8B 'fungus':36B 'level':19B 'plant':1A,34B 'question':23B 'receiv':25B 'rudimentari':18B 'skill':32B 'use':29B",
+     "updated_at": "2026-08-27T16:49:23.919185+00:00"
+    }
+   ],
+   "ancestryFeats": [
+    {
+     "id": 20520,
+     "created_at": "2023-12-14T03:30:53.232068+00:00",
+     "operations": [
+      {
+       "id": "c22f15fe-674c-4ba0-92cb-2d07d9a98174",
+       "type": "giveItem",
+       "data": {
+        "itemId": 9279
+       }
+      }
+     ],
+     "name": "Seedpod",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": null,
+     "cost": null,
+     "trigger": null,
+     "requirements": null,
+     "access": null,
+     "description": "Your body produces a nearly endless supply of hard seedpods. You gain a seedpod ranged unarmed attack with a range increment of 30 feet that deals 1d4 bludgeoning damage. On a critical hit, a seedpod bursts, issuing forth a tangle of vegetation that imposes a –10-foot circumstance penalty on the target’s Speed until the start of your next turn. Seedpods do not add critical specialization effects.",
+     "special": null,
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=4497",
+       "book": "Player Core",
+       "page": "68"
+      },
+      "foundry": {
+       "rules": [
+        {
+         "img": "icons/magic/nature/plant-poison-spit-green.webp",
+         "key": "Strike",
+         "range": {
+          "increment": 10
+         },
+         "damage": {
+          "base": {
+           "die": "d4",
+           "dice": 1,
+           "damageType": "bludgeoning"
+          }
+         },
+         "traits": [
+          "unarmed"
+         ],
+         "category": "unarmed"
+        },
+        {
+         "key": "AdjustStrike",
+         "mode": "add",
+         "value": "manipulate",
+         "property": "traits",
+         "definition": [
+          "item:id:{item|_id}"
+         ]
+        },
+        {
+         "key": "Note",
+         "text": "PF2E.SpecificRule.Leshy.Seedpod.Note",
+         "title": "{item|name}",
+         "outcome": [
+          "criticalSuccess"
+         ],
+         "selector": "{item|_id}-damage"
+        }
+       ]
+      }
+     },
+     "traits": [
+      1449
+     ],
+     "content_source_id": 1,
+     "version": "1.0",
+     "uuid": 3701852977060629,
+     "availability": null,
+     "search_tsv": "'10':47B '1d4':28B '30':24B 'add':66B 'attack':18B 'bludgeon':29B 'bodi':3B 'burst':37B 'circumst':49B 'critic':33B,67B 'damag':30B 'deal':27B 'effect':69B 'endless':7B 'feet':25B 'foot':48B 'forth':39B 'gain':13B 'hard':10B 'hit':34B 'impos':45B 'increment':22B 'issu':38B 'near':6B 'next':61B 'penalti':50B 'produc':4B 'rang':16B,21B 'seedpod':1A,11B,15B,36B,63B 'special':68B 'speed':55B 'start':58B 'suppli':8B 'tangl':41B 'target':53B 'turn':62B 'unarm':17B 'veget':43B",
+     "updated_at": "2026-08-27T16:49:23.919185+00:00"
+    }
+   ],
+   "otherFeats": [
+    {
+     "id": 33033,
+     "created_at": "2024-08-09T19:58:53.504432+00:00",
+     "operations": [
+      {
+       "id": "74910e77-9d16-4391-ba01-4646760bbc6e",
+       "type": "injectText",
+       "data": {
+        "type": "class-feature",
+        "id": 21215,
+        "text": "**Leaf Order** Commit wanton cruelty to plants or fungi or kill them unnecessarily. (This doesn’t prevent you from defending yourself or harvesting them for survival.)"
+       }
+      },
+      {
+       "id": "15dac92b-f434-4103-b429-1d714ec78cbe",
+       "type": "createValue",
+       "data": {
+        "variable": "MAIN_DRUID_ORDER",
+        "value": "leaf",
+        "type": "str"
+       }
+      },
+      {
+       "id": "d01cbfbc-2e7e-4612-8149-7cef2ef38b32",
+       "type": "conditional",
+       "data": {
+        "conditions": [
+         {
+          "id": "059cb0c5-88df-4623-a436-d1b5ca9c987c",
+          "name": "CLASS_NAMES",
+          "data": {
+           "name": "CLASS_NAMES",
+           "type": "list-str",
+           "value": []
+          },
+          "type": "list-str",
+          "operator": "NOT_INCLUDES",
+          "value": "druid"
+         },
+         {
+          "id": "cc2e9b29-7fc1-433f-945d-316ac90b1994",
+          "name": "MAIN_DRUID_ORDER",
+          "data": {
+           "name": "MAIN_DRUID_ORDER",
+           "type": "str",
+           "value": ""
+          },
+          "type": "str",
+          "operator": "EQUALS",
+          "value": "leaf"
+         }
+        ],
+        "trueOperations": [
+         {
+          "id": "dfbd5a05-46ee-4a81-87c1-c5eb46caac9e",
+          "type": "adjValue",
+          "data": {
+           "variable": "SKILL_DIPLOMACY",
+           "value": {
+            "value": "T"
+           }
+          }
+         }
+        ],
+        "falseOperations": [
+         {
+          "id": "e4875b42-d1a3-491c-961c-510e0a3dff38",
+          "type": "giveAbilityBlock",
+          "data": {
+           "type": "feat",
+           "abilityBlockId": 20300
+          }
+         }
+        ]
+       }
+      },
+      {
+       "id": "ab296678-79dd-4e0e-aab1-2ea12f1b9ff5",
+       "type": "conditional",
+       "data": {
+        "conditions": [
+         {
+          "id": "c7a7b373-ff62-4b4e-b637-e29bd7f0da14",
+          "name": "CLASS_NAMES",
+          "data": {
+           "name": "CLASS_NAMES",
+           "type": "list-str",
+           "value": []
+          },
+          "type": "list-str",
+          "operator": "INCLUDES",
+          "value": "druid"
+         },
+         {
+          "id": "d42d363c-0a07-4015-912f-1f9ce799b54d",
+          "name": "MAIN_DRUID_ORDER",
+          "data": {
+           "name": "MAIN_DRUID_ORDER",
+           "type": "str",
+           "value": ""
+          },
+          "type": "str",
+          "operator": "EQUALS",
+          "value": "leaf"
+         }
+        ],
+        "trueOperations": [
+         {
+          "id": "280e3e6d-c961-43b4-b9fa-ff1ce9ace590",
+          "type": "giveSpell",
+          "data": {
+           "spellId": 4538,
+           "type": "FOCUS",
+           "castingSource": "DRUID",
+           "rank": 1
+          }
+         },
+         {
+          "id": "bf5b2635-5300-4314-aa42-0123e398788c",
+          "type": "adjValue",
+          "data": {
+           "variable": "SKILL_DIPLOMACY",
+           "value": {
+            "value": "T"
+           }
+          }
+         }
+        ],
+        "falseOperations": []
+       }
+      },
+      {
+       "id": "5bf53c03-292a-4784-9eb1-098e1c33b907",
+       "type": "conditional",
+       "data": {
+        "conditions": [
+         {
+          "id": "9ba289fe-7e29-42c8-ba37-90f8ecdb7b57",
+          "name": "MAIN_DRUID_ORDER",
+          "data": {
+           "name": "MAIN_DRUID_ORDER",
+           "type": "str",
+           "value": ""
+          },
+          "type": "str",
+          "operator": "EQUALS",
+          "value": "leaf"
+         },
+         {
+          "id": "13ee63f8-dae9-450b-a915-1e1be6597315",
+          "name": "FEAT_NAMES",
+          "data": {
+           "name": "FEAT_NAMES",
+           "type": "list-str",
+           "value": []
+          },
+          "type": "list-str",
+          "operator": "INCLUDES",
+          "value": "order spell"
+         }
+        ],
+        "trueOperations": [
+         {
+          "id": "6cd48e9f-20a6-4219-9579-b33b6cb4a793",
+          "type": "giveSpell",
+          "data": {
+           "spellId": 4538,
+           "type": "FOCUS",
+           "castingSource": "DRUID",
+           "rank": 1
+          }
+         }
+        ],
+        "falseOperations": []
+       }
+      }
+     ],
+     "name": "Leaf Order",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You revere the bounty of nature, acting as both a gardener and warden for the wilderness. With your leshy familiar at your side, you help areas regrow after disasters or negligent expansion and turn flora against those who would abuse them.\n\n**Order Skill** Diplomacy\n\n**Druid Feat** [Leshy Familiar](link_feat_20300)\n\n**Order Spell** [_cornucopia_](link_spell_4538)\n\n**Anathema** Commit wanton cruelty to plants or fungi or kill them unnecessarily. (This doesn’t prevent you from defending yourself or harvesting them for survival.)",
+     "special": "",
+     "type": "feat",
+     "meta_data": {
+      "unselectable": false
+     },
+     "traits": [
+      3836
+     ],
+     "content_source_id": 1,
+     "version": null,
+     "uuid": 6678773764093293,
+     "availability": null,
+     "search_tsv": "'20300':53B '4538':59B 'abus':42B 'act':9B 'anathema':60B 'area':28B 'bounti':6B 'commit':61B 'cornucopia':56B 'cruelti':63B 'defend':78B 'diplomaci':46B 'disast':31B 'doesn':73B 'druid':47B 'expans':34B 'familiar':22B,50B 'feat':48B,52B 'flora':37B 'fungi':67B 'garden':13B 'harvest':81B 'help':27B 'kill':69B 'leaf':1A 'leshi':21B,49B 'link':51B,57B 'natur':8B 'neglig':33B 'order':2A,44B,54B 'plant':65B 'prevent':75B 'regrow':29B 'rever':4B 'side':25B 'skill':45B 'spell':55B,58B 'surviv':84B 'turn':36B 'unnecessarili':71B 'wanton':62B 'warden':15B 'wilder':18B 'would':41B",
+     "updated_at": "2024-08-09T19:58:53.504432+00:00"
+    }
+   ],
+   "classFeatures": [
+    {
+     "id": 21215,
+     "created_at": "2024-04-14T07:00:10.237937+00:00",
+     "operations": [],
+     "name": "Anathema",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "As stewards of the natural order, druids find affronts to nature anathema. If you repeatedly perform these acts, you lose your magical abilities from the druid class, including your druid spellcasting and the benefits of your order. These abilities can be regained only if you demonstrate your repentance with an [_atone_](link_spell_4405) ritual. The following acts are anathema to all druids.\n\n**Anathema** despoil natural places, consume more natural resources than you require to live comfortably, teach the Wildsong to non-druids.\n\nYour choice of druidic order adds further anathema, as detailed in the order’s entry.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Classes.aspx?ID=34",
+       "book": "Player Core",
+       "page": "122"
+      }
+     },
+     "traits": [
+      1343
+     ],
+     "content_source_id": 1,
+     "version": "1.0",
+     "uuid": 2854270737697905,
+     "availability": null,
+     "search_tsv": "'4405':55B 'abil':24B,40B 'act':19B,59B 'add':91B 'affront':10B 'anathema':1A,13B,61B,65B,93B 'aton':52B 'benefit':35B 'choic':87B 'class':28B 'comfort':78B 'consum':69B 'demonstr':47B 'despoil':66B 'detail':95B 'druid':8B,27B,31B,64B,85B 'druidic':89B 'entri':100B 'find':9B 'follow':58B 'includ':29B 'link':53B 'live':77B 'lose':21B 'magic':23B 'natur':6B,12B,67B,71B 'non':84B 'non-druid':83B 'order':7B,38B,90B,98B 'perform':17B 'place':68B 'regain':43B 'repeat':16B 'repent':49B 'requir':75B 'resourc':72B 'ritual':56B 'spell':54B 'spellcast':32B 'steward':3B 'teach':79B 'wildsong':81B",
+     "updated_at": "2026-08-27T16:49:23.919185+00:00"
+    },
+    {
+     "id": 21214,
+     "created_at": "2024-04-14T06:56:06.121469+00:00",
+     "operations": [
+      {
+       "id": "6ea5fd75-ab78-4146-9e08-f34dad1b3fcc",
+       "type": "giveSpellSlot",
+       "data": {
+        "castingSource": "DRUID",
+        "slots": [
+         {
+          "lvl": 1,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 2,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 3,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 4,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 5,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 6,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 7,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 8,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 9,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 10,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 11,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 12,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 13,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 14,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 15,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 16,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 17,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 19,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 20,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 18,
+          "rank": 0,
+          "amt": 5
+         },
+         {
+          "lvl": 1,
+          "rank": 1,
+          "amt": 2
+         },
+         {
+          "lvl": 2,
+          "rank": 1,
+          "amt": 3
+         },
+         {
+          "lvl": 3,
+          "rank": 1,
+          "amt": 3
+         },
+         {
+          "lvl": 4,
+          "rank": 1,
+          "amt": 3
+         },
+         {
+          "lvl": 5,
+          "rank": 1,
+          "amt": 3
+         },
+         {
+          "lvl": 6,
+          "rank": 1,
+          "amt": 3
+         },
+         {
+          "lvl": 7,
+          "rank": 1,
+          "amt": 3
+         },
+         {
+          "lvl": 8,
+          "rank": 1,
+          "amt": 3
+         },
+         {
+          "lvl": 9,
+          "rank": 1,
+          "amt": 3
+         },
+         {
+          "lvl": 10,
+          "rank": 1,
+          "amt": 3
+         },
+         {
+          "lvl": 11,
+          "rank": 1,
+          "amt": 3
+         },
+         {
+          "lvl": 12,
+          "rank": 1,
+          "amt": 3
+         },
+         {
+          "lvl": 13,
+          "rank": 1,
+          "amt": 3
+         },
+         {
+          "lvl": 14,
+          "rank": 1,
+          "amt": 3
+         },
+         {
+          "lvl": 15,
+          "rank": 1,
+          "amt": 3
+         },
+         {
+          "lvl": 16,
+          "rank": 1,
+          "amt": 3
+         },
+         {
+          "lvl": 17,
+          "rank": 1,
+          "amt": 3
+         },
+         {
+          "lvl": 18,
+          "rank": 1,
+          "amt": 3
+         },
+         {
+          "lvl": 19,
+          "rank": 1,
+          "amt": 3
+         },
+         {
+          "lvl": 20,
+          "rank": 1,
+          "amt": 3
+         },
+         {
+          "lvl": 20,
+          "rank": 2,
+          "amt": 3
+         },
+         {
+          "lvl": 20,
+          "rank": 3,
+          "amt": 3
+         },
+         {
+          "lvl": 20,
+          "rank": 4,
+          "amt": 3
+         },
+         {
+          "lvl": 20,
+          "rank": 6,
+          "amt": 3
+         },
+         {
+          "lvl": 20,
+          "rank": 5,
+          "amt": 3
+         },
+         {
+          "lvl": 20,
+          "rank": 7,
+          "amt": 3
+         },
+         {
+          "lvl": 20,
+          "rank": 8,
+          "amt": 3
+         },
+         {
+          "lvl": 20,
+          "rank": 9,
+          "amt": 3
+         },
+         {
+          "lvl": 19,
+          "rank": 8,
+          "amt": 3
+         },
+         {
+          "lvl": 19,
+          "rank": 7,
+          "amt": 3
+         },
+         {
+          "lvl": 19,
+          "rank": 6,
+          "amt": 3
+         },
+         {
+          "lvl": 19,
+          "rank": 5,
+          "amt": 3
+         },
+         {
+          "lvl": 19,
+          "rank": 4,
+          "amt": 3
+         },
+         {
+          "lvl": 19,
+          "rank": 3,
+          "amt": 3
+         },
+         {
+          "lvl": 19,
+          "rank": 2,
+          "amt": 3
+         },
+         {
+          "lvl": 18,
+          "rank": 2,
+          "amt": 3
+         },
+         {
+          "lvl": 18,
+          "rank": 3,
+          "amt": 3
+         },
+         {
+          "lvl": 18,
+          "rank": 5,
+          "amt": 3
+         },
+         {
+          "lvl": 18,
+          "rank": 4,
+          "amt": 3
+         },
+         {
+          "lvl": 17,
+          "rank": 5,
+          "amt": 3
+         },
+         {
+          "lvl": 18,
+          "rank": 6,
+          "amt": 3
+         },
+         {
+          "lvl": 17,
+          "rank": 7,
+          "amt": 3
+         },
+         {
+          "lvl": 17,
+          "rank": 6,
+          "amt": 3
+         },
+         {
+          "lvl": 17,
+          "rank": 8,
+          "amt": 3
+         },
+         {
+          "lvl": 18,
+          "rank": 8,
+          "amt": 3
+         },
+         {
+          "lvl": 18,
+          "rank": 7,
+          "amt": 3
+         },
+         {
+          "lvl": 16,
+          "rank": 8,
+          "amt": 3
+         },
+         {
+          "lvl": 16,
+          "rank": 7,
+          "amt": 3
+         },
+         {
+          "lvl": 16,
+          "rank": 6,
+          "amt": 3
+         },
+         {
+          "lvl": 16,
+          "rank": 5,
+          "amt": 3
+         },
+         {
+          "lvl": 16,
+          "rank": 4,
+          "amt": 3
+         },
+         {
+          "lvl": 17,
+          "rank": 4,
+          "amt": 3
+         },
+         {
+          "lvl": 17,
+          "rank": 3,
+          "amt": 3
+         },
+         {
+          "lvl": 16,
+          "rank": 2,
+          "amt": 3
+         },
+         {
+          "lvl": 17,
+          "rank": 2,
+          "amt": 3
+         },
+         {
+          "lvl": 16,
+          "rank": 3,
+          "amt": 3
+         },
+         {
+          "lvl": 15,
+          "rank": 2,
+          "amt": 3
+         },
+         {
+          "lvl": 15,
+          "rank": 3,
+          "amt": 3
+         },
+         {
+          "lvl": 15,
+          "rank": 4,
+          "amt": 3
+         },
+         {
+          "lvl": 15,
+          "rank": 6,
+          "amt": 3
+         },
+         {
+          "lvl": 15,
+          "rank": 5,
+          "amt": 3
+         },
+         {
+          "lvl": 15,
+          "rank": 8,
+          "amt": 2
+         },
+         {
+          "lvl": 15,
+          "rank": 7,
+          "amt": 3
+         },
+         {
+          "lvl": 14,
+          "rank": 8,
+          "amt": null
+         },
+         {
+          "lvl": 14,
+          "rank": 7,
+          "amt": 3
+         },
+         {
+          "lvl": 14,
+          "rank": 6,
+          "amt": 3
+         },
+         {
+          "lvl": 14,
+          "rank": 5,
+          "amt": 3
+         },
+         {
+          "lvl": 14,
+          "rank": 4,
+          "amt": 3
+         },
+         {
+          "lvl": 14,
+          "rank": 3,
+          "amt": 3
+         },
+         {
+          "lvl": 14,
+          "rank": 2,
+          "amt": 3
+         },
+         {
+          "lvl": 13,
+          "rank": 2,
+          "amt": 3
+         },
+         {
+          "lvl": 13,
+          "rank": 4,
+          "amt": 3
+         },
+         {
+          "lvl": 13,
+          "rank": 3,
+          "amt": 3
+         },
+         {
+          "lvl": 12,
+          "rank": 3,
+          "amt": 3
+         },
+         {
+          "lvl": 12,
+          "rank": 2,
+          "amt": 3
+         },
+         {
+          "lvl": 12,
+          "rank": 5,
+          "amt": 3
+         },
+         {
+          "lvl": 13,
+          "rank": 5,
+          "amt": 3
+         },
+         {
+          "lvl": 13,
+          "rank": 6,
+          "amt": 3
+         },
+         {
+          "lvl": 12,
+          "rank": 6,
+          "amt": 3
+         },
+         {
+          "lvl": 11,
+          "rank": 4,
+          "amt": 3
+         },
+         {
+          "lvl": 12,
+          "rank": 4,
+          "amt": 3
+         },
+         {
+          "lvl": 11,
+          "rank": 3,
+          "amt": 3
+         },
+         {
+          "lvl": 11,
+          "rank": 2,
+          "amt": 3
+         },
+         {
+          "lvl": 10,
+          "rank": 2,
+          "amt": 3
+         },
+         {
+          "lvl": 10,
+          "rank": 3,
+          "amt": 3
+         },
+         {
+          "lvl": 9,
+          "rank": 3,
+          "amt": 3
+         },
+         {
+          "lvl": 9,
+          "rank": 2,
+          "amt": 3
+         },
+         {
+          "lvl": 8,
+          "rank": 2,
+          "amt": 3
+         },
+         {
+          "lvl": 8,
+          "rank": 3,
+          "amt": 3
+         },
+         {
+          "lvl": 7,
+          "rank": 3,
+          "amt": 3
+         },
+         {
+          "lvl": 7,
+          "rank": 2,
+          "amt": 3
+         },
+         {
+          "lvl": 6,
+          "rank": 2,
+          "amt": 3
+         },
+         {
+          "lvl": 6,
+          "rank": 3,
+          "amt": 3
+         },
+         {
+          "lvl": 5,
+          "rank": 3,
+          "amt": 2
+         },
+         {
+          "lvl": 5,
+          "rank": 2,
+          "amt": 3
+         },
+         {
+          "lvl": 4,
+          "rank": 2,
+          "amt": 3
+         },
+         {
+          "lvl": 3,
+          "rank": 2,
+          "amt": 2
+         },
+         {
+          "lvl": 10,
+          "rank": 4,
+          "amt": 3
+         },
+         {
+          "lvl": 9,
+          "rank": 4,
+          "amt": 3
+         },
+         {
+          "lvl": 7,
+          "rank": 4,
+          "amt": 2
+         },
+         {
+          "lvl": 9,
+          "rank": 5,
+          "amt": 2
+         },
+         {
+          "lvl": 11,
+          "rank": 6,
+          "amt": 2
+         },
+         {
+          "lvl": 13,
+          "rank": 7,
+          "amt": 2
+         },
+         {
+          "lvl": 17,
+          "rank": 9,
+          "amt": 2
+         },
+         {
+          "lvl": 19,
+          "rank": 10,
+          "amt": 1
+         },
+         {
+          "lvl": 20,
+          "rank": 10,
+          "amt": 1
+         },
+         {
+          "lvl": 19,
+          "rank": 9,
+          "amt": 3
+         },
+         {
+          "lvl": 18,
+          "rank": 9,
+          "amt": 3
+         },
+         {
+          "lvl": 11,
+          "rank": 5,
+          "amt": 3
+         },
+         {
+          "lvl": 10,
+          "rank": 5,
+          "amt": 3
+         },
+         {
+          "lvl": 8,
+          "rank": 4,
+          "amt": 3
+         }
+        ]
+       }
+      },
+      {
+       "id": "9f09b615-d6d9-4bc6-86dd-15f6ee4ab41d",
+       "type": "adjValue",
+       "data": {
+        "variable": "PRIMARY_SHEET_TABS",
+        "value": "companions"
+       }
+      },
+      {
+       "id": "80ff58fd-ac5d-4e04-9543-280fc5500c1e",
+       "type": "adjValue",
+       "data": {
+        "variable": "PRIMARY_SHEET_TABS",
+        "value": "spells"
+       }
+      },
+      {
+       "id": "110362a0-e094-4c4f-a888-8c498b98050c",
+       "type": "defineCastingSource",
+       "data": {
+        "variable": "CASTING_SOURCES",
+        "value": "DRUID:::PREPARED-TRADITION:::PRIMAL:::ATTRIBUTE_WIS"
+       }
+      }
+     ],
+     "name": "Druid Spellcasting",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "The power of the wild world flows through you. You are a spellcaster and can cast spells of the primal tradition using the [Cast a Spell](link_action_19611) activity. As a druid, your spellcasting incantations might be pleas to the environment around you or the invocation of ancient vows; your hands might sway like willows or curl into clawlike shapes as your gestures direct your magic.\n\nAt 1st level, you can prepare two 1st-rank spells and five cantrips each morning from the common spells on the primal spell list, or from other primal spells to which you gain access and learn via Learn a Spell. Prepared spells remain available to you until you cast them or until you prepare your spells again. The number of spells you can prepare each day is called your spell slots.\n\nAs you increase in level as a druid, the number of spells you can prepare each day increases, as does the highest rank of spell you can cast, as shown in the Druid Spells per Day table.\n\n| Lvl | Can. | 1st | 2nd | 3rd | 4th | 5th | 6th | 7th | 8th | 9th | 10th |\n\n|---|---|---|---|---|---|---|---|---|---|---|---|\n\n| 1 | 5 | 2 | — | — | — | — | — | — | — | — | — |\n\n| 2 | 5 | 3 | — | — | — | — | — | — | — | — | — |\n\n| 3 | 5 | 3 | 2 | — | — | — | — | — | — | — | — |\n\n| 4 | 5 | 3 | 3 | — | — | — | — | — | — | — | — |\n\n| 5 | 5 | 3 | 3 | 2 | — | — | — | — | — | — | — |\n\n| 6 | 5 | 3 | 3 | 3 | — | — | — | — | — | — | — |\n\n| 7 | 5 | 3 | 3 | 3 | 2 | — | — | — | — | — | — |\n\n| 8 | 5 | 3 | 3 | 3 | 3 | — | — | — | — | — | — |\n\n| 9 | 5 | 3 | 3 | 3 | 3 | 2 | — | — | — | — | — |\n\n| 10 | 5 | 3 | 3 | 3 | 3 | 3 | — | — | — | — | — |\n\n| 11 | 5 | 3 | 3 | 3 | 3 | 3 | 2 | — | — | — | — |\n\n| 12 | 5 | 3 | 3 | 3 | 3 | 3 | 3 | — | — | — | — |\n\n| 13 | 5 | 3 | 3 | 3 | 3 | 3 | 3 | 2 | — | — | — |\n\n| 14 | 5 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | — | — | — |\n\n| 15 | 5 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 2 | — | — |\n\n| 16 | 5 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | — | — |\n\n| 17 | 5 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 2 | — |\n\n| 18 | 5 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | — |\n\n| 19 | 5 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 1\\* |\n\n| 20 | 5 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 1\\* |\n\nSome of your spells require you to attempt a spell attack to see how effective they are, or have your enemies roll against your spell DC (typically by attempting a saving throw). Since your key attribute is Wisdom, your spell attack modifier and spell DC use your Wisdom modifier.\n\n#### **Heightening Spells**\n\nWhen you get spell slots of 2nd rank and higher, you can fill those slots with stronger versions of lower-rank spells. This increases the spell’s rank, heightening it to match the spell slot. Many spells have specific improvements when they are heightened to certain ranks.\n\n#### Cantrips\n\nSome of your spells are cantrips. A cantrip is a special type of spell that doesn’t use spell slots. You can cast a cantrip at will, any number of times per day. A cantrip is always automatically heightened to half your level rounded up— this is usually equal to the highest rank of druid spell slot you have. For example, as a 1st-level druid, your cantrips are 1st-rank spells, and a 5th-level druid’s are 3rd rank.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Classes.aspx?ID=34",
+       "book": "Player Core",
+       "page": "122"
+      }
+     },
+     "traits": [
+      1343
+     ],
+     "content_source_id": 1,
+     "version": "1.0",
+     "uuid": 2766311124286541,
+     "availability": null,
+     "search_tsv": "'1':191B,328B,340B '10':234B '10th':190B '11':241B '12':249B '13':257B '14':266B '15':275B '16':285B '17':295B '18':306B '19':317B '19611':31B '1st':71B,78B,181B,505B,512B '1st-level':504B '1st-rank':77B,511B '2':193B,194B,200B,209B,220B,233B,248B,265B,284B,305B '20':329B '2nd':182B,398B '3':196B,197B,199B,203B,204B,207B,208B,212B,213B,214B,217B,218B,219B,223B,224B,225B,226B,229B,230B,231B,232B,236B,237B,238B,239B,240B,243B,244B,245B,246B,247B,251B,252B,253B,254B,255B,256B,259B,260B,261B,262B,263B,264B,268B,269B,270B,271B,272B,273B,274B,277B,278B,279B,280B,281B,282B,283B,287B,288B,289B,290B,291B,292B,293B,294B,297B,298B,299B,300B,301B,302B,303B,304B,308B,309B,310B,311B,312B,313B,314B,315B,316B,319B,320B,321B,322B,323B,324B,325B,326B,327B,331B,332B,333B,334B,335B,336B,337B,338B,339B '3rd':183B,523B '4':201B '4th':184B '5':192B,195B,198B,202B,205B,206B,211B,216B,222B,228B,235B,242B,250B,258B,267B,276B,286B,296B,307B,318B,330B '5th':185B,518B '5th-level':517B '6':210B '6th':186B '7':215B '7th':187B '8':221B '8th':188B '9':227B '9th':189B 'access':104B 'action':30B 'activ':32B 'alway':477B 'ancient':51B 'around':45B 'attack':351B,381B 'attempt':348B,369B 'attribut':376B 'automat':478B 'avail':114B 'call':138B 'cantrip':83B,440B,446B,448B,465B,475B,509B 'cast':18B,26B,119B,169B,463B 'certain':438B 'clawlik':62B 'common':88B 'curl':60B 'day':136B,158B,177B,473B 'dc':366B,385B 'direct':67B 'doesn':456B 'druid':1A,35B,149B,174B,495B,507B,520B 'effect':355B 'enemi':361B 'environ':44B 'equal':489B 'exampl':501B 'fill':404B 'five':82B 'flow':9B 'gain':103B 'gestur':66B 'get':394B 'half':481B 'hand':54B 'heighten':390B,421B,436B,479B 'higher':401B 'highest':163B,492B 'improv':432B 'incant':38B 'increas':144B,159B,416B 'invoc':49B 'key':375B 'learn':106B,108B 'level':72B,146B,483B,506B,519B 'like':57B 'link':29B 'list':94B 'lower':412B 'lower-rank':411B 'lvl':179B 'magic':69B 'mani':428B 'match':424B 'might':39B,55B 'modifi':382B,389B 'morn':85B 'number':129B,151B,469B 'per':176B,472B 'plea':41B 'power':4B 'prepar':75B,111B,124B,134B,156B 'primal':22B,92B,98B 'rank':79B,164B,399B,413B,420B,439B,493B,513B,524B 'remain':113B 'requir':345B 'roll':362B 'round':484B 'save':371B 'see':353B 'shape':63B 'shown':171B 'sinc':373B 'slot':141B,396B,406B,427B,460B,497B 'special':451B 'specif':431B 'spell':19B,28B,80B,89B,93B,99B,110B,112B,126B,131B,140B,153B,166B,175B,344B,350B,365B,380B,384B,391B,395B,414B,418B,426B,429B,444B,454B,459B,496B,514B 'spellcast':2A,15B,37B 'stronger':408B 'sway':56B 'tabl':178B 'throw':372B 'time':471B 'tradit':23B 'two':76B 'type':452B 'typic':367B 'use':24B,386B,458B 'usual':488B 'version':409B 'via':107B 'vow':52B 'wild':7B 'willow':58B 'wisdom':378B,388B 'world':8B",
+     "updated_at": "2026-08-27T16:49:23.919185+00:00"
+    },
+    {
+     "id": 21216,
+     "created_at": "2024-04-14T07:09:41.07718+00:00",
+     "operations": [
+      {
+       "id": "1433e9db-be6f-4e22-a66f-360eec72366d",
+       "type": "select",
+       "data": {
+        "title": "Select an Order",
+        "modeType": "FILTERED",
+        "optionType": "ABILITY_BLOCK",
+        "optionsPredefined": [],
+        "optionsFilters": {
+         "id": "0ccf84f5-f5f0-46af-b381-bedf9215fd87",
+         "type": "ABILITY_BLOCK",
+         "level": {},
+         "traits": [
+          "Druid Order"
+         ],
+         "abilityBlockType": "feat"
+        }
+       }
+      }
+     ],
+     "name": "Druidic Order",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "Upon becoming a druid, you align yourself with a druidic order, which grants you a class feat, an order spell (see below), and an additional trained skill tied to your order. While you’ll always be a member of your initial order, it’s not unheard of for a druid to request to study with other orders in search of greater understanding of the natural world, and PC druids are among the most likely to blend the powers of different orders.\n\nOrder spells are a type of focus spell. It costs 1 Focus Point to cast a [focus](link_trait_1856) spell, and you start with a focus pool of 1 Focus Point. You refill your focus pool during your daily preparations, and you can regain 1 Focus Point by spending 10 minutes using the [Refocus](link_action_19754) activity to commune with local nature spirits or otherwise tend to the wilderness in a way befitting your order.\n\nFocus spells are automatically heightened to half your level rounded up, much like cantrips. Focus spells don’t require spell slots, and you can’t cast them using spell slots. Certain feats give you more focus spells. The maximum Focus Points your focus pool can hold is equal to the number of focus spells you have, but can never be more than 3 points.\n\n**Order Skill** You become trained in the listed skill. If you’re already trained in that skill, you become trained in a different skill of your choice.\n\n**Druid Feat** You gain this 1st-level druid feat as a bonus feat.\n\n**Order Spell** You automatically gain the listed order spell at 1st level.\n\n**Anathema** Add this anathema to those for all druids.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Classes.aspx?ID=34",
+       "book": "Player Core",
+       "page": "122"
+      }
+     },
+     "traits": [
+      1343
+     ],
+     "content_source_id": 1,
+     "version": "1.0",
+     "uuid": 3948948305231148,
+     "availability": null,
+     "search_tsv": "'1':94B,113B,129B '10':134B '1856':103B '19754':141B '1st':258B,276B '1st-level':257B '3':223B 'action':140B 'activ':142B 'add':279B 'addit':27B 'align':8B 'alreadi':237B 'alway':37B 'among':73B 'anathema':278B,281B 'automat':164B,269B 'becom':4B,228B,243B 'befit':158B 'blend':78B 'bonus':264B 'cantrip':174B 'cast':98B,186B 'certain':191B 'choic':251B 'class':18B 'commune':144B 'cost':93B 'daili':123B 'differ':82B,247B 'druid':6B,52B,71B,252B,260B,286B 'druidic':1A,12B 'equal':208B 'feat':19B,192B,253B,261B,265B 'focus':90B,95B,100B,110B,114B,119B,130B,161B,175B,196B,200B,203B,213B 'gain':255B,270B 'give':193B 'grant':15B 'greater':63B 'half':167B 'heighten':165B 'hold':206B 'initi':43B 'level':169B,259B,277B 'like':76B,173B 'link':101B,139B 'list':232B,272B 'll':36B 'local':146B 'maximum':199B 'member':40B 'minut':135B 'much':172B 'natur':67B,147B 'never':219B 'number':211B 'order':2A,13B,21B,33B,44B,59B,83B,84B,160B,225B,266B,273B 'otherwis':150B 'pc':70B 'point':96B,115B,131B,201B,224B 'pool':111B,120B,204B 'power':80B 'prepar':124B 're':236B 'refil':117B 'refocus':138B 'regain':128B 'request':54B 'requir':179B 'round':170B 'search':61B 'see':23B 'skill':29B,226B,233B,241B,248B 'slot':181B,190B 'spell':22B,85B,91B,104B,162B,176B,180B,189B,197B,214B,267B,274B 'spend':133B 'spirit':148B 'start':107B 'studi':56B 'tend':151B 'tie':30B 'train':28B,229B,238B,244B 'trait':102B 'type':88B 'understand':64B 'unheard':48B 'upon':3B 'use':136B,188B 'way':157B 'wilder':154B 'world':68B",
+     "updated_at": "2026-08-27T16:49:23.919185+00:00"
+    },
+    {
+     "id": 19228,
+     "created_at": "2023-12-02T23:38:02.577406+00:00",
+     "operations": [
+      {
+       "id": "bde4cc00-62e8-41f1-bc94-10675cd19520",
+       "type": "giveAbilityBlock",
+       "data": {
+        "type": "feat",
+        "abilityBlockId": 20534
+       }
+      }
+     ],
+     "name": "Shield Block",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": null,
+     "cost": null,
+     "trigger": null,
+     "requirements": null,
+     "access": null,
+     "description": "You gain the [Shield Block](link_feat_20534) general feat, a reaction that lets you reduce damage with your shield.",
+     "special": null,
+     "type": "class-feature",
+     "meta_data": {
+      "foundry": {
+       "rules": [
+        {
+         "key": "GrantItem",
+         "uuid": "Compendium.pf2e.feats-srd.Item.Shield Block"
+        }
+       ]
+      }
+     },
+     "traits": [
+      1339,
+      1343
+     ],
+     "content_source_id": 1,
+     "version": "1.0",
+     "uuid": 83931783487265,
+     "availability": null,
+     "search_tsv": "'20534':10B 'block':2A,7B 'damag':19B 'feat':9B,12B 'gain':4B 'general':11B 'let':16B 'link':8B 'reaction':14B 'reduc':18B 'shield':1A,6B,22B",
+     "updated_at": "2023-12-02T23:38:02.577406+00:00"
+    },
+    {
+     "id": 21217,
+     "created_at": "2024-04-14T07:11:53.156395+00:00",
+     "operations": [
+      {
+       "id": "f78123ba-0c0a-4a65-8de5-f33d5523257c",
+       "type": "select",
+       "data": {
+        "title": "Select Animal or Plant Empathy",
+        "modeType": "PREDEFINED",
+        "optionType": "ABILITY_BLOCK",
+        "optionsPredefined": [
+         {
+          "id": "0ddfce1c-23f8-48bb-ab0e-b46f0362f823",
+          "type": "ABILITY_BLOCK",
+          "operation": {
+           "id": "651cef3b-e655-4402-aac7-bd0a6f76677c",
+           "type": "giveAbilityBlock",
+           "data": {
+            "type": "feat",
+            "abilityBlockId": 20412
+           }
+          }
+         },
+         {
+          "id": "e6253f1a-0391-42b6-8335-3ca133411dcb",
+          "type": "ABILITY_BLOCK",
+          "operation": {
+           "id": "e054e501-101b-4b73-9868-fd6f31c45a84",
+           "type": "giveAbilityBlock",
+           "data": {
+            "type": "feat",
+            "abilityBlockId": 19908
+           }
+          }
+         }
+        ]
+       }
+      }
+     ],
+     "name": "Voice of Nature",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You gain your choice of the [Animal Empathy](link_feat_19908) or [Plant Empathy](link_feat_20412) druid feat.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Classes.aspx?ID=34",
+       "book": "Player Core",
+       "page": "122"
+      }
+     },
+     "traits": [
+      1343
+     ],
+     "content_source_id": 1,
+     "version": "1.0",
+     "uuid": 5721511656025742,
+     "availability": null,
+     "search_tsv": "'19908':14B '20412':20B 'anim':10B 'choic':7B 'druid':21B 'empathi':11B,17B 'feat':13B,19B,22B 'gain':5B 'link':12B,18B 'natur':3A 'plant':16B 'voic':1A",
+     "updated_at": "2026-08-27T16:49:23.919185+00:00"
+    },
+    {
+     "id": 21218,
+     "created_at": "2024-04-14T07:14:02.703075+00:00",
+     "operations": [
+      {
+       "id": "b07c9dec-a4a1-402d-8469-f64f38b0dbee",
+       "type": "giveLanguage",
+       "data": {
+        "languageId": 309
+       }
+      }
+     ],
+     "name": "Wildsong",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You know the [Wildsong](link_language_309), a secret language known only within druid orders, in addition to any languages you know through your ancestry. The [Wildsong](link_language_309) is a melodic and tonal language sounding more like animal calls than a spoken tongue, and its alphabet involves fractals and spirals, like the arrangement of a seashell’s chambers, a snowflake’s crystals, or a fern’s fronds. Teaching the [Wildsong](link_language_309) to non-druids is [anathema](link_class-feature_21215).",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Classes.aspx?ID=34",
+       "book": "Player Core",
+       "page": "122"
+      }
+     },
+     "traits": [
+      1343
+     ],
+     "content_source_id": 1,
+     "version": "1.0",
+     "uuid": 4886805554395386,
+     "availability": null,
+     "search_tsv": "'21215':87B '309':8B,31B,76B 'addit':18B 'alphabet':49B 'anathema':82B 'ancestri':26B 'anim':41B 'arrang':56B 'call':42B 'chamber':61B 'class':85B 'class-featur':84B 'crystal':65B 'druid':15B,80B 'featur':86B 'fern':68B 'fractal':51B 'frond':70B 'involv':50B 'know':3B,23B 'known':12B 'languag':7B,11B,21B,30B,37B,75B 'like':40B,54B 'link':6B,29B,74B,83B 'melod':34B 'non':79B 'non-druid':78B 'order':16B 'seashel':59B 'secret':10B 'snowflak':63B 'sound':38B 'spiral':53B 'spoken':45B 'teach':71B 'tonal':36B 'tongu':46B 'wildsong':1A,5B,28B,73B 'within':14B",
+     "updated_at": "2026-08-27T16:49:23.919185+00:00"
+    }
+   ],
+   "physicalFeatures": [
+    {
+     "id": 21339,
+     "created_at": "2024-04-17T06:04:17.68696+00:00",
+     "operations": [],
+     "name": "Plant Nourishment",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You gain nourishment in the same way that the plants or fungi that match your body type normally do, through some combination of photosynthesis, absorbing minerals with your roots, or scavenging decaying matter. You typically do not need to pay for food. If you normally rely on photosynthesis and go without sunlight for 1 week, you begin to starve. You can derive nourishment from specially formulated bottles of sunlight instead of natural sunlight, but these bottles cost 10 times as much as standard rations (or 40 sp).",
+     "special": "",
+     "type": "physical-feature",
+     "meta_data": {},
+     "traits": [],
+     "content_source_id": 1,
+     "version": "1.0",
+     "uuid": 1773477854183893,
+     "availability": null,
+     "search_tsv": "'1':56B '10':80B '40':88B 'absorb':27B 'begin':59B 'bodi':18B 'bottl':69B,78B 'combin':24B 'cost':79B 'decay':34B 'deriv':64B 'food':44B 'formul':68B 'fungi':14B 'gain':4B 'go':52B 'instead':72B 'match':16B 'matter':35B 'miner':28B 'much':83B 'natur':74B 'need':40B 'normal':20B,47B 'nourish':2A,5B,65B 'pay':42B 'photosynthesi':26B,50B 'plant':1A,12B 'ration':86B 'reli':48B 'root':31B 'scaveng':33B 'sp':89B 'special':67B 'standard':85B 'starv':61B 'sunlight':54B,71B,75B 'time':81B 'type':19B 'typic':37B 'way':9B 'week':57B 'without':53B",
+     "updated_at": "2024-04-17T06:04:17.68696+00:00"
+    }
+   ],
+   "heritages": [
+    {
+     "id": 20743,
+     "created_at": "2023-12-14T04:52:16.020855+00:00",
+     "operations": null,
+     "name": "Leaf Leshy",
+     "actions": null,
+     "level": -1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": null,
+     "cost": null,
+     "trigger": null,
+     "requirements": null,
+     "access": null,
+     "description": "Your body is made mostly from natural foliage, and like a leaf tumbling from a tree, you land from falls with particular grace. You take no damage from falling, regardless of the distance you fall.",
+     "special": "",
+     "type": "heritage",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Heritages.aspx?ID=267",
+       "book": "Player Core",
+       "page": "67"
+      },
+      "foundry": {
+       "rules": []
+      }
+     },
+     "traits": [
+      1449
+     ],
+     "content_source_id": 1,
+     "version": "1.0",
+     "uuid": 4083087148419284,
+     "availability": null,
+     "search_tsv": "'bodi':4B 'damag':29B 'distanc':35B 'fall':22B,31B,37B 'foliag':10B 'grace':25B 'land':20B 'leaf':1A,14B 'leshi':2A 'like':12B 'made':6B 'most':7B 'natur':9B 'particular':24B 'regardless':32B 'take':27B 'tree':18B 'tumbl':15B",
+     "updated_at": "2026-08-27T16:49:23.919185+00:00"
+    }
+   ],
+   "baseAbilities": [],
+   "addedAbilities": []
+  },
+  "character_traits": [
+   {
+    "id": 1654,
+    "created_at": "2023-12-03T19:04:52.529598+00:00",
+    "name": "Plant (creature)",
+    "description": "Vegetable creatures have the plant trait. They are distinct from normal plants. This is different than the [plant](link_trait_2913) trait for magical effects.",
+    "meta_data": {
+     "important": false,
+     "class_trait": false,
+     "unselectable": false,
+     "ancestry_trait": false,
+     "creature_trait": true,
+     "archetype_trait": false,
+     "versatile_heritage_trait": false
+    },
+    "content_source_id": 3,
+    "uuid": 7958301339495760,
+    "search_tsv": "'2913':23B 'creatur':2A,4B 'differ':17B 'distinct':11B 'effect':27B 'link':21B 'magic':26B 'normal':13B 'plant':1A,7B,14B,20B 'trait':8B,22B,24B 'veget':3B",
+    "updated_at": "2023-12-03T19:04:52.529598+00:00"
+   },
+   {
+    "id": 1449,
+    "created_at": "2023-12-14T04:42:12.023328+00:00",
+    "name": "Leshy",
+    "description": "This indicates content from the leshy ancestry.",
+    "meta_data": {
+     "source": {
+      "url": "https://2e.aonprd.com/Traits.aspx?ID=639",
+      "book": "Player Core",
+      "page": "458"
+     },
+     "ancestry_trait": true
+    },
+    "content_source_id": 1,
+    "uuid": 8309087479634653,
+    "search_tsv": "'ancestri':8B 'content':4B 'indic':3B 'leshi':1A,7B",
+    "updated_at": "2026-08-27T16:49:13.252728+00:00"
+   }
+  ],
+  "languages": [
+   "COMMON",
+   "FEY",
+   "WILDSONG"
+  ],
+  "senses": {
+   "precise": [
+    {
+     "sense": {
+      "id": 19330,
+      "created_at": "2023-12-03T05:16:56.429526+00:00",
+      "operations": [
+       {
+        "id": "a53b5ac3-0df4-49d2-b924-14e8f6e221e2",
+        "type": "adjValue",
+        "data": {
+         "variable": "SENSES_PRECISE",
+         "value": "low-light vision"
+        }
+       }
+      ],
+      "name": "Low-Light Vision",
+      "actions": null,
+      "level": 1,
+      "rarity": "COMMON",
+      "prerequisites": [],
+      "frequency": "",
+      "cost": "",
+      "trigger": "",
+      "requirements": "",
+      "access": "",
+      "description": "You can see in dim light as though it were bright light, so you ignore the concealed condition due to dim light.",
+      "special": "",
+      "type": "sense",
+      "meta_data": {
+       "unselectable": true
+      },
+      "traits": [],
+      "content_source_id": 3,
+      "version": "1.0",
+      "uuid": 8382024518549176,
+      "availability": null,
+      "search_tsv": "'bright':15B 'conceal':21B 'condit':22B 'dim':9B,25B 'due':23B 'ignor':19B 'light':3A,10B,16B,26B 'low':2A 'low-light':1A 'see':7B 'though':12B 'vision':4A",
+      "updated_at": "2023-12-03T05:16:56.429526+00:00"
+     },
+     "senseName": "Low-Light Vision",
+     "range": "",
+     "type": "precise"
+    }
+   ],
+   "imprecise": [
+    {
+     "sense": {
+      "id": 21081,
+      "created_at": "2024-04-05T21:29:53.369732+00:00",
+      "operations": [
+       {
+        "id": "d093403b-7e30-48b0-865b-d823f756f54c",
+        "type": "adjValue",
+        "data": {
+         "variable": "SENSES_IMPRECISE",
+         "value": "hearing"
+        }
+       }
+      ],
+      "name": "Hearing",
+      "actions": null,
+      "level": 1,
+      "rarity": "COMMON",
+      "prerequisites": [],
+      "frequency": "",
+      "cost": "",
+      "trigger": "",
+      "requirements": "",
+      "access": "",
+      "description": "Hearing is the ability to perceive sound by detecting vibrations through an organ such as the ear. A creature might be undetected by you if it’s in an environment that distorts the sense, such as a noisy room. In those cases, you have to use the [Seek](link_action_19845) basic action to detect the creature.",
+      "special": "",
+      "type": "sense",
+      "meta_data": {
+       "unselectable": true
+      },
+      "traits": [],
+      "content_source_id": 3,
+      "version": "1.0",
+      "uuid": 7294419213926000,
+      "availability": null,
+      "search_tsv": "'19845':52B 'abil':5B 'action':51B,54B 'basic':53B 'case':43B 'creatur':20B,58B 'detect':10B,56B 'distort':33B 'ear':18B 'environ':31B 'hear':1A,2B 'link':50B 'might':21B 'noisi':39B 'organ':14B 'perceiv':7B 'room':40B 'seek':49B 'sens':35B 'sound':8B 'undetect':23B 'use':47B 'vibrat':11B",
+      "updated_at": "2024-04-05T21:29:53.369732+00:00"
+     },
+     "senseName": "Hearing",
+     "range": "",
+     "type": "imprecise"
+    }
+   ],
+   "vague": [
+    {
+     "sense": {
+      "id": 21082,
+      "created_at": "2024-04-05T21:31:08.459485+00:00",
+      "operations": [
+       {
+        "id": "d093403b-7e30-48b0-865b-d823f756f54c",
+        "type": "adjValue",
+        "data": {
+         "variable": "SENSES_VAGUE",
+         "value": "smell"
+        }
+       }
+      ],
+      "name": "Smell",
+      "actions": null,
+      "level": 1,
+      "rarity": "COMMON",
+      "prerequisites": [],
+      "frequency": "",
+      "cost": "",
+      "trigger": "",
+      "requirements": "",
+      "access": "",
+      "description": "Smell allows you to detect and identify chemical substances in your environment through your [olfactory](link_trait_2131) system. This involves the detection of odor molecules by receptor cells in the nose.",
+      "special": "",
+      "type": "sense",
+      "meta_data": {
+       "unselectable": true
+      },
+      "traits": [],
+      "content_source_id": 3,
+      "version": "1.0",
+      "uuid": 5653374427219146,
+      "availability": null,
+      "search_tsv": "'2131':19B 'allow':3B 'cell':30B 'chemic':9B 'detect':6B,24B 'environ':13B 'identifi':8B 'involv':22B 'link':17B 'molecul':27B 'nose':33B 'odor':26B 'olfactori':16B 'receptor':29B 'smell':1A,2B 'substanc':10B 'system':20B 'trait':18B",
+      "updated_at": "2024-04-05T21:31:08.459485+00:00"
+     },
+     "senseName": "Smell",
+     "range": "",
+     "type": "vague"
+    }
+   ]
+  },
+  "weapons": [],
+  "inventory_flat": [],
+  "total_bulk": "0",
+  "spell_raw_data": {
+   "slots": [
+    {
+     "id": "CHARACTER-spell-slot-0",
+     "rank": 0,
+     "source": "DRUID"
+    },
+    {
+     "id": "CHARACTER-spell-slot-1",
+     "rank": 0,
+     "source": "DRUID"
+    },
+    {
+     "id": "CHARACTER-spell-slot-2",
+     "rank": 0,
+     "source": "DRUID"
+    },
+    {
+     "id": "CHARACTER-spell-slot-3",
+     "rank": 0,
+     "source": "DRUID"
+    },
+    {
+     "id": "CHARACTER-spell-slot-4",
+     "rank": 0,
+     "source": "DRUID"
+    },
+    {
+     "id": "CHARACTER-spell-slot-5",
+     "rank": 1,
+     "source": "DRUID"
+    },
+    {
+     "id": "CHARACTER-spell-slot-6",
+     "rank": 1,
+     "source": "DRUID"
+    }
+   ],
+   "list": [],
+   "focus": [
+    {
+     "spell_id": 4538,
+     "source": "DRUID",
+     "rank": 1
+    }
+   ],
+   "innate": [],
+   "sources": [
+    {
+     "name": "DRUID",
+     "type": "PREPARED-TRADITION",
+     "tradition": "PRIMAL",
+     "attribute": "ATTRIBUTE_WIS"
+    }
+   ]
+  },
+  "spell_sources": [
+   {
+    "source": {
+     "name": "DRUID",
+     "type": "PREPARED-TRADITION",
+     "tradition": "PRIMAL",
+     "attribute": "ATTRIBUTE_WIS"
+    },
+    "stats": {
+     "spell_attack": {
+      "total": [
+       7,
+       2,
+       -3
+      ],
+      "parts": {},
+      "conditionals": []
+     },
+     "spell_dc": {
+      "total": 17,
+      "parts": {}
+     }
+    }
+   }
+  ],
+  "spell_slots": [
+   {
+    "id": "CHARACTER-spell-slot-0",
+    "rank": 0,
+    "source": "DRUID"
+   },
+   {
+    "id": "CHARACTER-spell-slot-1",
+    "rank": 0,
+    "source": "DRUID"
+   },
+   {
+    "id": "CHARACTER-spell-slot-2",
+    "rank": 0,
+    "source": "DRUID"
+   },
+   {
+    "id": "CHARACTER-spell-slot-3",
+    "rank": 0,
+    "source": "DRUID"
+   },
+   {
+    "id": "CHARACTER-spell-slot-4",
+    "rank": 0,
+    "source": "DRUID"
+   },
+   {
+    "id": "CHARACTER-spell-slot-5",
+    "rank": 1,
+    "source": "DRUID"
+   },
+   {
+    "id": "CHARACTER-spell-slot-6",
+    "rank": 1,
+    "source": "DRUID"
+   }
+  ],
+  "spells": {
+   "all": [],
+   "cantrips": [],
+   "normal": [],
+   "rituals": []
+  },
+  "focus_spells": [
+   {
+    "id": 4538,
+    "created_at": "2024-03-23T20:19:39.598036+00:00",
+    "name": "Cornucopia",
+    "rank": 1,
+    "traditions": [],
+    "rarity": "UNCOMMON",
+    "cast": "TWO-ACTIONS",
+    "traits": [
+     1432,
+     1343,
+     1856,
+     1442,
+     1433,
+     1478,
+     2938
+    ],
+    "defense": null,
+    "cost": "",
+    "trigger": null,
+    "requirements": null,
+    "range": "",
+    "area": null,
+    "targets": "",
+    "duration": "10 minutes",
+    "description": "Vines twine into a wicker horn in your hands, and out spills a single fruit, nut, or similar small bit of produce. A creature who eats the produce with an [Interact](link_action_19733) action regains 1d6+4 HP. The cornucopia, as well as any unconsumed pieces of fruit, wither away at the end of the duration.",
+    "meta_data": {
+     "focus": true,
+     "damage": [],
+     "source": {
+      "url": "https://2e.aonprd.com/Spells.aspx?ID=1856",
+      "book": "Player Core",
+      "page": "382"
+     },
+     "foundry": {
+      "rules": [],
+      "is_focus": true
+     }
+    },
+    "content_source_id": 1,
+    "version": "1.0",
+    "uuid": 3189984859169852,
+    "heightened": {
+     "text": [
+      {
+       "amount": "(+1)",
+       "text": "The cornucopia produces an additional piece of food. A creature can consume any amount of food from the same casting with a single Interact action. Eating six pieces of produce from the cornucopia gives as much nourishment as one square meal for a typical human."
+      }
+     ],
+     "data": {}
+    },
+    "availability": null,
+    "search_tsv": "'+4':39B '19733':35B '1d6':38B 'action':34B,36B 'away':52B 'bit':21B 'cornucopia':1A,42B 'creatur':25B 'durat':58B 'eat':27B 'end':55B 'fruit':16B,50B 'hand':10B 'horn':7B 'hp':40B 'interact':32B 'link':33B 'nut':17B 'piec':48B 'produc':23B,29B 'regain':37B 'similar':19B 'singl':15B 'small':20B 'spill':13B 'twine':3B 'unconsum':47B 'vine':2B 'well':44B 'wicker':6B 'wither':51B",
+    "updated_at": "2026-08-27T16:48:59.703223+00:00",
+    "casting_source": "DRUID"
+   }
+  ],
+  "innate_spells": [],
+  "size": "Small",
+  "speeds": [
+   {
+    "name": "SPEED",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 25,
+     "value": 25
+    }
+   },
+   {
+    "name": "SPEED_FLY",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 5,
+     "value": 0
+    }
+   },
+   {
+    "name": "SPEED_CLIMB",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 5,
+     "value": 0
+    }
+   },
+   {
+    "name": "SPEED_BURROW",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 5,
+     "value": 0
+    }
+   },
+   {
+    "name": "SPEED_SWIM",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 5,
+     "value": 0
+    }
+   }
+  ],
+  "max_hp": 19,
+  "ac": 15,
+  "shield_item": null,
+  "armor_item": null,
+  "resist_weaks": {
+   "resists": [],
+   "weaks": [],
+   "immunes": []
+  },
+  "proficiencies": {
+   "SAVE_FORT": {
+    "total": "+6",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 3,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SAVE_REFLEX": {
+    "total": "+5",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SAVE_WILL": {
+    "total": "+9",
+    "parts": {
+     "level": 1,
+     "profValue": 4,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_ACROBATICS": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_ARCANA": {
+    "total": "-1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": -1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_ATHLETICS": {
+    "total": "+1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_CRAFTING": {
+    "total": "-1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": -1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_DECEPTION": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 0,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_DIPLOMACY": {
+    "total": "+3",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 0,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_INTIMIDATION": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 0,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_MEDICINE": {
+    "total": "+4",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_NATURE": {
+    "total": "+7",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_OCCULTISM": {
+    "total": "-1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": -1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_PERFORMANCE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 0,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_RELIGION": {
+    "total": "+4",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_SOCIETY": {
+    "total": "-1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": -1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_STEALTH": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_SURVIVAL": {
+    "total": "+4",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_THIEVERY": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_LORE____": {
+    "total": "-1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": -1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SPELL_ATTACK": {
+    "total": "+7",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SPELL_DC": {
+    "total": "+7",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "LIGHT_ARMOR": {
+    "total": "+3",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "MEDIUM_ARMOR": {
+    "total": "+3",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "HEAVY_ARMOR": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "UNARMORED_DEFENSE": {
+    "total": "+3",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "LIGHT_BARDING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "HEAVY_BARDING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SIMPLE_WEAPONS": {
+    "total": "+3",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "MARTIAL_WEAPONS": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ADVANCED_WEAPONS": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "UNARMED_ATTACKS": {
+    "total": "+3",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "PERCEPTION": {
+    "total": "+7",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "CLASS_DC": {
+    "total": "+7",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_AXE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_BOMB": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_BOW": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_BRAWLING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_CLUB": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_CROSSBOW": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_DART": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_FIREARM": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_FLAIL": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_HAMMER": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_KNIFE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_PICK": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_POLEARM": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_SHIELD": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_SLING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_SPEAR": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_SWORD": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_LASER": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_PROJECTILE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_GUN": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_GUN_SIMPLE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_GUN_MARTIAL": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_GUN_ADVANCED": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_ONE_HANDED_AGILE_FINESSE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_CLOTH": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_CHAIN": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_COMPOSITE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_LEATHER": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_PLATE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_CERAMIC": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_POLYMER": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_SKELETAL": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_WOOD": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_LORE_HERBALISM": {
+    "total": "+2",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": -1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "INNATE_SPELL_ATTACK": {
+    "total": "+3",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 0,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "INNATE_SPELL_DC": {
+    "total": "13",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 0,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   }
+  },
+  "attributes": {
+   "ATTRIBUTE_STR": {
+    "value": 1,
+    "partial": false
+   },
+   "ATTRIBUTE_DEX": {
+    "value": 2,
+    "partial": false
+   },
+   "ATTRIBUTE_CON": {
+    "value": 3,
+    "partial": false
+   },
+   "ATTRIBUTE_INT": {
+    "value": -1,
+    "partial": false
+   },
+   "ATTRIBUTE_WIS": {
+    "value": 4,
+    "partial": false
+   },
+   "ATTRIBUTE_CHA": {
+    "value": 0,
+    "partial": false
+   }
+  }
+ },
+ "_sanitized": "user_id, timestamps, api_clients and library dumps (all_traits, all_sources, all_spells, raw_data_dump) removed"
+}

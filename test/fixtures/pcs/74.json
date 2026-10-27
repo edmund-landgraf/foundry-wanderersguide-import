@@ -1,0 +1,5207 @@
+{
+ "version": 4,
+ "character": {
+  "id": 74,
+  "name": "Azarra (P2)",
+  "level": 7,
+  "experience": 0,
+  "hp_current": 99,
+  "hp_temp": 0,
+  "hero_points": 1,
+  "stamina_current": 0,
+  "resolve_current": 0,
+  "inventory": {
+   "items": [
+    {
+     "id": "extra-item-14437",
+     "item": {
+      "id": 14437,
+      "created_at": "2024-06-13T21:06:02.088078+00:00",
+      "updated_at": "2026-07-28T17:00:33.389738+00:00",
+      "name": "Anadi Fangs",
+      "price": {},
+      "bulk": null,
+      "level": 0,
+      "rarity": "COMMON",
+      "availability": null,
+      "traits": [
+       2398,
+       1570
+      ],
+      "description": "[Unarmed](link_trait_2398) attack gained from the Anadi ancestry.",
+      "group": "WEAPON",
+      "hands": null,
+      "size": "MEDIUM",
+      "craft_requirements": "",
+      "usage": "",
+      "meta_data": {
+       "image_url": "",
+       "category": "unarmed_attack",
+       "group": "brawling",
+       "damage": {
+        "damageType": "piercing",
+        "dice": 1,
+        "die": "d6",
+        "extra": ""
+       },
+       "bulk": {},
+       "charges": {},
+       "is_shoddy": false,
+       "unselectable": true,
+       "quantity": 1,
+       "material": {},
+       "runes": {
+        "striking": 0,
+        "resilient": 0,
+        "potency": 0,
+        "property": []
+       },
+       "starfinder": {},
+       "foundry": {}
+      },
+      "operations": [],
+      "content_source_id": 28,
+      "version": "1.0"
+     },
+     "is_formula": false,
+     "is_equipped": true,
+     "is_invested": false,
+     "is_implanted": false,
+     "container_contents": []
+    },
+    {
+     "id": "extra-item-9252",
+     "item": {
+      "id": 9252,
+      "created_at": "2024-03-24T22:44:19.105898+00:00",
+      "updated_at": "2026-08-27T16:49:04.220135+00:00",
+      "name": "Fist",
+      "price": {},
+      "bulk": "0",
+      "level": 0,
+      "rarity": "COMMON",
+      "availability": null,
+      "traits": [
+       1569,
+       1570,
+       1571,
+       2398
+      ],
+      "description": "_Sometimes, the only way you can make someone listen is with your fist._",
+      "group": "WEAPON",
+      "hands": "1",
+      "size": "MEDIUM",
+      "craft_requirements": "",
+      "usage": "",
+      "meta_data": {
+       "image_url": "",
+       "category": "unarmed_attack",
+       "group": "brawling",
+       "damage": {
+        "damageType": "bludgeoning",
+        "dice": 1,
+        "die": "d4",
+        "extra": ""
+       },
+       "bulk": {},
+       "charges": {},
+       "hardness": 0,
+       "hp_max": 0,
+       "broken_threshold": 0,
+       "is_shoddy": false,
+       "unselectable": true,
+       "quantity": 1,
+       "material": {},
+       "runes": {
+        "property": []
+       },
+       "starfinder": {
+        "slots": []
+       },
+       "foundry": {}
+      },
+      "operations": [],
+      "content_source_id": 1,
+      "version": "1.0"
+     },
+     "is_formula": false,
+     "is_equipped": true,
+     "is_invested": false,
+     "is_implanted": false,
+     "container_contents": []
+    }
+   ],
+   "coins": {
+    "cp": 0,
+    "sp": 0,
+    "gp": 0,
+    "pp": 0
+   }
+  },
+  "notes": null,
+  "details": {
+   "class": {
+    "id": 68,
+    "created_at": "2024-04-29T03:13:50.276661+00:00",
+    "updated_at": "2026-08-27T16:49:14.833831+00:00",
+    "name": "Barbarian (legacy)",
+    "rarity": "COMMON",
+    "description": "> _Rage consumes you in battle. You delight in wreaking havoc and using powerful weapons to carve through your enemies, relying on astonishing durability without needing complicated techniques or rigid training. Your rages draw upon a vicious instinct, which you might associate with an animal, a spirit, or some part of yourself. To many barbarians, brute force is a hammer and every problem looks like a nail, whereas others try to hold back the storm of emotions inside them and release their rage only when it matters most._\n\n* * *\n\n### **During Combat Encounters…**\n\nYou summon your rage and rush to the front lines to smash your way through. Offense is your best defense—you'll need to drop foes before they can exploit your relatively low defenses.\n\n### **During Social Encounters…**\n\nYou use intimidation to get what you need, especially when gentler persuasion can't get the job done.\n\n### **While Exploring…**\n\nYou look out for danger, ready to rush headfirst into battle in an instant. You climb the challenging rock wall and drop a rope for others to follow, and you wade into the risky currents to reach the hidden switch beneath the water's surface. If something needs breaking, you're up to the task!\n\n### **In Downtime…**\n\nYou might head to a tavern to carouse, build up the fearsome legend of your mighty deeds, or recruit followers to become a warlord in your own right.\n\n### **You Might…**\n\n*   Have a deep-seated well of anger, hatred, or frustration.\n    \n*   Prefer a straightforward approach to one requiring patience and tedium.\n    \n*   Engage in a regimen of intense physical fitness—and punch anyone who says this conflicts with your distaste for patience and tedium.\n    \n\n### **Others Probably…**\n\n*   Rely on your courage and your strength, and trust that you can hold your own in a fight.\n    \n*   See you as uncivilized or a boorish lout unfit for high society.\n    \n*   Believe that you are loyal to your friends and allies and will never relent until the fight is done.",
+    "operations": [
+     {
+      "id": "116a6ac8-fc6e-48ad-9b45-6b195536d453",
+      "type": "adjValue",
+      "data": {
+       "variable": "MAX_HEALTH_CLASS_PER_LEVEL",
+       "value": 12
+      }
+     },
+     {
+      "id": "c94374f1-eaa0-4be1-b71d-5f68fa667acf",
+      "type": "adjValue",
+      "data": {
+       "variable": "SAVE_FORT",
+       "value": {
+        "value": "E"
+       }
+      }
+     },
+     {
+      "id": "a799024c-b18d-44dc-b064-d960c9e72695",
+      "type": "adjValue",
+      "data": {
+       "variable": "SAVE_REFLEX",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "86f1b814-faaf-4eb4-8b7c-e7e142e08eb5",
+      "type": "adjValue",
+      "data": {
+       "variable": "SAVE_WILL",
+       "value": {
+        "value": "E"
+       }
+      }
+     },
+     {
+      "id": "8df0bce0-7910-4490-8a1f-a05cda2fcef1",
+      "type": "adjValue",
+      "data": {
+       "variable": "SKILL_ATHLETICS",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "9ca43c5e-030f-4e4a-acbc-5cc641587645",
+      "type": "adjValue",
+      "data": {
+       "variable": "SIMPLE_WEAPONS",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "c6e8fe3d-d7fb-4dec-9d5f-5330d5b22f1e",
+      "type": "adjValue",
+      "data": {
+       "variable": "MARTIAL_WEAPONS",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "fbf09494-2192-4ce1-9e80-8f15d21cf87a",
+      "type": "adjValue",
+      "data": {
+       "variable": "UNARMED_ATTACKS",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "5fce81f4-8ad0-4428-9f3c-409ee7ee8498",
+      "type": "adjValue",
+      "data": {
+       "variable": "UNARMORED_DEFENSE",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "2d46c707-2308-44f8-a271-945da9a9f704",
+      "type": "adjValue",
+      "data": {
+       "variable": "LIGHT_ARMOR",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "48440b5a-5b36-4ccb-a382-adb097a27930",
+      "type": "adjValue",
+      "data": {
+       "variable": "MEDIUM_ARMOR",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "05757ec3-2b1a-4266-97ec-2dee1f315f0e",
+      "type": "adjValue",
+      "data": {
+       "variable": "PERCEPTION",
+       "value": {
+        "value": "E"
+       }
+      }
+     },
+     {
+      "id": "58780eac-7b90-4f19-b89d-34cbf5d37e21",
+      "type": "adjValue",
+      "data": {
+       "variable": "ATTRIBUTE_STR",
+       "value": {
+        "value": 1
+       }
+      }
+     },
+     {
+      "id": "fc887624-564d-4115-a0e1-3182f35f1801",
+      "type": "adjValue",
+      "data": {
+       "variable": "PATHFINDER",
+       "value": true
+      }
+     },
+     {
+      "id": "7d2dc53e-628a-46b9-849b-a4eb2cad8e0d",
+      "type": "setValue",
+      "data": {
+       "variable": "CLASS_DC",
+       "value": {
+        "value": "T",
+        "attribute": "ATTRIBUTE_STR"
+       }
+      }
+     }
+    ],
+    "skill_training_base": 3,
+    "trait_id": 3627,
+    "artwork_url": "https://2e.aonprd.com/Images/Classes/Iconic_Amiri.png",
+    "deprecated": true,
+    "content_source_id": 11,
+    "version": "1.0"
+   },
+   "background": {
+    "id": 1116,
+    "created_at": "2024-06-24T14:49:15.758323+00:00",
+    "updated_at": "2026-08-27T16:49:19.969852+00:00",
+    "name": "Dauntless",
+    "rarity": "RARE",
+    "description": "> As a child, you chose to face each of your deepest fears and, time and again, emerged victorious. You have learned to conquer fear itself, and by sheer force of will and determination, you're able to brush off frightening experiences more easily than most. Others find it difficult to intimidate you into backing down from whatever you've set your mind to.\n\nChoose two ability boosts. One must be to Wisdom or Charisma, and one is a free ability boost.\n\nYou are trained in the [Diplomacy](https://2e.aonprd.com/Skills.aspx?ID=6) skill. You gain the [Indomitable Act](link_feat_29795) reaction.",
+    "artwork_url": "",
+    "operations": [
+     {
+      "id": "77716721-c318-4dc4-9f09-2feb206fcd00",
+      "type": "select",
+      "data": {
+       "title": "Select an Attribute",
+       "modeType": "PREDEFINED",
+       "optionType": "ADJ_VALUE",
+       "optionsPredefined": [
+        {
+         "id": "e7dbc2e8-0ca8-48b0-acb9-f07b222d3565",
+         "type": "ADJ_VALUE",
+         "operation": {
+          "id": "ca495819-a0b7-4ffb-a004-6d563daaf288",
+          "type": "adjValue",
+          "data": {
+           "variable": "ATTRIBUTE_WIS",
+           "value": {
+            "value": 1
+           }
+          }
+         }
+        },
+        {
+         "id": "ef2301b0-da12-4fda-9f54-719b4b5e7ad4",
+         "type": "ADJ_VALUE",
+         "operation": {
+          "id": "660a8e2d-813a-488f-80d9-0aac359b6e6f",
+          "type": "adjValue",
+          "data": {
+           "variable": "ATTRIBUTE_CHA",
+           "value": {
+            "value": 1
+           }
+          }
+         }
+        }
+       ]
+      }
+     },
+     {
+      "id": "ef0772dd-2aae-4ab6-819f-8acc60ed9d24",
+      "type": "select",
+      "data": {
+       "title": "Select an Attribute",
+       "modeType": "FILTERED",
+       "optionType": "ADJ_VALUE",
+       "optionsPredefined": [],
+       "optionsFilters": {
+        "id": "ec7c01b8-3a11-48d1-9322-64597135e0ae",
+        "type": "ADJ_VALUE",
+        "group": "ATTRIBUTE",
+        "value": {
+         "value": 1
+        }
+       }
+      }
+     },
+     {
+      "id": "37cd6f43-bd21-45b1-b58d-caae80350ec3",
+      "type": "adjValue",
+      "data": {
+       "variable": "SKILL_DIPLOMACY",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "4830b5df-8f8d-47e8-a049-30fe57419945",
+      "type": "giveAbilityBlock",
+      "data": {
+       "type": "feat",
+       "abilityBlockId": 29795
+      }
+     }
+    ],
+    "deprecated": null,
+    "content_source_id": 21,
+    "version": "1.0"
+   },
+   "ancestry": {
+    "id": 115,
+    "created_at": "2024-06-13T21:02:30.549935+00:00",
+    "updated_at": "2026-08-27T16:49:19.460496+00:00",
+    "name": "Anadi",
+    "rarity": "RARE",
+    "description": "> _Anadi people are reclusive, sapient spiders who hail from the jungles of southern Garund. Though they act in many ways like natural-born shapeshifters, their twin forms actually stem from carefully developed magic._\n\nAs a communal and peaceful people, anadi ancestors endeavored to establish trade with the neighbors of their homeland. However, these anadi soon learned that most others found their appearance to be extremely objectionable. Wishing to avoid conflict, ancient anadi retreated into isolation until they could find a solution. The answer came when their greatest scholars innovated a fusion of transmutation and illusion magic that allowed them to assume a [humanoid](link_trait_2399) form. The technique was developed, perfected, and eventually taught to the overwhelming majority of anadi.\n\nEarly efforts with their new approach to diplomacy have yielded much better results, though sporadic contact means that some outsiders whisper false legends about anadi, such as claims that they are humans who transform into monstrous spiders at moonrise. Even contemporary explorers have reported anadi as human-spider hybrids. The anadi people of the current day strive to slowly but surely create a world where they no longer need to hide their true nature.",
+    "trait_id": 2979,
+    "artwork_url": "https://images.demiplane.com/elements/pathfinder-2e/ancestries/ancestry-anadi-detail.png?format=webp&quality=90&width=1920",
+    "content_source_id": 28,
+    "deprecated": null,
+    "version": "1.0",
+    "operations": [
+     {
+      "id": "9b1de24a-c6aa-42fb-a6e3-22720bbb1ea5",
+      "type": "setValue",
+      "data": {
+       "variable": "MAX_HEALTH_ANCESTRY",
+       "value": 8
+      }
+     },
+     {
+      "id": "20768d5f-45c1-45df-b0ab-afb34940d186",
+      "type": "setValue",
+      "data": {
+       "variable": "SIZE",
+       "value": "medium"
+      }
+     },
+     {
+      "id": "4ab2b747-01e1-4b85-8bf2-8c223a1e35b4",
+      "type": "setValue",
+      "data": {
+       "variable": "SPEED",
+       "value": 25
+      }
+     },
+     {
+      "id": "662408eb-fe4c-40da-be3b-8b508cf82446",
+      "type": "adjValue",
+      "data": {
+       "variable": "ATTRIBUTE_DEX",
+       "value": {
+        "value": 1
+       }
+      }
+     },
+     {
+      "id": "e0ba9ab3-b5e4-45ac-b589-715f654ac0a8",
+      "type": "adjValue",
+      "data": {
+       "variable": "ATTRIBUTE_WIS",
+       "value": {
+        "value": 1
+       }
+      }
+     },
+     {
+      "id": "e5511767-02aa-4ea8-9428-773a31c6533f",
+      "type": "adjValue",
+      "data": {
+       "variable": "ATTRIBUTE_CON",
+       "value": {
+        "value": -1
+       }
+      }
+     },
+     {
+      "id": "279b1f2f-580f-40a3-8492-38668be7f691",
+      "type": "giveLanguage",
+      "data": {
+       "languageId": 319
+      }
+     },
+     {
+      "id": "76124064-9a7d-4c3b-b1c0-8c01b5a4b28c",
+      "type": "giveLanguage",
+      "data": {
+       "languageId": 328
+      }
+     },
+     {
+      "id": "9161a130-7bd7-4c41-abcb-82b7896a36a7",
+      "type": "setValue",
+      "data": {
+       "variable": "CORE_LANGUAGES",
+       "value": "[\n  \"Draconic\",\n  \"Elven\",\n  \"Kholo\",\n  \"Iruxi\",\n  \"Orcish\",\n  \"Fey\"\n]"
+      }
+     },
+     {
+      "id": "570d5974-1599-4608-86f3-dbfde9aaa50f",
+      "type": "giveTrait",
+      "data": {
+       "traitId": 2399
+      }
+     },
+     {
+      "id": "f6e5c931-abbc-4d0d-804c-77a5cb45e045",
+      "type": "giveAbilityBlock",
+      "data": {
+       "type": "physical-feature",
+       "abilityBlockId": 29416
+      }
+     },
+     {
+      "id": "00d45016-fd10-4053-b35b-ebdc4d613948",
+      "type": "giveAbilityBlock",
+      "data": {
+       "type": "physical-feature",
+       "abilityBlockId": 29435
+      }
+     },
+     {
+      "id": "ecddf4f1-e45b-4c0c-8ff9-b47a77d51e28",
+      "type": "select",
+      "data": {
+       "title": "Select an Attribute",
+       "modeType": "FILTERED",
+       "optionType": "ADJ_VALUE",
+       "optionsPredefined": [],
+       "optionsFilters": {
+        "id": "c06315fe-c632-4ebb-9b35-8c6dceb9fc7a",
+        "type": "ADJ_VALUE",
+        "group": "ATTRIBUTE",
+        "value": {
+         "value": 1
+        }
+       }
+      }
+     }
+    ]
+   },
+   "info": {
+    "appearance": "undefined",
+    "personality": "undefined",
+    "alignment": "undefined",
+    "beliefs": "undefined",
+    "age": "undefined",
+    "height": "undefined",
+    "weight": "undefined",
+    "gender": "undefined",
+    "pronouns": "undefined",
+    "faction": "undefined",
+    "reputation": 0,
+    "ethnicity": "undefined",
+    "nationality": "undefined",
+    "birthplace": "undefined",
+    "organized_play_id": ""
+   },
+   "conditions": [
+    {
+     "name": "Wounded",
+     "description": "You have been seriously injured. If you lose the dying condition and do not already have the wounded condition, you become wounded 1. If you already have the wounded condition when you lose the dying condition, your wounded condition value increases by 1. If you gain the dying condition while wounded, increase your dying condition value by your wounded value.\n    The wounded condition ends if someone successfully restores Hit Points to you using Treat Wounds, or if you are restored to full Hit Points by any means and rest for 10 minutes.",
+     "value": 1,
+     "for_creature": true,
+     "for_object": false
+    }
+   ],
+   "background_image_url": "https://cdna.artstation.com/p/assets/images/images/030/992/364/large/jorge-jacinto-the-ocean-is-on-fire-red.jpg",
+   "image_url": "https://api.wanderersguide.app/storage/v1/object/public/portraits/default/Warpriest%20-%20Oloch.png"
+  },
+  "roll_history": null,
+  "custom_operations": null,
+  "meta_data": {
+   "reset_hp": false,
+   "given_item_ids": [
+    14437,
+    9252
+   ],
+   "calculated_stats": {
+    "hp_max": 99,
+    "stamina_max": 0,
+    "resolve_max": 0,
+    "ac": 21,
+    "profs": {
+     "SAVE_FORT": {
+      "total": 14,
+      "type": "M"
+     },
+     "SAVE_REFLEX": {
+      "total": 11,
+      "type": "T"
+     },
+     "SAVE_WILL": {
+      "total": 15,
+      "type": "E"
+     },
+     "SKILL_ACROBATICS": {
+      "total": 2,
+      "type": "U"
+     },
+     "SKILL_ARCANA": {
+      "total": 11,
+      "type": "T"
+     },
+     "SKILL_ATHLETICS": {
+      "total": 14,
+      "type": "T"
+     },
+     "SKILL_CRAFTING": {
+      "total": 11,
+      "type": "T"
+     },
+     "SKILL_DECEPTION": {
+      "total": 1,
+      "type": "U"
+     },
+     "SKILL_DIPLOMACY": {
+      "total": 10,
+      "type": "T"
+     },
+     "SKILL_INTIMIDATION": {
+      "total": 10,
+      "type": "T"
+     },
+     "SKILL_MEDICINE": {
+      "total": 13,
+      "type": "T"
+     },
+     "SKILL_NATURE": {
+      "total": 4,
+      "type": "U"
+     },
+     "SKILL_OCCULTISM": {
+      "total": 11,
+      "type": "U"
+     },
+     "SKILL_PERFORMANCE": {
+      "total": 1,
+      "type": "U"
+     },
+     "SKILL_RELIGION": {
+      "total": 4,
+      "type": "U"
+     },
+     "SKILL_SOCIETY": {
+      "total": 2,
+      "type": "U"
+     },
+     "SKILL_STEALTH": {
+      "total": 2,
+      "type": "U"
+     },
+     "SKILL_SURVIVAL": {
+      "total": 13,
+      "type": "T"
+     },
+     "SKILL_THIEVERY": {
+      "total": 11,
+      "type": "U"
+     },
+     "SPELL_ATTACK": {
+      "total": 0,
+      "type": "U"
+     },
+     "SPELL_DC": {
+      "total": 0,
+      "type": "U"
+     },
+     "LIGHT_ARMOR": {
+      "total": 9,
+      "type": "T"
+     },
+     "MEDIUM_ARMOR": {
+      "total": 9,
+      "type": "T"
+     },
+     "HEAVY_ARMOR": {
+      "total": 0,
+      "type": "U"
+     },
+     "UNARMORED_DEFENSE": {
+      "total": 9,
+      "type": "T"
+     },
+     "LIGHT_BARDING": {
+      "total": 0,
+      "type": "U"
+     },
+     "HEAVY_BARDING": {
+      "total": 0,
+      "type": "U"
+     },
+     "SIMPLE_WEAPONS": {
+      "total": 11,
+      "type": "E"
+     },
+     "MARTIAL_WEAPONS": {
+      "total": 11,
+      "type": "E"
+     },
+     "ADVANCED_WEAPONS": {
+      "total": 0,
+      "type": "U"
+     },
+     "UNARMED_ATTACKS": {
+      "total": 11,
+      "type": "E"
+     },
+     "PERCEPTION": {
+      "total": 15,
+      "type": "E"
+     },
+     "CLASS_DC": {
+      "total": 12,
+      "type": "T"
+     },
+     "WEAPON_GROUP_AXE": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_BOMB": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_BOW": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_BRAWLING": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_CLUB": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_CROSSBOW": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_DART": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_FIREARM": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_FLAIL": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_HAMMER": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_KNIFE": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_PICK": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_POLEARM": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_SHIELD": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_SLING": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_SPEAR": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_SWORD": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_LASER": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_GROUP_PROJECTILE": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_DIVISION_GUN": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_DIVISION_GUN_SIMPLE": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_DIVISION_GUN_MARTIAL": {
+      "total": 0,
+      "type": "U"
+     },
+     "WEAPON_DIVISION_GUN_ADVANCED": {
+      "total": 0,
+      "type": "U"
+     },
+     "ARMOR_GROUP_CLOTH": {
+      "total": 0,
+      "type": "U"
+     },
+     "ARMOR_GROUP_CHAIN": {
+      "total": 0,
+      "type": "U"
+     },
+     "ARMOR_GROUP_COMPOSITE": {
+      "total": 0,
+      "type": "U"
+     },
+     "ARMOR_GROUP_LEATHER": {
+      "total": 0,
+      "type": "U"
+     },
+     "ARMOR_GROUP_PLATE": {
+      "total": 0,
+      "type": "U"
+     },
+     "SKILL_COMPUTERS": {
+      "total": 2,
+      "type": "U"
+     },
+     "SKILL_PILOTING": {
+      "total": 2,
+      "type": "U"
+     }
+    }
+   }
+  },
+  "options": {
+   "is_public": false,
+   "dice_roller": false,
+   "voluntary_flaws": false,
+   "class_archetypes": false,
+   "custom_operations": false,
+   "ignore_bulk_limit": false,
+   "auto_heighten_spells": false,
+   "alternate_ancestry_boosts": false,
+   "auto_detect_prerequisites": false
+  },
+  "variants": {
+   "ancestry_paragon": false,
+   "proficiency_without_level": false,
+   "proficiency_half_level": false,
+   "stamina": false,
+   "free_archetype": false,
+   "dual_class": false
+  },
+  "content_sources": {
+   "enabled": [
+    32,
+    903,
+    14,
+    34,
+    33,
+    18,
+    839,
+    611,
+    114,
+    239,
+    240,
+    241,
+    35,
+    51,
+    19,
+    901,
+    20,
+    3,
+    11,
+    43,
+    580,
+    12,
+    420,
+    730,
+    36,
+    9,
+    21,
+    37,
+    818,
+    203,
+    38,
+    7,
+    22,
+    23,
+    731,
+    17,
+    852,
+    853,
+    859,
+    867,
+    146,
+    185,
+    24,
+    842,
+    437,
+    635,
+    39,
+    25,
+    26,
+    45,
+    8,
+    873,
+    27,
+    636,
+    811,
+    46,
+    499,
+    40,
+    117,
+    186,
+    50,
+    29,
+    1,
+    256,
+    276,
+    476,
+    41,
+    15,
+    748,
+    493,
+    402,
+    52,
+    13,
+    902,
+    118,
+    582,
+    591,
+    147,
+    448,
+    578,
+    793,
+    579,
+    152,
+    42,
+    840,
+    590,
+    900,
+    172,
+    44,
+    28,
+    47,
+    48,
+    318,
+    171,
+    30,
+    16,
+    581,
+    838,
+    49,
+    85,
+    400,
+    305,
+    31
+   ]
+  },
+  "operation_data": {
+   "selections": {
+    "class_720d2fe6-f042-4353-8313-1293375b1301-0": "SKILL_MEDICINE",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-0_SKILL_MEDICINE": "SKILL_ACROBATICS",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-1": "SKILL_SURVIVAL",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-1_SKILL_SURVIVAL": "SKILL_DECEPTION",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-2": "SKILL_INTIMIDATION",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-2_SKILL_INTIMIDATION": "SKILL_CRAFTING",
+    "class-feature-30965_d900cf62-993b-4f6b-a497-33345c8419f6": "ATTRIBUTE_INT",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-3": "SKILL_CRAFTING",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-3_SKILL_CRAFTING": "SKILL_SURVIVAL",
+    "class-feature-30965_d900cf62-993b-4f6b-a497-33345c8419f6_ATTRIBUTE_INT": "ATTRIBUTE_WIS",
+    "class-feature-30965_4a800419-f7d5-43a3-8f4a-b03a8e76eb37": "ATTRIBUTE_WIS",
+    "class-feature-30965_4a800419-f7d5-43a3-8f4a-b03a8e76eb37_ATTRIBUTE_WIS": "ATTRIBUTE_STR",
+    "class-feature-30965_ff531ab1-3d9a-43a0-b9c4-d7c29af9e830": "ATTRIBUTE_STR",
+    "class-feature-30965_ff531ab1-3d9a-43a0-b9c4-d7c29af9e830_ATTRIBUTE_STR": "ATTRIBUTE_STR",
+    "class-feature-30965_18fee4ba-a9a5-4f9c-85f4-fad3f73e0480": "ATTRIBUTE_CON",
+    "class-feature-30965_18fee4ba-a9a5-4f9c-85f4-fad3f73e0480_ATTRIBUTE_CON": "ATTRIBUTE_CHA",
+    "class-feature-31093_fc073e4e-1a68-45b2-8550-a4caab054e1a": "31322",
+    "class-feature-31093_fc073e4e-1a68-45b2-8550-a4caab054e1a_31322": "31324",
+    "class-feature-31305_71e76b2a-d8a7-4911-b378-b1dea99dfcae": "31314",
+    "class-feature-31305_71e76b2a-d8a7-4911-b378-b1dea99dfcae_31314": "31313",
+    "class-feature-31094_fe85dde8-7e7f-413f-8a65-fd97b554d4aa": "31330",
+    "class-feature-31094_fe85dde8-7e7f-413f-8a65-fd97b554d4aa_31330": "31331",
+    "class-feature-30975_7321a331-60eb-4fc6-a9cb-e76f92b16cef": "22680",
+    "class-feature-30975_7321a331-60eb-4fc6-a9cb-e76f92b16cef_22680": "27656",
+    "class-feature-30970_8be52fe8-0e0f-4c15-be23-13943282f27f": "46748",
+    "class-feature-30970_8be52fe8-0e0f-4c15-be23-13943282f27f_46748": "22435",
+    "class-feature-30986_b494f324-953d-4d8c-a838-6e48b2e029e2": "SKILL_THIEVERY",
+    "class-feature-30986_b494f324-953d-4d8c-a838-6e48b2e029e2_SKILL_THIEVERY": "SKILL_NATURE",
+    "class-feature-31203_5799ef5d-897c-404b-94e1-9fbb159bcecf": "31273",
+    "class-feature-31203_5799ef5d-897c-404b-94e1-9fbb159bcecf_31273": "27928",
+    "class-feature-30977_160efbb6-db1f-4f36-a12d-f231990c4669": "22733",
+    "class-feature-30977_160efbb6-db1f-4f36-a12d-f231990c4669_22733": "46731",
+    "class-feature-30966_fcc45fe6-efc8-4ea6-b0ec-5070f870f8db": "ATTRIBUTE_CON",
+    "class-feature-30966_fcc45fe6-efc8-4ea6-b0ec-5070f870f8db_ATTRIBUTE_CON": "ATTRIBUTE_CON",
+    "class-feature-30966_3909a5dd-1df6-4f6b-a287-17275228e686": "ATTRIBUTE_WIS",
+    "class-feature-30966_3909a5dd-1df6-4f6b-a287-17275228e686_ATTRIBUTE_WIS": "ATTRIBUTE_STR",
+    "class-feature-30966_a36ab775-c49c-408f-a84a-dccef98a9243": "ATTRIBUTE_INT",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-4": "SKILL_ARCANA",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-4_SKILL_ARCANA": "SKILL_PERFORMANCE",
+    "class-feature-30966_a36ab775-c49c-408f-a84a-dccef98a9243_ATTRIBUTE_INT": "ATTRIBUTE_STR",
+    "class-feature-30966_b6deef7d-13fb-497a-9f2e-607954bfbf29": "ATTRIBUTE_STR",
+    "class-feature-30966_b6deef7d-13fb-497a-9f2e-607954bfbf29_ATTRIBUTE_STR": "ATTRIBUTE_STR",
+    "class-feature-30987_17424b70-0636-4c0e-b966-7f90256afc0b": "SKILL_ATHLETICS",
+    "class-feature-30987_17424b70-0636-4c0e-b966-7f90256afc0b_SKILL_ATHLETICS": "SKILL_MEDICINE",
+    "class-feature-31096_df1d64ab-7bd4-45fa-b544-0db2e3cdfca7": "31328",
+    "class-feature-31096_df1d64ab-7bd4-45fa-b544-0db2e3cdfca7_31328": "27928",
+    "class-feature-30978_0856cfe8-16ef-4039-a351-9ad0336b7bdf": "35194",
+    "class-feature-30978_0856cfe8-16ef-4039-a351-9ad0336b7bdf_35194": "35143",
+    "class-feature-30971_8e506dbc-ffb8-44a3-864f-31d590c712a3": "20492",
+    "class-feature-30971_8e506dbc-ffb8-44a3-864f-31d590c712a3_20492": "20640",
+    "class-feature-30988_435f0bcc-1064-422a-b2ff-a06db35be72d": "SKILL_OCCULTISM",
+    "class-feature-30988_435f0bcc-1064-422a-b2ff-a06db35be72d_SKILL_OCCULTISM": "SKILL_MEDICINE",
+    "ancestry_ecddf4f1-e45b-4c0c-8ff9-b47a77d51e28": "ATTRIBUTE_CHA",
+    "ancestry_ecddf4f1-e45b-4c0c-8ff9-b47a77d51e28_ATTRIBUTE_CHA": "ATTRIBUTE_CHA",
+    "ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-0": "313",
+    "ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-0_313": "419",
+    "ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-1": "902",
+    "ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-1_902": "94",
+    "ancestry-section-5742419753466526_3fd6a268-771b-49fc-93ed-9b53695d1a29": "29468",
+    "ancestry-section-5742419753466526_3fd6a268-771b-49fc-93ed-9b53695d1a29_29468": "29466",
+    "ancestry-section-2707339574403411_9f26290c-a2db-4c45-9b34-5053e60c106d-0": "29475",
+    "ancestry-section-2707339574403411_9f26290c-a2db-4c45-9b34-5053e60c106d-0_29475": "29472",
+    "ancestry-section-491735390724817_9f26290c-a2db-4c45-9b34-5053e60c106d-1": "29476",
+    "ancestry-section-491735390724817_9f26290c-a2db-4c45-9b34-5053e60c106d-1_29476": "29472",
+    "background_77716721-c318-4dc4-9f09-2feb206fcd00": "ca495819-a0b7-4ffb-a004-6d563daaf288",
+    "background_77716721-c318-4dc4-9f09-2feb206fcd00_ca495819-a0b7-4ffb-a004-6d563daaf288": "660a8e2d-813a-488f-80d9-0aac359b6e6f",
+    "background_ef0772dd-2aae-4ab6-819f-8acc60ed9d24": "ATTRIBUTE_DEX",
+    "background_ef0772dd-2aae-4ab6-819f-8acc60ed9d24_ATTRIBUTE_DEX": "ATTRIBUTE_CON",
+    "ancestry-section-491735390724817_9f26290c-a2db-4c45-9b34-5053e60c106d-1_29476_9a604abf-0883-4211-9d4e-9aede390de8a_dc582144-1fc5-4af9-b319-c1d310f28185": "3b3b3378-43c0-4490-bd2e-365ea9bc38de"
+   }
+  },
+  "spells": {
+   "slots": [],
+   "list": [],
+   "focus_point_current": 0,
+   "innate_casts": []
+  },
+  "companions": null,
+  "campaign_id": 42
+ },
+ "content": {
+  "_README": "Here's some compiled data about the character. Should be fairly human-readable. The <character> section is what WG reads, this section is solely for you! Should give you an abundance of compiled stats and info about the character. If you have any questions, feel free to ask on our Discord!",
+  "feats_features": {
+   "generalAndSkillFeats": [
+    {
+     "id": 22680,
+     "created_at": "2024-04-20T07:11:50.946055+00:00",
+     "operations": null,
+     "name": "Crystal Healing",
+     "actions": null,
+     "level": 1,
+     "rarity": "UNCOMMON",
+     "prerequisites": [
+      "trained in Occultism"
+     ],
+     "frequency": null,
+     "cost": null,
+     "trigger": null,
+     "requirements": null,
+     "access": null,
+     "description": "You know how to stimulate a body's natural healing abilities through the application of resonant crystals. Doing so requires you to use at least two semiprecious stones with a total value of 5 gp or more in place of healer's tools, which allows you to attempt to [Treat Disease](link_action_19862) or [Treat Poison](link_action_19863) using Occultism rather than Medicine.\n\nIf you're an expert in Occultism and you use gems whose total value equals or exceeds 50 gp, you gain a +1 item bonus to your Occultism check. If you're a master and the gems' value equals or exceeds 700 gp, the item bonus increases to +2; if you're legendary in Occultism and the gems' value equals or exceeds 15,000 gp, the item bonus increases to +3.",
+     "special": null,
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=3773",
+       "book": "Dark Archive",
+       "page": "78"
+      },
+      "foundry": {
+       "rules": []
+      }
+     },
+     "traits": [
+      1437,
+      1442,
+      1433,
+      1438
+     ],
+     "content_source_id": 12,
+     "version": null,
+     "uuid": 4957127078625468,
+     "availability": null,
+     "search_tsv": "'+1':90B '+2':116B '+3':138B '000':131B '15':130B '19862':56B '19863':62B '5':36B '50':85B '700':109B 'abil':13B 'action':55B,61B 'allow':47B 'applic':16B 'attempt':50B 'bodi':9B 'bonus':92B,113B,135B 'check':96B 'crystal':1A,19B 'diseas':53B 'equal':82B,106B,127B 'exceed':84B,108B,129B 'expert':72B 'gain':88B 'gem':78B,104B,125B 'gp':37B,86B,110B,132B 'heal':2A,12B 'healer':43B 'increas':114B,136B 'item':91B,112B,134B 'know':4B 'least':27B 'legendari':120B 'link':54B,60B 'master':101B 'medicin':67B 'natur':11B 'occult':64B,74B,95B,122B 'place':41B 'poison':59B 'rather':65B 're':70B,99B,119B 'requir':22B 'reson':18B 'semipreci':29B 'stimul':7B 'stone':30B 'tool':45B 'total':33B,80B 'treat':52B,58B 'two':28B 'use':25B,63B,77B 'valu':34B,81B,105B,126B 'whose':79B",
+     "updated_at": "2026-08-27T16:49:25.686839+00:00"
+    },
+    {
+     "id": 20492,
+     "created_at": "2023-12-14T03:22:54.500998+00:00",
+     "operations": null,
+     "name": "Ride",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": null,
+     "cost": null,
+     "trigger": null,
+     "requirements": null,
+     "access": null,
+     "description": "When you Command an Animal you're mounted on to take a move action (such as [Stride](link_action_19855)), you automatically succeed instead of needing to attempt a check. Any animal you're mounted on acts on your turn, like a minion. If you Mount an animal in the middle of an encounter, it skips its next turn and then acts on your next turn.",
+     "special": null,
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=5206",
+       "book": "Player Core",
+       "page": "261"
+      },
+      "foundry": {
+       "rules": []
+      }
+     },
+     "traits": [
+      1437
+     ],
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 7356423023751965,
+     "availability": null,
+     "search_tsv": "'19855':21B 'act':38B,63B 'action':15B,20B 'anim':6B,33B,49B 'attempt':29B 'automat':23B 'check':31B 'command':4B 'encount':55B 'instead':25B 'like':42B 'link':19B 'middl':52B 'minion':44B 'mount':9B,36B,47B 'move':14B 'need':27B 'next':59B,66B 're':8B,35B 'ride':1A 'skip':57B 'stride':18B 'succeed':24B 'take':12B 'turn':41B,60B,67B",
+     "updated_at": "2026-08-27T16:53:40.818195+00:00"
+    },
+    {
+     "id": 35194,
+     "created_at": "2024-09-08T04:45:27.330755+00:00",
+     "operations": [
+      {
+       "id": "f8a401b2-9d92-4468-be80-9a7f50c5294a",
+       "type": "injectText",
+       "data": {
+        "type": "action",
+        "id": 19619,
+        "text": "**Sparkling Performance** You can Create a Diversion using Performance instead of Deception."
+       }
+      }
+     ],
+     "name": "Sparkling Performance",
+     "actions": "ONE-ACTION",
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [
+      "trained in Performance"
+     ],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "Your presence lights up the stage. You can [Create a Diversion](link_action_19619) using Performance instead of Deception. If you’re a master in Performance, you can create sparkles when you attempt a Performance check, casting dim light in a 20-foot radius. If you’re legendary in Performance, you can cast bright light in a 20-foot radius and attempt to [counteract](link_action_27519) a [darkness](link_trait_1900) effect using your Performance modifier as your [counteract](link_action_27519) modifier.",
+     "special": "",
+     "type": "feat",
+     "meta_data": {},
+     "traits": [
+      1437,
+      1438
+     ],
+     "content_source_id": 276,
+     "version": null,
+     "uuid": 1942971367194826,
+     "availability": null,
+     "search_tsv": "'1900':74B '19619':16B '20':44B,60B '27519':69B,85B 'action':15B,68B,84B 'attempt':35B,64B 'bright':56B 'cast':39B,55B 'check':38B 'counteract':66B,82B 'creat':11B,31B 'dark':71B 'decept':21B 'dim':40B 'divers':13B 'effect':75B 'foot':45B,61B 'instead':19B 'legendari':50B 'light':5B,41B,57B 'link':14B,67B,72B,83B 'master':26B 'modifi':79B,86B 'perform':2A,18B,28B,37B,52B,78B 'presenc':4B 'radius':46B,62B 're':24B,49B 'sparkl':1A,32B 'stage':8B 'trait':73B 'use':17B,76B",
+     "updated_at": "2024-09-08T04:45:27.330755+00:00"
+    },
+    {
+     "id": 20570,
+     "created_at": "2023-12-14T03:42:23.200163+00:00",
+     "operations": [
+      {
+       "id": "dc582144-1fc5-4af9-b319-c1d310f28185",
+       "type": "select",
+       "data": {
+        "title": "Select a Specialty",
+        "modeType": "PREDEFINED",
+        "optionType": "CUSTOM",
+        "optionsPredefined": [
+         {
+          "id": "def014c9-df51-49be-b05f-f2601b9b5710",
+          "type": "CUSTOM",
+          "title": "Alchemy",
+          "description": "[Alchemical](link_trait_1529) items such as elixirs. Requires [Alchemical Crafting](link_feat_19894) to [Craft](link_action_19617).",
+          "operations": [
+           {
+            "id": "bebb8d1c-b209-4603-a246-0e3ed131d416",
+            "type": "conditional",
+            "data": {
+             "conditions": [
+              {
+               "id": "7e575cbb-4f59-4927-955f-2d109b485f20",
+               "name": "SKILL_CRAFTING",
+               "data": {
+                "name": "SKILL_CRAFTING",
+                "type": "prof",
+                "value": {
+                 "value": "U",
+                 "attribute": "ATTRIBUTE_INT"
+                }
+               },
+               "type": "prof",
+               "operator": "LESS_THAN",
+               "value": "M"
+              }
+             ],
+             "trueOperations": [
+              {
+               "id": "c721f08e-89f1-43cb-9545-fccaad55d48b",
+               "type": "addBonusToValue",
+               "data": {
+                "variable": "SKILL_CRAFTING",
+                "value": 1,
+                "type": "circumstance",
+                "text": "to Craft alchemical items"
+               }
+              }
+             ],
+             "falseOperations": [
+              {
+               "id": "383595ab-1e66-4f84-ae50-ef47c944fad2",
+               "type": "addBonusToValue",
+               "data": {
+                "variable": "SKILL_CRAFTING",
+                "value": 2,
+                "type": "circumstance",
+                "text": "to Craft alchemical items"
+               }
+              }
+             ]
+            }
+           }
+          ]
+         },
+         {
+          "id": "d02ef81f-1f63-4bc1-a8e9-88e108830a5d",
+          "type": "CUSTOM",
+          "title": "Artistry",
+          "description": "Fine art, including jewelry",
+          "operations": [
+           {
+            "id": "93f6b9ea-bbc3-4b77-8396-503275b2fa9c",
+            "type": "conditional",
+            "data": {
+             "conditions": [
+              {
+               "id": "0e1ada89-a325-4aef-aa4d-abe136edeb68",
+               "name": "SKILL_CRAFTING",
+               "data": {
+                "name": "SKILL_CRAFTING",
+                "type": "prof",
+                "value": {
+                 "value": "U",
+                 "attribute": "ATTRIBUTE_INT"
+                }
+               },
+               "type": "prof",
+               "operator": "LESS_THAN",
+               "value": "M"
+              }
+             ],
+             "trueOperations": [
+              {
+               "id": "760fef19-0841-4e29-803f-1dd299ff2db0",
+               "type": "addBonusToValue",
+               "data": {
+                "variable": "SKILL_CRAFTING",
+                "value": 1,
+                "type": "circumstance",
+                "text": "to Craft fine art, including jewelry"
+               }
+              }
+             ],
+             "falseOperations": [
+              {
+               "id": "45f7d008-9ab3-4406-b1f0-bcd81010ac8e",
+               "type": "addBonusToValue",
+               "data": {
+                "variable": "SKILL_CRAFTING",
+                "value": 2,
+                "type": "circumstance",
+                "text": "to Craft fine art, including jewelry"
+               }
+              }
+             ]
+            }
+           }
+          ]
+         },
+         {
+          "id": "454a9976-003d-4dbc-96e0-ff0e94794eef",
+          "type": "CUSTOM",
+          "title": "Blacksmithing",
+          "description": "Durable metal goods, including metal armor",
+          "operations": [
+           {
+            "id": "bdb22265-b088-4c53-80a3-7150f7f0f702",
+            "type": "conditional",
+            "data": {
+             "conditions": [
+              {
+               "id": "6f55f2f8-ca09-4b7f-b8ae-f279356937a9",
+               "name": "SKILL_CRAFTING",
+               "data": {
+                "name": "SKILL_CRAFTING",
+                "type": "prof",
+                "value": {
+                 "value": "U",
+                 "attribute": "ATTRIBUTE_INT"
+                }
+               },
+               "type": "prof",
+               "operator": "LESS_THAN",
+               "value": "M"
+              }
+             ],
+             "trueOperations": [
+              {
+               "id": "b380fa13-f8bd-44a9-beb4-fc126766d686",
+               "type": "addBonusToValue",
+               "data": {
+                "variable": "SKILL_CRAFTING",
+                "value": 1,
+                "type": "circumstance",
+                "text": "to Craft durable metal goods, including metal armor"
+               }
+              }
+             ],
+             "falseOperations": [
+              {
+               "id": "9cbf5a28-927c-472d-97e2-79ea2d77b84f",
+               "type": "addBonusToValue",
+               "data": {
+                "variable": "SKILL_CRAFTING",
+                "value": 2,
+                "type": "circumstance",
+                "text": "to Craft durable metal goods, including metal armor"
+               }
+              }
+             ]
+            }
+           }
+          ]
+         },
+         {
+          "id": "e6278ba9-9fd4-4fcc-887c-2cd0226b350c",
+          "type": "CUSTOM",
+          "title": "Bookmaking",
+          "description": "Books and paper",
+          "operations": [
+           {
+            "id": "6a68fd8a-cf77-43b5-b347-cfc51aab24c7",
+            "type": "conditional",
+            "data": {
+             "conditions": [
+              {
+               "id": "c3f7f0c9-3724-44d8-9907-fe55c1a36883",
+               "name": "SKILL_CRAFTING",
+               "data": {
+                "name": "SKILL_CRAFTING",
+                "type": "prof",
+                "value": {
+                 "value": "U",
+                 "attribute": "ATTRIBUTE_INT"
+                }
+               },
+               "type": "prof",
+               "operator": "LESS_THAN",
+               "value": "M"
+              }
+             ],
+             "trueOperations": [
+              {
+               "id": "645acd03-65fe-46a0-94c9-de2a9464734f",
+               "type": "addBonusToValue",
+               "data": {
+                "variable": "SKILL_CRAFTING",
+                "value": 1,
+                "type": "circumstance",
+                "text": "to Craft books and paper"
+               }
+              }
+             ],
+             "falseOperations": [
+              {
+               "id": "6062fe66-f18a-4adc-bbe5-caebc6dbeddd",
+               "type": "addBonusToValue",
+               "data": {
+                "variable": "SKILL_CRAFTING",
+                "value": 2,
+                "type": "circumstance",
+                "text": "to Craft books and paper"
+               }
+              }
+             ]
+            }
+           }
+          ]
+         },
+         {
+          "id": "090dd286-90b7-45e0-bd24-3213dd170546",
+          "type": "CUSTOM",
+          "title": "Glassmaking",
+          "description": "Glass, including glassware and windows",
+          "operations": [
+           {
+            "id": "bce520ff-91cb-4bba-b620-9af7e1586a75",
+            "type": "conditional",
+            "data": {
+             "conditions": [
+              {
+               "id": "6af425db-3237-4d9b-b51f-6483b473de6a",
+               "name": "SKILL_CRAFTING",
+               "data": {
+                "name": "SKILL_CRAFTING",
+                "type": "prof",
+                "value": {
+                 "value": "U",
+                 "attribute": "ATTRIBUTE_INT"
+                }
+               },
+               "type": "prof",
+               "operator": "LESS_THAN",
+               "value": "M"
+              }
+             ],
+             "trueOperations": [
+              {
+               "id": "385113a3-1b68-4ae8-bffb-6b1e721380f6",
+               "type": "addBonusToValue",
+               "data": {
+                "variable": "SKILL_CRAFTING",
+                "value": 1,
+                "type": "circumstance",
+                "text": "to Craft glass, including glassware and windows"
+               }
+              }
+             ],
+             "falseOperations": [
+              {
+               "id": "e9677c76-d09c-4281-a831-0d08c32e6d54",
+               "type": "addBonusToValue",
+               "data": {
+                "variable": "SKILL_CRAFTING",
+                "value": 2,
+                "type": "circumstance",
+                "text": "to Craft glass, including glassware and windows"
+               }
+              }
+             ]
+            }
+           }
+          ]
+         },
+         {
+          "id": "fa46f11d-8ce1-41f9-aff3-d2706975f2c5",
+          "type": "CUSTOM",
+          "title": "Leatherworking",
+          "description": "Leather goods, including [leather armor](link_item_7068)",
+          "operations": [
+           {
+            "id": "80ca31cb-6385-4d02-b642-e25ce8c5a67f",
+            "type": "conditional",
+            "data": {
+             "conditions": [
+              {
+               "id": "c4145a1b-c684-4efa-b2cd-7278bcd07e95",
+               "name": "SKILL_CRAFTING",
+               "data": {
+                "name": "SKILL_CRAFTING",
+                "type": "prof",
+                "value": {
+                 "value": "U",
+                 "attribute": "ATTRIBUTE_INT"
+                }
+               },
+               "type": "prof",
+               "operator": "LESS_THAN",
+               "value": "M"
+              }
+             ],
+             "trueOperations": [
+              {
+               "id": "a1ba864d-7071-42b4-88dd-00e091eb1d8f",
+               "type": "addBonusToValue",
+               "data": {
+                "variable": "SKILL_CRAFTING",
+                "value": 1,
+                "type": "circumstance",
+                "text": "to Craft leather goods, including leather armor"
+               }
+              }
+             ],
+             "falseOperations": [
+              {
+               "id": "5de46c47-1702-4835-83fd-28f310972eb3",
+               "type": "addBonusToValue",
+               "data": {
+                "variable": "SKILL_CRAFTING",
+                "value": 2,
+                "type": "circumstance",
+                "text": "to Craft leather goods, including leather armor"
+               }
+              }
+             ]
+            }
+           }
+          ]
+         },
+         {
+          "id": "36adf734-307f-49bb-a728-a0758b6d93e1",
+          "type": "CUSTOM",
+          "title": "Pottery",
+          "description": "Ceramic goods",
+          "operations": [
+           {
+            "id": "325970ed-7df5-41e5-8900-7c58dbc0e3d7",
+            "type": "conditional",
+            "data": {
+             "conditions": [
+              {
+               "id": "81b547bd-45bd-40e1-9bd3-772efbf5dba1",
+               "name": "SKILL_CRAFTING",
+               "data": {
+                "name": "SKILL_CRAFTING",
+                "type": "prof",
+                "value": {
+                 "value": "U",
+                 "attribute": "ATTRIBUTE_INT"
+                }
+               },
+               "type": "prof",
+               "operator": "LESS_THAN",
+               "value": "M"
+              }
+             ],
+             "trueOperations": [
+              {
+               "id": "51abfea0-b3b3-4340-98fa-f68b27e9e9bc",
+               "type": "addBonusToValue",
+               "data": {
+                "variable": "SKILL_CRAFTING",
+                "value": 1,
+                "type": "circumstance",
+                "text": "to Craft ceramic goods"
+               }
+              }
+             ],
+             "falseOperations": [
+              {
+               "id": "26e843ff-0a52-4c27-862b-edca60761ab3",
+               "type": "addBonusToValue",
+               "data": {
+                "variable": "SKILL_CRAFTING",
+                "value": 2,
+                "type": "circumstance",
+                "text": "to Craft ceramic goods"
+               }
+              }
+             ]
+            }
+           }
+          ]
+         },
+         {
+          "id": "89689dff-eb65-409e-bdf9-8ebc4d59af7e",
+          "type": "CUSTOM",
+          "title": "Shipbuilding",
+          "description": "Ships and boats",
+          "operations": [
+           {
+            "id": "4362739d-3bf7-482e-b5cd-8e490da51313",
+            "type": "conditional",
+            "data": {
+             "conditions": [
+              {
+               "id": "6e5c4cbc-5891-4a7e-9fc3-41a8e72993b0",
+               "name": "SKILL_CRAFTING",
+               "data": {
+                "name": "SKILL_CRAFTING",
+                "type": "prof",
+                "value": {
+                 "value": "U",
+                 "attribute": "ATTRIBUTE_INT"
+                }
+               },
+               "type": "prof",
+               "operator": "LESS_THAN",
+               "value": "M"
+              }
+             ],
+             "trueOperations": [
+              {
+               "id": "058a633a-a0e3-4403-832d-6b2e47ba5889",
+               "type": "addBonusToValue",
+               "data": {
+                "variable": "SKILL_CRAFTING",
+                "value": 1,
+                "type": "circumstance",
+                "text": "to Craft ships and boats"
+               }
+              }
+             ],
+             "falseOperations": [
+              {
+               "id": "c4f3a84c-284d-447e-8698-473ec148e815",
+               "type": "addBonusToValue",
+               "data": {
+                "variable": "SKILL_CRAFTING",
+                "value": 2,
+                "type": "circumstance",
+                "text": "to Craft ships and boats"
+               }
+              }
+             ]
+            }
+           }
+          ]
+         },
+         {
+          "id": "f49eb1bf-b8e7-41c9-86aa-200fa0f18a7c",
+          "type": "CUSTOM",
+          "title": "Stonemasonry",
+          "description": "Stone goods and structures",
+          "operations": [
+           {
+            "id": "b17b7630-d03c-4360-bed4-fc349ccdd5b6",
+            "type": "conditional",
+            "data": {
+             "conditions": [
+              {
+               "id": "bab4ffc2-7eff-4499-908c-bc5a712345c7",
+               "name": "SKILL_CRAFTING",
+               "data": {
+                "name": "SKILL_CRAFTING",
+                "type": "prof",
+                "value": {
+                 "value": "U",
+                 "attribute": "ATTRIBUTE_INT"
+                }
+               },
+               "type": "prof",
+               "operator": "LESS_THAN",
+               "value": "M"
+              }
+             ],
+             "trueOperations": [
+              {
+               "id": "e83eb612-eb78-486e-8b2c-40a11d8d3ed9",
+               "type": "addBonusToValue",
+               "data": {
+                "variable": "SKILL_CRAFTING",
+                "value": 1,
+                "type": "circumstance",
+                "text": "to Craft stone goods and structures"
+               }
+              }
+             ],
+             "falseOperations": [
+              {
+               "id": "67038f56-396a-472a-b0a2-a59564a39515",
+               "type": "addBonusToValue",
+               "data": {
+                "variable": "SKILL_CRAFTING",
+                "value": 2,
+                "type": "circumstance",
+                "text": "to Craft stone goods and structures"
+               }
+              }
+             ]
+            }
+           }
+          ]
+         },
+         {
+          "id": "990f3900-e36a-494d-94e6-fad539627d6c",
+          "type": "CUSTOM",
+          "title": "Tailoring",
+          "description": "Clothing",
+          "operations": [
+           {
+            "id": "5342707b-c626-4e18-88c6-1d6840dfe51e",
+            "type": "conditional",
+            "data": {
+             "conditions": [
+              {
+               "id": "59d21262-fe33-49a0-9169-edeb6cfff59b",
+               "name": "SKILL_CRAFTING",
+               "data": {
+                "name": "SKILL_CRAFTING",
+                "type": "prof",
+                "value": {
+                 "value": "U",
+                 "attribute": "ATTRIBUTE_INT"
+                }
+               },
+               "type": "prof",
+               "operator": "LESS_THAN",
+               "value": "M"
+              }
+             ],
+             "trueOperations": [
+              {
+               "id": "9a5717ab-b9df-44ba-b29c-eba916aa5610",
+               "type": "addBonusToValue",
+               "data": {
+                "variable": "SKILL_CRAFTING",
+                "value": 1,
+                "type": "circumstance",
+                "text": "to Craft clothing"
+               }
+              }
+             ],
+             "falseOperations": [
+              {
+               "id": "eef83d9d-a1e8-4c20-80c1-a89de0fd0a1b",
+               "type": "addBonusToValue",
+               "data": {
+                "variable": "SKILL_CRAFTING",
+                "value": 2,
+                "type": "circumstance",
+                "text": "to Craft clothing"
+               }
+              }
+             ]
+            }
+           }
+          ]
+         },
+         {
+          "id": "3ef1fd8b-7ad0-4710-b1f1-875783eb63b4",
+          "type": "CUSTOM",
+          "title": "Weaving",
+          "description": "Textiles, baskets, and rugs",
+          "operations": [
+           {
+            "id": "b5258f33-9c38-4261-a6d9-bd7878e2b0da",
+            "type": "conditional",
+            "data": {
+             "conditions": [
+              {
+               "id": "ffa5044b-03e7-473c-a9c4-d8a8bc3d416a",
+               "name": "SKILL_CRAFTING",
+               "data": {
+                "name": "SKILL_CRAFTING",
+                "type": "prof",
+                "value": {
+                 "value": "U",
+                 "attribute": "ATTRIBUTE_INT"
+                }
+               },
+               "type": "prof",
+               "operator": "LESS_THAN",
+               "value": "M"
+              }
+             ],
+             "trueOperations": [
+              {
+               "id": "25d0c8ec-14ee-4ebd-9446-b1e6c71fe218",
+               "type": "addBonusToValue",
+               "data": {
+                "variable": "SKILL_CRAFTING",
+                "value": 1,
+                "type": "circumstance",
+                "text": "to Craft textiles, baskets, and rugs"
+               }
+              }
+             ],
+             "falseOperations": [
+              {
+               "id": "2e06443c-1bec-48e2-a085-eac72ef98ef1",
+               "type": "addBonusToValue",
+               "data": {
+                "variable": "SKILL_CRAFTING",
+                "value": 2,
+                "type": "circumstance",
+                "text": "to Craft textiles, baskets, and rugs"
+               }
+              }
+             ]
+            }
+           }
+          ]
+         },
+         {
+          "id": "3b3b3378-43c0-4490-bd2e-365ea9bc38de",
+          "type": "CUSTOM",
+          "title": "Woodworking",
+          "description": "Wooden goods and structures",
+          "operations": [
+           {
+            "id": "495e5fb9-9c71-48c6-bd13-e45b7cfcd192",
+            "type": "conditional",
+            "data": {
+             "conditions": [
+              {
+               "id": "83f3c6ca-5b3c-4985-bf34-95e95cd796ad",
+               "name": "SKILL_CRAFTING",
+               "data": {
+                "name": "SKILL_CRAFTING",
+                "type": "prof",
+                "value": {
+                 "value": "U",
+                 "attribute": "ATTRIBUTE_INT"
+                }
+               },
+               "type": "prof",
+               "operator": "LESS_THAN",
+               "value": "M"
+              }
+             ],
+             "trueOperations": [
+              {
+               "id": "61024036-d9b6-4e67-8d74-211ee1ffe427",
+               "type": "addBonusToValue",
+               "data": {
+                "variable": "SKILL_CRAFTING",
+                "value": 1,
+                "type": "circumstance",
+                "text": "to Craft wooden goods and structures"
+               }
+              }
+             ],
+             "falseOperations": [
+              {
+               "id": "367b0d17-29cb-431e-80da-c9a398867967",
+               "type": "addBonusToValue",
+               "data": {
+                "variable": "SKILL_CRAFTING",
+                "value": 2,
+                "type": "circumstance",
+                "text": "to Craft wooden goods and structures"
+               }
+              }
+             ]
+            }
+           }
+          ]
+         }
+        ]
+       }
+      }
+     ],
+     "name": "Specialty Crafting",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [
+      "trained in Crafting"
+     ],
+     "frequency": null,
+     "cost": null,
+     "trigger": null,
+     "requirements": null,
+     "access": null,
+     "description": "Your training focused on Crafting one particular kind of item. Select one of the specialties listed below; you gain a +1 circumstance bonus to Crafting checks to [Craft](link_action_19617) items of that type. If you are a master in Crafting, this bonus increases to +2. If it's unclear whether the specialty applies, the GM decides. Some specialties might apply only partially. For example, if you were making a [morningstar](link_item_7598) and had specialty in woodworking, the GM might give you half your bonus because the item requires both blacksmithing and woodworking.",
+     "special": null,
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=5216",
+       "book": "Player Core",
+       "page": "262"
+      },
+      "foundry": {
+       "rules": [
+        {
+         "key": "ChoiceSet",
+         "flag": "specialtyCrafting",
+         "prompt": "PF2E.SpecificRule.SpecialtyCrafting.Prompt",
+         "choices": [
+          {
+           "label": "PF2E.SpecificRule.SpecialtyCrafting.Alchemy",
+           "value": "alchemy",
+           "predicate": [
+            {
+             "not": "feat:specialty-crafting:alchemy"
+            }
+           ]
+          },
+          {
+           "label": "PF2E.SpecificRule.SpecialtyCrafting.Artistry",
+           "value": "artistry",
+           "predicate": [
+            {
+             "not": "feat:specialty-crafting:artistry"
+            }
+           ]
+          },
+          {
+           "label": "PF2E.SpecificRule.SpecialtyCrafting.Blacksmithing",
+           "value": "blacksmithing",
+           "predicate": [
+            {
+             "not": "feat:specialty-crafting:blacksmithing"
+            }
+           ]
+          },
+          {
+           "label": "PF2E.SpecificRule.SpecialtyCrafting.Bookmaking",
+           "value": "bookmaking",
+           "predicate": [
+            {
+             "not": "feat:specialty-crafting:bookmaking"
+            }
+           ]
+          },
+          {
+           "label": "PF2E.SpecificRule.SpecialtyCrafting.Glassmaking",
+           "value": "glassmaking",
+           "predicate": [
+            {
+             "not": "feat:specialty-crafting:glassmaking"
+            }
+           ]
+          },
+          {
+           "label": "PF2E.SpecificRule.SpecialtyCrafting.Leatherworking",
+           "value": "leatherworking",
+           "predicate": [
+            {
+             "not": "feat:specialty-crafting:leatherworking"
+            }
+           ]
+          },
+          {
+           "label": "PF2E.SpecificRule.SpecialtyCrafting.Pottery",
+           "value": "pottery",
+           "predicate": [
+            {
+             "not": "feat:specialty-crafting:pottery"
+            }
+           ]
+          },
+          {
+           "label": "PF2E.SpecificRule.SpecialtyCrafting.Shipbuilding",
+           "value": "shipbuilding",
+           "predicate": [
+            {
+             "not": "feat:specialty-crafting:shipbuilding"
+            }
+           ]
+          },
+          {
+           "label": "PF2E.SpecificRule.SpecialtyCrafting.Stonemasonry",
+           "value": "stonemasonry",
+           "predicate": [
+            {
+             "not": "feat:specialty-crafting:stonemasonry"
+            }
+           ]
+          },
+          {
+           "label": "PF2E.SpecificRule.SpecialtyCrafting.Tailoring",
+           "value": "tailoring",
+           "predicate": [
+            {
+             "not": "feat:specialty-crafting:tailoring"
+            }
+           ]
+          },
+          {
+           "label": "PF2E.SpecificRule.SpecialtyCrafting.Weaving",
+           "value": "weaving",
+           "predicate": [
+            {
+             "not": "feat:specialty-crafting:weaving"
+            }
+           ]
+          },
+          {
+           "label": "PF2E.SpecificRule.SpecialtyCrafting.Woodworking",
+           "value": "woodworking",
+           "predicate": [
+            {
+             "not": "feat:specialty-crafting:woodworking"
+            }
+           ]
+          }
+         ],
+         "rollOption": "feat:specialty-crafting"
+        },
+        {
+         "key": "FlatModifier",
+         "type": "circumstance",
+         "value": {
+          "field": "actor|system.skills.cra.rank",
+          "brackets": [
+           {
+            "end": 4,
+            "start": 3,
+            "value": 2
+           },
+           {
+            "end": 2,
+            "start": 1,
+            "value": 1
+           }
+          ]
+         },
+         "selector": "crafting",
+         "predicate": [
+          "action:craft",
+          "{item|flags.pf2e.rulesSelections.specialtyCrafting}"
+         ]
+        }
+       ]
+      },
+      "can_select_multiple_times": true
+     },
+     "traits": [
+      1437,
+      1438
+     ],
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 4441727895269460,
+     "availability": null,
+     "search_tsv": "'+1':23B '+2':49B '19617':33B '7598':77B 'action':32B 'appli':57B,64B 'blacksmith':96B 'bonus':25B,46B,90B 'check':28B 'circumst':24B 'craft':2A,7B,27B,30B,44B 'decid':60B 'exampl':68B 'focus':5B 'gain':21B 'give':86B 'gm':59B,84B 'half':88B 'increas':47B 'item':12B,34B,76B,93B 'kind':10B 'link':31B,75B 'list':18B 'make':72B 'master':42B 'might':63B,85B 'morningstar':74B 'one':8B,14B 'partial':66B 'particular':9B 'requir':94B 'select':13B 'specialti':1A,17B,56B,62B,80B 'train':4B 'type':37B 'unclear':53B 'whether':54B 'woodwork':82B,98B",
+     "updated_at": "2026-08-27T16:53:40.818195+00:00"
+    },
+    {
+     "id": 46748,
+     "created_at": "2025-08-26T16:09:41.862073+00:00",
+     "operations": [
+      {
+       "id": "54057079-0337-45d7-9042-3ff9835f8752",
+       "type": "injectText",
+       "data": {
+        "type": "action",
+        "id": 19857,
+        "text": "**Urban Survivalist**\n\nYou can use Survival in place of Society to Subsist in cities, space stations, and other settlements."
+       }
+      },
+      {
+       "id": "2675c8bd-c804-4d2b-89df-b4454640d585",
+       "type": "injectText",
+       "data": {
+        "type": "action",
+        "id": 19625,
+        "text": "**Urban Survivalist**\n\nYou can also use Survival instead of Perception to notice hazards in these environments; if you find a hazard in this way, you can also use Survival instead of Thievery to Disable the Device."
+       }
+      }
+     ],
+     "name": "Urban Survivalist",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [
+      "trained in Survival"
+     ],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You can use Survival in place of Society to [Subsist](link_action_19857) in cities, space stations, and other settlements. You can also use Survival instead of Perception to notice hazards in these environments; if you find a hazard in this way, you can also use Survival instead of Thievery to [Disable the Device](link_action_19625).",
+     "special": "",
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonsrd.com/feats/906-urban-survivalist",
+       "book": "Starfinder Player Core",
+       "page": "230"
+      }
+     },
+     "traits": [
+      1437,
+      1438
+     ],
+     "content_source_id": 579,
+     "version": null,
+     "uuid": 3465210054322959,
+     "availability": null,
+     "search_tsv": "'19625':59B '19857':15B 'action':14B,58B 'also':25B,47B 'citi':17B 'devic':56B 'disabl':54B 'environ':36B 'find':39B 'hazard':33B,41B 'instead':28B,50B 'link':13B,57B 'notic':32B 'percept':30B 'place':8B 'settlement':22B 'societi':10B 'space':18B 'station':19B 'subsist':12B 'surviv':6B,27B,49B 'survivalist':2A 'thieveri':52B 'urban':1A 'use':5B,26B,48B 'way':44B",
+     "updated_at": "2026-08-27T17:11:11.783918+00:00"
+    },
+    {
+     "id": 22733,
+     "created_at": "2024-04-20T07:12:29.47371+00:00",
+     "operations": null,
+     "name": "In Plain Sight",
+     "actions": null,
+     "level": 4,
+     "rarity": "COMMON",
+     "prerequisites": [
+      "Alter Ego Dedication"
+     ],
+     "frequency": null,
+     "cost": null,
+     "trigger": null,
+     "requirements": null,
+     "access": null,
+     "description": "People often only see what they want to see, a weakness you know how to take full advantage of. While you've [Assumed a Role](link_feat_25429), you can use Deception in place of Stealth when using the [Avoid Notice](link_action_21146) exploration activity in an area where someone with your role wouldn't be unusual, such as when impersonating a sailor or fisher when infiltrating the docks.",
+     "special": null,
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=3810",
+       "book": "Dark Archive",
+       "page": "127"
+      },
+      "foundry": {
+       "rules": []
+      }
+     },
+     "traits": [
+      1438,
+      2993
+     ],
+     "content_source_id": 12,
+     "version": null,
+     "uuid": 44572758050685,
+     "availability": null,
+     "search_tsv": "'21146':47B '25429':31B 'action':46B 'activ':49B 'advantag':21B 'area':52B 'assum':26B 'avoid':43B 'decept':35B 'dock':73B 'explor':48B 'feat':30B 'fisher':69B 'full':20B 'imperson':65B 'infiltr':71B 'know':16B 'link':29B,45B 'notic':44B 'often':5B 'peopl':4B 'place':37B 'plain':2A 'role':28B,57B 'sailor':67B 'see':7B,12B 'sight':3A 'someon':54B 'stealth':39B 'take':19B 'unusu':61B 'use':34B,41B 've':25B 'want':10B 'weak':14B 'wouldn':58B",
+     "updated_at": "2026-08-27T16:49:25.686839+00:00"
+    }
+   ],
+   "classFeats": [
+    {
+     "id": 31322,
+     "created_at": "2024-08-01T22:10:57.268409+00:00",
+     "operations": [
+      {
+       "id": "dc6cbb99-e444-40ff-943d-fe2c85e37460",
+       "type": "conditional",
+       "data": {
+        "conditions": [
+         {
+          "id": "d87cfe69-387c-4bb5-bf22-8c2d23444c99",
+          "name": "ACTIVE_MODES",
+          "data": {
+           "name": "ACTIVE_MODES",
+           "type": "list-str",
+           "value": []
+          },
+          "type": "list-str",
+          "operator": "INCLUDES",
+          "value": "rage"
+         }
+        ],
+        "trueOperations": [
+         {
+          "id": "395a70a6-4eb9-4157-bed0-3b26f7f4a153",
+          "type": "addBonusToValue",
+          "data": {
+           "variable": "SAVE_FORT",
+           "value": 2,
+           "type": "status",
+           "text": "against emotion effects."
+          }
+         },
+         {
+          "id": "e1112047-079e-4489-abf2-235509bd896b",
+          "type": "addBonusToValue",
+          "data": {
+           "variable": "SAVE_REFLEX",
+           "value": 2,
+           "type": "status",
+           "text": "against emotion effects."
+          }
+         },
+         {
+          "id": "8edab446-8350-4a02-8689-2c5bca3e33a7",
+          "type": "addBonusToValue",
+          "data": {
+           "variable": "SAVE_WILL",
+           "value": 2,
+           "type": "status",
+           "text": "against emotion effects."
+          }
+         }
+        ],
+        "falseOperations": []
+       }
+      }
+     ],
+     "name": "Draconic Arrogance",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [
+      "Dragon Instinct"
+     ],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "Few can sway you from your goals while the fury of combat fills you. While [raging](link_feat_31184), you gain a +2 status bonus to saving throws against [emotion](link_trait_1486) effects.",
+     "special": "",
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=5808",
+       "book": "Player Core 2",
+       "page": "77"
+      }
+     },
+     "traits": [
+      3627,
+      1455
+     ],
+     "content_source_id": 256,
+     "version": null,
+     "uuid": 5223511570978344,
+     "availability": null,
+     "search_tsv": "'+2':25B '1486':35B '31184':21B 'arrog':2A 'bonus':27B 'combat':14B 'dracon':1A 'effect':36B 'emot':32B 'feat':20B 'fill':15B 'furi':12B 'gain':23B 'goal':9B 'link':19B,33B 'rage':18B 'save':29B 'status':26B 'sway':5B 'throw':30B 'trait':34B",
+     "updated_at": "2026-08-27T16:49:29.077051+00:00"
+    },
+    {
+     "id": 31200,
+     "created_at": "2024-07-30T22:14:22.939532+00:00",
+     "operations": [],
+     "name": "Quick-Tempered",
+     "actions": "FREE-ACTION",
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "You roll initiative.",
+     "requirements": "You are not encumbered or wearing heavy armor.",
+     "access": "",
+     "description": "So long as you are able to move freely, your fury is instinctive and instantaneous. You [Rage](link_feat_31184).",
+     "special": "",
+     "type": "feat",
+     "meta_data": {
+      "unselectable": true
+     },
+     "traits": [
+      3627
+     ],
+     "content_source_id": 256,
+     "version": null,
+     "uuid": 8555482895940595,
+     "availability": null,
+     "search_tsv": "'31184':23B 'abl':9B 'feat':22B 'freeli':12B 'furi':14B 'instantan':18B 'instinct':16B 'link':21B 'long':5B 'move':11B 'quick':2A 'quick-temp':1A 'rage':20B 'temper':3A",
+     "updated_at": "2024-07-30T22:14:22.939532+00:00"
+    },
+    {
+     "id": 31184,
+     "created_at": "2024-07-30T17:16:02.496724+00:00",
+     "operations": [
+      {
+       "id": "1c787182-763c-4b65-a5b7-4b518f929bd9",
+       "type": "giveAbilityBlock",
+       "data": {
+        "type": "mode",
+        "abilityBlockId": 31008
+       }
+      },
+      {
+       "id": "954a59d3-13d3-40a9-a456-321f12602080",
+       "type": "createValue",
+       "data": {
+        "variable": "RAGE_DAMAGE",
+        "value": 2,
+        "type": "num"
+       }
+      },
+      {
+       "id": "d13045d5-11c3-4897-83ee-660116a1cf84",
+       "type": "createValue",
+       "data": {
+        "variable": "RAGE_DAMAGE_TYPE",
+        "value": "",
+        "type": "str"
+       }
+      }
+     ],
+     "name": "Rage",
+     "actions": "ONE-ACTION",
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "You aren’t fatigued or raging.",
+     "access": "",
+     "description": "You tap into your inner fury and begin raging. You gain a number of temporary Hit Points equal to your level plus your Constitution modifier (⬆️{{level+attribute\\_con}}). While you are raging:\n\n*   You deal 2 additional damage on melee [Strikes](link_action_19856). This additional damage is halved if your weapon or [unarmed](link_trait_2398) attack is [agile](link_trait_1569).\n    \n*   You can’t use actions with the [concentrate](link_trait_1432) trait unless they also have the [rage](link_trait_1455) trait. You can [Seek](link_action_19845) while raging.\n    \n\nRage lasts for 1 minute, until you fall unconscious, or until the encounter ends, whichever comes first. You can’t voluntarily stop raging. When you stop raging, you lose any remaining temporary Hit Points from Rage, and can’t gain temporary Hit Points from using the Rage action again for 1 minute.",
+     "special": "",
+     "type": "feat",
+     "meta_data": {
+      "unselectable": true
+     },
+     "traits": [
+      3627,
+      1432,
+      1486,
+      1448
+     ],
+     "content_source_id": 256,
+     "version": null,
+     "uuid": 952294454471782,
+     "availability": null,
+     "search_tsv": "'1':97B,144B '1432':74B '1455':84B '1569':63B '19845':91B '19856':44B '2':36B '2398':57B 'action':43B,68B,90B,141B 'addit':37B,46B 'agil':60B 'also':78B 'attack':58B 'attribut':28B 'begin':9B 'come':109B 'con':29B 'concentr':71B 'constitut':25B 'damag':38B,47B 'deal':35B 'encount':106B 'end':107B 'equal':19B 'fall':101B 'first':110B 'furi':7B 'gain':12B,133B 'halv':49B 'hit':17B,126B,135B 'inner':6B 'last':95B 'level':22B,27B 'link':42B,55B,61B,72B,82B,89B 'lose':122B 'mele':40B 'minut':98B,145B 'modifi':26B 'number':14B 'plus':23B 'point':18B,127B,136B 'rage':1A,10B,33B,81B,93B,94B,116B,120B,129B,140B 'remain':124B 'seek':88B 'stop':115B,119B 'strike':41B 'tap':3B 'temporari':16B,125B,134B 'trait':56B,62B,73B,75B,83B,85B 'unarm':54B 'unconsci':102B 'unless':76B 'use':67B,138B 'voluntarili':114B 'weapon':52B 'whichev':108B",
+     "updated_at": "2024-07-30T17:16:02.496724+00:00"
+    },
+    {
+     "id": 31273,
+     "created_at": "2024-08-01T07:10:45.738148+00:00",
+     "operations": [],
+     "name": "Sudden Charge",
+     "actions": "TWO-ACTIONS",
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "With a quick sprint, you dash up to your foe and swing. [Stride](link_action_19855) twice. If you end your movement within melee reach of at least one enemy, you can make a melee [Strike](link_action_19856) against that enemy. You can use Sudden Charge while [Burrowing](link_action_19609), [Climbing](link_action_19612), [Flying](link_action_19721), or [Swimming](link_action_19859) instead of Striding if you have the corresponding movement type.",
+     "special": "",
+     "type": "feat",
+     "meta_data": {},
+     "traits": [
+      3627,
+      1462
+     ],
+     "content_source_id": 256,
+     "version": null,
+     "uuid": 2746140046523808,
+     "availability": null,
+     "search_tsv": "'19609':54B '19612':58B '19721':62B '19855':18B '19856':41B '19859':67B 'action':17B,40B,53B,57B,61B,66B 'burrow':51B 'charg':2A,49B 'climb':55B 'correspond':75B 'dash':8B 'end':22B 'enemi':32B,44B 'fli':59B 'foe':12B 'instead':68B 'least':30B 'link':16B,39B,52B,56B,60B,65B 'make':35B 'mele':26B,37B 'movement':24B,76B 'one':31B 'quick':5B 'reach':27B 'sprint':6B 'stride':15B,70B 'strike':38B 'sudden':1A,48B 'swim':64B 'swing':14B 'twice':19B 'type':77B 'use':47B 'within':25B",
+     "updated_at": "2024-08-01T07:10:45.738148+00:00"
+    },
+    {
+     "id": 31328,
+     "created_at": "2024-08-01T22:23:39.897186+00:00",
+     "operations": [],
+     "name": "Intimidating Strike",
+     "actions": "TWO-ACTIONS",
+     "level": 2,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "Your blow not only wounds creatures but also shatters their confidence. Make a melee [Strike](link_action_19856). If you hit and deal damage, the target is frightened 1, or frightened 2 on a critical hit.",
+     "special": "",
+     "type": "feat",
+     "meta_data": {},
+     "traits": [
+      3627,
+      1486,
+      1487,
+      1448
+     ],
+     "content_source_id": 256,
+     "version": null,
+     "uuid": 1057442928065582,
+     "availability": null,
+     "search_tsv": "'1':31B '19856':20B '2':34B 'action':19B 'also':10B 'blow':4B 'confid':13B 'creatur':8B 'critic':37B 'damag':26B 'deal':25B 'frighten':30B,33B 'hit':23B,38B 'intimid':1A 'link':18B 'make':14B 'mele':16B 'shatter':11B 'strike':2A,17B 'target':28B 'wound':7B",
+     "updated_at": "2024-08-01T22:23:39.897186+00:00"
+    },
+    {
+     "id": 31330,
+     "created_at": "2024-08-01T22:23:50.649046+00:00",
+     "operations": [],
+     "name": "Second Wind",
+     "actions": null,
+     "level": 2,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You can enter a second rage, but afterward you need to catch your breath. When you [Rage](link_feat_31184), you can choose to gain temporary HP from the [Rage](link_feat_31184) even if 1 minute hasn’t passed (or a full turn if you have the [revitalizing rage](link_class-feature_31241) class feature). If you do, once this [Rage](link_feat_31184) ends you become fatigued until you rest for 10 minutes.",
+     "special": "",
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=5816",
+       "book": "Player Core 2",
+       "page": "77"
+      }
+     },
+     "traits": [
+      3627
+     ],
+     "content_source_id": 256,
+     "version": null,
+     "uuid": 6789203611366947,
+     "availability": null,
+     "search_tsv": "'1':38B '10':77B '31184':22B,35B,68B '31241':57B 'afterward':10B 'becom':71B 'breath':16B 'catch':14B 'choos':25B 'class':55B,58B 'class-featur':54B 'end':69B 'enter':5B 'even':36B 'fatigu':72B 'feat':21B,34B,67B 'featur':56B,59B 'full':45B 'gain':27B 'hasn':40B 'hp':29B 'link':20B,33B,53B,66B 'minut':39B,78B 'need':12B 'pass':42B 'rage':8B,19B,32B,52B,65B 'rest':75B 'revit':51B 'second':1A,7B 'temporari':28B 'turn':46B 'wind':2A",
+     "updated_at": "2026-08-27T16:49:29.077051+00:00"
+    }
+   ],
+   "ancestryFeats": [
+    {
+     "id": 29475,
+     "created_at": "2024-06-14T03:06:11.233026+00:00",
+     "operations": [
+      {
+       "id": "8d202b5f-0b13-437b-9df1-4843a4068a63",
+       "type": "addBonusToValue",
+       "data": {
+        "variable": "SAVE_FORT",
+        "value": 2,
+        "type": "circumstance",
+        "text": "against the web spell, natural webbing, and effects that entrap you in webbing. Whenever you roll a success against an effect involving a web, you get a critical success instead."
+       }
+      },
+      {
+       "id": "11abb86c-2036-4d6c-bc59-c40d88efa693",
+       "type": "addBonusToValue",
+       "data": {
+        "variable": "SAVE_REFLEX",
+        "value": 2,
+        "type": "circumstance",
+        "text": "against the web spell, natural webbing, and effects that entrap you in webbing. Whenever you roll a success against an effect involving a web, you get a critical success instead."
+       }
+      },
+      {
+       "id": "0ca2ee31-6d35-41dd-92e0-fdb9e2aeeb3e",
+       "type": "addBonusToValue",
+       "data": {
+        "variable": "SAVE_WILL",
+        "value": 2,
+        "type": "circumstance",
+        "text": "against the web spell, natural webbing, and effects that entrap you in webbing. Whenever you roll a success against an effect involving a web, you get a critical success instead."
+       }
+      },
+      {
+       "id": "407d6f01-4159-4f94-9986-35460a6c58c2",
+       "type": "addBonusToValue",
+       "data": {
+        "variable": "AC_BONUS",
+        "value": 2,
+        "type": "circumstance",
+        "text": "against the web spell, natural webbing, and effects that entrap you in webbing"
+       }
+      },
+      {
+       "id": "7b8b00d5-05bf-4bc0-acaa-5439961aa99e",
+       "type": "addBonusToValue",
+       "data": {
+        "variable": "SAVE_FORT",
+        "value": 1,
+        "type": "circumstance",
+        "text": "against effects that snare and entangle you, like the entangling flora spell"
+       }
+      },
+      {
+       "id": "d84551c8-dcea-4b30-a063-27eeeef0e853",
+       "type": "addBonusToValue",
+       "data": {
+        "variable": "SAVE_REFLEX",
+        "value": 1,
+        "type": "circumstance",
+        "text": "against effects that snare and entangle you, like the entangling flora spell"
+       }
+      },
+      {
+       "id": "fd29f269-5c4b-477c-807b-3f3290547ac6",
+       "type": "addBonusToValue",
+       "data": {
+        "variable": "SAVE_WILL",
+        "value": 1,
+        "type": "circumstance",
+        "text": "against effects that snare and entangle you, like the entangling flora spell"
+       }
+      },
+      {
+       "id": "a39e7be8-581d-4531-a7be-b2c9f1c707b0",
+       "type": "addBonusToValue",
+       "data": {
+        "variable": "AC_BONUS",
+        "value": 1,
+        "type": "circumstance",
+        "text": "against effects that snare and entangle you, like the entangling flora spell"
+       }
+      }
+     ],
+     "name": "Web Walker",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You have plenty of practice navigating webs. You gain a +2 circumstance bonus to saves and AC against the [_web_](link_spell_6196) spell, natural webbing, and effects that entrap you in webbing, as well as a +1 circumstance bonus against other effects that snare and entangle you, like the [_entangling flora_](link_spell_4602) spell. Whenever you roll a success on a saving throw against an effect involving a web, you get a critical success instead.",
+     "special": "",
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=2766",
+       "book": "The Mwangi Expanse",
+       "page": "103"
+      }
+     },
+     "traits": [
+      2979
+     ],
+     "content_source_id": 28,
+     "version": null,
+     "uuid": 7580954725906877,
+     "availability": null,
+     "search_tsv": "'+1':40B '+2':13B '4602':57B '6196':25B 'ac':19B 'bonus':15B,42B 'circumst':14B,41B 'critic':77B 'effect':30B,45B,70B 'entangl':49B,53B 'entrap':32B 'flora':54B 'gain':11B 'get':75B 'instead':79B 'involv':71B 'like':51B 'link':23B,55B 'natur':27B 'navig':8B 'plenti':5B 'practic':7B 'roll':61B 'save':17B,66B 'snare':47B 'spell':24B,26B,56B,58B 'success':63B,78B 'throw':67B 'walker':2A 'web':1A,9B,22B,28B,35B,73B 'well':37B 'whenev':59B",
+     "updated_at": "2026-08-27T16:49:33.347375+00:00"
+    },
+    {
+     "id": 29476,
+     "created_at": "2024-06-14T03:10:25.833333+00:00",
+     "operations": [
+      {
+       "id": "9a604abf-0883-4211-9d4e-9aede390de8a",
+       "type": "giveAbilityBlock",
+       "data": {
+        "type": "feat",
+        "abilityBlockId": 20570
+       }
+      }
+     ],
+     "name": "Web Weaver",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You can produce a soft silk to weave into useful items. You gain the [Specialty Crafting](link_feat_20570) feat with a specialty in weaving. You can use your webbing to [Craft](link_action_19617) simple, nonconsumable threaded items, such as clothing and rope, at zero cost as long as their base Price is 1 sp or less. These items have no resale value, and they naturally degrade after 24 hours without regular (if minor) maintenance. You can maintain up to 10 such items at a time; if you create a new one, your oldest creation breaks down from neglect. These temporary items take you only 1 day to [Craft](link_action_19617) instead of 4. If you're an expert in Crafting, you can [Craft](link_action_19617) these items in 1 hour; if you're a master, you can [Craft](link_action_19617) them in 10 minutes; if you're legendary, you can [Craft](link_action_19617) them in 1 minute.",
+     "special": "",
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=2767",
+       "book": "The Mwangi Expanse",
+       "page": "103"
+      }
+     },
+     "traits": [
+      2979
+     ],
+     "content_source_id": 28,
+     "version": null,
+     "uuid": 5296806359348029,
+     "availability": null,
+     "search_tsv": "'1':57B,109B,135B,164B '10':84B,150B '19617':37B,115B,131B,147B,161B '20570':21B '24':72B '4':118B 'action':36B,114B,130B,146B,160B 'base':54B 'break':99B 'cloth':44B 'cost':49B 'craft':18B,34B,112B,125B,128B,144B,158B 'creat':92B 'creation':98B 'day':110B 'degrad':70B 'expert':123B 'feat':20B,22B 'gain':15B 'hour':73B,136B 'instead':116B 'item':13B,41B,62B,86B,105B,133B 'legendari':155B 'less':60B 'link':19B,35B,113B,129B,145B,159B 'long':51B 'maintain':81B 'mainten':78B 'master':141B 'minor':77B 'minut':151B,165B 'natur':69B 'neglect':102B 'new':94B 'nonconsum':39B 'oldest':97B 'one':95B 'price':55B 'produc':5B 're':121B,139B,154B 'regular':75B 'resal':65B 'rope':46B 'silk':8B 'simpl':38B 'soft':7B 'sp':58B 'specialti':17B,25B 'take':106B 'temporari':104B 'thread':40B 'time':89B 'use':12B,30B 'valu':66B 'weav':10B,27B 'weaver':2A 'web':1A,32B 'without':74B 'zero':48B",
+     "updated_at": "2026-08-27T16:49:33.347375+00:00"
+    }
+   ],
+   "otherFeats": [
+    {
+     "id": 29795,
+     "created_at": "2024-06-21T22:38:36.417903+00:00",
+     "operations": [],
+     "name": "Indomitable Act",
+     "actions": "REACTION",
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "once per day",
+     "cost": "",
+     "trigger": "You are about to attempt a check",
+     "requirements": "You are frightened",
+     "access": "",
+     "description": "You lean into your fear, using it to embolden you. You can roll the triggering check twice and take the higher result.",
+     "special": "",
+     "type": "feat",
+     "meta_data": {
+      "unselectable": true
+     },
+     "traits": [
+      1460
+     ],
+     "content_source_id": 21,
+     "version": null,
+     "uuid": 2704518678338870,
+     "availability": null,
+     "search_tsv": "'act':2A 'check':18B 'embolden':11B 'fear':7B 'higher':23B 'indomit':1A 'lean':4B 'result':24B 'roll':15B 'take':21B 'trigger':17B 'twice':19B 'use':8B",
+     "updated_at": "2024-06-21T22:38:36.417903+00:00"
+    },
+    {
+     "id": 31314,
+     "created_at": "2024-08-01T20:57:42.283319+00:00",
+     "operations": [
+      {
+       "id": "bc0505a8-6dd8-4966-a04e-387ba954cf92",
+       "type": "conditional",
+       "data": {
+        "conditions": [
+         {
+          "id": "3f6c9d5f-4ee3-4a02-890a-71774a5c2ba8",
+          "name": "CLASS_FEATURE_NAMES",
+          "data": {
+           "name": "CLASS_FEATURE_NAMES",
+           "type": "list-str",
+           "value": []
+          },
+          "type": "list-str",
+          "operator": "NOT_INCLUDES",
+          "value": "instinct"
+         },
+         {
+          "id": "d5480cf0-1122-4245-bb39-4ed3566f85a2",
+          "name": "FEAT_NAMES",
+          "data": {
+           "name": "FEAT_NAMES",
+           "type": "list-str",
+           "value": []
+          },
+          "type": "list-str",
+          "operator": "NOT_INCLUDES",
+          "value": "instinct ability"
+         }
+        ],
+        "trueOperations": [],
+        "falseOperations": [
+         {
+          "id": "953dc486-4962-4bfd-8851-f076f944914c",
+          "type": "setValue",
+          "data": {
+           "variable": "RAGE_DAMAGE",
+           "value": "3"
+          }
+         },
+         {
+          "id": "8f10ecc4-431c-4bb3-ac12-9b3e7840e598",
+          "type": "setValue",
+          "data": {
+           "variable": "RAGE_DAMAGE_TYPE",
+           "value": "spirit or default"
+          }
+         }
+        ]
+       }
+      },
+      {
+       "id": "1ad99b3b-7245-4acc-bbe3-b85afbb89fb2",
+       "type": "conditional",
+       "data": {
+        "conditions": [
+         {
+          "id": "8d324ccd-e866-4f1a-a541-1c99671d61ae",
+          "name": "CLASS_FEATURE_NAMES",
+          "data": {
+           "name": "CLASS_FEATURE_NAMES",
+           "type": "list-str",
+           "value": []
+          },
+          "type": "list-str",
+          "operator": "INCLUDES",
+          "value": "instinct"
+         },
+         {
+          "id": "d32f3a58-8463-4c85-9fbc-821d678da0e9",
+          "name": "LEVEL",
+          "data": {
+           "name": "LEVEL",
+           "type": "num",
+           "value": 0
+          },
+          "type": "num",
+          "operator": "GREATER_THAN_OR_EQUALS",
+          "value": "7"
+         }
+        ],
+        "trueOperations": [
+         {
+          "id": "997d13e0-9dbc-43ac-8cf1-74cbabe4d4af",
+          "type": "setValue",
+          "data": {
+           "variable": "RAGE_DAMAGE",
+           "value": "7"
+          }
+         }
+        ],
+        "falseOperations": []
+       }
+      },
+      {
+       "id": "cd5b6f0d-4c3a-41d3-b396-971e923f1126",
+       "type": "conditional",
+       "data": {
+        "conditions": [
+         {
+          "id": "89e3507d-fff0-4bce-b6ed-2c430a8d917e",
+          "name": "CLASS_FEATURE_NAMES",
+          "data": {
+           "name": "CLASS_FEATURE_NAMES",
+           "type": "list-str",
+           "value": []
+          },
+          "type": "list-str",
+          "operator": "INCLUDES",
+          "value": "instinct"
+         },
+         {
+          "id": "aa6f4bc3-f260-4561-ada8-a0b2d189659c",
+          "name": "CLASS_FEATURE_NAMES",
+          "data": {
+           "name": "CLASS_FEATURE_NAMES",
+           "type": "list-str",
+           "value": []
+          },
+          "type": "list-str",
+          "operator": "INCLUDES",
+          "value": "greater weapon specialization"
+         }
+        ],
+        "trueOperations": [
+         {
+          "id": "d257aab0-354d-4d72-ba0b-add68552460c",
+          "type": "setValue",
+          "data": {
+           "variable": "RAGE_DAMAGE",
+           "value": "13"
+          }
+         }
+        ],
+        "falseOperations": []
+       }
+      },
+      {
+       "id": "2b12c9d8-7aff-4d08-b7ed-b749579a6ee0",
+       "type": "conditional",
+       "data": {
+        "conditions": [
+         {
+          "id": "a2a9def2-8c40-4ecf-aff3-79f19399310a",
+          "name": "ACTIVE_MODES",
+          "data": {
+           "name": "ACTIVE_MODES",
+           "type": "list-str",
+           "value": []
+          },
+          "type": "list-str",
+          "operator": "INCLUDES",
+          "value": "rage"
+         },
+         {
+          "id": "d22a94f1-f80d-411b-a50a-835aae40560e",
+          "name": "CLASS_FEATURE_NAMES",
+          "data": {
+           "name": "CLASS_FEATURE_NAMES",
+           "type": "list-str",
+           "value": []
+          },
+          "type": "list-str",
+          "operator": "INCLUDES",
+          "value": "raging resistance"
+         }
+        ],
+        "trueOperations": [
+         {
+          "id": "a32b5144-c0f5-4c8a-a620-8afc0dc0aac0",
+          "type": "adjValue",
+          "data": {
+           "variable": "RESISTANCES",
+           "value": "void, {{3+attribute_con}}"
+          }
+         },
+         {
+          "id": "56dda653-b22a-4cf1-9eda-21b51370c268",
+          "type": "adjValue",
+          "data": {
+           "variable": "RESISTANCES",
+           "value": "damage dealt by the attacks and abilities of undead creatures, {{3+attribute_con}}"
+          }
+         }
+        ],
+        "falseOperations": []
+       }
+      }
+     ],
+     "name": "Spirit Instinct",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "Whether you are emotionally sensitive to the spirits around you; worship ancestors or apparitions; or are haunted by the specter of an ancestor, relative, friend, or foe, your rage takes the form of a spiritual possession.\n\n**Instinct Ability—Spirit Rage** When you [rage](link_feat_31184), you can increase the additional damage from [Rage](link_feat_31184) from 2 to 3 and change its damage type to [spirit](link_trait_1556), instead of the damage type for your weapon or unarmed attack (choose each time you [Rage](link_feat_31184)). If you choose to deal [spirit](link_trait_1556) damage, your weapon or [unarmed](link_trait_2398) attack gains the effects of the [ghost touch](link_item_6992) property rune, which makes it more effective against [incorporeal](link_trait_2424) creatures, and your [Rage](link_feat_31184) action gains the [divine](link_trait_1475) and [spirit](link_trait_1556) traits.\n\n**Specialization Ability (7th)** When using spirit rage, increase the damage from [Rage](link_feat_31184) from 3 to 7. If you have [greater weapon specialization](link_class-feature_31226), instead increase the damage when using spirit rage to 13.\n\n**Raging Resistance (9th)** You resist [void](link_trait_1485) damage, as well as damage dealt by the attacks and abilities of [undead](link_trait_2425) creatures, regardless of the damage type.",
+     "special": "",
+     "type": "feat",
+     "meta_data": {
+      "unselectable": false
+     },
+     "traits": [
+      3854
+     ],
+     "content_source_id": 256,
+     "version": null,
+     "uuid": 5432712656092923,
+     "availability": null,
+     "search_tsv": "'13':192B '1475':146B '1485':201B '1556':73B,101B,151B '2':61B '2398':109B '2424':132B '2425':217B '3':63B,169B '31184':48B,59B,92B,139B,167B '31226':182B '6992':120B '7':171B '7th':155B '9th':195B 'abil':40B,154B,212B 'action':140B 'addit':53B 'ancestor':14B,25B 'apparit':16B 'around':11B 'attack':84B,110B,210B 'chang':65B 'choos':85B,95B 'class':180B 'class-featur':179B 'creatur':133B,218B 'damag':54B,67B,77B,102B,162B,186B,202B,206B,222B 'deal':97B 'dealt':207B 'divin':143B 'effect':113B,127B 'emot':6B 'feat':47B,58B,91B,138B,166B 'featur':181B 'foe':29B 'form':34B 'friend':27B 'gain':111B,141B 'ghost':116B 'greater':175B 'haunt':19B 'incorpor':129B 'increas':51B,160B,184B 'instead':74B,183B 'instinct':2A,39B 'item':119B 'link':46B,57B,71B,90B,99B,107B,118B,130B,137B,144B,149B,165B,178B,199B,215B 'make':124B 'possess':38B 'properti':121B 'rage':31B,42B,45B,56B,89B,136B,159B,164B,190B,193B 'regardless':219B 'relat':26B 'resist':194B,197B 'rune':122B 'sensit':7B 'special':153B,177B 'specter':22B 'spirit':1A,10B,41B,70B,98B,148B,158B,189B 'spiritu':37B 'take':32B 'time':87B 'touch':117B 'trait':72B,100B,108B,131B,145B,150B,152B,200B,216B 'type':68B,78B,223B 'unarm':83B,106B 'undead':214B 'use':157B,188B 'void':198B 'weapon':81B,104B,176B 'well':204B 'whether':3B 'worship':13B",
+     "updated_at": "2024-08-01T20:57:42.283319+00:00"
+    }
+   ],
+   "classFeatures": [
+    {
+     "id": 31093,
+     "created_at": "2024-07-29T19:51:13.075225+00:00",
+     "operations": [
+      {
+       "id": "fc073e4e-1a68-45b2-8550-a4caab054e1a",
+       "type": "select",
+       "data": {
+        "title": "Select a Feat",
+        "modeType": "FILTERED",
+        "optionType": "ABILITY_BLOCK",
+        "optionsPredefined": [],
+        "optionsFilters": {
+         "id": "6eedb801-a913-47a9-b51c-bd8b2597b472",
+         "type": "ABILITY_BLOCK",
+         "level": {
+          "max": 1
+         },
+         "traits": [
+          "Barbarian"
+         ],
+         "abilityBlockType": "feat"
+        }
+       }
+      }
+     ],
+     "name": "Barbarian Feat",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You gain a barbarian class feat.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {},
+     "traits": [
+      3627
+     ],
+     "content_source_id": 256,
+     "version": null,
+     "uuid": 8570564256892835,
+     "availability": null,
+     "search_tsv": "'barbarian':1A,6B 'class':7B 'feat':2A,8B 'gain':4B",
+     "updated_at": "2024-07-29T19:51:13.075225+00:00"
+    },
+    {
+     "id": 31305,
+     "created_at": "2024-08-01T19:23:37.204053+00:00",
+     "operations": [
+      {
+       "id": "71e76b2a-d8a7-4911-b378-b1dea99dfcae",
+       "type": "select",
+       "data": {
+        "title": "Select an Instinct",
+        "modeType": "FILTERED",
+        "optionType": "ABILITY_BLOCK",
+        "optionsPredefined": [],
+        "optionsFilters": {
+         "id": "89962a65-677e-4e91-b488-6316618e4c07",
+         "type": "ABILITY_BLOCK",
+         "level": {},
+         "traits": [
+          "Barbarian Instinct"
+         ],
+         "abilityBlockType": "feat"
+        }
+       }
+      }
+     ],
+     "name": "Instinct",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "Your rage wells up from a dominant instinct—one you learned from a tradition or that comes naturally to you. Your instinct gives you an ability, requires you to avoid certain behaviors, grants you increased damage and resistances at higher levels, and allows you to select feats tied to your instinct.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Classes.aspx?ID=57",
+       "book": "Player Core 2",
+       "page": "70"
+      }
+     },
+     "traits": [
+      3627
+     ],
+     "content_source_id": 256,
+     "version": null,
+     "uuid": 2303057036392456,
+     "availability": null,
+     "search_tsv": "'abil':27B 'allow':44B 'avoid':31B 'behavior':33B 'certain':32B 'come':18B 'damag':37B 'domin':8B 'feat':48B 'give':24B 'grant':34B 'higher':41B 'increas':36B 'instinct':1A,9B,23B,52B 'learn':12B 'level':42B 'natur':19B 'one':10B 'rage':3B 'requir':28B 'resist':39B 'select':47B 'tie':49B 'tradit':15B 'well':4B",
+     "updated_at": "2026-08-27T16:49:29.077051+00:00"
+    },
+    {
+     "id": 31201,
+     "created_at": "2024-07-30T22:16:27.100222+00:00",
+     "operations": [
+      {
+       "id": "8540159b-5346-457d-8364-1aab5ec26a74",
+       "type": "giveAbilityBlock",
+       "data": {
+        "type": "feat",
+        "abilityBlockId": 31200
+       }
+      }
+     ],
+     "name": "Quick-Tempered",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You gain the [Quick-Tempered](link_feat_31200) free action, which lets you [Rage](link_feat_31184) at the slightest provocation.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {},
+     "traits": [
+      3627
+     ],
+     "content_source_id": 256,
+     "version": null,
+     "uuid": 8795569301966040,
+     "availability": null,
+     "search_tsv": "'31184':21B '31200':12B 'action':14B 'feat':11B,20B 'free':13B 'gain':5B 'let':16B 'link':10B,19B 'provoc':25B 'quick':2A,8B 'quick-temp':1A,7B 'rage':18B 'slightest':24B 'temper':3A,9B",
+     "updated_at": "2024-07-30T22:16:27.100222+00:00"
+    },
+    {
+     "id": 31199,
+     "created_at": "2024-07-30T22:09:05.6369+00:00",
+     "operations": [
+      {
+       "id": "a424628e-04a3-485d-9365-67d3bb996e32",
+       "type": "giveAbilityBlock",
+       "data": {
+        "type": "feat",
+        "abilityBlockId": 31184
+       }
+      }
+     ],
+     "name": "Rage",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You gain the [Rage](link_feat_31184) action, which lets you fly into a frenzy.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {},
+     "traits": [
+      3627
+     ],
+     "content_source_id": 256,
+     "version": null,
+     "uuid": 77536608853264,
+     "availability": null,
+     "search_tsv": "'31184':8B 'action':9B 'feat':7B 'fli':13B 'frenzi':16B 'gain':3B 'let':11B 'link':6B 'rage':1A,5B",
+     "updated_at": "2024-07-30T22:09:05.6369+00:00"
+    },
+    {
+     "id": 31094,
+     "created_at": "2024-07-29T19:51:24.070515+00:00",
+     "operations": [
+      {
+       "id": "fe85dde8-7e7f-413f-8a65-fd97b554d4aa",
+       "type": "select",
+       "data": {
+        "title": "Select a Feat",
+        "modeType": "FILTERED",
+        "optionType": "ABILITY_BLOCK",
+        "optionsPredefined": [],
+        "optionsFilters": {
+         "id": "4fdd45e2-532f-4d67-be4e-7a4b8ca334ff",
+         "type": "ABILITY_BLOCK",
+         "level": {
+          "max": 2
+         },
+         "traits": [
+          "Barbarian"
+         ],
+         "abilityBlockType": "feat"
+        }
+       }
+      }
+     ],
+     "name": "Barbarian Feat",
+     "actions": null,
+     "level": 2,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You gain a barbarian class feat.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {},
+     "traits": [
+      3627
+     ],
+     "content_source_id": 256,
+     "version": null,
+     "uuid": 8429323968049598,
+     "availability": null,
+     "search_tsv": "'barbarian':1A,6B 'class':7B 'feat':2A,8B 'gain':4B",
+     "updated_at": "2024-07-29T19:51:24.070515+00:00"
+    },
+    {
+     "id": 31202,
+     "created_at": "2024-07-30T22:23:05.472514+00:00",
+     "operations": [
+      {
+       "id": "1fbde685-acc0-41a5-a74d-78db3c8fcd19",
+       "type": "conditional",
+       "data": {
+        "conditions": [
+         {
+          "id": "167a7bef-aacb-4105-92b3-7e6782c7f16f",
+          "name": "ACTIVE_MODES",
+          "data": {
+           "name": "ACTIVE_MODES",
+           "type": "list-str",
+           "value": [
+            "RAGE"
+           ]
+          },
+          "type": "list-str",
+          "operator": "INCLUDES",
+          "value": "rage"
+         }
+        ],
+        "trueOperations": [
+         {
+          "id": "5a352e03-d782-4ebc-af09-10c0226ac2ea",
+          "type": "addBonusToValue",
+          "data": {
+           "variable": "SPEED",
+           "value": 10,
+           "type": "status",
+           "text": ""
+          }
+         }
+        ],
+        "falseOperations": [
+         {
+          "id": "e228073c-c160-48b0-8f35-b66558aa9bcc",
+          "type": "addBonusToValue",
+          "data": {
+           "variable": "SPEED",
+           "value": 5,
+           "type": "status",
+           "text": ""
+          }
+         }
+        ]
+       }
+      }
+     ],
+     "name": "Furious Footfalls",
+     "actions": null,
+     "level": 3,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "The urge to fight drives you ever forward. You gain a +5-foot status bonus to your Speed. This bonus increases to +10 feet while you’re [raging](link_feat_31184).",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Classes.aspx?ID=57",
+       "book": "Player Core 2",
+       "page": "70"
+      }
+     },
+     "traits": [
+      3627
+     ],
+     "content_source_id": 256,
+     "version": null,
+     "uuid": 8873842989597715,
+     "availability": null,
+     "search_tsv": "'+10':25B '+5':14B '31184':33B 'bonus':17B,22B 'drive':7B 'ever':9B 'feat':32B 'feet':26B 'fight':6B 'foot':15B 'footfal':2A 'forward':10B 'furious':1A 'gain':12B 'increas':23B 'link':31B 'rage':30B 're':29B 'speed':20B 'status':16B 'urg':4B",
+     "updated_at": "2026-08-27T16:49:29.077051+00:00"
+    },
+    {
+     "id": 31203,
+     "created_at": "2024-07-31T01:25:53.879579+00:00",
+     "operations": [
+      {
+       "id": "5799ef5d-897c-404b-94e1-9fbb159bcecf",
+       "type": "select",
+       "data": {
+        "title": "Select a Feat",
+        "modeType": "FILTERED",
+        "optionType": "ABILITY_BLOCK",
+        "optionsPredefined": [],
+        "optionsFilters": {
+         "id": "14ed5e06-cbf8-47fd-ab16-e720198c528b",
+         "type": "ABILITY_BLOCK",
+         "level": {
+          "max": 4
+         },
+         "traits": [
+          "Barbarian"
+         ],
+         "abilityBlockType": "feat"
+        }
+       }
+      }
+     ],
+     "name": "Barbarian Feat",
+     "actions": null,
+     "level": 4,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You gain a barbarian class feat.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {},
+     "traits": [
+      3627
+     ],
+     "content_source_id": 256,
+     "version": null,
+     "uuid": 5947486879390896,
+     "availability": null,
+     "search_tsv": "'barbarian':1A,6B 'class':7B 'feat':2A,8B 'gain':4B",
+     "updated_at": "2024-07-31T01:25:53.879579+00:00"
+    },
+    {
+     "id": 31233,
+     "created_at": "2024-08-01T06:24:46.522025+00:00",
+     "operations": [
+      {
+       "id": "20b895ac-19a1-475a-a227-161c6a0516cd",
+       "type": "adjValue",
+       "data": {
+        "variable": "SIMPLE_WEAPONS",
+        "value": {
+         "value": "E"
+        }
+       }
+      },
+      {
+       "id": "3dd24782-19eb-4701-8cfa-92a5af385967",
+       "type": "adjValue",
+       "data": {
+        "variable": "MARTIAL_WEAPONS",
+        "value": {
+         "value": "E"
+        }
+       }
+      },
+      {
+       "id": "b31f7803-49d1-46a7-adb9-82a94047fb1b",
+       "type": "adjValue",
+       "data": {
+        "variable": "UNARMED_ATTACKS",
+        "value": {
+         "value": "E"
+        }
+       }
+      },
+      {
+       "id": "e58cbbff-a5ac-4ea6-99e6-10b88bb70342",
+       "type": "conditional",
+       "data": {
+        "conditions": [
+         {
+          "id": "179dbd84-b9ae-4de9-a54d-c03468e0bee4",
+          "name": "ACTIVE_MODES",
+          "data": {
+           "name": "ACTIVE_MODES",
+           "type": "list-str",
+           "value": []
+          },
+          "type": "list-str",
+          "operator": "INCLUDES",
+          "value": "rage"
+         }
+        ],
+        "trueOperations": [
+         {
+          "id": "eea0bf5d-82e7-427a-a1ed-5e81c816fa9d",
+          "type": "adjValue",
+          "data": {
+           "variable": "WEAPON_CRITICAL_SPECIALIZATIONS",
+           "value": "simple weapons"
+          }
+         },
+         {
+          "id": "1899d196-a5e7-4c00-9733-f0f1d672dfb8",
+          "type": "adjValue",
+          "data": {
+           "variable": "WEAPON_CRITICAL_SPECIALIZATIONS",
+           "value": "martial weapons"
+          }
+         },
+         {
+          "id": "df060284-f3fe-4db4-a2a0-ab0b2c68376b",
+          "type": "adjValue",
+          "data": {
+           "variable": "WEAPON_CRITICAL_SPECIALIZATIONS",
+           "value": "unarmed attacks"
+          }
+         }
+        ],
+        "falseOperations": []
+       }
+      }
+     ],
+     "name": "Brutality",
+     "actions": null,
+     "level": 5,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "Your fury makes your weapons lethal. Your proficiency ranks for simple weapons, martial weapons, and unarmed attacks increase to expert. While raging, you have the critical specialization benefits for melee weapons and unarmed attacks.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Classes.aspx?ID=57",
+       "book": "Player Core 2",
+       "page": "70"
+      }
+     },
+     "traits": [
+      3627
+     ],
+     "content_source_id": 256,
+     "version": null,
+     "uuid": 6368754972573411,
+     "availability": null,
+     "search_tsv": "'attack':18B,35B 'benefit':29B 'brutal':1A 'critic':27B 'expert':21B 'furi':3B 'increas':19B 'lethal':7B 'make':4B 'martial':14B 'mele':31B 'profici':9B 'rage':23B 'rank':10B 'simpl':12B 'special':28B 'unarm':17B,34B 'weapon':6B,13B,15B,32B",
+     "updated_at": "2026-08-27T16:49:29.077051+00:00"
+    },
+    {
+     "id": 31096,
+     "created_at": "2024-07-29T19:52:02.174158+00:00",
+     "operations": [
+      {
+       "id": "df1d64ab-7bd4-45fa-b544-0db2e3cdfca7",
+       "type": "select",
+       "data": {
+        "title": "Select a Feat",
+        "modeType": "FILTERED",
+        "optionType": "ABILITY_BLOCK",
+        "optionsPredefined": [],
+        "optionsFilters": {
+         "id": "f9f95f4d-c659-46f2-9fe6-71baca440296",
+         "type": "ABILITY_BLOCK",
+         "level": {
+          "max": 6
+         },
+         "traits": [
+          "Barbarian"
+         ],
+         "abilityBlockType": "feat"
+        }
+       }
+      }
+     ],
+     "name": "Barbarian Feat",
+     "actions": null,
+     "level": 6,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You gain a barbarian class feat.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {},
+     "traits": [
+      3627
+     ],
+     "content_source_id": 256,
+     "version": null,
+     "uuid": 5536379592618529,
+     "availability": null,
+     "search_tsv": "'barbarian':1A,6B 'class':7B 'feat':2A,8B 'gain':4B",
+     "updated_at": "2024-07-29T19:52:02.174158+00:00"
+    },
+    {
+     "id": 31234,
+     "created_at": "2024-08-01T06:24:59.535694+00:00",
+     "operations": [
+      {
+       "id": "a2567501-e140-40ac-a3dc-07b4bfd97eeb",
+       "type": "adjValue",
+       "data": {
+        "variable": "SAVE_FORT",
+        "value": {
+         "value": "M"
+        }
+       }
+      },
+      {
+       "id": "c29d3271-13eb-4e9d-b8a2-a72b2bd1ad4b",
+       "type": "addBonusToValue",
+       "data": {
+        "variable": "SAVE_FORT",
+        "text": "When you roll a success, you get a critical success instead."
+       }
+      }
+     ],
+     "name": "Juggernaut",
+     "actions": null,
+     "level": 7,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "Your body is accustomed to physical hardship and resistant to ailments. Your proficiency rank for Fortitude saves increases to master. When you roll a success on a Fortitude save, you get a critical success instead.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Classes.aspx?ID=57",
+       "book": "Player Core 2",
+       "page": "70"
+      }
+     },
+     "traits": [
+      3627
+     ],
+     "content_source_id": 256,
+     "version": null,
+     "uuid": 4947001784725006,
+     "availability": null,
+     "search_tsv": "'accustom':5B 'ailment':12B 'bodi':3B 'critic':34B 'fortitud':17B,29B 'get':32B 'hardship':8B 'increas':19B 'instead':36B 'juggernaut':1A 'master':21B 'physic':7B 'profici':14B 'rank':15B 'resist':10B 'roll':24B 'save':18B,30B 'success':26B,35B",
+     "updated_at": "2026-08-27T16:49:29.077051+00:00"
+    },
+    {
+     "id": 31219,
+     "created_at": "2024-07-31T22:26:30.902309+00:00",
+     "operations": [
+      {
+       "id": "cd80f3bf-88ea-471a-93e4-4d1720db08ed",
+       "type": "adjValue",
+       "data": {
+        "variable": "WEAPON_SPECIALIZATION",
+        "value": true
+       }
+      }
+     ],
+     "name": "Weapon Specialization",
+     "actions": null,
+     "level": 7,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You’ve learned how to inflict greater injuries with the weapons you know best. You deal 2 additional damage with weapons and unarmed attacks in which you are an expert. This damage increases to 3 if you’re a master and 4 if you’re legendary.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {},
+     "traits": [
+      3627,
+      3628,
+      3629,
+      3630,
+      3633
+     ],
+     "content_source_id": 256,
+     "version": null,
+     "uuid": 2118896408973848,
+     "availability": null,
+     "search_tsv": "'2':19B '3':37B '4':44B 'addit':20B 'attack':26B 'best':16B 'damag':21B,34B 'deal':18B 'expert':32B 'greater':9B 'increas':35B 'inflict':8B 'injuri':10B 'know':15B 'learn':5B 'legendari':48B 'master':42B 're':40B,47B 'special':2A 'unarm':25B 've':4B 'weapon':1A,13B,23B",
+     "updated_at": "2024-07-31T22:26:30.902309+00:00"
+    }
+   ],
+   "physicalFeatures": [
+    {
+     "id": 29416,
+     "created_at": "2024-06-13T21:08:54.974599+00:00",
+     "operations": [],
+     "name": "Change Shape",
+     "actions": "ONE-ACTION",
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You change into your human or spider shape. Each shape has a specific, persistent appearance. In your [human](link_trait_1436) shape, you can't use [unarmed](link_trait_2398) attacks granted by your ancestry. You aren't flat-footed when [climbing](link_action_19612) in your spider shape. However, in your spider shape you can't use weapons, shields, or other held items of any sort, and you are limited in what actions you can take that have the [manipulate](link_trait_1433) trait. The only [manipulate](link_trait_1433) actions you can take are to [Cast a Spell](link_action_19611) , weave silk or webbing, or simple [Interact](link_action_19733) actions such as opening an unlocked door. Your spider legs can't perform actions that require fingers or significant manual dexterity, including any action that would require a check to accomplish. The GM might determine other manipulate actions are appropriate for your spider legs.",
+     "special": "",
+     "type": "physical-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Actions.aspx?ID=730",
+       "book": "The Mwangi Expanse",
+       "page": "103"
+      },
+      "unselectable": true
+     },
+     "traits": [
+      2979,
+      1459,
+      1432,
+      1453
+     ],
+     "content_source_id": 28,
+     "version": null,
+     "uuid": 4060254409884388,
+     "availability": null,
+     "search_tsv": "'1433':87B,94B '1436':23B '19611':106B '19612':48B '19733':116B '2398':32B 'accomplish':147B 'action':47B,77B,95B,105B,115B,117B,130B,140B,154B 'ancestri':37B 'appear':17B 'appropri':156B 'aren':39B 'attack':33B 'cast':101B 'chang':1A,4B 'check':145B 'climb':45B 'determin':151B 'dexter':137B 'door':123B 'finger':133B 'flat':42B 'flat-foot':41B 'foot':43B 'gm':149B 'grant':34B 'held':66B 'howev':53B 'human':7B,20B 'includ':138B 'interact':113B 'item':67B 'leg':126B,160B 'limit':74B 'link':21B,30B,46B,85B,92B,104B,114B 'manipul':84B,91B,153B 'manual':136B 'might':150B 'open':120B 'perform':129B 'persist':16B 'requir':132B,143B 'shape':2A,10B,12B,24B,52B,57B 'shield':63B 'signific':135B 'silk':108B 'simpl':112B 'sort':70B 'specif':15B 'spell':103B 'spider':9B,51B,56B,125B,159B 'take':80B,98B 'trait':22B,31B,86B,88B,93B 'unarm':29B 'unlock':122B 'use':28B,61B 'weapon':62B 'weav':107B 'web':110B 'would':142B",
+     "updated_at": "2026-08-27T16:49:33.347375+00:00"
+    },
+    {
+     "id": 29435,
+     "created_at": "2024-06-14T00:21:29.360072+00:00",
+     "operations": [
+      {
+       "id": "08c4d908-26ab-43a6-91b4-0c94f5edd64c",
+       "type": "giveItem",
+       "data": {
+        "itemId": 14437
+       }
+      }
+     ],
+     "name": "Fangs",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You were born with a natural means for hunting and self-defense. You gain a [fangs](link_item_14437) [unarmed](link_trait_2398) attack that deals 1d6 piercing damage. Your [fangs](link_item_14437) are in the brawling group and have the [finesse](link_trait_1570) and [unarmed](link_trait_2398) traits.",
+     "special": "",
+     "type": "physical-feature",
+     "meta_data": {},
+     "traits": [
+      2979
+     ],
+     "content_source_id": 28,
+     "version": null,
+     "uuid": 4868531276984873,
+     "availability": null,
+     "search_tsv": "'14437':21B,36B '1570':48B '1d6':29B '2398':25B,53B 'attack':26B 'born':4B 'brawl':40B 'damag':31B 'deal':28B 'defens':14B 'fang':1A,18B,33B 'finess':45B 'gain':16B 'group':41B 'hunt':10B 'item':20B,35B 'link':19B,23B,34B,46B,51B 'mean':8B 'natur':7B 'pierc':30B 'self':13B 'self-defens':12B 'trait':24B,47B,52B,54B 'unarm':22B,50B",
+     "updated_at": "2024-06-14T00:21:29.360072+00:00"
+    }
+   ],
+   "heritages": [
+    {
+     "id": 29468,
+     "created_at": "2024-06-14T02:23:04.985445+00:00",
+     "operations": [
+      {
+       "id": "4600803b-d923-456c-a89d-8a58efe884fb",
+       "type": "injectText",
+       "data": {
+        "type": "item",
+        "id": 14437,
+        "text": "Your [fangs](link_item_14437) attack has the [grapple](link_trait_2524) and [trip](link_trait_1537) traits."
+       }
+      }
+     ],
+     "name": "Snaring Anadi",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You were hatched with hooked fangs that give you an edge when hunting in your true form. Your [fangs](link_item_14437) attack gains the [grapple](link_trait_2524) and [trip](link_trait_1537) traits.",
+     "special": "",
+     "type": "heritage",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Heritages.aspx?ID=158",
+       "book": "The Mwangi Expanse",
+       "page": "103"
+      }
+     },
+     "traits": [
+      2979
+     ],
+     "content_source_id": 28,
+     "version": null,
+     "uuid": 6230605217339930,
+     "availability": null,
+     "search_tsv": "'14437':24B '1537':36B '2524':31B 'anadi':2A 'attack':25B 'edg':13B 'fang':8B,21B 'form':19B 'gain':26B 'give':10B 'grappl':28B 'hatch':5B 'hook':7B 'hunt':15B 'item':23B 'link':22B,29B,34B 'snare':1A 'trait':30B,35B,37B 'trip':33B 'true':18B",
+     "updated_at": "2026-08-27T16:49:33.347375+00:00"
+    }
+   ],
+   "baseAbilities": [],
+   "addedAbilities": []
+  },
+  "character_traits": [
+   {
+    "id": 2399,
+    "created_at": "2024-03-30T02:28:30.447007+00:00",
+    "name": "Humanoid",
+    "description": "Humanoid creatures reason and act much like [humans](link_trait_1436). They typically stand upright and have two arms and two legs.",
+    "meta_data": {
+     "source": {
+      "url": "https://2e.aonprd.com/Traits.aspx?ID=628",
+      "book": "Player Core",
+      "page": "457"
+     },
+     "important": false,
+     "class_trait": false,
+     "unselectable": false,
+     "ancestry_trait": false,
+     "creature_trait": true,
+     "archetype_trait": false,
+     "versatile_heritage_trait": false
+    },
+    "content_source_id": 3,
+    "uuid": 4637282396389759,
+    "search_tsv": "'1436':12B 'act':6B 'arm':20B 'creatur':3B 'human':9B 'humanoid':1A,2B 'leg':23B 'like':8B 'link':10B 'much':7B 'reason':4B 'stand':15B 'trait':11B 'two':19B,22B 'typic':14B 'upright':16B",
+    "updated_at": "2026-08-27T16:53:39.273543+00:00"
+   },
+   {
+    "id": 2979,
+    "created_at": "2024-04-23T16:14:01.436557+00:00",
+    "name": "Anadi",
+    "description": "This indicates content from the anadi ancestry.",
+    "meta_data": {
+     "source": {
+      "url": "https://2e.aonprd.com/Traits.aspx?ID=255",
+      "book": "The Mwangi Expanse",
+      "page": "308"
+     },
+     "ancestry_trait": true
+    },
+    "content_source_id": 28,
+    "uuid": 3693401426521299,
+    "search_tsv": "'anadi':1A,7B 'ancestri':8B 'content':4B 'indic':3B",
+    "updated_at": "2026-08-27T16:49:13.252728+00:00"
+   }
+  ],
+  "languages": [
+   "ANADI",
+   "MWANGI",
+   "AMURRUN",
+   "PAHTRA"
+  ],
+  "senses": {
+   "precise": [
+    {
+     "sense": {
+      "id": 20776,
+      "created_at": "2024-03-23T17:24:22.611991+00:00",
+      "operations": [
+       {
+        "id": "1c98e2a2-5228-4d57-bb09-d0c87d3d055a",
+        "type": "adjValue",
+        "data": {
+         "variable": "SENSES_PRECISE",
+         "value": "normal vision"
+        }
+       }
+      ],
+      "name": "Normal Vision",
+      "actions": null,
+      "level": 1,
+      "rarity": "COMMON",
+      "prerequisites": [],
+      "frequency": "",
+      "cost": "",
+      "trigger": "",
+      "requirements": "",
+      "access": "",
+      "description": "In bright light, such as sunlight, you can observe things clearly. However, creatures and objects in areas of dim light have the concealed condition for you and, in darkness, they're hidden or undetected.  \n  \nYou have the blinded condition while in darkness, though you may be able to see illuminated areas beyond the darkness. If you can see into an illuminated area, it can observe creatures within that illuminated area normally. After being in darkness, sudden exposure to bright light might make you dazzled for a short time, as determined by the GM.",
+      "special": "",
+      "type": "sense",
+      "meta_data": {
+       "unselectable": true
+      },
+      "traits": [],
+      "content_source_id": 3,
+      "version": "1.0",
+      "uuid": 423202486919968,
+      "availability": null,
+      "search_tsv": "'abl':49B 'area':19B,53B,64B,72B 'beyond':54B 'blind':40B 'bright':4B,81B 'clear':13B 'conceal':25B 'condit':26B,41B 'creatur':15B,68B 'dark':31B,44B,56B,77B 'dazzl':86B 'determin':92B 'dim':21B 'exposur':79B 'gm':95B 'hidden':34B 'howev':14B 'illumin':52B,63B,71B 'light':5B,22B,82B 'make':84B 'may':47B 'might':83B 'normal':1A,73B 'object':17B 'observ':11B,67B 're':33B 'see':51B,60B 'short':89B 'sudden':78B 'sunlight':8B 'thing':12B 'though':45B 'time':90B 'undetect':36B 'vision':2A 'within':69B",
+      "updated_at": "2024-03-23T17:24:22.611991+00:00"
+     },
+     "senseName": "Normal Vision",
+     "range": "",
+     "type": "precise"
+    }
+   ],
+   "imprecise": [
+    {
+     "sense": {
+      "id": 21081,
+      "created_at": "2024-04-05T21:29:53.369732+00:00",
+      "operations": [
+       {
+        "id": "d093403b-7e30-48b0-865b-d823f756f54c",
+        "type": "adjValue",
+        "data": {
+         "variable": "SENSES_IMPRECISE",
+         "value": "hearing"
+        }
+       }
+      ],
+      "name": "Hearing",
+      "actions": null,
+      "level": 1,
+      "rarity": "COMMON",
+      "prerequisites": [],
+      "frequency": "",
+      "cost": "",
+      "trigger": "",
+      "requirements": "",
+      "access": "",
+      "description": "Hearing is the ability to perceive sound by detecting vibrations through an organ such as the ear. A creature might be undetected by you if it’s in an environment that distorts the sense, such as a noisy room. In those cases, you have to use the [Seek](link_action_19845) basic action to detect the creature.",
+      "special": "",
+      "type": "sense",
+      "meta_data": {
+       "unselectable": true
+      },
+      "traits": [],
+      "content_source_id": 3,
+      "version": "1.0",
+      "uuid": 7294419213926000,
+      "availability": null,
+      "search_tsv": "'19845':52B 'abil':5B 'action':51B,54B 'basic':53B 'case':43B 'creatur':20B,58B 'detect':10B,56B 'distort':33B 'ear':18B 'environ':31B 'hear':1A,2B 'link':50B 'might':21B 'noisi':39B 'organ':14B 'perceiv':7B 'room':40B 'seek':49B 'sens':35B 'sound':8B 'undetect':23B 'use':47B 'vibrat':11B",
+      "updated_at": "2024-04-05T21:29:53.369732+00:00"
+     },
+     "senseName": "Hearing",
+     "range": "",
+     "type": "imprecise"
+    }
+   ],
+   "vague": [
+    {
+     "sense": {
+      "id": 21082,
+      "created_at": "2024-04-05T21:31:08.459485+00:00",
+      "operations": [
+       {
+        "id": "d093403b-7e30-48b0-865b-d823f756f54c",
+        "type": "adjValue",
+        "data": {
+         "variable": "SENSES_VAGUE",
+         "value": "smell"
+        }
+       }
+      ],
+      "name": "Smell",
+      "actions": null,
+      "level": 1,
+      "rarity": "COMMON",
+      "prerequisites": [],
+      "frequency": "",
+      "cost": "",
+      "trigger": "",
+      "requirements": "",
+      "access": "",
+      "description": "Smell allows you to detect and identify chemical substances in your environment through your [olfactory](link_trait_2131) system. This involves the detection of odor molecules by receptor cells in the nose.",
+      "special": "",
+      "type": "sense",
+      "meta_data": {
+       "unselectable": true
+      },
+      "traits": [],
+      "content_source_id": 3,
+      "version": "1.0",
+      "uuid": 5653374427219146,
+      "availability": null,
+      "search_tsv": "'2131':19B 'allow':3B 'cell':30B 'chemic':9B 'detect':6B,24B 'environ':13B 'identifi':8B 'involv':22B 'link':17B 'molecul':27B 'nose':33B 'odor':26B 'olfactori':16B 'receptor':29B 'smell':1A,2B 'substanc':10B 'system':20B 'trait':18B",
+      "updated_at": "2024-04-05T21:31:08.459485+00:00"
+     },
+     "senseName": "Smell",
+     "range": "",
+     "type": "vague"
+    }
+   ]
+  },
+  "weapons": [
+   {
+    "item": {
+     "id": 14437,
+     "created_at": "2024-06-13T21:06:02.088078+00:00",
+     "updated_at": "2026-07-28T17:00:33.389738+00:00",
+     "name": "Anadi Fangs",
+     "price": {},
+     "bulk": null,
+     "level": 0,
+     "rarity": "COMMON",
+     "availability": null,
+     "traits": [
+      2398,
+      1570
+     ],
+     "description": "[Unarmed](link_trait_2398) attack gained from the Anadi ancestry.",
+     "group": "WEAPON",
+     "hands": null,
+     "size": "MEDIUM",
+     "craft_requirements": "",
+     "usage": "",
+     "meta_data": {
+      "image_url": "",
+      "category": "unarmed_attack",
+      "group": "brawling",
+      "damage": {
+       "damageType": "piercing",
+       "dice": 1,
+       "die": "d6",
+       "extra": ""
+      },
+      "bulk": {},
+      "charges": {},
+      "is_shoddy": false,
+      "unselectable": true,
+      "quantity": 1,
+      "material": {},
+      "runes": {
+       "striking": 0,
+       "resilient": 0,
+       "potency": 0,
+       "property": []
+      },
+      "starfinder": {},
+      "foundry": {}
+     },
+     "operations": [],
+     "content_source_id": 28,
+     "version": "1.0"
+    },
+    "stats": {
+     "attack_bonus": {
+      "total": [
+       14,
+       9,
+       4
+      ],
+      "parts": {},
+      "conditionals": []
+     },
+     "damage": {
+      "dice": 1,
+      "die": "d6",
+      "damageType": "P",
+      "bonus": {
+       "total": 5,
+       "parts": {},
+       "conditionals": []
+      },
+      "other": [],
+      "extra": ""
+     }
+    }
+   },
+   {
+    "item": {
+     "id": 9252,
+     "created_at": "2024-03-24T22:44:19.105898+00:00",
+     "updated_at": "2026-08-27T16:49:04.220135+00:00",
+     "name": "Fist",
+     "price": {},
+     "bulk": "0",
+     "level": 0,
+     "rarity": "COMMON",
+     "availability": null,
+     "traits": [
+      1569,
+      1570,
+      1571,
+      2398
+     ],
+     "description": "_Sometimes, the only way you can make someone listen is with your fist._",
+     "group": "WEAPON",
+     "hands": "1",
+     "size": "MEDIUM",
+     "craft_requirements": "",
+     "usage": "",
+     "meta_data": {
+      "image_url": "",
+      "category": "unarmed_attack",
+      "group": "brawling",
+      "damage": {
+       "damageType": "bludgeoning",
+       "dice": 1,
+       "die": "d4",
+       "extra": ""
+      },
+      "bulk": {},
+      "charges": {},
+      "hardness": 0,
+      "hp_max": 0,
+      "broken_threshold": 0,
+      "is_shoddy": false,
+      "unselectable": true,
+      "quantity": 1,
+      "material": {},
+      "runes": {
+       "property": []
+      },
+      "starfinder": {
+       "slots": []
+      },
+      "foundry": {}
+     },
+     "operations": [],
+     "content_source_id": 1,
+     "version": "1.0"
+    },
+    "stats": {
+     "attack_bonus": {
+      "total": [
+       14,
+       10,
+       6
+      ],
+      "parts": {},
+      "conditionals": []
+     },
+     "damage": {
+      "dice": 1,
+      "die": "d4",
+      "damageType": "B",
+      "bonus": {
+       "total": 5,
+       "parts": {},
+       "conditionals": []
+      },
+      "other": [],
+      "extra": ""
+     }
+    }
+   }
+  ],
+  "inventory_flat": [
+   {
+    "id": "extra-item-14437",
+    "item": {
+     "id": 14437,
+     "created_at": "2024-06-13T21:06:02.088078+00:00",
+     "updated_at": "2026-07-28T17:00:33.389738+00:00",
+     "name": "Anadi Fangs",
+     "price": {},
+     "bulk": null,
+     "level": 0,
+     "rarity": "COMMON",
+     "availability": null,
+     "traits": [
+      2398,
+      1570
+     ],
+     "description": "[Unarmed](link_trait_2398) attack gained from the Anadi ancestry.",
+     "group": "WEAPON",
+     "hands": null,
+     "size": "MEDIUM",
+     "craft_requirements": "",
+     "usage": "",
+     "meta_data": {
+      "image_url": "",
+      "category": "unarmed_attack",
+      "group": "brawling",
+      "damage": {
+       "damageType": "piercing",
+       "dice": 1,
+       "die": "d6",
+       "extra": ""
+      },
+      "bulk": {},
+      "charges": {},
+      "is_shoddy": false,
+      "unselectable": true,
+      "quantity": 1,
+      "material": {},
+      "runes": {
+       "striking": 0,
+       "resilient": 0,
+       "potency": 0,
+       "property": []
+      },
+      "starfinder": {},
+      "foundry": {}
+     },
+     "operations": [],
+     "content_source_id": 28,
+     "version": "1.0"
+    },
+    "is_formula": false,
+    "is_equipped": true,
+    "is_invested": false,
+    "is_implanted": false,
+    "container_contents": []
+   },
+   {
+    "id": "extra-item-9252",
+    "item": {
+     "id": 9252,
+     "created_at": "2024-03-24T22:44:19.105898+00:00",
+     "updated_at": "2026-08-27T16:49:04.220135+00:00",
+     "name": "Fist",
+     "price": {},
+     "bulk": "0",
+     "level": 0,
+     "rarity": "COMMON",
+     "availability": null,
+     "traits": [
+      1569,
+      1570,
+      1571,
+      2398
+     ],
+     "description": "_Sometimes, the only way you can make someone listen is with your fist._",
+     "group": "WEAPON",
+     "hands": "1",
+     "size": "MEDIUM",
+     "craft_requirements": "",
+     "usage": "",
+     "meta_data": {
+      "image_url": "",
+      "category": "unarmed_attack",
+      "group": "brawling",
+      "damage": {
+       "damageType": "bludgeoning",
+       "dice": 1,
+       "die": "d4",
+       "extra": ""
+      },
+      "bulk": {},
+      "charges": {},
+      "hardness": 0,
+      "hp_max": 0,
+      "broken_threshold": 0,
+      "is_shoddy": false,
+      "unselectable": true,
+      "quantity": 1,
+      "material": {},
+      "runes": {
+       "property": []
+      },
+      "starfinder": {
+       "slots": []
+      },
+      "foundry": {}
+     },
+     "operations": [],
+     "content_source_id": 1,
+     "version": "1.0"
+    },
+    "is_formula": false,
+    "is_equipped": true,
+    "is_invested": false,
+    "is_implanted": false,
+    "container_contents": []
+   }
+  ],
+  "total_bulk": "0",
+  "spell_raw_data": {
+   "slots": [],
+   "list": [],
+   "focus": [],
+   "innate": [],
+   "sources": []
+  },
+  "spell_sources": [],
+  "spell_slots": [],
+  "spells": {
+   "all": [],
+   "cantrips": [],
+   "normal": [],
+   "rituals": []
+  },
+  "focus_spells": [],
+  "innate_spells": [],
+  "size": "Medium",
+  "speeds": [
+   {
+    "name": "SPEED",
+    "value": {
+     "bonus": 5,
+     "bmap": {},
+     "conditionals": [],
+     "total": 30,
+     "value": 25
+    }
+   },
+   {
+    "name": "SPEED_FLY",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 5,
+     "value": 0
+    }
+   },
+   {
+    "name": "SPEED_CLIMB",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 5,
+     "value": 0
+    }
+   },
+   {
+    "name": "SPEED_BURROW",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 5,
+     "value": 0
+    }
+   },
+   {
+    "name": "SPEED_SWIM",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 5,
+     "value": 0
+    }
+   }
+  ],
+  "max_hp": 99,
+  "ac": 21,
+  "shield_item": null,
+  "armor_item": null,
+  "resist_weaks": {
+   "resists": [],
+   "weaks": [],
+   "immunes": []
+  },
+  "proficiencies": {
+   "SAVE_FORT": {
+    "total": "+14",
+    "parts": {
+     "level": 7,
+     "profValue": 6,
+     "attributeMod": 1,
+     "hasConditionals": true,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": [
+       {
+        "text": "+2 circumstance bonus against the web spell, natural webbing, and effects that entrap you in webbing. Whenever you roll a success against an effect involving a web, you get a critical success instead.",
+        "source": "Web Walker"
+       },
+       {
+        "text": "+1 circumstance bonus against effects that snare and entangle you, like the entangling flora spell",
+        "source": "Web Walker"
+       },
+       {
+        "text": "When you roll a success, you get a critical success instead.",
+        "source": "Juggernaut (Lvl. 7)"
+       }
+      ]
+     }
+    }
+   },
+   "SAVE_REFLEX": {
+    "total": "+11",
+    "parts": {
+     "level": 7,
+     "profValue": 2,
+     "attributeMod": 2,
+     "hasConditionals": true,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": [
+       {
+        "text": "+2 circumstance bonus against the web spell, natural webbing, and effects that entrap you in webbing. Whenever you roll a success against an effect involving a web, you get a critical success instead.",
+        "source": "Web Walker"
+       },
+       {
+        "text": "+1 circumstance bonus against effects that snare and entangle you, like the entangling flora spell",
+        "source": "Web Walker"
+       }
+      ]
+     }
+    }
+   },
+   "SAVE_WILL": {
+    "total": "+15",
+    "parts": {
+     "level": 7,
+     "profValue": 4,
+     "attributeMod": 4,
+     "hasConditionals": true,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": [
+       {
+        "text": "+2 circumstance bonus against the web spell, natural webbing, and effects that entrap you in webbing. Whenever you roll a success against an effect involving a web, you get a critical success instead.",
+        "source": "Web Walker"
+       },
+       {
+        "text": "+1 circumstance bonus against effects that snare and entangle you, like the entangling flora spell",
+        "source": "Web Walker"
+       }
+      ]
+     }
+    }
+   },
+   "SKILL_ACROBATICS": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_ARCANA": {
+    "total": "+11",
+    "parts": {
+     "level": 7,
+     "profValue": 2,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_ATHLETICS": {
+    "total": "+14",
+    "parts": {
+     "level": 7,
+     "profValue": 4,
+     "attributeMod": 3,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_CRAFTING": {
+    "total": "+11",
+    "parts": {
+     "level": 7,
+     "profValue": 2,
+     "attributeMod": 2,
+     "hasConditionals": true,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": [
+       {
+        "text": "+1 circumstance bonus to Craft wooden goods and structures",
+        "source": "Specialty Crafting (Lvl. 1)"
+       }
+      ]
+     }
+    }
+   },
+   "SKILL_DECEPTION": {
+    "total": "+1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_DIPLOMACY": {
+    "total": "+10",
+    "parts": {
+     "level": 7,
+     "profValue": 2,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_INTIMIDATION": {
+    "total": "+10",
+    "parts": {
+     "level": 7,
+     "profValue": 2,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_MEDICINE": {
+    "total": "+13",
+    "parts": {
+     "level": 7,
+     "profValue": 2,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_NATURE": {
+    "total": "+4",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_OCCULTISM": {
+    "total": "+11",
+    "parts": {
+     "level": 7,
+     "profValue": 2,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_PERFORMANCE": {
+    "total": "+1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_RELIGION": {
+    "total": "+4",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_SOCIETY": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_STEALTH": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_SURVIVAL": {
+    "total": "+13",
+    "parts": {
+     "level": 7,
+     "profValue": 2,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_THIEVERY": {
+    "total": "+11",
+    "parts": {
+     "level": 7,
+     "profValue": 2,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_LORE____": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SPELL_ATTACK": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SPELL_DC": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "LIGHT_ARMOR": {
+    "total": "+9",
+    "parts": {
+     "level": 7,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "MEDIUM_ARMOR": {
+    "total": "+9",
+    "parts": {
+     "level": 7,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "HEAVY_ARMOR": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "UNARMORED_DEFENSE": {
+    "total": "+9",
+    "parts": {
+     "level": 7,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "LIGHT_BARDING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "HEAVY_BARDING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SIMPLE_WEAPONS": {
+    "total": "+11",
+    "parts": {
+     "level": 7,
+     "profValue": 4,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "MARTIAL_WEAPONS": {
+    "total": "+11",
+    "parts": {
+     "level": 7,
+     "profValue": 4,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ADVANCED_WEAPONS": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "UNARMED_ATTACKS": {
+    "total": "+11",
+    "parts": {
+     "level": 7,
+     "profValue": 4,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "PERCEPTION": {
+    "total": "+15",
+    "parts": {
+     "level": 7,
+     "profValue": 4,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "CLASS_DC": {
+    "total": "+12",
+    "parts": {
+     "level": 7,
+     "profValue": 2,
+     "attributeMod": 3,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_AXE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_BOMB": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_BOW": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_BRAWLING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_CLUB": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_CROSSBOW": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_DART": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_FIREARM": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_FLAIL": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_HAMMER": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_KNIFE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_PICK": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_POLEARM": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_SHIELD": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_SLING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_SPEAR": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_SWORD": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_LASER": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_PROJECTILE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_GUN": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_GUN_SIMPLE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_GUN_MARTIAL": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_GUN_ADVANCED": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_ONE_HANDED_AGILE_FINESSE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_CLOTH": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_CHAIN": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_COMPOSITE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_LEATHER": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_PLATE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_CERAMIC": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_POLYMER": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_SKELETAL": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_WOOD": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_COMPUTERS": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_PILOTING": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "INNATE_SPELL_ATTACK": {
+    "total": "+1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "INNATE_SPELL_DC": {
+    "total": "11",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   }
+  },
+  "attributes": {
+   "ATTRIBUTE_STR": {
+    "value": 3,
+    "partial": false
+   },
+   "ATTRIBUTE_DEX": {
+    "value": 2,
+    "partial": false
+   },
+   "ATTRIBUTE_CON": {
+    "value": 1,
+    "partial": false
+   },
+   "ATTRIBUTE_INT": {
+    "value": 2,
+    "partial": false
+   },
+   "ATTRIBUTE_WIS": {
+    "value": 4,
+    "partial": false
+   },
+   "ATTRIBUTE_CHA": {
+    "value": 1,
+    "partial": false
+   }
+  }
+ },
+ "_sanitized": "user_id, timestamps, api_clients and library dumps (all_traits, all_sources, all_spells, raw_data_dump) removed"
+}

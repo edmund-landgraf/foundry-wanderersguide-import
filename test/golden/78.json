@@ -1,0 +1,368 @@
+{
+ "plan": {
+  "wgId": 78,
+  "name": "Inkwhisk (P4)",
+  "level": 2,
+  "maxHp": 28,
+  "coins": {
+   "cp": 0,
+   "sp": 150,
+   "gp": 0,
+   "pp": 0
+  },
+  "heroPoints": 1,
+  "imageUrl": "https://api.wanderersguide.app/storage/v1/object/public/portraits/default/Vigilante%20-%20Aric.png",
+  "languages": [
+   "common",
+   "fey",
+   "gnomish"
+  ],
+  "attributes": {
+   "str": 0,
+   "dex": 2,
+   "con": 2,
+   "int": 1,
+   "wis": 1,
+   "cha": 3
+  },
+  "entries": [
+   {
+    "kind": "ancestry",
+    "packType": "ancestry",
+    "name": "Gnome",
+    "slug": "gnome",
+    "wgContentId": 5,
+    "sourcePath": "character.details.ancestry"
+   },
+   {
+    "kind": "heritage",
+    "packType": "heritage",
+    "name": "Chameleon Gnome",
+    "slug": "chameleon-gnome",
+    "wgContentId": 20728,
+    "sourcePath": "content.feats_features.heritages[0]"
+   },
+   {
+    "kind": "background",
+    "packType": "background",
+    "name": "Entertainer",
+    "slug": "entertainer",
+    "wgContentId": 740,
+    "sourcePath": "character.details.background"
+   },
+   {
+    "kind": "class",
+    "packType": "class",
+    "name": "Bard",
+    "slug": "bard",
+    "wgContentId": 21,
+    "sourcePath": "character.details.class"
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Animal Accomplice",
+    "slug": "animal-accomplice",
+    "wgContentId": 19903,
+    "level": 1,
+    "sourcePath": "content.feats_features.ancestryFeats[0]"
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Martial Performance",
+    "slug": "martial-performance",
+    "wgContentId": 20326,
+    "level": 1,
+    "sourcePath": "content.feats_features.classFeats[0]"
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Versatile Performance",
+    "slug": "versatile-performance",
+    "wgContentId": 20684,
+    "level": 1,
+    "sourcePath": "content.feats_features.classFeats[1]"
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Fascinating Performance",
+    "slug": "fascinating-performance",
+    "wgContentId": 20141,
+    "level": 1,
+    "sourcePath": "content.feats_features.generalAndSkillFeats[0]"
+   },
+   {
+    "kind": "feat",
+    "packType": "feat",
+    "name": "Polymath Muse",
+    "slug": "polymath-muse",
+    "wgContentId": 34062,
+    "level": 1,
+    "sourcePath": "content.feats_features.otherFeats[0]"
+   },
+   {
+    "kind": "spell",
+    "packType": "spell",
+    "name": "Phantasmal Minion",
+    "slug": "phantasmal-minion",
+    "wgContentId": 4764,
+    "rank": 1,
+    "castingSource": "BARD",
+    "focus": false,
+    "sourcePath": "content.spells.all[0]"
+   },
+   {
+    "kind": "spell",
+    "packType": "spell",
+    "name": "Courageous Anthem",
+    "slug": "courageous-anthem",
+    "wgContentId": 4540,
+    "rank": 0,
+    "castingSource": "BARD",
+    "focus": true,
+    "sourcePath": "content.focus_spells[0]"
+   },
+   {
+    "kind": "spell",
+    "packType": "spell",
+    "name": "Counter Performance",
+    "slug": "counter-performance",
+    "wgContentId": 4539,
+    "rank": 1,
+    "castingSource": "BARD",
+    "focus": true,
+    "sourcePath": "content.focus_spells[1]"
+   }
+  ]
+ },
+ "match": [
+  "ancestry: Gnome -> Compendium.pf2e.ancestries.Item.CYlfsYLJcBOgqKtD (slug)",
+  "heritage: Chameleon Gnome -> Compendium.pf2e.heritages.Item.XeXWsvcWU3Zaj5WC (slug)",
+  "background: Entertainer -> Compendium.pf2e.backgrounds.Item.i4hN6OYv8qmi3GLW (slug)",
+  "class: Bard -> Compendium.pf2e.classes.Item.3gweRQ5gn7szIWAv (slug)",
+  "feat: Animal Accomplice -> Compendium.pf2e.feats-srd.Item.ED58GzldWb82yc2q (slug)",
+  "feat: Martial Performance -> Compendium.pf2e.feats-srd.Item.q1iP3SjAF5uceI0M (slug)",
+  "feat: Versatile Performance -> Compendium.pf2e.feats-srd.Item.jBp91q4uzwd4FeSX (slug)",
+  "feat: Fascinating Performance -> Compendium.pf2e.feats-srd.Item.7LB00jkh6JaJr3vS (slug)",
+  "feat: Polymath Muse -> MISS (miss)",
+  "spell: Phantasmal Minion -> Compendium.pf2e.spells-srd.Item.xqmHD8JIjak15lRk (slug)",
+  "spell: Courageous Anthem -> Compendium.pf2e.spells-srd.Item.IAjvwqgiDr3qGYxY (slug)",
+  "spell: Counter Performance -> Compendium.pf2e.spells-srd.Item.WILXkjU5Yq3yw10r (slug)"
+ ],
+ "misses": [
+  "feat: Polymath Muse"
+ ],
+ "choiceHints": {
+  "muses": [
+   "Polymath Muse"
+  ]
+ },
+ "spellcasting": [
+  {
+   "key": "src:BARD",
+   "source": "BARD",
+   "name": "Bard Spells",
+   "mode": "spontaneous",
+   "tradition": "occult",
+   "ability": "cha",
+   "slots": {
+    "0": 5,
+    "1": 3
+   }
+  },
+  {
+   "key": "focus:BARD",
+   "source": "BARD",
+   "name": "Bard Focus Spells",
+   "mode": "focus",
+   "tradition": "occult",
+   "ability": "cha",
+   "slots": {}
+  }
+ ],
+ "preview": {
+  "insert": {
+   "insert": true,
+   "fields": [],
+   "add": [
+    "ancestry: Gnome",
+    "heritage: Chameleon Gnome",
+    "background: Entertainer",
+    "class: Bard",
+    "feat: Animal Accomplice",
+    "feat: Martial Performance",
+    "feat: Versatile Performance",
+    "feat: Fascinating Performance",
+    "feat: Polymath Muse",
+    "spell: Phantasmal Minion",
+    "spell: Courageous Anthem",
+    "spell: Counter Performance"
+   ],
+   "remove": [],
+   "keep": []
+  },
+  "update": {
+   "insert": false,
+   "fields": [],
+   "add": [],
+   "remove": [],
+   "keep": [
+    "ancestry: Gnome",
+    "heritage: Chameleon Gnome",
+    "background: Entertainer",
+    "class: Bard",
+    "feat: Animal Accomplice",
+    "feat: Martial Performance",
+    "feat: Versatile Performance",
+    "feat: Fascinating Performance",
+    "feat: Polymath Muse",
+    "spell: Phantasmal Minion",
+    "spell: Courageous Anthem",
+    "spell: Counter Performance"
+   ]
+  },
+  "html": "<h3>WG preview: Inkwhisk (P4) (Update)</h3><p>No field changes.</p><p>Add (0):</p><p>none</p><p>Remove (0):</p><p>none</p><p>Unchanged: 12. Would become homebrew: 1.</p>"
+ },
+ "coverage": {
+  "counts": {
+   "mapped": 24,
+   "included": 12,
+   "unresolved": 2,
+   "leftover-preserved": 20,
+   "dropped": 22
+  },
+  "unresolved": [
+   {
+    "path": "character.operation_data.selections.background_0b62c294-14a5-49cc-a5d5-3d67dfeb021b",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   },
+   {
+    "path": "character.operation_data.selections.ancestry_957ee14b-c6dc-44eb-881b-e99a1b4e5118-0",
+    "status": "unresolved",
+    "reason": "WG select answer with no PF2e target; review manually"
+   }
+  ],
+  "dropped": [
+   {
+    "path": "character.operation_data.selections.background_bd9301f2-7349-4c33-92d6-1d9f048de92f",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-0",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-1",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-2",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-3",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "character.operation_data.selections.class_720d2fe6-f042-4353-8313-1293375b1301-4",
+    "status": "dropped",
+    "reason": "skill training selection: skills are not imported (PF2e derives them from its own choices)"
+   },
+   {
+    "path": "content._README",
+    "status": "dropped",
+    "reason": "library reference data, not character state"
+   },
+   {
+    "path": "content.character_traits",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.senses",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.weapons",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.total_bulk",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.spell_raw_data",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.spells.cantrips",
+    "status": "dropped",
+    "reason": "derived spell view; PF2e recomputes"
+   },
+   {
+    "path": "content.spells.normal",
+    "status": "dropped",
+    "reason": "derived spell view; PF2e recomputes"
+   },
+   {
+    "path": "content.spells.rituals",
+    "status": "dropped",
+    "reason": "derived spell view; PF2e recomputes"
+   },
+   {
+    "path": "content.size",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.speeds",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.ac",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.shield_item",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.armor_item",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.resist_weaks",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.proficiencies",
+    "status": "dropped",
+    "reason": "derived by WG; PF2e recomputes it"
+   }
+  ]
+ },
+ "parity": {
+  "ok": true,
+  "passed": 14,
+  "failed": [],
+  "html": "<h4>Parity check</h4><p>All checks match the export.</p>"
+ }
+}
