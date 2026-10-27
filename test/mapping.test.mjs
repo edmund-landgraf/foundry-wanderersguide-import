@@ -268,3 +268,32 @@ test("exportCharacter rejects non-v4 exports", async () => {
   const fetchImpl = async () => ({ status: 200, ok: true, headers: { get: () => null }, json: async () => ({ version: 3, character: {} }) });
   await assert.rejects(exportCharacter({ baseUrl: "http://h", apiKey: KEY, fetchImpl }, 7), /JSON v4 character/);
 });
+
+test("exportCharacter uses the slim export and falls back to the full one only when slim is missing", async () => {
+  const { exportCharacter } = await import("../scripts/api.js");
+  const v4 = { version: 4, character: { id: 7 }, content: {} };
+  const reply = (status, json) => ({ status, ok: status < 400, headers: { get: () => null }, json: async () => json });
+  const run = async (slimStatus) => {
+    const urls = [];
+    const fetchImpl = async (url) => {
+      urls.push(url.split("/").pop());
+      if (url.endsWith("-slim")) return slimStatus === 200 ? reply(200, { ...v4, slim: { version: 1 } }) : reply(slimStatus, slimStatus === 500 ? null : { status: "fail", data: { message: "no" } });
+      return reply(200, v4);
+    };
+    const out = await exportCharacter({ baseUrl: "http://h", apiKey: KEY, fetchImpl, maxRetries: 0 }, 7).catch((e) => e);
+    return { urls, out };
+  };
+  let r = await run(200);
+  assert.deepEqual(r.urls, ["wgui-export-character-slim"]);
+  assert.equal(r.out.slim.version, 1);
+  for (const status of [404, 500]) {
+    r = await run(status);
+    assert.deepEqual(r.urls, ["wgui-export-character-slim", "wgui-export-character"], String(status));
+    assert.equal(r.out.version, 4);
+  }
+  for (const status of [401, 403, 429]) {
+    r = await run(status);
+    assert.deepEqual(r.urls, ["wgui-export-character-slim"], String(status));
+    assert.ok(r.out instanceof Error, String(status));
+  }
+});
