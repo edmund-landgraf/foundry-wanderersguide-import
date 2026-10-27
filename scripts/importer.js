@@ -22,10 +22,6 @@ async function compendiumIndex() {
   }
   return (indexCache = rows);
 }
-async function homebrewFolder() {
-  return game.folders.find((f) => f.type === "Item" && f.name === HOMEBREW_FOLDER)
-    ?? Folder.create({ name: HOMEBREW_FOLDER, type: "Item" });
-}
 
 function homebrewItemData(entry, folderId) {
   const type = entry.packType === "equipment" ? "equipment" : entry.packType;
@@ -167,9 +163,10 @@ async function itemDataFor(entry, folderId, ctx, notes) {
       if (entry.wgContentId != null) return id === entry.wgContentId;
       return id == null && i.getFlag(MODULE_ID, "homebrew") === true && i.type === type && i.name === entry.name;
     });
-    if (!world) world = await Item.create(homebrewItemData(entry, folderId));
-    data = world.toObject();
+    // Planned only: apply() creates the world item after confirmation.
+    data = world ? world.toObject() : homebrewItemData(entry, null);
     delete data._id;
+    delete data.folder;
   }
   data.flags = foundry.utils.mergeObject(data.flags ?? {}, { [MODULE_ID]: { wgContentId: entry.wgContentId ?? null, kind: entry.kind } });
   if (entry.kind === "equipment" && data.system) {
@@ -287,21 +284,37 @@ export function parityHtml(name, parity) {
     + (parity.failed.length ? `<ul>${parity.failed.map((r) => `<li>${esc(r.check)}: WG ${esc(JSON.stringify(r.wg))}, Foundry ${esc(JSON.stringify(r.foundry))}</li>`).join("")}</ul>` : "");
 }
 
-export async function importCharacter(exp, { host, onStep = () => {}, parity = false }) {
-  const step = (s) => { console.debug(`${MODULE_ID} | ${s}`); onStep(s); };
-  const plan = buildPlan(exp);
-  step("plan");
-  const index = await compendiumIndex();
-  step(`index ${index.length}`);
-  const matched = matchEntries(plan.entries, index);
-  const misses = missReport(matched);
-  step("match");
-  const folder = await homebrewFolder();
-  const ctx = choiceContext(exp, plan, index);
+// ---- Safe apply (AMBA_REUSE_PLAN section 5) -------------------------------------------------
+// importCharacter runs in two phases:
+//   1. plan: export -> plan -> compendium match -> every item's data built and validated. No writes.
+//   2. apply (only after `confirm` returns true): snapshot the actor, create the replacements, and only
+//      then delete the old module-managed items. Any error restores the snapshot (or keeps a
+//      "(WG backup)" actor when the restore itself fails) and removes world items this run created.
+// `failAfter` (number of items) injects a failure part-way through item creation for tests.
 
-  let actor = findActor(plan, host);
-  const existing = !!actor;
-  const runtime = captureRuntimeState(actor);
+/** Items this module manages on `actor`, plus everything PF2e granted from them. */
+export function managedTree(items) {
+  const list = [...items];
+  const flag = (i, k) => i.getFlag?.(MODULE_ID, k) ?? i.flags?.[MODULE_ID]?.[k];
+  const ours = new Set(list.filter((i) => flag(i, "wgContentId") !== undefined || flag(i, "kind")).map((i) => i.id));
+  for (let grew = true; grew;) {
+    grew = false;
+    for (const i of list) {
+      const g = i.flags?.pf2e?.grantedBy?.id;
+      if (g && ours.has(g) && !ours.has(i.id)) { ours.add(i.id); grew = true; }
+      // ABC features (Alchemy, Cat Fall) point at their class/background through system.location.
+      const loc = i.system?.location;
+      if (typeof loc === "string" && ours.has(loc) && !ours.has(i.id)) { ours.add(i.id); grew = true; }
+      // Some grants are only recorded on the parent's flags.pf2e.itemGrants.
+      if (ours.has(i.id)) for (const v of Object.values(i.flags?.pf2e?.itemGrants ?? {})) if (v?.id && !ours.has(v.id)) { ours.add(v.id); grew = true; }
+    }
+  }
+  return ours;
+}
+
+export class InjectedFailure extends Error {}
+
+function forcedFields(plan, host, actor, existing) {
   const keepImg = actor?.img && !/mystery-man|default-icons/.test(actor.img) ? actor.img : null;
   const img = resolveImageUrl(plan.imageUrl, host) ?? keepImg ?? FALLBACK_IMG;
   const forced = {
@@ -323,109 +336,205 @@ export async function importCharacter(exp, { host, onStep = () => {}, parity = f
     Object.assign(forced, Object.fromEntries(Object.entries(plan.coins ?? {}).map(([k, v]) => [`system.currency.${k}`, v])));
     forced["system.resources.heroPoints.value"] = plan.heroPoints ?? 0;
   }
-  if (!actor) {
-    actor = await Actor.create({
-      name: plan.name,
-      type: "character",
-      ownership: { default: 0, [game.user.id]: 3 },
-      flags: { [MODULE_ID]: { wgId: plan.wgId, host } },
-    });
-  } else {
-    // Update: remove only items this module created (PLAN 8); Foundry-only state is kept.
-    // Items PF2e granted from ours (e.g. Formula Book (Blank) from the Alchemist's Formula Book) go too;
-    // PF2e detaches rather than deletes some granted physical items, which duplicated them on every re-import.
-    const ours = new Set(actor.items.filter((i) => i.getFlag(MODULE_ID, "wgContentId") !== undefined || i.getFlag(MODULE_ID, "kind")).map((i) => i.id));
-    for (let grew = true; grew;) {
-      grew = false;
-      for (const i of actor.items) {
-        const g = i.flags?.pf2e?.grantedBy?.id;
-        if (g && ours.has(g) && !ours.has(i.id)) { ours.add(i.id); grew = true; }
-        // ABC features (Alchemy, Cat Fall) point at their class/background through system.location.
-        const loc = i.system?.location;
-        if (typeof loc === "string" && ours.has(loc) && !ours.has(i.id)) { ours.add(i.id); grew = true; }
-        // Some grants are only recorded on the parent's flags.pf2e.itemGrants.
-        if (ours.has(i.id)) for (const v of Object.values(i.flags?.pf2e?.itemGrants ?? {})) if (v?.id && !ours.has(v.id)) { ours.add(v.id); grew = true; }
+  return forced;
+}
+
+/** Phase 1: everything an import needs, computed without writing to the world. */
+export async function planImport(exp, { host }) {
+  const plan = buildPlan(exp);
+  const index = await compendiumIndex();
+  const matched = matchEntries(plan.entries, index);
+  const misses = missReport(matched);
+  const ctx = choiceContext(exp, plan, index);
+  const actor = findActor(plan, host) ?? null;
+  const notes = [];
+  const problems = [];
+  // Spellcasting entries get their ids now so spells can point at them.
+  const entryIds = {};
+  const entryData = spellcastingPlan(exp).map((se) => {
+    const _id = foundry.utils.randomID();
+    entryIds[se.key] = _id;
+    const slots = {};
+    for (let r = 0; r <= 10; r++) { const n = se.slots[r] ?? 0; slots[`slot${r}`] = { max: n, value: n, prepared: [] }; }
+    return { _id, name: se.name, type: "spellcastingEntry", system: { ability: { value: se.ability }, tradition: { value: se.tradition ?? "" }, prepared: { value: se.mode, flexible: false }, showSlotlessLevels: { value: false }, slots }, flags: { [MODULE_ID]: { kind: "spellcasting", wgSource: se.key } } };
+  });
+  for (const e of matched) if (e.kind === "spell") e.entryId = entryIds[entryKeyFor(e)] ?? (e.focus || e.innate ? null : Object.values(entryIds)[0] ?? null);
+  // Build every item's data now; homebrew world items are only described here and created on apply.
+  for (const e of matched) {
+    try { e.data = await itemDataFor(e, null, ctx, notes); }
+    catch (err) { problems.push(`${e.kind}: ${e.name} (${err.message})`); }
+  }
+  const diff = diffPlan(plan, summarizeActor(actor));
+  const homebrew = matched.filter((e) => !e.match && e.data);
+  return { exp, plan, host, index, ctx, matched, misses, notes, problems, actor, entryData, diff, homebrew, valid: problems.length === 0 };
+}
+
+export function reviewHtml(p) {
+  const li = (xs) => (xs.length ? `<ul>${xs.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : "<p>none</p>");
+  return `${diffHtml(p.plan, p.diff, p.misses)}`
+    + (p.homebrew.length ? `<p>World homebrew items to create or reuse (folder "${esc(HOMEBREW_FOLDER)}"):</p>${li(p.homebrew.map((e) => `${e.kind}: ${e.name}`))}` : "")
+    + (p.notes.length ? `<p>Choices:</p>${li(p.notes)}` : "")
+    + (p.problems.length ? `<p><strong>Plan problems (import blocked):</strong></p>${li(p.problems)}` : "");
+}
+
+/** Phase 2. Called by importCharacter after confirmation. */
+async function applyImport(p, { onStep, parity, failAfter }) {
+  const { plan, host, matched, misses, notes, entryData, exp } = p;
+  const step = onStep;
+  let actor = p.actor ? game.actors.get(p.actor.id) : null;
+  const existing = !!actor;
+  const snapshot = existing ? actor.toObject() : null;
+  const runtime = captureRuntimeState(actor);
+  const createdWorld = [];
+  let createdFolder = null;
+  let createdActor = null;
+  let createdCount = 0;
+  const bump = (n) => { createdCount += n; if (failAfter != null && createdCount >= failAfter) throw new InjectedFailure(`injected failure after ${createdCount} created items`); };
+  const createItems = async (docs, opts = {}) => {
+    if (!docs.length) return [];
+    if (failAfter == null) { const out = await actor.createEmbeddedDocuments("Item", docs, { render: false, ...opts }); bump(0); return out; }
+    const out = [];
+    for (const d of docs) { out.push(...await actor.createEmbeddedDocuments("Item", [d], { render: false, ...opts })); bump(1); }
+    return out;
+  };
+  const stopPrompts = autoAnswerPrompts(p.ctx, notes);
+  try {
+    // Homebrew world items: only now that the plan is confirmed.
+    if (p.homebrew.length) {
+      let folder = game.folders.find((f) => f.type === "Item" && f.name === HOMEBREW_FOLDER);
+      if (!folder) { folder = await Folder.create({ name: HOMEBREW_FOLDER, type: "Item" }); createdFolder = folder; }
+      for (const e of p.homebrew) {
+        const type = e.packType === "equipment" ? "equipment" : e.packType;
+        let world = game.items.find((i) => {
+          const id = i.getFlag(MODULE_ID, "wgContentId");
+          if (e.wgContentId != null) return id === e.wgContentId;
+          return id == null && i.getFlag(MODULE_ID, "homebrew") === true && i.type === type && i.name === e.name;
+        });
+        if (!world) { world = await Item.create(homebrewItemData(e, folder.id)); createdWorld.push(world); }
       }
     }
-    const ids = [...ours].filter((id) => actor.items.has(id));
-    if (ids.length) await actor.deleteEmbeddedDocuments("Item", ids);
-  }
-  const notes = [];
-  const stopPrompts = autoAnswerPrompts(ctx, notes);
-  try {
-  step("actor");
-  await actor.update(forced);
-  step("forced");
-
-  // ABC first, then the rest (PLAN 5).
-  const order = ["ancestry", "heritage", "background", "class", "feat", "spell", "equipment"];
-  const sorted = [...matched].sort((a, b) => order.indexOf(a.kind) - order.indexOf(b.kind));
-  for (const kind of order) {
-    if (kind === "spell") {
-      // One spellcasting entry per WG source, plus focus and innate entries (PLAN 6).
-      const entryIds = {};
-      const entryData = spellcastingPlan(exp).map((se) => {
-        const _id = foundry.utils.randomID();
-        entryIds[se.key] = _id;
-        const slots = {};
-        for (let r = 0; r <= 10; r++) { const n = se.slots[r] ?? 0; slots[`slot${r}`] = { max: n, value: n, prepared: [] }; }
-        return { _id, name: se.name, type: "spellcastingEntry", system: { ability: { value: se.ability }, tradition: { value: se.tradition ?? "" }, prepared: { value: se.mode, flexible: false }, showSlotlessLevels: { value: false }, slots }, flags: { [MODULE_ID]: { kind: "spellcasting", wgSource: se.key } } };
-      });
-      if (entryData.length) {
-        await actor.createEmbeddedDocuments("Item", entryData, { keepId: true, render: false });
+    if (!actor) {
+      actor = createdActor = await Actor.create({ name: plan.name, type: "character", ownership: { default: 0, [game.user.id]: 3 }, flags: { [MODULE_ID]: { wgId: plan.wgId, host } } });
+    }
+    // Old managed items stay until every replacement exists.
+    const old = existing ? managedTree(actor.items) : new Set();
+    step("actor");
+    await actor.update(forcedFields(plan, host, actor, existing));
+    step("forced");
+    const order = ["ancestry", "heritage", "background", "class", "feat", "spell", "equipment"];
+    for (const kind of order) {
+      if (kind === "spell" && entryData.length) {
+        await createItems(entryData, { keepId: true });
         await restoreSpellcastingState(actor, runtime?.spellcasting);
       }
-      for (const e of sorted) if (e.kind === "spell") e.entryId = entryIds[entryKeyFor(e)] ?? (e.focus || e.innate ? null : Object.values(entryIds)[0] ?? null);
-    }
-    const batch = [];
-    // Skip entries PF2e already granted (class features, muse, etc.) so they are neither duplicated nor reported as misses.
-    const have = new Set(actor.items.filter((i) => i.type !== "spellcastingEntry").map((i) => sluggify(i.name)));
-    for (const e of sorted.filter((x) => x.kind === kind)) {
-      if (kind !== "equipment" && kind !== "spell" && (have.has(sluggify(e.name)) || (kind === "feat" && [...have].some((h) => sluggify(e.name).startsWith(`${h}-`))))) { const k = misses.findIndex((m) => m === `${e.kind}: ${e.name}`); if (k >= 0) misses.splice(k, 1); continue; }
-      if (kind === "spell") {
-        // A granted copy of the spell (e.g. a composition cantrip) is moved into its WG entry instead of duplicated.
-        const g = actor.items.find((i) => i.type === "spell" && sluggify(i.name) === sluggify(e.name));
-        if (g) { if (e.entryId && g.system.location?.value !== e.entryId) await g.update({ "system.location.value": e.entryId }); const k = misses.findIndex((m) => m === `${e.kind}: ${e.name}`); if (k >= 0) misses.splice(k, 1); continue; }
+      const batch = [];
+      // Only items created by this run count as "already present"; old managed items are about to go.
+      const fresh = actor.items.filter((i) => !old.has(i.id) && i.type !== "spellcastingEntry");
+      const have = new Set(fresh.map((i) => sluggify(i.name)));
+      for (const e of matched.filter((x) => x.kind === kind && x.data)) {
+        if (kind !== "equipment" && kind !== "spell" && (have.has(sluggify(e.name)) || (kind === "feat" && [...have].some((h) => sluggify(e.name).startsWith(`${h}-`))))) { const k = misses.findIndex((m) => m === `${e.kind}: ${e.name}`); if (k >= 0) misses.splice(k, 1); continue; }
+        if (kind === "spell") {
+          const g = fresh.find((i) => i.type === "spell" && sluggify(i.name) === sluggify(e.name));
+          if (g) { if (e.entryId && g.system.location?.value !== e.entryId) await g.update({ "system.location.value": e.entryId }); const k = misses.findIndex((m) => m === `${e.kind}: ${e.name}`); if (k >= 0) misses.splice(k, 1); continue; }
+        }
+        batch.push(foundry.utils.deepClone(e.data));
+
       }
-      try { batch.push(await itemDataFor(e, folder.id, ctx, notes)); } catch (err) { misses.push(`${e.kind}: ${e.name} (error: ${err.message})`); }
+      step(`build ${kind} ${batch.length}`);
+      await createItems(batch);
+      step(`created ${kind}`);
     }
-    step(`build ${kind} ${batch.length}`);
-    if (batch.length) await actor.createEmbeddedDocuments("Item", batch, { render: false });
-    step(`created ${kind}`);
-  }
+    // Replacements exist: now remove the previous module-managed items.
+    const stale = [...old].filter((id) => actor.items.has(id));
+    if (stale.length) await actor.deleteEmbeddedDocuments("Item", stale);
+    step("old removed");
 
+    if (plan.maxHp != null) {
+      // HP adjustment (PLAN 7.2): WG's max HP wins; a flagged effect carries the difference.
+      const computed = actor.system.attributes.hp.max;
+      const delta = plan.maxHp - computed;
+      if (delta !== 0) {
+        await actor.createEmbeddedDocuments("Item", [hpEffect(plan.maxHp, computed, delta)], { render: false });
+        notes.push(`HP: PF2e computed ${computed}, WG ${plan.maxHp}; adjustment ${delta > 0 ? "+" : ""}${delta}`);
+      }
+      const hpValue = preservedCurrentHp(runtime, plan.maxHp, existing);
+      const hpPatch = {};
+      if (hpValue != null) hpPatch["system.attributes.hp.value"] = hpValue;
+      if (existing && runtime?.tempHp != null) hpPatch["system.attributes.hp.temp"] = runtime.tempHp;
+      if (Object.keys(hpPatch).length) await actor.update(hpPatch);
+    }
+  } catch (err) {
+    stopPrompts();
+    closeChoicePrompts();
+    const rb = await rollback({ actor, snapshot, createdActor, createdWorld, createdFolder });
+    err.rollback = rb;
+    throw err;
   } finally { stopPrompts(); }
-
-  if (plan.maxHp != null) {
-    // HP adjustment (PLAN 7.2): WG's max HP wins. If PF2e computes something else, a flagged effect
-    // carries the difference so the sheet shows WG's number and rules still stack on top of it.
-    const computed = actor.system.attributes.hp.max;
-    const delta = plan.maxHp - computed;
-    if (delta !== 0) {
-      await actor.createEmbeddedDocuments("Item", [{
-        name: "Wanderer's Guide HP Adjustment",
-        type: "effect",
-        img: "icons/svg/regen.svg",
-        system: {
-          description: { value: `<p>Wanderer's Guide max HP is ${plan.maxHp}; PF2e computed ${computed}. This effect adds ${delta} so they match. Re-import recalculates it.</p>` },
-          rules: [{ key: "FlatModifier", selector: "hp", value: delta, label: "Wanderer's Guide HP adjustment" }],
-          duration: { value: -1, unit: "unlimited", expiry: null, sustained: false },
-          tokenIcon: { show: false },
-        },
-        flags: { [MODULE_ID]: { kind: "hp-adjust", wgContentId: null, computed, wgMaxHp: plan.maxHp } },
-      }], { render: false });
-      notes.push(`HP: PF2e computed ${computed}, WG ${plan.maxHp}; adjustment ${delta > 0 ? "+" : ""}${delta}`);
-    }
-    const hpValue = preservedCurrentHp(runtime, plan.maxHp, existing);
-    const hpPatch = {};
-    if (hpValue != null) hpPatch["system.attributes.hp.value"] = hpValue;
-    if (existing && runtime?.tempHp != null) hpPatch["system.attributes.hp.temp"] = runtime.tempHp;
-    if (Object.keys(hpPatch).length) await actor.update(hpPatch);
-  }
-
-  // Parity check against the export (PLAN 7.3); optional, off by default.
   const parityResult = parity ? parityCheck(plan, summarizeActor(actor)) : null;
+  return { actor, parity: parityResult, existing };
+}
 
+function hpEffect(wgMaxHp, computed, delta) {
+  return {
+    name: "Wanderer's Guide HP Adjustment",
+    type: "effect",
+    img: "icons/svg/regen.svg",
+    system: {
+      description: { value: `<p>Wanderer's Guide max HP is ${wgMaxHp}; PF2e computed ${computed}. This effect adds ${delta} so they match. Re-import recalculates it. Source: WG export content.max_hp.</p>` },
+      rules: [{ key: "FlatModifier", selector: "hp", value: delta, label: "Wanderer's Guide HP adjustment" }],
+      duration: { value: -1, unit: "unlimited", expiry: null, sustained: false },
+      tokenIcon: { show: false },
+    },
+    flags: { [MODULE_ID]: { kind: "hp-adjust", wgContentId: null, computed, wgMaxHp, sourcePath: "content.max_hp" } },
+  };
+}
+
+function closeChoicePrompts() {
+  for (const app of foundry.applications?.instances?.values?.() ?? []) if (Array.isArray(app.choices) && typeof app.close === "function") app.close();
+}
+
+/** Undo a failed apply. Restores the snapshot in place (no item create workflow, so no PF2e prompts or re-grants). */
+async function rollback({ actor, snapshot, createdActor, createdWorld, createdFolder }) {
+  const out = { restored: false, backup: null, removedWorld: 0 };
+  try {
+    if (createdActor) { await createdActor.delete(); out.restored = true; }
+    else if (actor && snapshot) {
+      await actor.update({ name: snapshot.name, img: snapshot.img, prototypeToken: snapshot.prototypeToken, system: snapshot.system, items: snapshot.items, effects: snapshot.effects, flags: snapshot.flags }, { diff: false, recursive: false, render: false });
+      const want = new Set(snapshot.items.map((i) => i._id));
+      out.restored = actor.items.size === want.size && actor.items.every((i) => want.has(i.id));
+      if (!out.restored) throw new Error("restored item set differs from snapshot");
+    }
+  } catch (e) {
+    // Keep a recoverable copy rather than lose the pre-import state.
+    try {
+      const data = foundry.utils.deepClone(snapshot);
+      delete data._id;
+      data.name = `${snapshot.name} (WG backup)`;
+      data.flags = { ...(data.flags ?? {}), [MODULE_ID]: { backupOf: actor?.id ?? null } };
+      out.backup = (await Actor.create(data))?.id ?? null;
+    } catch (e2) { out.backupError = e2.message; }
+    out.restoreError = e.message;
+  }
+  for (const w of createdWorld) { try { await w.delete(); out.removedWorld++; } catch { /* keep going */ } }
+  if (createdFolder && !createdFolder.contents?.length) await createdFolder.delete().catch(() => {});
+  return out;
+}
+
+/**
+ * Import one WG export. `confirm(planResult)` must resolve true before anything is written; returning
+ * false cancels with no changes. Without a confirm callback the plan is applied directly.
+ */
+export async function importCharacter(exp, { host, onStep = () => {}, parity = false, confirm = null, failAfter = null }) {
+  const step = (s) => { console.debug(`${MODULE_ID} | ${s}`); onStep(s); };
+  const p = await planImport(exp, { host });
+  step("plan");
+  if (!p.valid) throw new Error(`plan invalid, nothing written: ${p.problems.join("; ")}`);
+  if (confirm && !(await confirm(p))) {
+    step("cancelled");
+    return { cancelled: true, actor: p.actor, misses: p.misses, notes: p.notes, plan: p.plan };
+  }
+  const { actor, parity: parityResult } = await applyImport(p, { onStep: step, parity, failAfter });
+  const { plan, matched, misses, notes } = p;
   await ChatMessage.create({
     whisper: [game.user.id],
     content: `<h3>WG import: ${esc(plan.name)}</h3><p>${matched.length - misses.length} matched, ${misses.length} created as homebrew or missed.</p>${misses.length ? `<ul>${misses.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${notes.length ? `<p>Choices:</p><ul>${notes.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${parityResult ? parityHtml(plan.name, parityResult) : ""}`,
