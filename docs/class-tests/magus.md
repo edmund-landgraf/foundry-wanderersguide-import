@@ -1,6 +1,6 @@
 # Class test: Magus
 
-Status: open (stats match; hybrid study prompt unanswered). Tested 2026-10-27 on local WGUI (localhost) and the local Foundry world (PF2e 8.6.1, module main at 70e597e). Built as the campaign-42 GM test account.
+Status: open (stats match; hybrid study prompt unanswered). Tested 2026-10-27 on local WGUI (localhost) and the local Foundry world (PF2e 8.6.1, module branch fix/cleric-domain-prompt at 70e597e, not main). Built as the campaign-42 GM test account.
 
 ## Character
 
@@ -22,7 +22,7 @@ Str +4, Dex +2, Con +2, Int +1, Wis +0, Cha +0. HP 22, AC 15, Perception +3, For
 
 ## Foundry import
 
-On main (70e597e) the stats **match WG**: attributes, HP 22/22, AC 15, Perception +3, Fort +7, Ref +5, Will +5, class DC +7. Arcane Cascade and Spellstrike import as features and actions. Magus Spells has the 12-spell book; Magus Focus Spells has Thunderous Strike. The Longsword is in the inventory.
+On fix/cleric-domain-prompt (70e597e) the stats **match WG**: attributes, HP 22/22, AC 15, Perception +3, Fort +7, Ref +5, Will +5, class DC +7. Arcane Cascade and Spellstrike import as features and actions. Magus Spells has the 12-spell book; Magus Focus Spells has Thunderous Strike. The Longsword is in the inventory.
 
 23 matched, 1 homebrew (**Inexorable Iron Hybrid Study**). The PF2e **Hybrid Study** prompt (option "Inexorable Iron") was not answered from WG, so Hybrid Study shows "?" on the sheet. Ledger: key attribute "WG chose Strength; not consumed by a PF2e ChoiceSet" (class DC is still correct).
 

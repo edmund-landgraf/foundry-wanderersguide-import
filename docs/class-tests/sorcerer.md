@@ -1,6 +1,6 @@
 # Class test: Sorcerer
 
-Status: open (stats match; bloodline prompt unanswered). Tested 2026-10-27 on local WGUI (localhost) and the local Foundry world (PF2e 8.6.1, module main at 70e597e). Built as the campaign-42 GM test account.
+Status: open (stats match; bloodline prompt unanswered). Tested 2026-10-27 on local WGUI (localhost) and the local Foundry world (PF2e 8.6.1, module branch fix/cleric-domain-prompt at 70e597e, not main). Built as the campaign-42 GM test account.
 
 ## Character
 
@@ -21,7 +21,7 @@ Str +1, Dex +3, Con +2, Int +0, Wis -1, Cha +4. HP 18, AC 16, Perception +2, For
 
 ## Foundry import
 
-On main (70e597e) the stats **match WG**: attributes, HP 18/18, AC 16, Perception +2, Fort +5, Ref +6, Will +4, class DC +7. Sorcerer Spells has the 8-spell repertoire; Sorcerer Focus Spells has Ancestral Memories.
+On fix/cleric-domain-prompt (70e597e) the stats **match WG**: attributes, HP 18/18, AC 16, Perception +2, Fort +5, Ref +6, Will +4, class DC +7. Sorcerer Spells has the 8-spell repertoire; Sorcerer Focus Spells has Ancestral Memories.
 
 15 matched, 1 homebrew (**Imperial Bloodline**). The PF2e **Bloodline** prompt (options "Bloodline: Imperial" and others) was not answered from WG, so Bloodline shows "?" on the sheet. Ledger: Noble's Heraldry Lore not consumed.
 
