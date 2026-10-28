@@ -317,18 +317,51 @@ async function itemDataFor(entry, folderId, ctx, notes) {
 // WG's explicit selection for that feature, or the actor's previous still-legal selection, and only
 // when exactly one option fits. Otherwise it stays open for the user; it is recorded as unresolved
 // (and, if the user dismisses it, as not applied). It is never answered with a guess.
+// Domain Initiate / Domain Focus have no options when WG exported no deity. Close those instead of
+// waiting, and stop the watcher after MAX_PROMPT_PASSES so a prompt PF2e reopens cannot hang the import.
+export const MAX_PROMPT_PASSES = 20;
+const DOMAIN_PROMPT = /domain initiate|domain focus/i;
+
+export function domainPromptWithoutDeity(app) {
+  const title = `${app?.title ?? ""} ${app?.item?.name ?? ""}`;
+  return DOMAIN_PROMPT.test(title) && Array.isArray(app?.choices) && app.choices.length === 0;
+}
+
+/** Every explicit WG answer, used when the prompt's item name is not the selection owner. */
+export function allChoiceHints(hints) {
+  const names = [];
+  if (hints instanceof Map) for (const list of hints.values()) names.push(...list);
+  return names;
+}
+
 function watchPrompts(ctx, notes) {
   const seen = new Set();
+  let passes = 0;
+  let domainWarned = false;
   const tick = () => {
+    passes += 1;
     for (const app of foundry.applications?.instances?.values?.() ?? []) {
       if (seen.has(app) || !Array.isArray(app.choices) || !app.rendered) continue;
       seen.add(app);
       const labels = app.choices.map((c) => c.label ?? "");
       const owner = app.item?.name ?? app.options?.item?.name ?? "";
+      if (domainPromptWithoutDeity(app)) {
+        if (!domainWarned) {
+          domainWarned = true;
+          ctx.unresolved.push({ owner: owner || app.title, flag: null, reason: "no deity imported; domain prompt has no options" });
+          ui.notifications?.warn?.(`Wanderer's Guide import: ${app.title || "domain choice"} has no options without a deity; left unresolved`);
+        }
+        app.close?.();
+        continue;
+      }
       const ownerWgId = app.item?.flags?.[MODULE_ID]?.wgContentId ?? null;
       const specific = ctx.specific(owner, ownerWgId);
       let i = specific.length ? ctx.pick(owner, labels, ownerWgId) : null;
       let via = "WG selection";
+      if (i == null) {
+        const global = uniqueChoice(labels, allChoiceHints(ctx.hints));
+        if (global >= 0) i = global;
+      }
       if (i == null) {
         const src = app.item?._stats?.compendiumSource ?? app.item?.sourceId ?? null;
         const prev = Object.values(ctx.previous.get(src) ?? {});
@@ -342,6 +375,18 @@ function watchPrompts(ctx, notes) {
       ui.notifications?.warn?.(`Wanderer's Guide import needs your choice: ${app.title}`);
       const close = app.close.bind(app);
       app.close = async (...a) => { rec.reason = app.selection ? `user chose ${app.selection.label ?? app.selection.value}` : "prompt dismissed; PF2e did not apply this choice"; rec.resolvedByUser = !!app.selection; return close(...a); };
+    }
+    if (passes >= MAX_PROMPT_PASSES) {
+      clearInterval(timer);
+      if (!domainWarned) {
+        for (const app of foundry.applications?.instances?.values?.() ?? []) {
+          if (!domainPromptWithoutDeity(app)) continue;
+          domainWarned = true;
+          ctx.unresolved.push({ owner: app.item?.name || app.title, flag: null, reason: "no deity imported; domain prompt has no options" });
+          ui.notifications?.warn?.(`Wanderer's Guide import: ${app.title || "domain choice"} has no options without a deity; left unresolved`);
+          app.close?.();
+        }
+      }
     }
   };
   const timer = setInterval(tick, 200);

@@ -17,7 +17,7 @@ test("managedTree: module items plus everything granted from them, nothing else"
   ];
   assert.deepEqual([...managedTree(items)].sort(), ["cls", "feat", "loc", "sub", "viaParent"]);
 });
-import { explicitGrants, sameThing, duplicateItemDiagnostics, focusResourcePatch } from "../scripts/importer.js";
+import { explicitGrants, sameThing, duplicateItemDiagnostics, focusResourcePatch, domainPromptWithoutDeity, allChoiceHints, uniqueChoice } from "../scripts/importer.js";
 test("dedupe: only explicit grants from this run's items, same compendium source", () => {
   const it = (id, type, name, src, extra = {}) => ({ id, type, name, _stats: { compendiumSource: src }, flags: extra.flags ?? {}, system: extra.system ?? {} });
   const items = [
@@ -71,6 +71,20 @@ test("focus resources initialize even when the export has no max HP", () => {
     "system.resources.focus.value": 1,
   });
   assert.equal(focusResourcePatch({ maxHp: 20 }, undefined, false), null);
+});
+
+test("domain prompts with no deity are closed instead of waited on", () => {
+  assert.equal(domainPromptWithoutDeity({ title: "Domain Initiate", choices: [], item: { name: "Domain Initiate" } }), true);
+  assert.equal(domainPromptWithoutDeity({ title: "Domain Focus", choices: [] }), true);
+  assert.equal(domainPromptWithoutDeity({ title: "Doctrine", choices: [{ label: "Cloistered Cleric" }] }), false);
+  assert.equal(domainPromptWithoutDeity({ title: "Domain Initiate", choices: [{ label: "Healing" }] }), false);
+});
+
+test("a longer WG doctrine name matches the shorter PF2e option", () => {
+  const hints = new Map([["doctrine", ["Cloistered Cleric Doctrine"]], ["domain", ["Healing"]]]);
+  const labels = ["Battle Creed", "Cloistered Cleric", "Warpriest"];
+  assert.equal(uniqueChoice(labels, allChoiceHints(hints)), 1);
+  assert.equal(uniqueChoice(["Healing", "Fire"], ["Healing", "Fire"]), -1);
 });
 import { auditImportCoverage, leftoverValues, CLASS_SUPPORT_NOTE } from "../scripts/coverage.js";
 import { buildPlan, sluggify } from "../scripts/mapping.js";
