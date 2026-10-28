@@ -1,42 +1,88 @@
-// Generate the PF2e catalog seed from a checked-out pf2e-8.6.1 repository.
-// The generated SQL contains names, slugs, pack paths, and classification only.
+﻿// Generates db/migrations/023_pf2e_catalog_8_6_1.sql and 027_pf2e_grant_rules_8_6_1.sql
+// from the PF2e system repo packs (tag pf2e-8.6.1). No UUIDs are emitted: grants are stored by name.
+// Usage: node db/tools/gen-pf2e-catalog.mjs D:\repos\foundryvtt_pf2e
 import fs from "node:fs";
 import path from "node:path";
 
 const root = process.argv[2];
-if (!root) throw new Error("usage: node db/tools/gen-pf2e-catalog.mjs <foundryvtt_pf2e>");
-const packs = [
-  ["feats", "pf2e.feats-srd", null], ["class-features", "pf2e.classfeatures", "classfeature"],
-  ["actions", "pf2e.actionspf2e", "action"], ["heritages", "pf2e.heritages", "heritage"],
-  ["classes", "pf2e.classes", "class"], ["ancestries", "pf2e.ancestries", "ancestry"],
-  ["backgrounds", "pf2e.backgrounds", "background"], ["spells", "pf2e.spells-srd", "spell"],
-  ["equipment", "pf2e.equipment-srd", "equipment"], ["ancestry-features", "pf2e.ancestryfeatures", "ancestryfeature"],
-  ["deities", "pf2e.deities", "deity"], ["familiar-abilities", "pf2e.familiar-abilities", "familiarability"],
-  ["boons-and-curses", "pf2e.boons-and-curses", "boon"], ["adventure-specific-actions", "pf2e.adventure-specific-actions", "adventureaction"],
-  ["conditions", "pf2e.conditionitems", "condition"],
+if (!root) throw new Error("pass the foundryvtt pf2e repo path");
+const PACKS = [
+  ["feats", "pf2e.feats-srd"],
+  ["class-features", "pf2e.classfeatures"],
+  ["actions", "pf2e.actionspf2e"],
+  ["heritages", "pf2e.heritages"],
 ];
-const kinds = ["feat", "classfeature", "action", "heritage", "class", "ancestry", "background", "spell", "equipment", "ancestryfeature", "deity", "familiarability", "boon", "adventureaction", "condition"];
-const classes = new Set(["alchemist", "animist", "barbarian", "bard", "champion", "cleric", "commander", "druid", "exemplar", "fighter", "guardian", "gunslinger", "inventor", "investigator", "kineticist", "magus", "monk", "necromancer", "oracle", "psychic", "ranger", "rogue", "runesmith", "sorcerer", "summoner", "swashbuckler", "thaumaturge", "witch", "wizard"]);
-const sql = (value) => value == null ? "NULL" : `'${String(value).replaceAll("'", "''")}'`;
-const walk = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => entry.isDirectory() ? walk(path.join(dir, entry.name)) : entry.name.endsWith(".json") && !entry.name.startsWith("_") ? [path.join(dir, entry.name)] : []);
+const CLASSES = new Set(["alchemist","animist","barbarian","bard","champion","cleric","commander","druid","exemplar","fighter","guardian","gunslinger","inventor","investigator","kineticist","magus","monk","necromancer","oracle","psychic","ranger","rogue","runesmith","sorcerer","summoner","swashbuckler","thaumaturge","witch","wizard"]);
+const q = (s) => (s === null || s === undefined ? "NULL" : "'" + String(s).replace(/'/g, "''") + "'");
+const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => e.isDirectory() ? walk(path.join(d, e.name)) : e.name.endsWith(".json") && !e.name.startsWith("_") ? [path.join(d, e.name)] : []);
+
 const rows = [];
-for (const [dir, collection, fixedKind] of packs) {
-  for (const file of walk(path.join(root, "packs", "pf2e", dir))) {
-    const item = JSON.parse(fs.readFileSync(file, "utf8"));
-    if (!item.name || !item.type) continue;
-    const relative = path.relative(root, file).split(path.sep).join("/");
-    const system = item.system ?? {};
-    const traits = system.traits?.value ?? [];
-    const classTraits = traits.filter((trait) => classes.has(trait));
-    const kind = fixedKind ?? (system.category === "classfeature" ? "classfeature" : "feat");
-    rows.push([kind, item.type, item.name, system.slug || path.basename(file, ".json"), collection, relative, system.category ?? null, traits.join(","), system.level?.value ?? null, classTraits.length === 1 ? classTraits[0] : null, system.publication?.title || null]);
+const grants = [];
+for (const [dir, coll] of PACKS) {
+  for (const f of walk(path.join(root, "packs", "pf2e", dir))) {
+    const j = JSON.parse(fs.readFileSync(f, "utf8"));
+    if (!j.name || !j.type) continue;
+    const rel = path.relative(root, f).split(path.sep).join("/");
+    const slug = j.system?.slug || path.basename(f, ".json");
+    const traits = j.system?.traits?.value ?? [];
+    const cls = traits.filter((t) => CLASSES.has(t));
+    const category = j.system?.category ?? null;
+    const kind = dir === "class-features" ? "classfeature" : dir === "feats" ? (category === "classfeature" ? "classfeature" : "feat") : dir === "actions" ? "action" : "heritage";
+    rows.push([kind, j.type, j.name, slug, coll, rel, category, traits.join(","), j.system?.level?.value ?? null, cls.length === 1 ? cls[0] : null]);
+    for (const r of j.system?.rules ?? []) {
+      if (r.key !== "GrantItem" || typeof r.uuid !== "string") continue;
+      const m = r.uuid.match(/^Compendium\.pf2e\.([^.]+)\.Item\.(.+)$/);
+      if (!m || m[2].startsWith("{")) continue;
+      grants.push([cls.length === 1 ? cls[0] : null, j.name, m[2], m[1], rel]);
+    }
   }
 }
-const values = rows.map((row) => `(${row.map((value, index) => index === 8 && value != null ? Number(value) : sql(value)).join(",")})`);
-const chunks = [];
-let body = "";
-for (let i = 0; i < values.length; i += 500) body += `INSERT INTO _cat VALUES\n${values.slice(i, i + 500).join(",\n")};\n`;
-const kindSql = kinds.map(sql).join(",");
-const output = `-- Generated from PF2e 8.6.1; do not hand-edit.\nBEGIN;\nCREATE TEMP TABLE _cat (item_kind text, foundry_type text, pf2e_name text, pf2e_slug text, compendium_collection text, source_path text, category text, traits text, level integer, class_id text, pf2e_source_book text) ON COMMIT DROP;\n${body}INSERT INTO pf2e_catalog_entries (ruleset_id,item_kind,foundry_type,pf2e_name,pf2e_slug,compendium_collection,source_path,category,traits,level,class_id,pf2e_source_book) SELECT 'pf2e-remaster',item_kind,foundry_type,pf2e_name,pf2e_slug,compendium_collection,source_path,category,traits,level,class_id,pf2e_source_book FROM _cat WHERE item_kind IN (${kindSql}) ON CONFLICT (ruleset_id,compendium_collection,source_path) DO UPDATE SET item_kind=EXCLUDED.item_kind,foundry_type=EXCLUDED.foundry_type,pf2e_name=EXCLUDED.pf2e_name,pf2e_slug=EXCLUDED.pf2e_slug,category=EXCLUDED.category,traits=EXCLUDED.traits,level=EXCLUDED.level,class_id=EXCLUDED.class_id,pf2e_source_book=EXCLUDED.pf2e_source_book;\nCOMMIT;\n`;
-fs.writeFileSync(path.join("db", "migrations", "027_seed_pf2e_catalog_8_6_1.sql"), output);
-console.log(JSON.stringify({ entries: rows.length, output: "db/migrations/027_seed_pf2e_catalog_8_6_1.sql" }));
+const hdr = (n) => `-- ${n}\n-- GENERATED by db/tools/gen-pf2e-catalog.mjs from foundryvtt/pf2e tag pf2e-8.6.1. Do not hand-edit.\n-- Idempotent. Stores names/slugs/paths only (no UUIDs).\n`;
+let sql = hdr("023: PF2e 8.6.1 compendium catalog (feats of all categories, class features, actions, heritages)") + `
+CREATE TABLE IF NOT EXISTS pf2e_catalog_entries (
+  entry_id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  ruleset_id text NOT NULL REFERENCES rulesets(ruleset_id) ON DELETE CASCADE,
+  item_kind text NOT NULL CHECK (item_kind IN ('feat','classfeature','action','heritage')),
+  foundry_type text NOT NULL,
+  pf2e_name text NOT NULL,
+  pf2e_slug text NOT NULL,
+  compendium_collection text NOT NULL,
+  source_path text NOT NULL,
+  category text,
+  traits text,
+  level integer,
+  class_id text REFERENCES classes(class_id),
+  pf2e_version text NOT NULL DEFAULT 'pf2e-8.6.1',
+  UNIQUE (ruleset_id, compendium_collection, source_path)
+);
+CREATE INDEX IF NOT EXISTS idx_pf2e_catalog_name ON pf2e_catalog_entries (lower(pf2e_name));
+CREATE TEMP TABLE _cat (item_kind text, foundry_type text, pf2e_name text, pf2e_slug text, compendium_collection text, source_path text, category text, traits text, level integer, class_id text) ON COMMIT DROP;
+`;
+for (let i = 0; i < rows.length; i += 500) {
+  sql += "INSERT INTO _cat VALUES\n" + rows.slice(i, i + 500).map((r) => "(" + r.map((v, k) => (k === 8 ? (v === null ? "NULL" : Number(v)) : q(v))).join(",") + ")").join(",\n") + ";\n";
+}
+sql += `
+INSERT INTO pf2e_catalog_entries (ruleset_id,item_kind,foundry_type,pf2e_name,pf2e_slug,compendium_collection,source_path,category,traits,level,class_id)
+SELECT 'pf2e-remaster',item_kind,foundry_type,pf2e_name,pf2e_slug,compendium_collection,source_path,category,traits,level,class_id FROM _cat
+ON CONFLICT (ruleset_id, compendium_collection, source_path) DO UPDATE SET
+  item_kind=EXCLUDED.item_kind, foundry_type=EXCLUDED.foundry_type, pf2e_name=EXCLUDED.pf2e_name, pf2e_slug=EXCLUDED.pf2e_slug,
+  category=EXCLUDED.category, traits=EXCLUDED.traits, level=EXCLUDED.level, class_id=EXCLUDED.class_id;
+DELETE FROM pf2e_catalog_entries e WHERE e.pf2e_version='pf2e-8.6.1' AND NOT EXISTS (SELECT 1 FROM _cat c WHERE c.source_path=e.source_path AND c.compendium_collection=e.compendium_collection);
+`;
+fs.writeFileSync(path.join("db", "migrations", "023_pf2e_catalog_8_6_1.sql"), sql);
+
+let g = hdr("027: PF2e GrantItem rules from 8.6.1 (parent feature grants child item by name)") + `
+CREATE TEMP TABLE _grants (class_id text, parent text, child text, child_pack text, evidence text) ON COMMIT DROP;
+`;
+for (let i = 0; i < grants.length; i += 500) {
+  g += "INSERT INTO _grants VALUES\n" + grants.slice(i, i + 500).map((r) => "(" + r.map(q).join(",") + ")").join(",\n") + ";\n";
+}
+g += `
+INSERT INTO grant_rules (class_id,parent_source_pattern,child_source_pattern,ownership_evidence,dedupe_policy,choice_policy,status,evidence_ref,notes)
+SELECT DISTINCT ON (n.class_id,n.parent,n.child) n.class_id,n.parent,n.child,'GrantItem','keep-grant','inherit','active',n.evidence,
+  'PF2e 8.6.1 GrantItem (' || n.child_pack || '): the parent grants this item; a WG copy must link to the grant, not be created again.'
+FROM _grants n WHERE NOT EXISTS (SELECT 1 FROM grant_rules r WHERE r.class_id IS NOT DISTINCT FROM n.class_id AND r.parent_source_pattern=n.parent AND r.child_source_pattern=n.child)
+ORDER BY n.class_id,n.parent,n.child;
+`;
+fs.writeFileSync(path.join("db", "migrations", "027_pf2e_grant_rules_8_6_1.sql"), g);
+console.log(JSON.stringify({ entries: rows.length, grants: grants.length }));
