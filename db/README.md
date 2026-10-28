@@ -87,7 +87,7 @@ The database can decide that an action is eligible for review; Foundry remains t
 ## Current gaps
 
 - The normalized tables are populated, but the runtime importer does not read them yet.
-- Dependency rows and user decisions are schema-ready but not fully derived or persisted.
+- `deconstruct_test_pc` resolves names, marks grant provenance, and writes a batched plan. Compendium UUID matching and user decisions are still separate.
 - PF2e compendium matching and ChoiceSet legality still happen in the existing Foundry-side code.
 - Foundry application, rollback, and post-application parity remain separate from database deconstruction.
 - The WG export can omit or fail to refresh changes; the database cannot recover data absent from the snapshot.
@@ -103,6 +103,17 @@ The database can decide that an action is eligible for review; Foundry remains t
 - `006_create_compendium_match_registry.sql`: ordered compendium lookup and alias registry.
 - `007_create_import_log_summary.sql`: best-log summaries and external-file references.
 - `008_create_import_gap_rollup.sql`: best-log gaps, unresolved choices, and warnings by character and feature.
+- `009_class_rename_and_plan_batches.sql`: class-scoped renames, grant provenance, and dependency batches.
+
+## Rename and plan functions
+
+`resolve_source_name(ruleset_id, class_id, item_kind, source_name)` returns one lookup candidate. A class alias wins over a global alias. Otherwise it tries a grade swap, then a semantic role suffix, then the exact name. `resolve_run_item_names` stores that candidate on `pc_items` and `pc_spells`. `match_status` becomes `renamed` only for an alias, grade swap, or semantic suffix. An exact name stays `unmatched` until a compendium index exists.
+
+`apply_grant_provenance` marks a child `grant-child` or `rules-selection` when an active `grant_rules` row cites `GrantItem`, `itemGrants`, or `rulesSelections`. Those rows are not second creates.
+
+`build_foundry_plan` replaces `pc_foundry_plan` for the run. Batch 1 is ancestry, background, class, and heritages. Batch 2 is inventory that is still a source item. Batch 3 is other source feats and features. Batch 4 is `link-grant` after the parent. Batch 5 is spells. A row is `create` only when the name was renamed or it is an ABC item. Unmatched and ambiguous rows are `review` with `prerequisite_status = blocked`.
+
+A larger rename list can be loaded into `compendium_match_aliases` with `class_id` set and `status = proposed` until a WG fixture confirms it. `evidence_ref` should name the Pathmuncher source and the confirming fixture. Unverified Pathbuilder strings are not activated.
 
 ## Log retention
 

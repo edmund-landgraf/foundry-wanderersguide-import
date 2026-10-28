@@ -90,7 +90,7 @@ PF2e grant and dedupe relationships.
 | `class_id` | Nullable for shared PF2e rules |
 | `parent_source_pattern` | Source feature that grants |
 | `child_source_pattern` | Granted item/action/feat |
-| `ownership_evidence` | GrantItem, itemGrants, location |
+| `ownership_evidence` | GrantItem, itemGrants, rulesSelections, location |
 | `dedupe_policy` | keep-grant, keep-source, never-dedupe |
 | `choice_policy` | inherit, resolve-child, leave-prompt |
 

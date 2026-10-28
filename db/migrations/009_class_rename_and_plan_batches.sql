@@ -399,23 +399,12 @@ BEGIN
 
   INSERT INTO plan_stage
   SELECT 5, source_path,
-         CASE WHEN match_status IN ('renamed', 'unmatched') THEN 'create' ELSE 'review' END,
+         CASE WHEN match_status = 'renamed' THEN 'create' ELSE 'review' END,
          source_path, 'spell', COALESCE(resolved_slug, wgi_sluggify(name)),
          jsonb_build_object('name', COALESCE(resolved_name, name), 'renameVia', rename_via, 'rank', rank),
-         CASE WHEN match_status = 'ambiguous' THEN 'blocked' ELSE 'planned' END
+         CASE WHEN match_status = 'renamed' THEN 'planned' ELSE 'blocked' END
   FROM pc_spells
   WHERE import_run_id = p_import_run_id;
-
-  INSERT INTO plan_stage
-  SELECT 6, source_path, 'review', source_path, item_kind, wgi_sluggify(name),
-         jsonb_build_object('name', name, 'matchStatus', match_status),
-         'blocked'
-  FROM pc_items
-  WHERE import_run_id = p_import_run_id
-    AND provenance = 'source'
-    AND match_status = 'ambiguous'
-    AND item_kind <> 'equipment'
-    AND source_path NOT LIKE 'content.feats_features.heritages%';
 
   INSERT INTO pc_foundry_plan (import_run_id, sequence, batch, action_type, source_path, target_type, target_key, payload, prerequisite_status)
   SELECT p_import_run_id, row_number() OVER (ORDER BY batch, sort_key), batch, action_type, source_path, target_type, target_key, payload, prerequisite_status
