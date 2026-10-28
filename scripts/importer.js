@@ -137,7 +137,8 @@ export function choiceContext(exp, plan, index, actor) {
     consume(owner, candidate.hint, ownerWgId);
     return candidate.index;
   };
-  return { hints, fixedNames, index, uuidName, previous, used, markUsed, conflicts: new Map(), unresolved: [], specific, consume, pick, assigned };
+  const beliefs = String(exp?.character?.details?.info?.beliefs ?? "").trim();
+  return { hints, fixedNames, index, uuidName, previous, used, markUsed, conflicts: new Map(), unresolved: [], specific, consume, pick, assigned, beliefs };
 }
 
 /** Index of the single option matching the hints, or -1 when none or more than one match. */
@@ -319,18 +320,64 @@ async function itemDataFor(entry, folderId, ctx, notes) {
 // WG's explicit selection for that feature, or the actor's previous still-legal selection, and only
 // when exactly one option fits. Otherwise it stays open for the user; it is recorded as unresolved
 // (and, if the user dismisses it, as not applied). It is never answered with a guess.
+// Domain Initiate / Domain Focus have no options when WG exported no deity. Close those instead of
+// waiting. The watcher stays up for the whole import: class prompts open only after ancestry,
+// heritage, and background.
+const DOMAIN_PROMPT = /domain initiate|domain focus/i;
+
+/** Index of the deity whose name is the character's beliefs, when that prompt has exactly one match. */
+export function deityPromptChoice(app, beliefs) {
+  const title = `${app?.title ?? ""} ${app?.item?.name ?? ""}`;
+  if (!/deity/i.test(title) || !String(beliefs ?? "").trim() || !Array.isArray(app?.choices) || !app.choices.length) return null;
+  const i = uniqueChoice(app.choices.map((c) => c.label ?? ""), [String(beliefs).trim()]);
+  return i >= 0 ? i : null;
+}
+
+export function domainPromptWithoutDeity(app) {
+  const title = `${app?.title ?? ""} ${app?.item?.name ?? ""}`;
+  return DOMAIN_PROMPT.test(title) && Array.isArray(app?.choices) && app.choices.length === 0;
+}
+
+/** Every explicit WG answer, used when the prompt's item name is not the selection owner. */
+export function allChoiceHints(hints) {
+  const names = [];
+  if (hints instanceof Map) for (const list of hints.values()) names.push(...list);
+  return names;
+}
+
 function watchPrompts(ctx, notes) {
   const seen = new Set();
+  let domainWarned = false;
   const tick = () => {
     for (const app of foundry.applications?.instances?.values?.() ?? []) {
-      if (seen.has(app) || !Array.isArray(app.choices) || !app.rendered) continue;
-      seen.add(app);
+      if (!Array.isArray(app.choices) || !app.rendered) continue;
       const labels = app.choices.map((c) => c.label ?? "");
+      const signature = `${app.title ?? ""}|${app.item?.name ?? ""}|${labels.join("|")}`;
+      if (seen.has(signature)) continue;
+      seen.add(signature);
       const owner = app.item?.name ?? app.options?.item?.name ?? "";
+      if (domainPromptWithoutDeity(app)) {
+        if (!domainWarned) {
+          domainWarned = true;
+          const named = ctx.specific(owner)[0] ?? ctx.specific("Domain")[0] ?? ctx.specific("domains")[0] ?? null;
+          ctx.unresolved.push({ owner: owner || app.title, flag: null, reason: named ? `WG chose ${named}; no deity imported, so this prompt has no options` : "no deity imported; domain prompt has no options" });
+          ui.notifications?.warn?.(`Wanderer's Guide import: ${app.title || "domain choice"} has no options without a deity; left unresolved`);
+        }
+        app.close?.();
+        continue;
+      }
       const ownerWgId = app.item?.flags?.[MODULE_ID]?.wgContentId ?? null;
       const specific = ctx.specific(owner, ownerWgId);
       let i = specific.length ? ctx.pick(owner, labels, ownerWgId) : null;
       let via = "WG selection";
+      if (i == null) {
+        const global = uniqueChoice(labels, allChoiceHints(ctx.hints));
+        if (global >= 0) i = global;
+      }
+      if (i == null) {
+        const deity = deityPromptChoice(app, ctx.beliefs);
+        if (deity != null) { i = deity; via = "WG deity"; }
+      }
       if (i == null) {
         const src = app.item?._stats?.compendiumSource ?? app.item?.sourceId ?? null;
         const prev = Object.values(ctx.previous.get(src) ?? {});
