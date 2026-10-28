@@ -61,6 +61,11 @@ test("duplicate diagnostics distinguish a PF2e grant pair from an unexplained du
   assert.equal(duplicateItemDiagnostics(differentlyNamedGrant)[0].expectedGrantPair, true);
 });
 
+test("Exemplar inventory is scheduled before class grants", () => {
+  const source = rf(new URL("../scripts/importer.js", import.meta.url));
+  assert.match(source, /const order = \["ancestry", "heritage", "background", "equipment", "class", "feat", "spell"\]/);
+});
+
 test("Spark Transcendence is covered by Divine Spark and Ikons without a homebrew copy", () => {
   const entries = [
     { name: "Divine Spark and Ikons", match: { uuid: "Compendium.pf2e.classfeatures.Item.divine" } },
