@@ -218,7 +218,7 @@ export function matchEntries(entries, index) {
 }
 
 export function missReport(matched) {
-  return matched.filter((m) => !m.match && !m.custom).map((m) => `${m.kind}: ${m.name}`);
+  return matched.filter((m) => !m.match && !m.custom && !m.coveredBy && !m.unresolved).map((m) => `${m.kind}: ${m.name}`);
 }
 
 export const FALLBACK_IMG = "icons/svg/mystery-man.svg";
