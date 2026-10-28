@@ -69,10 +69,11 @@ export function buildPlan(exp) {
   const preparedBy = new Map();
   (ct.spell_slots ?? []).forEach((sl, i) => {
     if (sl?.spell_id == null || !sl.spell?.name) return;
-    const key = `${sl.source}:${sl.spell_id}:${sl.rank}`;
-    let e = preparedBy.get(key) ?? entries.find((x) => x.kind === "spell" && !x.innate && !x.focus && x.wgContentId === sl.spell_id && x.rank === sl.rank && x.castingSource === sl.source);
+    const source = spellListSource(sl.source);
+    const key = `${source}:${sl.spell_id}:${sl.rank}`;
+    let e = preparedBy.get(key) ?? entries.find((x) => x.kind === "spell" && !x.innate && !x.focus && x.wgContentId === sl.spell_id && x.rank === sl.rank && x.castingSource === source);
     if (!e) {
-      add("spell", "spell", sl.spell.name, { wgContentId: sl.spell_id, rank: sl.rank, castingSource: sl.source, focus: false, sourcePath: `content.spell_slots[${i}]` });
+      add("spell", "spell", sl.spell.name, { wgContentId: sl.spell_id, rank: sl.rank, castingSource: source, focus: false, sourcePath: `content.spell_slots[${i}]` });
       e = entries[entries.length - 1];
     }
     preparedBy.set(key, e);
@@ -331,16 +332,23 @@ export function parseComposedName(name, meta = {}) {
 // ---------------------------------------------------------------------------------------------
 // Spellcasting (PLAN 6): one entry per WG spell source, plus focus and innate entries.
 const ATTR_SHORT = (a) => ATTR_KEYS[String(a ?? "").replace(/^ATTRIBUTE_/, "")] ?? "cha";
+/** Divine font slots are extra prepared Heal or Harm on the class entry, not a second caster. */
+export function spellListSource(name) {
+  const raw = String(name ?? "");
+  return raw.match(/^(.*)_DIVINE_FONT$/)?.[1] || raw;
+}
+
 export function spellcastingPlan(exp) {
   const ct = exp?.content ?? {};
   const entries = [];
   const sources = new Map();
   for (const s of ct.spell_sources ?? []) {
     const src = s.source ?? s;
+    if (String(src.name ?? "").endsWith("_DIVINE_FONT")) continue;
     sources.set(src.name, src);
     const type = String(src.type ?? "");
     const slots = {};
-    for (const sl of ct.spell_slots ?? []) if (sl.source === src.name) slots[sl.rank] = (slots[sl.rank] ?? 0) + 1;
+    for (const sl of ct.spell_slots ?? []) if (spellListSource(sl.source) === src.name) slots[sl.rank] = (slots[sl.rank] ?? 0) + 1;
     entries.push({ key: `src:${src.name}`, source: src.name, name: `${titleCase(src.name)} Spells`, mode: type.startsWith("PREPARED") ? "prepared" : "spontaneous", tradition: String(src.tradition ?? "").toLowerCase() || null, ability: ATTR_SHORT(src.attribute), slots });
   }
   const focusSrc = new Set((ct.focus_spells ?? []).map((s) => s.casting_source ?? null));

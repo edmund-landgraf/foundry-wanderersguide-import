@@ -3,7 +3,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { buildPlan, spellcastingPlan, entryKeyFor, spellSlotWarnings, preparedSlotUpdates } from "../scripts/mapping.js";
+import { buildPlan, spellcastingPlan, entryKeyFor, spellSlotWarnings, preparedSlotUpdates, spellListSource } from "../scripts/mapping.js";
 
 const load = (id) => JSON.parse(readFileSync(new URL(`./fixtures/pcs/${id}.json`, import.meta.url)));
 const spellsOf = (plan) => plan.entries.filter((e) => e.kind === "spell");
@@ -73,6 +73,36 @@ test("a spell prepared twice at the same rank is one item in two slots", () => {
   assert.equal(dazes[0].prepared, 2);
   const [upd] = preparedSlotUpdates(dazes.map((e) => ({ ...e, entryId: "n", itemId: "d" })));
   assert.deepEqual(upd["system.slots.slot0.prepared"], [{ id: "d", expended: false }, { id: "d", expended: false }]);
+});
+
+test("cleric divine font Heal slots are prepared on the cleric entry", () => {
+  const exp = load(81);
+  const cleric = {
+    ...exp,
+    content: {
+      ...exp.content,
+      spell_sources: [{ source: { name: "CLERIC", type: "PREPARED", tradition: "DIVINE", attribute: "ATTRIBUTE_WIS" } }, { source: { name: "CLERIC_DIVINE_FONT", type: "PREPARED", tradition: "DIVINE", attribute: "ATTRIBUTE_WIS" } }],
+      spell_slots: [
+        { source: "CLERIC", rank: 1, spell_id: 1, spell: { id: 1, name: "Bless" } },
+        { source: "CLERIC_DIVINE_FONT", rank: 1, spell_id: 2, spell: { id: 2, name: "Heal" } },
+        { source: "CLERIC_DIVINE_FONT", rank: 1, spell_id: 2, spell: { id: 2, name: "Heal" } },
+        { source: "CLERIC_DIVINE_FONT", rank: 1, spell_id: 2, spell: { id: 2, name: "Heal" } },
+        { source: "CLERIC_DIVINE_FONT", rank: 1, spell_id: 2, spell: { id: 2, name: "Heal" } },
+      ],
+      spells: { all: [] },
+      focus_spells: [],
+      innate_spells: [],
+    },
+  };
+  assert.equal(spellListSource("CLERIC_DIVINE_FONT"), "CLERIC");
+  const plan = buildPlan(cleric);
+  const entries = spellcastingPlan(cleric);
+  assert.equal(entries.some((e) => e.source === "CLERIC_DIVINE_FONT"), false);
+  assert.deepEqual(entries.find((e) => e.source === "CLERIC").slots, { 1: 5 });
+  const heal = spellsOf(plan).find((e) => e.name === "Heal");
+  assert.equal(heal.castingSource, "CLERIC");
+  assert.equal(heal.prepared, 4);
+  assert.ok(placed(plan).includes("Bless|1|src:CLERIC|prepared 1"));
 });
 
 test("import report warns when a slotted caster has no spells from its source", () => {
