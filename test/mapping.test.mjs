@@ -240,6 +240,15 @@ test("wgChoiceHints names selected skill adjValue options", () => {
   assert.deepEqual(wgChoiceHints(exp2).get("runesmith"), ["Arcana"]);
 });
 
+test("fixed physical-feature grants resolve only a unique equivalent PF2e option", async () => {
+  const exp = JSON.parse(readFileSync(new URL("./fixtures/pcs/81.json", import.meta.url)));
+  const { choiceContext, uniqueFixedChoice } = await import("../scripts/importer.js");
+  const ctx = choiceContext(exp, {}, [], null);
+  assert.ok(ctx.fixedNames.has("clan-dagger"));
+  assert.equal(uniqueFixedChoice(["Clan Dagger", "Clan Poniard"], ctx.fixedNames), "Clan Dagger");
+  assert.equal(uniqueFixedChoice(["Clan Dagger", "Clan Dagger"], ctx.fixedNames), null);
+});
+
 test("matchChoice and defaultFlag", () => {
   assert.equal(matchChoice(["Enigma", "Polymath", "Maestro"], ["Polymath Muse"]), 1);
   assert.equal(matchChoice(["Alchemy", "Woodworking"], ["Woodworking"]), 1);

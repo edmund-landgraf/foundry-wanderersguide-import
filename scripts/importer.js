@@ -84,6 +84,11 @@ async function restoreSpellcastingState(actor, state) {
 // recorded as unresolved and PF2e's own prompt is shown to the user (AMBA_REUSE_PLAN section 3).
 export function choiceContext(exp, plan, index, actor) {
   const hints = wgChoiceHints(exp);
+  const fixedNames = new Set(
+    exp?.content?.raw_data_dump?.variables?.PHYSICAL_FEATURE_NAMES?.value
+      ?.map((name) => sluggify(name))
+      .filter(Boolean) ?? []
+  );
   const uuidName = new Map(index.map((r) => [r.uuid, r.name]));
   const previous = new Map();
   for (const i of actor?.items ?? []) {
@@ -113,7 +118,7 @@ export function choiceContext(exp, plan, index, actor) {
     consume(owner, candidate.hint);
     return candidate.index;
   };
-  return { hints, index, uuidName, previous, used, markUsed, conflicts: new Map(), unresolved: [], specific, consume, pick, assigned };
+  return { hints, fixedNames, index, uuidName, previous, used, markUsed, conflicts: new Map(), unresolved: [], specific, consume, pick, assigned };
 }
 
 /** Index of the single option matching the hints, or -1 when none or more than one match. */
@@ -125,6 +130,13 @@ export function uniqueChoice(labels, hintNames) {
   // Also reject when a second label matches the same hint (e.g. two "Fire" options).
   const others = labels.filter((l, k) => k !== i && matchChoice([l], hintNames) === 0);
   return others.length ? -1 : i;
+}
+
+/** Return the sole PF2e label that exactly matches a WG-computed fixed grant. */
+export function uniqueFixedChoice(labels, fixedNames) {
+  const known = new Set([...fixedNames ?? []].map(sluggify).filter(Boolean));
+  const hits = labels.filter((label) => known.has(sluggify(label)));
+  return hits.length === 1 ? hits[0] : null;
 }
 
 async function filterAccepts(c, uuid) {
@@ -152,6 +164,13 @@ async function resolveChoiceSet(rule, ownerName, ctx, { sourceUuid = null, flag 
       if (i == null) i = ctx.pick(ownerName, opts.map((o) => String(o.value)));
       if (i != null) return { value: opts[i].value, label: opts[i].label, via: "WG selection" };
     }
+    // Some WG grants are fixed physical features rather than select answers.
+    // If PF2e asks the equivalent ChoiceSet, accept only one option whose label
+    // exactly matches a physical feature WG already computed. Never use this
+    // fallback for arbitrary first options or ambiguous labels.
+    const fixedLabel = uniqueFixedChoice(opts.map((option) => option.label), ctx.fixedNames);
+    const fixed = fixedLabel ? opts.find((option) => option.label === fixedLabel) : null;
+    if (fixed) return { value: fixed.value, label: fixed.label, via: "WG fixed grant" };
     if (prev !== undefined) {
       const o = opts.find((x) => JSON.stringify(x.value) === JSON.stringify(prev));
       if (o) return { value: o.value, label: o.label, via: "existing Foundry selection (still legal)" };
