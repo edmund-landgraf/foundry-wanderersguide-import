@@ -203,9 +203,31 @@ test("Champion Redemption Cause resolves to PF2e's canonical Redemption item", (
   const entry = [{ kind: "feat", packType: "feat", name: "Redemption Cause", slug: "redemption-cause", level: 1 }];
   const index = [{ type: "feat", slug: "redemption", name: "Redemption", level: 1, uuid: "Compendium.pf2e.feats-srd.Item.redemption" }];
   const [match] = matchEntries(entry, index);
-  assert.equal(match.via, "canonical-alias");
+  assert.equal(match.via, "semantic-name");
   assert.equal(match.match.name, "Redemption");
   assert.equal(match.canonicalSlug, "redemption");
+});
+
+test("semantic-name matching is confidence gated by type and level", () => {
+  const entry = [{ kind: "feat", packType: "feat", name: "Liberation Cause", slug: "liberation-cause", level: 1 }];
+  const index = [
+    { type: "feat", slug: "liberation", name: "Liberation", level: 1, uuid: "U1" },
+    { type: "feat", slug: "liberation", name: "Liberation", level: 2, uuid: "U2" },
+  ];
+  const [match] = matchEntries(entry, index);
+  assert.equal(match.via, "semantic-name");
+  assert.equal(match.match.uuid, "U1");
+});
+
+test("semantic-name matching stays unresolved when canonical candidates remain ambiguous", () => {
+  const entry = [{ kind: "feat", packType: "feat", name: "Justice Cause", slug: "justice-cause", level: 1 }];
+  const index = [
+    { type: "feat", slug: "justice", name: "Justice", level: 1, uuid: "U1" },
+    { type: "feat", slug: "justice", name: "Justice", level: 1, uuid: "U2" },
+  ];
+  const [match] = matchEntries(entry, index);
+  assert.equal(match.match, null);
+  assert.equal(match.via, "miss");
 });
 
 test("uniqueChoice: only an explicit WG answer naming exactly one legal option", async () => {
