@@ -14,13 +14,16 @@ export function sluggify(name) {
 
 const SKIP_ITEMS = new Set(["fist"]);
 
-// WG's display names are occasionally more descriptive than PF2e's canonical
-// compendium names. Keep these aliases explicit and narrow: this is not a
-// fuzzy-match fallback, and every alias still has to resolve to one unique
-// compendium document of the expected type.
-const CANONICAL_SLUG_ALIASES = new Map([
-  ["redemption-cause", ["redemption"]],
-]);
+// WG sometimes labels a selected class feature as "<canonical option> <role>"
+// while PF2e stores the option itself (for example "Redemption Cause" vs
+// "Redemption"). These are semantic role suffixes, not a fuzzy name match:
+// the stem must resolve to one compendium document of the expected type and,
+// when WG supplies one, the PF2e level must also agree.
+const SEMANTIC_ROLE_SUFFIXES = [
+  "research field", "research-field", "methodology", "bloodline",
+  "doctrine", "mystery", "patron", "cause", "muse", "school", "instinct",
+  "ikon", "implement", "apparition", "thesis", "curriculum", "order",
+];
 
 const ATTR_KEYS = { STR: "str", DEX: "dex", CON: "con", INT: "int", WIS: "wis", CHA: "cha" };
 
@@ -121,16 +124,39 @@ export function buildPlan(exp) {
 /** Match entries against a compendium index: slug first, then an unambiguous name (or name+level). */
 export function matchEntries(entries, index) {
   const bySlug = new Map();
+  const bySlugAll = new Map();
   const byName = new Map();
   for (const row of index) {
     const k = `${row.type}:`;
     if (row.slug && !bySlug.has(k + row.slug)) bySlug.set(k + row.slug, row);
+    if (row.slug) (bySlugAll.get(k + row.slug) ?? bySlugAll.set(k + row.slug, []).get(k + row.slug)).push(row);
     const n = k + String(row.name).toLowerCase();
     (byName.get(n) ?? byName.set(n, []).get(n)).push(row);
   }
   const typesFor = (pt) => pt === "equipment"
     ? ["weapon", "armor", "shield", "equipment", "consumable", "treasure", "backpack", "kit"]
     : pt === "feat" ? ["feat", "action"] : [pt];
+  const semanticStems = (name) => {
+    const raw = String(name ?? "").trim();
+    const lower = raw.toLowerCase();
+    return SEMANTIC_ROLE_SUFFIXES
+      .filter((suffix) => lower.endsWith(` ${suffix}`))
+      .map((suffix) => raw.slice(0, -(suffix.length + 1)).trim())
+      .filter(Boolean)
+      .map(sluggify);
+  };
+  const uniqueSlugHit = (slug, types, entry) => {
+    const candidates = types.flatMap((t) => {
+      return bySlugAll.get(`${t}:${slug}`) ?? [];
+    });
+    const unique = [...new Map(candidates.map((r) => [r.uuid, r])).values()];
+    if (unique.length === 1) return unique[0];
+    if (entry.level != null) {
+      const atLevel = unique.filter((r) => r.level === entry.level);
+      if (atLevel.length === 1) return atLevel[0];
+    }
+    return null;
+  };
   return entries.map((e) => {
     for (const t of typesFor(e.packType)) {
       const hit = bySlug.get(`${t}:${e.slug}`);
@@ -140,9 +166,9 @@ export function matchEntries(entries, index) {
       const hit = bySlug.get(`${t}:${e.baseSlug}`);
       if (hit) return { ...e, match: hit, via: "base+runes" };
     }
-    for (const alias of CANONICAL_SLUG_ALIASES.get(e.slug) ?? []) for (const t of typesFor(e.packType)) {
-      const hit = bySlug.get(`${t}:${alias}`);
-      if (hit) return { ...e, match: hit, via: "canonical-alias", canonicalSlug: alias };
+    for (const stem of semanticStems(e.name)) {
+      const hit = uniqueSlugHit(stem, typesFor(e.packType), e);
+      if (hit) return { ...e, match: hit, via: "semantic-name", canonicalSlug: stem };
     }
     for (const t of typesFor(e.packType)) {
       const list = byName.get(`${t}:${e.name.toLowerCase()}`);
