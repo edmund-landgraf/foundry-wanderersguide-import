@@ -460,7 +460,7 @@ export function summarizeActor(actor) {
 const findActor = (plan, host) => game.actors.find((a) => a.getFlag(MODULE_ID, "wgId") === plan.wgId && a.getFlag(MODULE_ID, "host") === host);
 
 /** Dry run (PLAN 8): what an import would change. Reads only; nothing is created or written. */
-export async function previewImport(exp, { host }) {
+export async function previewImport(exp, { host, matchCatalog = null }) {
   const p = await planImport(exp, { host, matchCatalog });
   return { plan: p.plan, diff: p.diff, misses: p.misses, actor: p.actor, coverage: p.coverage, unresolved: p.ctx.unresolved, review: reviewHtml(p) };
 }
