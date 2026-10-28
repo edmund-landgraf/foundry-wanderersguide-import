@@ -74,6 +74,17 @@ test("Specialty Crafting under Web Weaver (PC 64): WG Woodworking vs PF2e fixed 
   assert.match(row.reason, /exception pf2e-fixed-choice/);
 });
 
+test("PC 91 nested Witch choices are included only when WG exports concrete descendants", () => {
+  const e = pc(91);
+  const familiarSpell = "class-feature-21170_f01737dd-b596-4d66-81f3-faa63b5b9d45";
+  const tradition = "ancestry-section-5742419753466526_3fd6a268-771b-49fc-93ed-9b53695d1a29_20760_e28776c1-9de7-4032-97c4-dcd39030280e";
+  const familiar = get(classifySelections(e), familiarSpell);
+  const nested = get(classifySelections(e), tradition);
+  assert.deepEqual([familiar.status, familiar.category], ["included", "spell-choice"]);
+  assert.deepEqual([nested.status, nested.category], ["included", "nested-derived"]);
+  assert.match(nested.reason, /4890/);
+});
+
 test("no PC fixture has an unresolved selection without a classified reason", () => {
   for (const id of [63, 64, 66, 71, 72, 74, 76, 78]) {
     const e = pc(id);
