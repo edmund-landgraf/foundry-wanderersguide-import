@@ -2,7 +2,7 @@
 // is_formula=true; PF2e keeps them as UUID references in system.crafting.formulas.
 // Pack preference order and the rename-then-match flow follow Pathmuncher's #processFormulas
 // (https://github.com/MrPrimate/pathmuncher), MIT License, Copyright (c) 2023 Jack Holloway.
-import { itemNameCandidates } from "./item-renames.js";
+import { itemNameCandidates, GRADE_WORDS } from "./item-renames.js";
 
 export const FORMULA_PACK_ORDER = ["pf2e.equipment-srd", "sf2e.equipment", "pf2e-legacy-content.formulas-legacy", "pf2e-legacy-content.equipment-legacy"];
 export const FORMULA_TYPES = ["consumable", "weapon", "equipment", "armor", "shield", "backpack", "treasure", "ammo", "kit"];
@@ -24,6 +24,23 @@ export function resolveFormula(entry, index) {
     if (top.length > 1 && entry.level != null) { const l = top.filter((r) => r.level === entry.level); if (l.length) top = l; }
     if (top.length === 1) return { ...entry, match: top[0], via: `formula:${via}` };
     return { ...entry, match: null, via: "ambiguous", candidates: top.map((r) => r.uuid) };
+  }
+  // Fallback: the base name has no ungraded document, only graded variants (e.g. WG "Tanglefoot Bag"
+  // -> PF2e "Glue Bomb (Lesser/Moderate/...)"). Take the lowest grade and say so in the report.
+  for (const [via, name] of itemNameCandidates(entry.name)) {
+    if (GRADE_WORDS.some((w) => name.endsWith(` (${w})`))) continue;
+    const graded = [];
+    for (const [g, grade] of GRADE_WORDS.entries()) {
+      const slug = slugOf(`${name} (${grade})`);
+      const rows = (index ?? []).filter((r) => FORMULA_TYPES.includes(r.type) && (r.slug === slug || slugOf(r.name) === slug));
+      if (rows.length) graded.push({ g, rows });
+    }
+    if (!graded.length) continue;
+    const rows = graded[0].rows;
+    const best = Math.min(...rows.map((r) => rank(r.uuid)));
+    const top = [...new Map(rows.filter((r) => rank(r.uuid) === best).map((r) => [r.uuid, r])).values()];
+    if (top.length !== 1) return { ...entry, match: null, via: "ambiguous", candidates: top.map((r) => r.uuid) };
+    return { ...entry, match: top[0], via: `formula:${via}+lowest-grade`, note: `${entry.name} matched as ${top[0].name}: no ungraded item` };
   }
   return { ...entry, match: null, via: "miss" };
 }
@@ -85,7 +102,7 @@ export function formulasHtml(entries, plan = {}) {
   if (!f.length && !extras.length) return "";
   const ok = f.filter((e) => e.match);
   const bad = f.filter((e) => !e.match);
-  const li = (e) => `<li>${esc(e.name)}${e.match ? ` &rarr; ${esc(e.match.name)} <span class="notes">(${esc(packOf(e.match.uuid))})</span>` : ` &mdash; <b>${e.via === "ambiguous" ? "ambiguous" : "no compendium match"}</b>`}</li>`;
+  const li = (e) => `<li>${esc(e.name)}${e.match ? ` &rarr; ${esc(e.match.name)} <span class="notes">(${esc(packOf(e.match.uuid))})</span>${e.note ? ` <em>${esc(e.note)}</em>` : ""}` : ` &mdash; <b>${e.via === "ambiguous" ? "ambiguous" : "no compendium match"}</b>`}</li>`;
   return `<h4>Formulas</h4><p>${ok.length}/${f.length} formulas added to the formula book.</p>`
     + (f.length ? `<ul>${[...ok, ...bad].map(li).join("")}</ul>` : "")
     + (extras.length ? `<p class="notes">Not imported as items (PF2e grants them itself): ${extras.map(esc).join(", ")}.</p>` : "")

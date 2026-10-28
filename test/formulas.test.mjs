@@ -85,3 +85,24 @@ test("assignContainers leaves children loose when the parent is not a PF2e conta
   assert.equal(assignContainers(es, () => "x").length, 1);
   assert.equal(es[1].data.system.containerId, undefined);
 });
+
+test("ungraded name with only graded PF2e variants falls back to the lowest grade, with a note", () => {
+  const idx = [...index, row("weapon", "Glue Bomb (Moderate)", SRD, "glueM", 3), row("weapon", "Glue Bomb (Greater)", SRD, "glueG", 11), row("weapon", "Glue Bomb (Major)", SRD, "glueX", 17)];
+  const r = resolveFormula({ kind: "formula", name: "Tanglefoot Bag" }, idx);
+  assert.equal(r.match.uuid, `Compendium.${SRD}.Item.glue`);
+  assert.equal(r.note, "Tanglefoot Bag matched as Glue Bomb (Lesser): no ungraded item");
+  assert.match(formulasHtml([r]), /no ungraded item/);
+  // graded inputs are unchanged and carry no note
+  const g = resolveFormula({ kind: "formula", name: "Tanglefoot Bag (Moderate)" }, idx);
+  assert.equal(g.match.uuid, `Compendium.${SRD}.Item.glueM`);
+  assert.equal(g.note, undefined);
+  // lowest is Minor when a Minor exists
+  const m = resolveFormula({ kind: "formula", name: "Elixir of Life" }, [...idx, row("consumable", "Elixir of Life (Lesser)", SRD, "eolL", 5)]);
+  assert.equal(m.match.uuid, `Compendium.${SRD}.Item.eol`);
+  // an ungraded document wins over the fallback
+  assert.equal(resolveFormula({ kind: "formula", name: "Backpack" }, idx).note, undefined);
+  // true misses are still reported
+  const miss = resolveFormula({ kind: "formula", name: "Nope Elixir" }, idx);
+  assert.equal(miss.via, "miss");
+  assert.match(formulasHtml([miss]), /no compendium match/);
+});
