@@ -116,7 +116,7 @@ export function buildPlan(exp) {
   // WG resolves the class DC's governing attribute in raw_data_dump, including
   // class choices (for example a Champion's selected Strength). Keep that
   // resolved value so Foundry does not retain its default key ability.
-  const keyAttr = exp?.content?.raw_data_dump?.variables?.CLASS_DC?.value?.attribute;
+  const keyAttr = exp?.content?.raw_data_dump?.variables?.CLASS_DC?.value?.attribute ?? selectedKeyAttribute(exp);
   const keyAbility = ATTR_KEYS[String(keyAttr ?? "").replace(/^ATTRIBUTE_/, "")] ?? null;
   // PF2e starts a character with one focus point when WG exports focus spells;
   // the pool cannot exceed three. The raw WG bonus is additive for higher-level
@@ -243,6 +243,55 @@ export function resolveImageUrl(raw, functionsUrl) {
 // ability block id (FILTERED). Returns Map(slug of the feature/feat that owns the select -> [names]).
 // The map also exposes non-enumerable `byId` and `keys` indexes so callers can
 // use stable WG content IDs without changing the existing name-based API.
+/**
+ * Display name for a bare WG ADJ_VALUE answer from a FILTERED select (no predefined
+ * options): SKILL_STEALTH -> "Stealth", WEAPON_GROUP_SWORD -> "Sword". Lore skills and
+ * other variables are not named (no PF2e option can be matched safely).
+ */
+export function rawVariableName(v) {
+  const m = String(v ?? "").match(/^(?:SKILL|WEAPON_GROUP)_([A-Z]+(?:_[A-Z]+)*)$/);
+  if (!m || /^LORE(_|$)/.test(m[1])) return null;
+  return m[1].toLowerCase().replace(/(^|_)([a-z])/g, (_, p, c) => `${p ? " " : ""}${c.toUpperCase()}`);
+}
+
+/**
+ * The exported selection key for one select op. Reads only keys that end exactly in
+ * _<opId>; WG also leaves sibling history entries (<key>_<oldValue>) that are ignored.
+ * When several keys end in the same op id, only the one scoped to the owner's block id
+ * is used; otherwise the answer is ambiguous and nothing is read.
+ */
+export function selectionKeyFor(keys, opId, ownerId = null) {
+  const hits = keys.filter((k) => k.endsWith(`_${opId}`));
+  if (hits.length <= 1) return hits[0] ?? null;
+  if (ownerId == null) return null;
+  const scoped = hits.filter((k) => k.split(/[_-]/).includes(String(ownerId)));
+  return scoped.length === 1 ? scoped[0] : null;
+}
+
+/** Key attribute from the class's selected WG option (setValue CLASS_DC.attribute), when exactly one is selected. */
+export function selectedKeyAttribute(exp) {
+  const sel = exp?.character?.operation_data?.selections ?? {};
+  const keys = Object.keys(sel);
+  const found = new Set();
+  const visit = (ops, depth = 0) => {
+    if (!Array.isArray(ops) || depth > 6) return;
+    for (const op of ops) {
+      if (!op || typeof op !== "object") continue;
+      if (op.type === "select" && op.id) {
+        const key = selectionKeyFor(keys, op.id);
+        const pre = key ? (op.data?.optionsPredefined ?? []).find((o) => String(o.id) === String(sel[key])) : null;
+        for (const o of pre?.operations ?? []) {
+          const a = o?.type === "setValue" && o.data?.variable === "CLASS_DC" ? o.data?.value?.attribute : null;
+          if (a) found.add(String(a));
+        }
+      }
+      if (op.type === "conditional") { visit(op.data?.trueOperations, depth + 1); visit(op.data?.falseOperations, depth + 1); }
+    }
+  };
+  visit(exp?.character?.details?.class?.operations);
+  return found.size === 1 ? [...found][0] : null;
+}
+
 export function wgChoiceHints(exp) {
   const sel = exp?.character?.operation_data?.selections ?? {};
   const ff = exp?.content?.feats_features ?? {};
@@ -271,7 +320,7 @@ export function wgChoiceHints(exp) {
     for (const op of ops) {
       if (!op || typeof op !== "object") continue;
       if (op.type === "select" && op.id) {
-        const key = keys.find((k) => k.endsWith(`_${op.id}`));
+        const key = selectionKeyFor(keys, op.id, typeof owner === "object" ? owner?.id : null);
         const v = key ? sel[key] : null;
         if (v != null) {
           // WGUI has emitted both the predefined option id and the nested
@@ -285,7 +334,7 @@ export function wgChoiceHints(exp) {
             : null;
           // FILTERED ADJ_VALUE selects (e.g. Skilled Human "Select a Skill") have no
           // predefined options; WG stores the raw variable (SKILL_STEALTH) as the answer.
-          const rawSkill = !pre && /^SKILL_[A-Z]+$/.test(String(v)) ? String(v).slice(6).toLowerCase().replace(/(^|_)([a-z])/g, (_, p, c) => `${p ? " " : ""}${c.toUpperCase()}`) : null;
+          const rawSkill = !pre ? rawVariableName(v) : null;
           const name = pre?.title ?? byId.get(String(v))?.name ?? variableName ?? rawSkill;
           if (name) push(owner, name, key);
           if (pre?.operations) visit(owner, pre.operations, depth + 1);

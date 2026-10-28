@@ -173,10 +173,19 @@ async function filterAccepts(c, uuid) {
 
 /** PF2e ChoiceSet `choices: { config: "skills" }` -> [{ value, label }] from CONFIG.PF2E (8.6.1). */
 export function configChoices(choices, config = globalThis.CONFIG?.PF2E) {
-  const key = choices && typeof choices === "object" && !Array.isArray(choices) ? choices.config : null;
+  // PF2e 8.6.1 accepts both "weaponGroups" and { config: "skills" } for CONFIG-backed choices.
+  const key = typeof choices === "string" ? choices : choices && typeof choices === "object" && !Array.isArray(choices) ? choices.config : null;
   const table = typeof key === "string" ? config?.[key] : null;
   if (!table || typeof table !== "object") return choices;
   return Object.entries(table).map(([value, x]) => ({ value, label: typeof x === "string" ? x : x?.label ?? value }));
+}
+
+/** Localized ChoiceSet label; an unlocalized PF2E.* key falls back to its value slug or last key segment (PF2E.Dragon.Adamantine -> Adamantine). */
+export function choiceLabel(label, value) {
+  const text = globalThis.game?.i18n?.localize?.(label) ?? label;
+  if (!/^PF2E\./.test(String(text))) return text;
+  if (typeof value === "string" && !value.includes(".")) return value;
+  return String(text).split(".").pop();
 }
 
 async function resolveChoiceSet(rule, ownerName, ctx, { sourceUuid = null, flag = null, ownerWgId = null } = {}) {
@@ -186,7 +195,7 @@ async function resolveChoiceSet(rule, ownerName, ctx, { sourceUuid = null, flag 
   if (Array.isArray(c)) {
     const opts = c.map((o) => {
       const value = typeof o === "object" ? o.value : o;
-      const label = (typeof o === "object" && o.label ? game.i18n.localize(o.label) : null) ?? (typeof value === "string" ? ctx.uuidName.get(value) : null) ?? String(value);
+      const label = (typeof o === "object" && o.label ? choiceLabel(o.label, value) : null) ?? (typeof value === "string" ? ctx.uuidName.get(value) : null) ?? String(value);
       return { value, label: typeof value === "string" && ctx.uuidName.has(value) ? ctx.uuidName.get(value) : label };
     });
     if (specific.length) {
@@ -229,6 +238,9 @@ async function resolveChoiceSet(rule, ownerName, ctx, { sourceUuid = null, flag 
 /** Apply WG's resolved class key ability to PF2e's class-item selection field. */
 export function applyKeyAbilityData(entry, data) {
   if (entry.kind !== "class" || !entry.keyAbility || !data?.system?.keyAbility) return data;
+  // Only a key attribute the PF2e class offers; anything else stays unselected (reported, never forced).
+  const legal = data.system.keyAbility.value;
+  if (Array.isArray(legal) && legal.length && !legal.includes(entry.keyAbility)) return data;
   data.system.keyAbility = { ...data.system.keyAbility, selected: entry.keyAbility };
   return data;
 }
