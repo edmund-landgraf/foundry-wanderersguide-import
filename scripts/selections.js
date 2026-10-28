@@ -63,7 +63,7 @@ const titleCase = (s) => String(s ?? "").toLowerCase().replace(/\b[a-z]/g, (c) =
  * Classify one selection. Returns { status, reason, category, answer? } or null (no evidence; caller keeps unresolved).
  *   answer: { owner, name } for a ChoiceSet the importer can answer from WG's explicit pick.
  */
-export function classifySelection(key, value, { ops, ids, byId }) {
+export function classifySelection(key, value, { ops, ids, byId, selections }) {
   const parsed = parseSelectionKey(key);
   if (!parsed) return null;
   const v = String(value);
@@ -77,12 +77,26 @@ export function classifySelection(key, value, { ops, ids, byId }) {
       const variable = inner?.type === "adjValue" ? inner.data?.variable : null;
       if (variable?.startsWith("ATTRIBUTE_")) return { status: "included", category: "attribute-option", reason: `${owner}: "${op.data?.title ?? "select"}" option ${v} is adjValue ${variable}; final modifiers forced from content.attributes` };
       if (variable?.startsWith("SKILL_")) return { status: "dropped", category: "skill-option", reason: `${owner}: option ${v} is adjValue ${variable}; skills are not imported (PF2e derives them from its own choices)` };
+      if (inner?.type === "giveSpell" && inner.data?.spellId != null) {
+        const spellId = String(inner.data.spellId);
+        const hit = inIds(spellId);
+        if (hit?.list === "SPELL_IDS") return { status: "included", category: "spell-choice", reason: `${owner}: WG chose spell ${spellId}, present in WG SPELL_IDS and exported spell data` };
+      }
       if (inner?.type === "giveAbilityBlock" && inner.data?.abilityBlockId != null) {
         const id = String(inner.data.abilityBlockId);
         const name = byId.get(id)?.name ?? (inIds(id)?.name ? titleCase(inIds(id).name) : null);
         if (name) return { status: "unresolved", category: "choice-answer", reason: `${owner}: WG chose ${name} (ability block ${id}); not consumed by a PF2e ChoiceSet`, answer: { owner, name } };
       }
-      if (opt.title) return { status: "unresolved", category: "choice-answer", reason: `${owner}: WG chose ${opt.title}; not consumed by a PF2e ChoiceSet`, answer: { owner, name: opt.title } };
+      if (opt.title) {
+        // Nested CUSTOM choices can have no direct PF2e ChoiceSet, while a
+        // descendant selection is exported as a concrete computed result.
+        // Treat the parent as included only when that descendant is evidenced
+        // by one of WG's computed *_IDS lists; otherwise keep it unresolved.
+        const prefix = `${key}_${v}_`;
+        const descendant = Object.entries(selections ?? {}).find(([childKey, childValue]) => childKey.startsWith(prefix) && inIds(String(childValue)));
+        if (descendant) return { status: "included", category: "nested-derived", reason: `${owner}: WG chose ${opt.title}; descendant ${descendant[1]} is present in WG computed IDs` };
+        return { status: "unresolved", category: "choice-answer", reason: `${owner}: WG chose ${opt.title}; not consumed by a PF2e ChoiceSet`, answer: { owner, name: opt.title } };
+      }
       return null;
     }
     return null;
@@ -107,7 +121,7 @@ export function classifySelections(exp) {
   const byId = new Map(Object.values(exp?.content?.feats_features ?? {}).flat().filter((f) => f && typeof f === "object").map((f) => [String(f.id), f]));
   const out = new Map();
   for (const [k, v] of Object.entries(sel)) {
-    const c = classifySelection(k, v, { ops, ids, byId });
+    const c = classifySelection(k, v, { ops, ids, byId, selections: sel });
     if (c) out.set(k, c);
   }
   return out;
