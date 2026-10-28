@@ -74,6 +74,18 @@ test("WG key ability populates the PF2e class-item selection", () => {
   assert.equal(data.system.keyAbility.selected, "cha");
 });
 
+test("Cleric feature gaps are covered by PF2e grants", () => {
+  const entries = [
+    { name: "Divine Font (Healing)", match: { uuid: "Compendium.pf2e.classfeatures.Item.font" } },
+    { name: "Domain Initiate (Luck)", match: { uuid: "Compendium.pf2e.classfeatures.Item.domain" } },
+    { name: "Healing Font", match: null },
+    { name: "Domains", match: null },
+  ];
+  coverFeatureGaps(entries, null, []);
+  assert.equal(entries[2].coveredBy, "Divine Font (Healing)");
+  assert.equal(entries[3].coveredBy, "Domain Initiate (Luck)");
+});
+
 test("Spark Transcendence is covered by Divine Spark and Ikons without a homebrew copy", () => {
   const entries = [
     { name: "Divine Spark and Ikons", match: { uuid: "Compendium.pf2e.classfeatures.Item.divine" } },
