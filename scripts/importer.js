@@ -522,6 +522,27 @@ export function duplicateItemDiagnostics(items) {
   });
 }
 
+/**
+ * Some WG features are headings inside a PF2e feature rather than standalone
+ * documents. Keep those source paths visible without manufacturing a homebrew
+ * item. The relationship is resolved by names at runtime so a future PF2e
+ * standalone document still wins through the normal compendium matcher.
+ */
+export function coverFeatureGaps(entries, actor = null) {
+  const source = entries.find((e) => e.match && sluggify(e.name) === "divine-spark-and-ikons")
+    ?? [...(actor?.items ?? [])].find((i) => sluggify(i.name) === "divine-spark-and-ikons");
+  for (const entry of entries) {
+    if (entry.match || sluggify(entry.name) !== "spark-transcendence") continue;
+    if (source) {
+      entry.coveredBy = source.name;
+      entry.coverageReason = `covered by PF2e feature ${source.name}`;
+    } else {
+      entry.unresolved = "PF2e gap: no standalone item or covering Divine Spark and Ikons feature was found";
+    }
+  }
+  return entries;
+}
+
 const KIND_ITEM_TYPES = { ancestry: ["ancestry"], heritage: ["heritage"], background: ["background"], class: ["class"], feat: ["feat", "action"], spell: ["spell"] };
 /** Same compendium source, or (when WG's entry has no match of that item type) the same slug. No prefix or fuzzy matching. */
 export function sameThing(entry, item) {
@@ -564,6 +585,7 @@ export async function planImport(exp, { host }) {
   const plan = buildPlan(exp);
   const index = await compendiumIndex();
   const matched = matchEntries(plan.entries, index);
+  coverFeatureGaps(matched, findActor(plan, host) ?? null);
   const misses = missReport(matched);
   const actor = findActor(plan, host) ?? null;
   const ctx = choiceContext(exp, plan, index, actor);
@@ -587,6 +609,7 @@ export async function planImport(exp, { host }) {
   for (const e of matched) if (e.custom) e.customLook = customLook;
   // Build every item's data now; homebrew world items are only described here and created on apply.
   for (const e of matched) {
+    if (e.coveredBy) continue;
     if (e.via === "ambiguous") { e.unresolved = `several compendium items share this name: ${e.candidates.join(", ")}`; ctx.unresolved.push({ owner: `: ${e.name}`, flag: null, reason: e.unresolved }); continue; }
     if (e.unresolved) continue;
     if (e.kind === "formula") { if (!e.match) e.unresolved = "no compendium formula match; add it on PF2e's crafting tab"; continue; }
