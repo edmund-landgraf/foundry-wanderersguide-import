@@ -115,6 +115,7 @@ export function choiceContext(exp, plan, index, actor) {
   }
   const used = new Set();
   const markUsed = (owner) => { for (const k of hints.keys?.get(sluggify(owner)) ?? []) used.add(k); };
+  const markHintUsed = (hint) => { const wanted = sluggify(hint); for (const [owner, values] of hints.keys ?? []) if (values.some((value) => sluggify(value) === wanted)) used.add(owner); };
   const assigned = new Map();
   const hintKey = (owner, ownerWgId) => ownerWgId != null && hints.byId?.has(String(ownerWgId))
     ? `id:${ownerWgId}`
@@ -139,7 +140,7 @@ export function choiceContext(exp, plan, index, actor) {
     return candidate.index;
   };
   const beliefs = String(exp?.character?.details?.info?.beliefs ?? "").trim();
-  return { hints, fixedNames, index, uuidName, previous, used, markUsed, conflicts: new Map(), unresolved: [], specific, consume, pick, assigned, beliefs };
+  return { hints, fixedNames, index, uuidName, previous, used, markUsed, markHintUsed, conflicts: new Map(), unresolved: [], specific, consume, pick, assigned, beliefs };
 }
 
 /** Index of the single option matching the hints, or -1 when none or more than one match. */
@@ -355,7 +356,7 @@ export function domainPromptWithoutDeity(app) {
 /** Every explicit WG answer, used when the prompt's item name is not the selection owner. */
 export function allChoiceHints(hints) {
   const names = [];
-  if (hints instanceof Map) for (const list of hints.values()) names.push(...list);
+  if (hints instanceof Map) for (const list of hints.values()) for (const name of list) { const raw = String(name); names.push(/^SKILL_[A-Z]+$/.test(raw) ? raw.slice(6).toLowerCase().replace(/(^|_)([a-z])/g, (_, p, x) => (p ? " " : "") + x.toUpperCase()) : name); }
   return names;
 }
 
@@ -398,7 +399,7 @@ function watchPrompts(ctx, notes) {
         const hits = app.choices.map((c, k) => (prev.some((v) => JSON.stringify(v) === JSON.stringify(c.value)) ? k : -1)).filter((k) => k >= 0);
         if (hits.length === 1) { i = hits[0]; via = "existing Foundry selection"; }
       }
-      if (i >= 0 && via === "WG selection") ctx.markUsed(owner);
+      if (i >= 0 && via === "WG selection") { ctx.markUsed(owner); ctx.markHintUsed?.(app.choices[i].label); ctx.unresolved = ctx.unresolved.filter((u) => u.owner !== owner); }
       if (i >= 0) { notes.push(`choice ${app.title}: ${app.choices[i].label} (prompt answered from ${via})`); app.selection = app.choices[i]; app.close(); continue; }
       const rec = { owner: owner || app.title, flag: null, reason: "PF2e prompt shown to the user (no explicit WG answer)" };
       ctx.unresolved.push(rec);
@@ -536,17 +537,15 @@ export function duplicateItemDiagnostics(items) {
  * item. The relationship is resolved by names at runtime so a future PF2e
  * standalone document still wins through the normal compendium matcher.
  */
-export function coverFeatureGaps(entries, actor = null) {
-  const source = entries.find((e) => e.match && sluggify(e.name) === "divine-spark-and-ikons")
-    ?? [...(actor?.items ?? [])].find((i) => sluggify(i.name) === "divine-spark-and-ikons");
+export function coverFeatureGaps(entries, actor = null, index = []) {
+  const rules = [{ wg: "spark-transcendence", pf2e: "divine-spark-and-ikons", label: "Divine Spark and Ikons" }, { wg: "healing-font", pf2e: "divine-font", label: "Divine Font" }, { wg: "domains", pf2e: "domain-initiate", label: "Domain Initiate" }];
   for (const entry of entries) {
-    if (entry.match || sluggify(entry.name) !== "spark-transcendence") continue;
-    if (source) {
-      entry.coveredBy = source.name;
-      entry.coverageReason = `covered by PF2e feature ${source.name}`;
-    } else {
-      entry.unresolved = "PF2e gap: no standalone item or covering Divine Spark and Ikons feature was found";
-    }
+    if (entry.match) continue;
+    const rule = rules.find((x) => x.wg === sluggify(entry.name));
+    if (!rule) continue;
+    const source = entries.find((e) => e.match && sluggify(e.name).startsWith(rule.pf2e)) ?? [...(actor?.items ?? [])].find((i) => sluggify(i.name).startsWith(rule.pf2e)) ?? index.find((i) => sluggify(i.name).startsWith(rule.pf2e));
+    if (source) { entry.coveredBy = source.name; entry.coverageReason = "covered by PF2e " + rule.label; }
+    else if (rule.wg === "spark-transcendence") entry.unresolved = "PF2e gap: no standalone item or covering Divine Spark and Ikons feature was found";
   }
   return entries;
 }
@@ -594,7 +593,7 @@ export async function planImport(exp, { host }) {
   const index = await compendiumIndex();
   const matched = matchEntries(plan.entries, index);
   for (const entry of matched) if (entry.kind === "class") entry.keyAbility = plan.keyAbility;
-  coverFeatureGaps(matched, findActor(plan, host) ?? null);
+  coverFeatureGaps(matched, findActor(plan, host) ?? null, index);
   const misses = missReport(matched);
   const actor = findActor(plan, host) ?? null;
   const ctx = choiceContext(exp, plan, index, actor);
