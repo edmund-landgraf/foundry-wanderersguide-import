@@ -62,7 +62,7 @@ test("duplicate diagnostics distinguish a PF2e grant pair from an unexplained du
 });
 
 test("Exemplar inventory is scheduled before class grants", () => {
-  const source = rf(new URL("../scripts/importer.js", import.meta.url));
+  const source = rf(new URL("../scripts/importer.js", import.meta.url), "utf8");
   assert.match(source, /const order = \["ancestry", "heritage", "background", "equipment", "class", "feat", "spell"\]/);
 });
 

@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { buildPlan, matchEntries, missReport, sluggify } from "../scripts/mapping.js";
+import { buildPlan, matchEntries, missReport, sluggify, normalizeMatchCatalog } from "../scripts/mapping.js";
 import { applyFeatSlotData, choiceContext } from "../scripts/importer.js";
 import { summarizeCharacters, callFunction, parseClientId, resolveFunctionsUrl, listCharacters, listCampaigns, getCampaign, campaignLabel, friendlyError } from "../scripts/api.js";
 
@@ -10,6 +10,34 @@ const exp = JSON.parse(readFileSync(new URL("./fixtures/sample-v4.json", import.
 test("sluggify", () => {
   assert.equal(sluggify("Sudden Charge"), "sudden-charge");
   assert.equal(sluggify("Champion's Reaction (Remastered)"), "champions-reaction");
+});
+
+test("database match catalog aliases are applied before semantic fallback", () => {
+  const catalog = normalizeMatchCatalog({ aliases: [{
+    item_kind: "feat", source_slug: "wg-special", target_slug: "pf2e-special",
+    priority: 10, status: "active", evidence_ref: "fixture:test",
+  }] });
+  const [hit] = matchEntries(
+    [{ kind: "feat", packType: "feat", name: "WG Special", slug: "wg-special", level: 1 }],
+    [{ type: "feat", slug: "pf2e-special", name: "PF2e Special", level: 1, uuid: "U1" }],
+    { catalog },
+  );
+  assert.equal(hit.via, "catalog-alias");
+  assert.equal(hit.match.uuid, "U1");
+  assert.equal(hit.matchEvidence, "fixture:test");
+});
+
+test("database match catalog preserves the ambiguity gate", () => {
+  const [hit] = matchEntries(
+    [{ kind: "feat", packType: "feat", name: "WG Special", slug: "wg-special", level: 1 }],
+    [
+      { type: "feat", slug: "pf2e-special", name: "PF2e Special", level: 1, uuid: "U1" },
+      { type: "feat", slug: "pf2e-special", name: "PF2e Special", level: 1, uuid: "U2" },
+    ],
+    { catalog: { aliases: [{ item_kind: "feat", source_slug: "wg-special", target_slug: "pf2e-special", status: "active" }] } },
+  );
+  assert.equal(hit.match, null);
+  assert.equal(hit.via, "miss");
 });
 
 test("buildPlan maps core fields", () => {

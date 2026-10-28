@@ -151,7 +151,28 @@ export function semanticStems(name) {
 /** Names a WG choice answer may carry in PF2e: the full slug plus semantic stems. */
 export const choiceNameKeys = (h) => [sluggify(h), ...semanticStems(h)];
 
-export function matchEntries(entries, index) {
+/** Normalize the Postgres-exported match registry into a small pure runtime catalog. */
+export function normalizeMatchCatalog(catalog = null) {
+  if (catalog?.aliases instanceof Map) return catalog;
+  const aliases = new Map();
+  for (const a of catalog?.aliases ?? catalog?.compendium_match_aliases ?? []) {
+    if (a?.status && a.status !== "active") continue;
+    const kind = String(a.item_kind ?? a.itemKind ?? "*");
+    const source = sluggify(a.source_slug ?? a.sourceName ?? a.source_name);
+    const target = sluggify(a.target_slug ?? a.targetName ?? a.target_name);
+    if (!source || !target) continue;
+    const key = `${kind}:${source}`;
+    const list = aliases.get(key) ?? [];
+    list.push({ target, priority: Number(a.priority ?? 100), strategy: a.match_strategy ?? "canonical", evidence: a.evidence_ref ?? null });
+    aliases.set(key, list);
+  }
+  for (const list of aliases.values()) list.sort((a, b) => a.priority - b.priority);
+  const typeMap = catalog?.typeMap ?? catalog?.type_map ?? null;
+  return { aliases, typeMap };
+}
+
+export function matchEntries(entries, index, { catalog = null } = {}) {
+  const matchCatalog = normalizeMatchCatalog(catalog);
   const bySlug = new Map();
   const bySlugAll = new Map();
   const byName = new Map();
@@ -163,8 +184,8 @@ export function matchEntries(entries, index) {
     (byName.get(n) ?? byName.set(n, []).get(n)).push(row);
   }
   const typesFor = (pt) => pt === "equipment"
-    ? ["weapon", "armor", "shield", "equipment", "consumable", "treasure", "backpack", "kit"]
-    : pt === "feat" ? ["feat", "action"] : [pt];
+    ? (matchCatalog.typeMap?.equipment ?? ["weapon", "armor", "shield", "equipment", "consumable", "treasure", "backpack", "kit"])
+    : pt === "feat" ? (matchCatalog.typeMap?.feat ?? ["feat", "action"]) : (matchCatalog.typeMap?.[pt] ?? [pt]);
   const semanticStems = (name) => {
     const raw = String(name ?? "").trim();
     const lower = raw.toLowerCase();
@@ -196,6 +217,14 @@ export function matchEntries(entries, index) {
     if (e.baseSlug) for (const t of typesFor(e.packType)) {
       const hit = bySlug.get(`${t}:${e.baseSlug}`);
       if (hit) return { ...e, match: hit, via: "base+runes" };
+    }
+    const aliases = [
+      ...(matchCatalog.aliases.get(`${e.packType}:${e.slug}`) ?? []),
+      ...(matchCatalog.aliases.get(`*:${e.slug}`) ?? []),
+    ];
+    for (const alias of aliases) {
+      const hit = uniqueSlugHit(alias.target, typesFor(e.packType), e);
+      if (hit) return { ...e, match: hit, via: "catalog-alias", canonicalSlug: alias.target, matchEvidence: alias.evidence };
     }
     for (const stem of semanticStems(e.name)) {
       const hit = uniqueSlugHit(stem, typesFor(e.packType), e);

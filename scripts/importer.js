@@ -588,10 +588,10 @@ function forcedFields(plan, host, actor, existing) {
 }
 
 /** Phase 1: everything an import needs, computed without writing to the world. */
-export async function planImport(exp, { host }) {
+export async function planImport(exp, { host, matchCatalog = null }) {
   const plan = buildPlan(exp);
   const index = await compendiumIndex();
-  const matched = matchEntries(plan.entries, index);
+  const matched = matchEntries(plan.entries, index, { catalog: matchCatalog });
   for (const entry of matched) if (entry.kind === "class") entry.keyAbility = plan.keyAbility;
   coverFeatureGaps(matched, findActor(plan, host) ?? null, index);
   const misses = missReport(matched);
@@ -905,9 +905,9 @@ async function rollback({ actor, snapshot, createdActor, createdWorld, createdFo
  * Import one WG export. `confirm(planResult)` must resolve true before anything is written; returning
  * false cancels with no changes. Without a confirm callback the plan is applied directly.
  */
-export async function importCharacter(exp, { host, onStep = () => {}, parity = false, confirm = null, failAfter = null }) {
+export async function importCharacter(exp, { host, matchCatalog = null, onStep = () => {}, parity = false, confirm = null, failAfter = null }) {
   const step = (s) => { console.debug(`${MODULE_ID} | ${s}`); onStep(s); };
-  const p = await planImport(exp, { host });
+  const p = await planImport(exp, { host, matchCatalog });
   step("plan");
   if (!p.valid) throw new Error(`plan invalid, nothing written: ${p.problems.join("; ")}`);
   if (confirm && !(await confirm(p))) {
