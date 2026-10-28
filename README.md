@@ -52,3 +52,7 @@ The module calls the key-scoped `wgui-ext` functions (POST `<base>/functions/v1/
 - `wgui-export-character`: the JSON v4 export used for the import.
 
 Errors such as `INVALID_API_KEY`, `CAMPAIGN_FORBIDDEN` and `CAMPAIGN_ID_INVALID` are shown as plain notifications. These functions must be deployed on the selected WG server.
+
+## Credits
+
+Formula matching (rename table, grade swap, pack order) is adapted from [Pathmuncher](https://github.com/MrPrimate/pathmuncher) by Jack Holloway, MIT License, Copyright (c) 2023 Jack Holloway. See THIRD_PARTY_NOTICES.md.

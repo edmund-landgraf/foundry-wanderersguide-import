@@ -218,19 +218,17 @@
     "level": 1,
     "featGroup": null,
     "sourcePath": "content.feats_features.otherFeats[1]"
-   },
-   {
-    "kind": "equipment",
-    "packType": "equipment",
-    "name": "Anadi Fangs",
-    "slug": "anadi-fangs",
-    "wgContentId": 14437,
-    "quantity": 1,
-    "equipped": true,
-    "runes": null,
-    "material": null,
-    "sourcePath": "content.inventory_flat[0]"
    }
+  ],
+  "skipped": [
+   {
+    "sourcePath": "content.inventory_flat[0]",
+    "name": "Anadi Fangs",
+    "reason": "Anadi Fangs: WG-granted extra item; PF2e grants its own"
+   }
+  ],
+  "grantedExtras": [
+   "Anadi Fangs"
   ]
  },
  "match": [
@@ -253,14 +251,12 @@
   "feat: Urban Survivalist -> MISS (miss)",
   "feat: In Plain Sight -> Compendium.pf2e.feats-srd.Item.ZC9C6rxPJKrw6Ktx (slug)",
   "feat: Indomitable Act -> MISS (miss)",
-  "feat: Spirit Instinct -> Compendium.pf2e.classfeatures.Item.TQqv9Q5mB4PW6LH9 (slug)",
-  "equipment: Anadi Fangs -> MISS (miss)"
+  "feat: Spirit Instinct -> Compendium.pf2e.classfeatures.Item.TQqv9Q5mB4PW6LH9 (slug)"
  ],
  "misses": [
   "feat: Sparkling Performance",
   "feat: Urban Survivalist",
-  "feat: Indomitable Act",
-  "equipment: Anadi Fangs"
+  "feat: Indomitable Act"
  ],
  "choiceHints": {
   "specialty-crafting": [
@@ -304,8 +300,7 @@
     "feat: Urban Survivalist",
     "feat: In Plain Sight",
     "feat: Indomitable Act",
-    "feat: Spirit Instinct",
-    "equipment: Anadi Fangs"
+    "feat: Spirit Instinct"
    ],
    "remove": [],
    "keep": []
@@ -314,7 +309,9 @@
    "insert": false,
    "fields": [],
    "add": [],
-   "remove": [],
+   "remove": [
+    "equipment: Anadi Fangs"
+   ],
    "keep": [
     "ancestry: Anadi",
     "heritage: Snaring Anadi",
@@ -335,19 +332,18 @@
     "feat: Urban Survivalist",
     "feat: In Plain Sight",
     "feat: Indomitable Act",
-    "feat: Spirit Instinct",
-    "equipment: Anadi Fangs"
+    "feat: Spirit Instinct"
    ]
   },
-  "html": "<h3>WG preview: Azarra (Update)</h3><p>No field changes.</p><p>Add (0):</p><p>none</p><p>Remove (0):</p><p>none</p><p>Unchanged: 21. Would become homebrew: 4.</p>"
+  "html": "<h3>WG preview: Azarra (Update)</h3><p>No field changes.</p><p>Add (0):</p><p>none</p><p>Remove (1):</p><ul><li>equipment: Anadi Fangs</li></ul><p>Unchanged: 20. Would become homebrew: 3.</p>"
  },
  "coverage": {
   "counts": {
-   "mapped": 33,
+   "mapped": 32,
    "included": 41,
    "unresolved": 1,
    "leftover-preserved": 27,
-   "dropped": 50
+   "dropped": 51
   },
   "unresolved": [
    {
@@ -536,6 +532,11 @@
     "path": "content.weapons",
     "status": "dropped",
     "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.inventory_flat[0]",
+    "status": "dropped",
+    "reason": "Anadi Fangs: WG-granted extra item; PF2e grants its own"
    },
    {
     "path": "content.inventory_flat[1]",

@@ -1,7 +1,8 @@
 // Foundry-side import. Uses Foundry/PF2e globals (game, Actor, Item, Folder, ChatMessage).
 import { MODULE_ID, HOMEBREW_FOLDER } from "./constants.js";
+import { mergeFormulas, assignContainers, formulasHtml } from "./formulas.js";
 import { auditImportCoverage, leftoverValues, CLASS_SUPPORT_NOTE } from "./coverage.js";
-import { buildPlan, matchEntries, missReport, sluggify, resolveImageUrl, FALLBACK_IMG, wgChoiceHints, matchChoice, defaultFlag, spellcastingPlan, spellSlotWarnings, preparedSlotUpdates, entryKeyFor, diffPlan, parityCheck } from "./mapping.js";
+import { buildPlan, matchEntries, missReport, sluggify, resolveImageUrl, FALLBACK_IMG, wgChoiceHints, matchChoice, choiceNameKeys, defaultFlag, spellcastingPlan, spellSlotWarnings, preparedSlotUpdates, entryKeyFor, diffPlan, parityCheck } from "./mapping.js";
 
 const PACK_TYPES = new Set(["ancestry", "heritage", "background", "class", "feat", "spell", "weapon", "armor", "shield", "equipment", "consumable", "treasure", "backpack", "kit"]);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -199,7 +200,8 @@ async function resolveChoiceSet(rule, ownerName, ctx, { sourceUuid = null, flag 
     const type = c.itemType ?? "feat";
     for (const h of specific) {
       if ((ctx.assigned?.get(sluggify(ownerName)) ?? new Set()).has(sluggify(h))) continue;
-      const rows = ctx.index.filter((r) => r.type === type && sluggify(r.name) === sluggify(h));
+      const keys = choiceNameKeys(h);
+      const rows = ctx.index.filter((r) => r.type === type && keys.includes(sluggify(r.name)));
       const legal = [];
       for (const r of rows) if (await filterAccepts(c, r.uuid)) legal.push(r);
       if (legal.length === 1) {
@@ -532,11 +534,12 @@ export async function planImport(exp, { host }) {
   for (const e of matched) {
     if (e.via === "ambiguous") { e.unresolved = `several compendium items share this name: ${e.candidates.join(", ")}`; ctx.unresolved.push({ owner: `: ${e.name}`, flag: null, reason: e.unresolved }); continue; }
     if (e.unresolved) continue;
+    if (e.kind === "formula") { if (!e.match) e.unresolved = "no compendium formula match; add it on PF2e's crafting tab"; continue; }
     const n0 = notes.length;
     try { e.data = await itemDataFor(e, null, ctx, notes); e.notes = notes.slice(n0); }
     catch (err) { e.error = err.message; problems.push(`${e.kind}: ${e.name} (${err.message})`); }
   }
-  const warnings = spellSlotWarnings(exp, matched);
+  const warnings = [...spellSlotWarnings(exp, matched), ...assignContainers(matched, () => foundry.utils.randomID())];
   const diff = diffPlan(plan, summarizeActor(actor));
   const homebrew = matched.filter((e) => !e.match && e.data);
   const coverage = auditImportCoverage(exp, { ...plan, entries: matched }, { applied: false, grantedSlugs: grantedSlugsOf(actor), choiceUsed: ctx.used, slug: sluggify });
@@ -567,6 +570,7 @@ export function reviewHtml(p) {
     + (p.ctx.unresolved.length ? `<p><strong>Unresolved (PF2e will ask you; nothing is guessed):</strong></p>${li(p.ctx.unresolved.map((u) => `${u.owner}${u.flag ? ` [${u.flag}]` : ""}: ${u.reason}`))}` : "")
     + (p.warnings?.length ? `<p><strong>Warnings:</strong></p>${li(p.warnings)}` : "")
     + (p.problems.length ? `<p><strong>Plan problems (import blocked):</strong></p>${li(p.problems)}` : "")
+    + formulasHtml(p.matched, p.plan)
     + coverageHtml(p.coverage);
 }
 
@@ -651,7 +655,7 @@ async function applyImport(p, { onStep, parity, failAfter }) {
         batch.push(foundry.utils.deepClone(e.data));
         batchEntries.push(e);
       }      step(`build ${kind} ${batch.length}`);
-      const made = await createItems(batch);
+      const made = await createItems(batch, kind === "equipment" ? { keepId: true } : {});
       made.forEach((doc, i) => { if (batchEntries[i]) batchEntries[i].itemId = doc.id; });
       }
       step(`created ${kind}`);
@@ -660,6 +664,14 @@ async function applyImport(p, { onStep, parity, failAfter }) {
     const prepared = preparedSlotUpdates(matched);
     if (prepared.length) await actor.updateEmbeddedDocuments("Item", prepared, { render: false });
     step("prepared slots");
+    // Formulas: one write of the merged, UUID-deduped list. diff:false so the array is replaced as sent.
+    const formulaEntries = matched.filter((e) => e.kind === "formula" && e.match);
+    if (formulaEntries.length) {
+      const merged = mergeFormulas(actor._source.system?.crafting?.formulas ?? [], formulaEntries.map((e) => e.match.uuid));
+      await actor.update({ "system.crafting.formulas": merged }, { diff: false, render: false });
+      for (const e of formulaEntries) e.outcome = "created";
+    }
+    step("formulas");
     // Leftovers (coverage status leftover-preserved) are kept verbatim on the actor.
     // Use Document flag APIs when available. The -= embedded-key update form
     // is deprecated in newer Foundry versions and will be removed in v16.
@@ -780,7 +792,7 @@ export async function importCharacter(exp, { host, onStep = () => {}, parity = f
     : "";
   await ChatMessage.create({
     whisper: [game.user.id],
-    content: `<h3>WG import: ${esc(plan.name)}</h3><p>${matched.length - misses.length} matched, ${misses.length} created as homebrew or missed.</p>${misses.length ? `<ul>${misses.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${notes.length ? `<p>Choices:</p><ul>${notes.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${p.ctx.unresolved.length ? `<p>Unresolved choices:</p><ul>${p.ctx.unresolved.map((u) => `<li>${esc(u.owner)}${u.flag ? ` [${esc(u.flag)}]` : ""}: ${esc(u.reason)}</li>`).join("")}</ul>` : ""}${p.warnings.length ? `<p><strong>Warnings:</strong></p><ul>${p.warnings.map((w) => `<li>${esc(w)}</li>`).join("")}</ul>` : ""}${duplicateHtml}${parityResult ? parityHtml(plan.name, parityResult) : ""}${coverageHtml(p.coverage)}`,
+    content: `<h3>WG import: ${esc(plan.name)}</h3><p>${matched.length - misses.length} matched, ${misses.length} created as homebrew or missed.</p>${misses.length ? `<ul>${misses.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${notes.length ? `<p>Choices:</p><ul>${notes.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${p.ctx.unresolved.length ? `<p>Unresolved choices:</p><ul>${p.ctx.unresolved.map((u) => `<li>${esc(u.owner)}${u.flag ? ` [${esc(u.flag)}]` : ""}: ${esc(u.reason)}</li>`).join("")}</ul>` : ""}${p.warnings.length ? `<p><strong>Warnings:</strong></p><ul>${p.warnings.map((w) => `<li>${esc(w)}</li>`).join("")}</ul>` : ""}${duplicateHtml}${formulasHtml(matched, plan)}${parityResult ? parityHtml(plan.name, parityResult) : ""}${coverageHtml(p.coverage)}`,
   });
   return { actor, misses, notes, warnings: p.warnings, unresolved: p.ctx.unresolved, coverage: p.coverage, matched: matched.length - misses.length, parity: parityResult };
 }

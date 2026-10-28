@@ -1,4 +1,5 @@
 import { classifySelections } from "./selections.js";
+import { resolveFormula, extraItemIds, containerParents } from "./formulas.js";
 // Pure mapping: WG JSON v4 export -> import plan. No Foundry globals here, so it is unit-testable in Node.
 
 export function sluggify(name) {
@@ -79,13 +80,23 @@ export function buildPlan(exp) {
     e.prepared = (e.prepared ?? 0) + 1;
   });
   (ct.innate_spells ?? []).forEach((s, i) => add("spell", "spell", s.spell?.name, { wgContentId: s.spell?.id, rank: s.rank, innate: true, tradition: String(s.tradition ?? "").toLowerCase() || null, uses: s.casts_max ?? null, sourcePath: `content.innate_spells[${i}]` }));
+  const extraIds = extraItemIds(exp);
+  const parents = containerParents(exp);
+  const skipped = [];
+  const grantedExtras = [];
   for (const [invIndex, inv] of (ct.inventory_flat ?? []).entries()) {
     const it = inv.item ?? inv;
     if (SKIP_ITEMS.has(sluggify(it.name))) continue; // built-in strikes, not items
+    const sourcePath = `content.inventory_flat[${invIndex}]`;
+    // Formulas live in PF2e's formula book (system.crafting.formulas), not in the inventory.
+    if (inv.is_formula) { add("formula", "formula", it.name, { wgContentId: it.id, level: it.level ?? null, sourcePath }); continue; }
+    // WG grants these itself (EXTRA_ITEM_IDS, e.g. Versatile Vial); PF2e's class grants them too.
+    if (extraIds.has(String(it.id))) { skipped.push({ sourcePath, name: it.name, reason: `${it.name}: WG-granted extra item; PF2e grants its own` }); grantedExtras.push(it.name); continue; }
+    const invIds = inv.id ? { wgInvId: inv.id, ...(parents.get(inv.id) ? { parentInvId: parents.get(inv.id) } : {}) } : {};
     const c = parseComposedName(it.name, it.meta_data ?? {});
     const hasRunes = c.runes.potency || c.runes.striking || c.runes.resilient || c.runes.property.length;
     add("equipment", "equipment", it.name, { wgContentId: it.id, quantity: inv.quantity ?? it.meta_data?.quantity ?? 1, equipped: !!inv.is_equipped,
-      ...(c.composed ? { baseName: c.base, baseSlug: sluggify(c.base) } : {}), runes: hasRunes ? c.runes : null, material: c.material, sourcePath: `content.inventory_flat[${invIndex}]` });
+      ...(c.composed ? { baseName: c.base, baseSlug: sluggify(c.base) } : {}), runes: hasRunes ? c.runes : null, material: c.material, sourcePath, ...invIds });
   }
 
   const attributes = {};
@@ -118,10 +129,20 @@ export function buildPlan(exp) {
     ...(keyAbility ? { keyAbility } : {}),
     ...(focusMax ? { focusMax } : {}),
     entries,
+    ...(skipped.length ? { skipped } : {}), ...(grantedExtras.length ? { grantedExtras } : {}),
   };
 }
 
 /** Match entries against a compendium index: slug first, then an unambiguous name (or name+level). */
+/** Sluggified semantic stems: "Bomber Research Field" -> ["bomber"]. */
+export function semanticStems(name) {
+  const raw = String(name ?? "").trim();
+  const lower = raw.toLowerCase();
+  return SEMANTIC_ROLE_SUFFIXES.filter((suffix) => lower.endsWith(` ${suffix}`)).map((suffix) => raw.slice(0, -(suffix.length + 1)).trim()).filter(Boolean).map(sluggify);
+}
+/** Names a WG choice answer may carry in PF2e: the full slug plus semantic stems. */
+export const choiceNameKeys = (h) => [sluggify(h), ...semanticStems(h)];
+
 export function matchEntries(entries, index) {
   const bySlug = new Map();
   const bySlugAll = new Map();
@@ -158,6 +179,7 @@ export function matchEntries(entries, index) {
     return null;
   };
   return entries.map((e) => {
+    if (e.kind === "formula") return resolveFormula(e, index);
     for (const t of typesFor(e.packType)) {
       const hit = bySlug.get(`${t}:${e.slug}`);
       if (hit) return { ...e, match: hit, via: "slug" };
@@ -401,6 +423,7 @@ function itemFound(entry, items) {
 const KIND_TYPES = { ancestry: ["ancestry"], heritage: ["heritage"], background: ["background"], class: ["class"], feat: ["feat", "action"], spell: ["spell"], equipment: ["weapon", "armor", "shield", "equipment", "consumable", "treasure", "backpack", "kit"] };
 
 export function diffPlan(plan, actor) {
+  plan = { ...plan, entries: plan.entries.filter((e) => e.kind !== "formula") };
   const fields = [];
   if (!actor) return { insert: true, fields: [], add: plan.entries.map((e) => `${e.kind}: ${e.name}`), remove: [], keep: [] };
   const cmp = (label, a, b) => { if (JSON.stringify(a) !== JSON.stringify(b)) fields.push({ field: label, from: a, to: b }); };
@@ -422,6 +445,7 @@ export function diffPlan(plan, actor) {
 }
 
 export function parityCheck(plan, actor) {
+  plan = { ...plan, entries: plan.entries.filter((e) => e.kind !== "formula") };
   const rows = [];
   const row = (check, wg, foundry, ok) => rows.push({ check, wg, foundry, ok: ok ?? JSON.stringify(wg) === JSON.stringify(foundry) });
   row("level", plan.level, actor.level);
