@@ -217,6 +217,13 @@ async function resolveChoiceSet(rule, ownerName, ctx, { sourceUuid = null, flag 
 }
 
 /** Apply PF2e's character-sheet location for a WG feat-slot entry. */
+/** Apply WG's resolved class key ability to PF2e's class-item selection field. */
+export function applyKeyAbilityData(entry, data) {
+  if (entry.kind !== "class" || !entry.keyAbility || !data?.system?.keyAbility) return data;
+  data.system.keyAbility = { ...data.system.keyAbility, selected: entry.keyAbility };
+  return data;
+}
+
 export function applyFeatSlotData(entry, data) {
   if (entry.kind !== "feat" || !data?.system || data.type !== "feat") return data;
   const category = data.system.category;
@@ -316,6 +323,7 @@ async function itemDataFor(entry, folderId, ctx, notes) {
     if (entry.innate && entry.uses) loc.uses = { value: entry.uses, max: entry.uses };
     data.system.location = { ...(data.system.location ?? {}), ...loc };
   }
+  applyKeyAbilityData(entry, data);
   applyFeatSlotData(entry, data);
   if (["ancestry", "heritage", "background", "class", "feat"].includes(entry.kind)) await prefillChoices(data, ctx, notes, entry.name, entry.wgContentId);
   return data;
@@ -585,6 +593,7 @@ export async function planImport(exp, { host }) {
   const plan = buildPlan(exp);
   const index = await compendiumIndex();
   const matched = matchEntries(plan.entries, index);
+  for (const entry of matched) if (entry.kind === "class") entry.keyAbility = plan.keyAbility;
   coverFeatureGaps(matched, findActor(plan, host) ?? null);
   const misses = missReport(matched);
   const actor = findActor(plan, host) ?? null;
