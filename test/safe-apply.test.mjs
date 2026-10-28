@@ -17,7 +17,7 @@ test("managedTree: module items plus everything granted from them, nothing else"
   ];
   assert.deepEqual([...managedTree(items)].sort(), ["cls", "feat", "loc", "sub", "viaParent"]);
 });
-import { explicitGrants, sameThing, duplicateItemDiagnostics, focusResourcePatch, domainPromptWithoutDeity, allChoiceHints, uniqueChoice } from "../scripts/importer.js";
+import { explicitGrants, sameThing, duplicateItemDiagnostics, focusResourcePatch, domainPromptWithoutDeity, deityPromptChoice, allChoiceHints, uniqueChoice } from "../scripts/importer.js";
 test("dedupe: only explicit grants from this run's items, same compendium source", () => {
   const it = (id, type, name, src, extra = {}) => ({ id, type, name, _stats: { compendiumSource: src }, flags: extra.flags ?? {}, system: extra.system ?? {} });
   const items = [
@@ -71,6 +71,14 @@ test("focus resources initialize even when the export has no max HP", () => {
     "system.resources.focus.value": 1,
   });
   assert.equal(focusResourcePatch({ maxHp: 20 }, undefined, false), null);
+});
+
+test("a beliefs deity answers the cleric deity prompt when exactly one option matches", () => {
+  const choices = [{ label: "Aakriti" }, { label: "Sarenrae" }, { label: "Abadar" }];
+  assert.equal(deityPromptChoice({ title: "Deity (Cleric)", item: { name: "Deity (Cleric)" }, choices }, "Sarenrae"), 1);
+  assert.equal(deityPromptChoice({ title: "Deity (Cleric)", choices }, ""), null);
+  assert.equal(deityPromptChoice({ title: "Doctrine", choices }, "Sarenrae"), null);
+  assert.equal(deityPromptChoice({ title: "Deity (Cleric)", choices: [{ label: "Sarenrae" }, { label: "Sarenrae" }] }, "Sarenrae"), null);
 });
 
 test("domain prompts with no deity are closed instead of waited on", () => {
