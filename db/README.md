@@ -105,6 +105,7 @@ The database can decide that an action is eligible for review; Foundry remains t
 - `008_create_import_gap_rollup.sql`: best-log gaps, unresolved choices, and warnings by character and feature.
 - `009_class_rename_and_plan_batches.sql`: class-scoped renames, grant provenance, and dependency batches.
 - `010_seed_registry_lookup_rows.sql`: class identity lookups, shared selection policies, proposed spell-source rows, and narrow registry coverage cases.
+- `011_add_lightslayer_oath_mapping.sql`: maps WG Lightslayer Oath to PF2e Oath of the Slayer.
 
 ## Rename and plan functions
 
