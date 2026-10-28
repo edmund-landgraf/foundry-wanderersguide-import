@@ -17,7 +17,7 @@ test("managedTree: module items plus everything granted from them, nothing else"
   ];
   assert.deepEqual([...managedTree(items)].sort(), ["cls", "feat", "loc", "sub", "viaParent"]);
 });
-import { coverFeatureGaps, explicitGrants, sameThing, duplicateItemDiagnostics, focusResourcePatch, domainPromptWithoutDeity, deityPromptChoice, allChoiceHints, uniqueChoice } from "../scripts/importer.js";
+import { applyKeyAbilityData, coverFeatureGaps, explicitGrants, sameThing, duplicateItemDiagnostics, focusResourcePatch, domainPromptWithoutDeity, deityPromptChoice, allChoiceHints, uniqueChoice } from "../scripts/importer.js";
 test("dedupe: only explicit grants from this run's items, same compendium source", () => {
   const it = (id, type, name, src, extra = {}) => ({ id, type, name, _stats: { compendiumSource: src }, flags: extra.flags ?? {}, system: extra.system ?? {} });
   const items = [
@@ -64,6 +64,14 @@ test("duplicate diagnostics distinguish a PF2e grant pair from an unexplained du
 test("Exemplar inventory is scheduled before class grants", () => {
   const source = rf(new URL("../scripts/importer.js", import.meta.url));
   assert.match(source, /const order = \["ancestry", "heritage", "background", "equipment", "class", "feat", "spell"\]/);
+});
+
+test("WG key ability populates the PF2e class-item selection", () => {
+  const data = { system: { keyAbility: { value: [], selected: null } } };
+  applyKeyAbilityData({ kind: "class", keyAbility: "cha" }, data);
+  assert.deepEqual(data.system.keyAbility, { value: [], selected: "cha" });
+  applyKeyAbilityData({ kind: "feat", keyAbility: "str" }, data);
+  assert.equal(data.system.keyAbility.selected, "cha");
 });
 
 test("Spark Transcendence is covered by Divine Spark and Ikons without a homebrew copy", () => {
