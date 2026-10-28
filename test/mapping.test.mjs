@@ -297,6 +297,7 @@ test("re-import preserves live HP without exceeding the new maximum", async () =
   assert.equal(preservedCurrentHp({ currentHp: 40, maxHp: 40 }, 25, true), 25);
   assert.equal(preservedCurrentHp({ currentHp: 0, maxHp: 20 }, 20, true), 0);
   assert.equal(preservedCurrentHp(null, 20, false), 20);
+  assert.equal(preservedCurrentHp(undefined, 15, false), 15, "fresh imports initialize current HP to WG max");
 });
 
 test("captureRuntimeState records HP, temporary HP, and spell slot usage", async () => {

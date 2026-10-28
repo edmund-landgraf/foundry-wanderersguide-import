@@ -634,7 +634,11 @@ async function applyImport(p, { onStep, parity, failAfter }) {
         // Do this after the HP adjustment effect is embedded. PF2e prepares the
         // actor again when that effect is created, and a fresh actor otherwise
         // retains the system default current HP (the source of low fresh-import HP).
-        await actor.update(hpPatch, { diff: false, render: false });
+        // Use Foundry's normal nested update here. A forced full-diff update can
+        // leave a freshly prepared actor with its system-derived current HP
+        // instead of the WG value, while also making this write more sensitive
+        // to prepared-system changes.
+        await actor.update(hpPatch, { render: false });
       }
       if (plan.focusMax != null) {
         const focusValue = existing && runtime?.focus?.value != null
@@ -643,7 +647,7 @@ async function applyImport(p, { onStep, parity, failAfter }) {
         await actor.update({
           "system.resources.focus.max": Number(plan.focusMax),
           "system.resources.focus.value": focusValue,
-        }, { diff: false, render: false });
+        }, { render: false });
       }
     }
   } catch (err) {
