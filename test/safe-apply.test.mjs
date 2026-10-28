@@ -108,6 +108,11 @@ test("a beliefs deity answers the cleric deity prompt when exactly one option ma
   assert.equal(deityPromptChoice({ title: "Deity (Cleric)", choices: [{ label: "Sarenrae" }, { label: "Sarenrae" }] }, "Sarenrae"), null);
 });
 
+test("a different WG deity answers the Cleric deity prompt", () => {
+  const choices = [{ label: "Desna" }, { label: "Abadar" }, { label: "Sarenrae" }];
+  assert.equal(deityPromptChoice({ title: "Deity (Cleric)", choices }, "Desna"), 0);
+});
+
 test("domain prompts with no deity are closed instead of waited on", () => {
   assert.equal(domainPromptWithoutDeity({ title: "Domain Initiate", choices: [], item: { name: "Domain Initiate" } }), true);
   assert.equal(domainPromptWithoutDeity({ title: "Domain Focus", choices: [] }), true);
