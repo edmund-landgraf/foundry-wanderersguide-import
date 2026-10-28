@@ -17,7 +17,7 @@ test("managedTree: module items plus everything granted from them, nothing else"
   ];
   assert.deepEqual([...managedTree(items)].sort(), ["cls", "feat", "loc", "sub", "viaParent"]);
 });
-import { applyKeyAbilityData, coverFeatureGaps, explicitGrants, sameThing, duplicateItemDiagnostics, focusResourcePatch, domainPromptWithoutDeity, deityPromptChoice, allChoiceHints, uniqueChoice, dependencyOrder, dependsOnActor, reconcileRuntimeGrants } from "../scripts/importer.js";
+import { applyKeyAbilityData, coverFeatureGaps, explicitGrants, sameThing, duplicateItemDiagnostics, focusResourcePatch, domainPromptWithoutDeity, emptyChoicePrompt, deityPromptChoice, allChoiceHints, uniqueChoice, dependencyOrder, dependsOnActor, reconcileRuntimeGrants, exactSlugGrant, grantFixedChoice } from "../scripts/importer.js";
 test("dedupe: only explicit grants from this run's items, same compendium source", () => {
   const it = (id, type, name, src, extra = {}) => ({ id, type, name, _stats: { compendiumSource: src }, flags: extra.flags ?? {}, system: extra.system ?? {} });
   const items = [
@@ -63,6 +63,35 @@ test("runtime grants reconcile only unique evidence-backed aliases", () => {
     { item: { id: "flurry2", name: "Flurry" }, parent: { name: "Other" } },
   ]);
   assert.equal(ambiguous[0].unresolved, "no match", "ambiguous grants remain unresolved");
+});
+
+test("a Way-granted action covers the WG class feat of the same name", () => {
+  const grants = [
+    { item: { id: "a1", type: "action", name: "Covered Reload", system: { slug: "covered-reload" } }, parent: { name: "Way of the Sniper" } },
+    { item: { id: "a2", type: "action", name: "One Shot, One Kill" }, parent: { name: "Way of the Sniper" } },
+    { item: { id: "a3", type: "action", name: "Into the Fray" }, parent: { name: "Way of the Drifter" } },
+  ];
+  const covered = [{ kind: "feat", name: "Covered Reload", slug: "covered-reload", unresolved: "no unambiguous PF2e compendium match; left unresolved (no homebrew copy created)" }];
+  reconcileRuntimeGrants(covered, grants, [{ owner: "feat: Covered Reload" }]);
+  assert.equal(covered[0].coveredBy, "Covered Reload");
+  assert.equal(covered[0].grantedBy, "Way of the Sniper");
+  assert.equal(covered[0].unresolved, undefined);
+  const fray = { kind: "feat", name: "Into the Fray", slug: "into-the-fray", match: { uuid: "Compendium.pf2e.feats-srd.Item.QcyaUiea6fp8c17U", type: "feat" } };
+  assert.equal(exactSlugGrant(fray, grants).item.id, "a3");
+  assert.equal(exactSlugGrant(fray, [...grants, { item: { id: "a4", type: "feat", name: "Into the Fray" }, parent: { name: "Other" } }]), null);
+});
+
+test("an unanswered dragon choice is not a PF2e fixed choice", () => {
+  assert.equal(grantFixedChoice(["Diabolic"], [], "Dragon Instinct"), false);
+  assert.equal(grantFixedChoice(["Diabolic"], [{ dragonType: "diabolic" }], "Dragon Instinct"), false);
+  assert.equal(grantFixedChoice(["Diabolic"], ["adamantine"], "Dragon Instinct"), true);
+  assert.equal(grantFixedChoice(["Woodworking"], ["weaving"], "Specialty Crafting"), true);
+});
+
+test("any empty choice prompt is closed, including ones that are not domain prompts", () => {
+  assert.equal(emptyChoicePrompt({ title: "Cultural Adaptability", choices: [] }), true);
+  assert.equal(emptyChoicePrompt({ title: "Doctrine", choices: [{ label: "Cloistered Cleric" }] }), false);
+  assert.equal(domainPromptWithoutDeity({ title: "Cultural Adaptability", choices: [] }), false);
 });
 
 test("dependency order puts static GrantItem parents first", () => {

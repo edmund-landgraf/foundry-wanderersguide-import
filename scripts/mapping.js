@@ -40,6 +40,7 @@ export const WG_CANONICAL_ALIASES = [
   ["spell", "Telekinetic Projectile (Psi)", "Telekinetic Projectile"],
   ["feat", "Flurry Edge", "Flurry"],
   ["feat", "Precision Edge", "Precision"],
+  ["feat", "Lightslayer Oath", "Oath of the Slayer"],
 ];
 
 const ATTR_KEYS = { STR: "str", DEX: "dex", CON: "con", INT: "int", WIS: "wis", CHA: "cha" };
@@ -390,19 +391,31 @@ export function wgChoiceHints(exp) {
   };
   Object.defineProperty(out, "byId", { value: new Map(), enumerable: false });
   for (const o of owners) visit(o, o.operations);
+  // Adopted Ancestry stores the chosen ancestry as a trait id (all_traits meta_data.ancestry_trait).
+  // The select operation lives on the granted feat and is often absent from the export. Attach the
+  // trait name to the single feat whose id is a token of the key. Zero or several feat ids stay unnamed.
+  const ancestryTraits = new Map((exp?.content?.all_traits ?? []).filter((t) => t?.meta_data?.ancestry_trait && t.name).map((t) => [String(t.id), t.name]));
+  for (const [key, value] of Object.entries(sel)) {
+    const traitName = ancestryTraits.get(String(value));
+    if (!traitName) continue;
+    const tokens = new Set(key.split(/[_-]/));
+    const featOwners = [...byId.values()].filter((f) => tokens.has(String(f.id)));
+    if (featOwners.length === 1) push(featOwners[0], traitName, key);
+  }
   // Explicit picks the visitor cannot name itself (e.g. an ABILITY_BLOCK option that gives Plant Empathy),
   // named from the option's own giveAbilityBlock id (scripts/selections.js).
   for (const [k, x] of classifySelections(exp)) if (x.answer) push(x.answer.owner, x.answer.name, k);
   return out;
 }
 
-/** Index of the first label matching a hint name (exact slug, or "Polymath" vs "Polymath Muse"). */
+/** Index of the first label matching a hint name (exact slug, a single " Dragon" suffix, or "Polymath" vs "Polymath Muse"). */
 export function matchChoice(labels, hintNames) {
   const hints = hintNames.map((n) => sluggify(n)).filter(Boolean);
   for (const h of hints) {
     for (const [i, label] of labels.entries()) {
       const l = sluggify(label);
-      if (l && (h === l || h.startsWith(`${l}-`) || h.endsWith(`-${l}`) || l.endsWith(`-${h}`))) return i;
+      // "Diabolic" and "Diabolic Dragon" are the same PF2e dragon option. The extra word must be exactly Dragon.
+      if (l && (h === l || l === `${h}-dragon` || h === `${l}-dragon` || h.startsWith(`${l}-`) || h.endsWith(`-${l}`) || l.endsWith(`-${h}`))) return i;
     }
   }
   return -1;

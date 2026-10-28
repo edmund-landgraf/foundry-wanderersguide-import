@@ -272,6 +272,16 @@ test("WG issue aliases resolve only their evidence-backed canonical targets", ()
   }
 });
 
+test("Lightslayer Oath resolves to PF2e Oath of the Slayer", () => {
+  const [hit] = matchEntries(
+    [{ kind: "feat", packType: "feat", name: "Lightslayer Oath", slug: "lightslayer-oath", level: 2 }],
+    [{ type: "feat", slug: "oath-of-the-slayer", name: "Oath of the Slayer", level: 2, uuid: "oath-slayer" }],
+  );
+  assert.equal(hit.via, "catalog-alias");
+  assert.equal(hit.match.uuid, "oath-slayer");
+  assert.equal(hit.canonicalSlug, "oath-of-the-slayer");
+});
+
 test("semantic-name matching is confidence gated by type and level", () => {
   const entry = [{ kind: "feat", packType: "feat", name: "Liberation Cause", slug: "liberation-cause", level: 1 }];
   const index = [
