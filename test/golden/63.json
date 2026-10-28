@@ -148,19 +148,17 @@
     "level": 1,
     "featGroup": null,
     "sourcePath": "content.feats_features.otherFeats[0]"
-   },
-   {
-    "kind": "equipment",
-    "packType": "equipment",
-    "name": "Versatile Vial (Lesser)",
-    "slug": "versatile-vial-lesser",
-    "wgContentId": 15516,
-    "quantity": 1,
-    "equipped": true,
-    "runes": null,
-    "material": null,
-    "sourcePath": "content.inventory_flat[0]"
    }
+  ],
+  "skipped": [
+   {
+    "sourcePath": "content.inventory_flat[0]",
+    "name": "Versatile Vial (Lesser)",
+    "reason": "Versatile Vial (Lesser): WG-granted extra item; PF2e grants its own"
+   }
+  ],
+  "grantedExtras": [
+   "Versatile Vial (Lesser)"
   ]
  },
  "match": [
@@ -176,12 +174,10 @@
   "feat: Cat Fall -> Compendium.pf2e.feats-srd.Item.LQw0yIMDUJJkq1nD (slug)",
   "feat: Eye of the Arclords -> Compendium.pf2e.feats-srd.Item.OtV7esAwza1U6Kwr (slug)",
   "feat: Familiar Oddities -> Compendium.pf2e.feats-srd.Item.5f8gQxVdioUcgsTD (slug)",
-  "feat: Mutagenist Research Field -> MISS (miss)",
-  "equipment: Versatile Vial (Lesser) -> MISS (miss)"
+  "feat: Mutagenist Research Field -> MISS (miss)"
  ],
  "misses": [
-  "feat: Mutagenist Research Field",
-  "equipment: Versatile Vial (Lesser)"
+  "feat: Mutagenist Research Field"
  ],
  "choiceHints": {
   "research-field": [
@@ -209,8 +205,7 @@
     "feat: Cat Fall",
     "feat: Eye of the Arclords",
     "feat: Familiar Oddities",
-    "feat: Mutagenist Research Field",
-    "equipment: Versatile Vial (Lesser)"
+    "feat: Mutagenist Research Field"
    ],
    "remove": [],
    "keep": []
@@ -219,7 +214,9 @@
    "insert": false,
    "fields": [],
    "add": [],
-   "remove": [],
+   "remove": [
+    "equipment: Versatile Vial (Lesser)"
+   ],
    "keep": [
     "ancestry: Yaksha",
     "heritage: Respite of Loam and Leaf",
@@ -233,19 +230,18 @@
     "feat: Cat Fall",
     "feat: Eye of the Arclords",
     "feat: Familiar Oddities",
-    "feat: Mutagenist Research Field",
-    "equipment: Versatile Vial (Lesser)"
+    "feat: Mutagenist Research Field"
    ]
   },
-  "html": "<h3>WG preview: Ernmpo (Update)</h3><p>No field changes.</p><p>Add (0):</p><p>none</p><p>Remove (0):</p><p>none</p><p>Unchanged: 14. Would become homebrew: 2.</p>"
+  "html": "<h3>WG preview: Ernmpo (Update)</h3><p>No field changes.</p><p>Add (0):</p><p>none</p><p>Remove (1):</p><ul><li>equipment: Versatile Vial (Lesser)</li></ul><p>Unchanged: 13. Would become homebrew: 1.</p>"
  },
  "coverage": {
   "counts": {
-   "mapped": 26,
+   "mapped": 25,
    "included": 24,
    "unresolved": 0,
    "leftover-preserved": 20,
-   "dropped": 33
+   "dropped": 34
   },
   "unresolved": [],
   "dropped": [
@@ -343,6 +339,11 @@
     "path": "content.weapons",
     "status": "dropped",
     "reason": "derived by WG; PF2e recomputes it"
+   },
+   {
+    "path": "content.inventory_flat[0]",
+    "status": "dropped",
+    "reason": "Versatile Vial (Lesser): WG-granted extra item; PF2e grants its own"
    },
    {
     "path": "content.inventory_flat[1]",

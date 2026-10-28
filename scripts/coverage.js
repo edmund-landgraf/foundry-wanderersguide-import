@@ -110,7 +110,7 @@ export function auditImportCoverage(exp, plan, { applied = false, grantedSlugs =
         const fp = `${path}[${i}]`;
         const e = byPath.get(fp);
         if (e) entryRow(fp, e);
-        else if (k === "inventory_flat") add(fp, "dropped", "built-in strike (fist), not an item");
+        else if (k === "inventory_flat") { const sk = (plan.skipped ?? []).find((s) => s.sourcePath === fp); add(fp, "dropped", sk ? sk.reason : "built-in strike (fist), not an item"); }
         else add(fp, "dropped", "duplicate of another spell entry (same id and rank)");
       });
     } else if (DERIVED.has(k)) add(path, "dropped", "derived by WG; PF2e recomputes it");
