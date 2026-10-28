@@ -40,6 +40,7 @@ export const WG_CANONICAL_ALIASES = [
   ["spell", "Telekinetic Projectile (Psi)", "Telekinetic Projectile"],
   ["feat", "Flurry Edge", "Flurry"],
   ["feat", "Precision Edge", "Precision"],
+  ["feat", "Lightslayer Oath", "Oath of the Slayer"],
 ];
 
 const ATTR_KEYS = { STR: "str", DEX: "dex", CON: "con", INT: "int", WIS: "wis", CHA: "cha" };
