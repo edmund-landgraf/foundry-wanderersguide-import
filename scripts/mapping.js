@@ -120,7 +120,9 @@ export function matchEntries(entries, index) {
     const n = k + String(row.name).toLowerCase();
     (byName.get(n) ?? byName.set(n, []).get(n)).push(row);
   }
-  const typesFor = (pt) => (pt === "equipment" ? ["weapon", "armor", "shield", "equipment", "consumable", "treasure", "backpack", "kit"] : [pt]);
+  const typesFor = (pt) => pt === "equipment"
+    ? ["weapon", "armor", "shield", "equipment", "consumable", "treasure", "backpack", "kit"]
+    : pt === "feat" ? ["feat", "action"] : [pt];
   return entries.map((e) => {
     for (const t of typesFor(e.packType)) {
       const hit = bySlug.get(`${t}:${e.slug}`);

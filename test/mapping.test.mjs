@@ -59,6 +59,13 @@ test("matchEntries slug -> name -> miss", () => {
   assert.deepEqual(missReport(m), ["feat: Stormwarden Dedication", "equipment: Stormforge Covenant Blade"]);
 });
 
+test("feat entries can match PF2e action documents", () => {
+  const fixture = JSON.parse(readFileSync(new URL("./fixtures/pcs/81.json", import.meta.url)));
+  const entry = buildPlan(fixture).entries.find((e) => e.name === "Consume Thrall");
+  const [hit] = matchEntries([entry], [{ type: "action", slug: "consume-thrall", name: "Consume Thrall" }]);
+  assert.equal(hit.match.type, "action");
+});
+
 test("summarizeCharacters reads wgui-ext rows", () => {
   const s = summarizeCharacters([{ id: 1, name: "A", level: 2, class: "Bard", ancestry: "Gnome", campaign_id: 7, image_url: "u", updated_at: "t" }]);
   assert.deepEqual(s[0], { id: 1, name: "A", level: 2, ancestry: "Gnome", class: "Bard", campaignId: 7, imageUrl: "u", updatedAt: "t", player: null });
