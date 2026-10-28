@@ -101,21 +101,26 @@ export function choiceContext(exp, plan, index, actor) {
   const used = new Set();
   const markUsed = (owner) => { for (const k of hints.keys?.get(sluggify(owner)) ?? []) used.add(k); };
   const assigned = new Map();
-  const specific = (owner) => hints.get(sluggify(owner)) ?? [];
-  const consume = (owner, hint) => {
-    const key = sluggify(owner);
+  const hintKey = (owner, ownerWgId) => ownerWgId != null && hints.byId?.has(String(ownerWgId))
+    ? `id:${ownerWgId}`
+    : `name:${sluggify(owner)}`;
+  const specific = (owner, ownerWgId = null) => ownerWgId != null && hints.byId?.has(String(ownerWgId))
+    ? hints.byId.get(String(ownerWgId))
+    : hints.get(sluggify(owner)) ?? [];
+  const consume = (owner, hint, ownerWgId = null) => {
+    const key = hintKey(owner, ownerWgId);
     const set = assigned.get(key) ?? new Set();
     set.add(sluggify(hint));
     assigned.set(key, set);
   };
-  const pick = (owner, labels) => {
-    const alreadyUsed = assigned.get(sluggify(owner)) ?? new Set();
-    const candidate = specific(owner)
+  const pick = (owner, labels, ownerWgId = null) => {
+    const alreadyUsed = assigned.get(hintKey(owner, ownerWgId)) ?? new Set();
+    const candidate = specific(owner, ownerWgId)
       .filter((hint) => !alreadyUsed.has(sluggify(hint)))
       .map((hint) => ({ hint, index: matchChoice(labels, [hint]) }))
       .find((x) => x.index >= 0);
     if (!candidate) return null;
-    consume(owner, candidate.hint);
+    consume(owner, candidate.hint, ownerWgId);
     return candidate.index;
   };
   return { hints, fixedNames, index, uuidName, previous, used, markUsed, conflicts: new Map(), unresolved: [], specific, consume, pick, assigned };
@@ -149,8 +154,8 @@ async function filterAccepts(c, uuid) {
   return tags.every((x) => (t.otherTags ?? []).includes(x)) && traits.every((x) => (t.value ?? []).includes(x));
 }
 
-async function resolveChoiceSet(rule, ownerName, ctx, { sourceUuid = null, flag = null } = {}) {
-  const specific = ctx.specific(ownerName);
+async function resolveChoiceSet(rule, ownerName, ctx, { sourceUuid = null, flag = null, ownerWgId = null } = {}) {
+  const specific = ctx.specific(ownerName, ownerWgId);
   const prev = sourceUuid && flag ? ctx.previous.get(sourceUuid)?.[flag] : undefined;
   const c = rule.choices;
   if (Array.isArray(c)) {
@@ -160,8 +165,8 @@ async function resolveChoiceSet(rule, ownerName, ctx, { sourceUuid = null, flag 
       return { value, label: typeof value === "string" && ctx.uuidName.has(value) ? ctx.uuidName.get(value) : label };
     });
     if (specific.length) {
-      let i = ctx.pick(ownerName, opts.map((o) => o.label));
-      if (i == null) i = ctx.pick(ownerName, opts.map((o) => String(o.value)));
+      let i = ctx.pick(ownerName, opts.map((o) => o.label), ownerWgId);
+      if (i == null) i = ctx.pick(ownerName, opts.map((o) => String(o.value)), ownerWgId);
       if (i != null) return { value: opts[i].value, label: opts[i].label, via: "WG selection" };
     }
     // Some WG grants are fixed physical features rather than select answers.
@@ -209,7 +214,7 @@ export function applyFeatSlotData(entry, data) {
   return data;
 }
 
-async function prefillChoices(data, ctx, notes, sourceName = null) {
+async function prefillChoices(data, ctx, notes, sourceName = null, sourceWgId = null) {
   const rules = data.system?.rules;
   if (!Array.isArray(rules)) return;
   const src = data._stats?.compendiumSource ?? data.flags?.core?.sourceId ?? null;
@@ -224,8 +229,8 @@ async function prefillChoices(data, ctx, notes, sourceName = null) {
       const flag = rule.flag ?? defaultFlag(data.name);
       let hit = null;
       let owner = data.name;
-      for (const candidate of owners) {
-        hit = await resolveChoiceSet(rule, candidate, ctx, { sourceUuid: src, flag });
+      for (const [candidateIndex, candidate] of owners.entries()) {
+        hit = await resolveChoiceSet(rule, candidate, ctx, { sourceUuid: src, flag, ownerWgId: candidateIndex === 0 ? sourceWgId : null });
         if (hit) { owner = candidate; break; }
       }
       if (!hit) { ctx.unresolved.push({ owner: data.name, flag, reason: "no explicit WG answer matching exactly one legal option; PF2e will ask" }); continue; }
@@ -239,7 +244,7 @@ async function prefillChoices(data, ctx, notes, sourceName = null) {
         if (gr?.key !== "ChoiceSet" || gr.selection != null) continue;
         const flag = gr.flag ?? defaultFlag(granted.name);
         if (rule.preselectChoices?.[flag] != null) continue;
-        const hit = await resolveChoiceSet(gr, granted.name, ctx, { sourceUuid: rule.uuid, flag });
+        const hit = await resolveChoiceSet(gr, granted.name, ctx, { sourceUuid: rule.uuid, flag, ownerWgId: sourceWgId });
         if (!hit) { ctx.unresolved.push({ owner: granted.name, flag, reason: `granted by ${data.name}; no explicit WG answer; PF2e will ask` }); continue; }
         rule.preselectChoices = { ...(rule.preselectChoices ?? {}), [flag]: hit.value };
         if (hit.via === "WG selection") ctx.markUsed(granted.name);
@@ -290,7 +295,7 @@ async function itemDataFor(entry, folderId, ctx, notes) {
     data.system.location = { ...(data.system.location ?? {}), ...loc };
   }
   applyFeatSlotData(entry, data);
-  if (["ancestry", "heritage", "background", "class", "feat"].includes(entry.kind)) await prefillChoices(data, ctx, notes, entry.name);
+  if (["ancestry", "heritage", "background", "class", "feat"].includes(entry.kind)) await prefillChoices(data, ctx, notes, entry.name, entry.wgContentId);
   return data;
 }
 
@@ -307,8 +312,9 @@ function watchPrompts(ctx, notes) {
       seen.add(app);
       const labels = app.choices.map((c) => c.label ?? "");
       const owner = app.item?.name ?? app.options?.item?.name ?? "";
-      const specific = ctx.specific(owner);
-      let i = specific.length ? ctx.pick(owner, labels) : null;
+      const ownerWgId = app.item?.flags?.[MODULE_ID]?.wgContentId ?? null;
+      const specific = ctx.specific(owner, ownerWgId);
+      let i = specific.length ? ctx.pick(owner, labels, ownerWgId) : null;
       let via = "WG selection";
       if (i == null) {
         const src = app.item?._stats?.compendiumSource ?? app.item?.sourceId ?? null;

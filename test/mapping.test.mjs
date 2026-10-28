@@ -262,7 +262,33 @@ test("wgChoiceHints reads WG select answers per feature", () => {
   const h = wgChoiceHints(exp2);
   assert.deepEqual(h.get("specialty-crafting"), ["Woodworking"]);
   assert.deepEqual(h.get("muses"), ["Polymath Muse"]);
+  assert.deepEqual(h.byId.get("1"), ["Woodworking"]);
+  assert.deepEqual(h.byId.get("2"), ["Polymath Muse"]);
   assert.deepEqual(wgChoiceHints(real).get("muses"), ["Polymath Muse"]);
+});
+
+test("wgChoiceHints keeps stable owner IDs separate when display names repeat", () => {
+  const exp2 = { character: { operation_data: { selections: { "class-feature-1_op-a": "opt-1", "class-feature-2_op-b": "opt-2" } }, details: {} },
+    content: { feats_features: { classFeatures: [
+      { id: 1, name: "Shared Feature", operations: [{ id: "op-a", type: "select", data: { optionsPredefined: [{ id: "opt-1", title: "First" }] } }] },
+      { id: 2, name: "Shared Feature", operations: [{ id: "op-b", type: "select", data: { optionsPredefined: [{ id: "opt-2", title: "Second" }] } }] },
+    ] } } };
+  const h = wgChoiceHints(exp2);
+  assert.deepEqual(h.get("shared-feature"), ["First", "Second"]);
+  assert.deepEqual(h.byId.get("1"), ["First"]);
+  assert.deepEqual(h.byId.get("2"), ["Second"]);
+});
+
+test("choiceContext prefers the WG owner ID over a duplicate display name", async () => {
+  const exp2 = { character: { operation_data: { selections: { "class-feature-1_op-a": "opt-1", "class-feature-2_op-b": "opt-2" } }, details: {} },
+    content: { feats_features: { classFeatures: [
+      { id: 1, name: "Shared Feature", operations: [{ id: "op-a", type: "select", data: { optionsPredefined: [{ id: "opt-1", title: "First" }] } }] },
+      { id: 2, name: "Shared Feature", operations: [{ id: "op-b", type: "select", data: { optionsPredefined: [{ id: "opt-2", title: "Second" }] } }] },
+    ] } } };
+  const { choiceContext } = await import("../scripts/importer.js");
+  const ctx = choiceContext(exp2, {}, [], null);
+  assert.deepEqual(ctx.specific("Shared Feature", 1), ["First"]);
+  assert.deepEqual(ctx.specific("Shared Feature", 2), ["Second"]);
 });
 
 test("wgChoiceHints names selected skill adjValue options", () => {
