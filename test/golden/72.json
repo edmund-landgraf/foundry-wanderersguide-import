@@ -186,6 +186,9 @@
  "choiceHints": {
   "research-field": [
    "Mutagenist Research Field"
+  ],
+  "deckhand": [
+   "Str"
   ]
  },
  "spellcasting": [],

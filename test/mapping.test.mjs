@@ -66,6 +66,12 @@ test("feat entries can match PF2e action documents", () => {
   assert.equal(hit.match.type, "action");
 });
 
+test("WG skill selections are available as ChoiceSet hints", async () => {
+  const fixture = JSON.parse(readFileSync(new URL("./fixtures/pcs/81.json", import.meta.url)));
+  const hints = (await import("../scripts/mapping.js")).wgChoiceHints(fixture);
+  assert.ok(hints.get("scholar")?.includes("Occultism"));
+});
+
 test("summarizeCharacters reads wgui-ext rows", () => {
   const s = summarizeCharacters([{ id: 1, name: "A", level: 2, class: "Bard", ancestry: "Gnome", campaign_id: 7, image_url: "u", updated_at: "t" }]);
   assert.deepEqual(s[0], { id: 1, name: "A", level: 2, ancestry: "Gnome", class: "Bard", campaignId: 7, imageUrl: "u", updatedAt: "t", player: null });

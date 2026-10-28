@@ -197,7 +197,10 @@ export function wgChoiceHints(exp) {
         const key = keys.find((k) => k.endsWith(`_${op.id}`));
         const v = key ? sel[key] : null;
         if (v != null) {
-          const pre = (op.data?.optionsPredefined ?? []).find((o) => o.id === v);
+          // WGUI has emitted both the predefined option id and the nested
+          // operation id over time. Treat either representation as the same
+          // selected option so background/class skill choices are not lost.
+          const pre = (op.data?.optionsPredefined ?? []).find((o) => String(o.id) === String(v) || String(o.operation?.id) === String(v));
           const operation = pre?.operation ?? null;
           const variable = operation?.type === "adjValue" ? operation.data?.variable : null;
           const variableName = variable
