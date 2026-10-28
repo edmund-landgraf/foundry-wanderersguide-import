@@ -14,6 +14,15 @@ Status: open. Tested 2026-10-27 on local WGUI (localhost) and the local Foundry 
 
 Str +0, Dex +2, Con +0, Int +1, Wis +1, Cha +3. HP 16, AC 15, Perception +4, Fort +5 (expert), Ref +5, Will +6 (expert), spell DC 16 (primal, Cha). Focus: Boost Eidolon, Evolution Surge. Innate: Shield. Slots: 5 cantrips, 1 rank-1.
 
+## Live export recheck (2026-10-28)
+
+The local `wgui-export-character` API was queried again after the importer fixes. It confirms the source values rather than an importer-calculated mismatch:
+
+- `ATTRIBUTE_CON` is `0` and `content.max_hp` is `16`, even though the saved selections include `ATTRIBUTE_CON` as a free boost. Tracked in [WandersGuideUI #16](https://github.com/edmund-landgraf/WandersGuideUI/issues/16).
+- `content.spell_slots` contains five rank-0 SUMMONER slots and one rank-1 SUMMONER slot. Tracked in [WandersGuideUI #17](https://github.com/edmund-landgraf/WandersGuideUI/issues/17); the correct rules verdict is still pending.
+- `SAVE_FORT` is expert, so the corresponding Necromancer Fortitude concern is not evidence of an importer defect.
+- The export has a PC-side `Fey Eidolon` feature but `companions` is still null; a linked eidolon cannot be imported until WGUI exports a companion/eidolon block.
+
 ## Foundry import
 
 13 matched, 0 missed, 0 unresolved. HP, AC and saves match WG. The Eidolon and Evolution Feat prompts were answered from the WG selections. Re-imports came out identical. Skill selections were dropped (by design).
