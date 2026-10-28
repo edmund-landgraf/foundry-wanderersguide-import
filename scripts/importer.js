@@ -209,17 +209,28 @@ export function applyFeatSlotData(entry, data) {
   return data;
 }
 
-async function prefillChoices(data, ctx, notes) {
+async function prefillChoices(data, ctx, notes, sourceName = null) {
   const rules = data.system?.rules;
   if (!Array.isArray(rules)) return;
   const src = data._stats?.compendiumSource ?? data.flags?.core?.sourceId ?? null;
+  // A WG feature can have a descriptive display name while the PF2e
+  // compendium uses a canonical name (for example "Redemption Cause" ->
+  // "Redemption"). Try the WG entry name first so its explicit answer is
+  // still consumed after canonical matching, then fall back to the document
+  // name for normal imports and prior Foundry selections.
+  const owners = [...new Set([sourceName, data.name].filter(Boolean))];
   for (const rule of rules) {
     if (rule?.key === "ChoiceSet" && rule.selection == null) {
       const flag = rule.flag ?? defaultFlag(data.name);
-      const hit = await resolveChoiceSet(rule, data.name, ctx, { sourceUuid: src, flag });
+      let hit = null;
+      let owner = data.name;
+      for (const candidate of owners) {
+        hit = await resolveChoiceSet(rule, candidate, ctx, { sourceUuid: src, flag });
+        if (hit) { owner = candidate; break; }
+      }
       if (!hit) { ctx.unresolved.push({ owner: data.name, flag, reason: "no explicit WG answer matching exactly one legal option; PF2e will ask" }); continue; }
       rule.selection = hit.value;
-      if (hit.via === "WG selection") ctx.markUsed(data.name);
+      if (hit.via === "WG selection") ctx.markUsed(owner);
       foundry.utils.setProperty(data, `flags.pf2e.rulesSelections.${flag}`, hit.value);
       notes.push(`choice ${data.name}: ${hit.label} (pre-filled from ${hit.via})`);
     } else if (rule?.key === "GrantItem" && typeof rule.uuid === "string" && rule.uuid.startsWith("Compendium.")) {
@@ -279,7 +290,7 @@ async function itemDataFor(entry, folderId, ctx, notes) {
     data.system.location = { ...(data.system.location ?? {}), ...loc };
   }
   applyFeatSlotData(entry, data);
-  if (["ancestry", "heritage", "background", "class", "feat"].includes(entry.kind)) await prefillChoices(data, ctx, notes);
+  if (["ancestry", "heritage", "background", "class", "feat"].includes(entry.kind)) await prefillChoices(data, ctx, notes, entry.name);
   return data;
 }
 
