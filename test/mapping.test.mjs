@@ -279,6 +279,19 @@ test("wgChoiceHints keeps stable owner IDs separate when display names repeat", 
   assert.deepEqual(h.byId.get("2"), ["Second"]);
 });
 
+test("choiceContext marks applied labels as consumed coverage selections", () => {
+  const exp2 = {
+    character: { operation_data: { selections: { "class-feature-1_op-a": "opt-1" } }, details: {} },
+    content: { feats_features: { classFeatures: [{
+      id: 1, name: "Domains",
+      operations: [{ id: "op-a", type: "select", data: { optionsPredefined: [{ id: "opt-1", title: "Luck" }] } }],
+    }] } },
+  };
+  const ctx = choiceContext(exp2, {}, [], null);
+  ctx.markHintUsed("Luck");
+  assert.ok(ctx.used.has("class-feature-1_op-a"));
+});
+
 test("choiceContext prefers the WG owner ID over a duplicate display name", async () => {
   const exp2 = { character: { operation_data: { selections: { "class-feature-1_op-a": "opt-1", "class-feature-2_op-b": "opt-2" } }, details: {} },
     content: { feats_features: { classFeatures: [
