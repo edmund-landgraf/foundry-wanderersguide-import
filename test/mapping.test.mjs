@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { buildPlan, matchEntries, missReport, sluggify } from "../scripts/mapping.js";
-import { applyFeatSlotData } from "../scripts/importer.js";
+import { applyFeatSlotData, choiceContext } from "../scripts/importer.js";
 import { summarizeCharacters, callFunction, parseClientId, resolveFunctionsUrl, listCharacters, listCampaigns, getCampaign, campaignLabel, friendlyError } from "../scripts/api.js";
 
 const exp = JSON.parse(readFileSync(new URL("./fixtures/sample-v4.json", import.meta.url)));
@@ -70,6 +70,34 @@ test("WG skill selections are available as ChoiceSet hints", async () => {
   const fixture = JSON.parse(readFileSync(new URL("./fixtures/pcs/81.json", import.meta.url)));
   const hints = (await import("../scripts/mapping.js")).wgChoiceHints(fixture);
   assert.ok(hints.get("scholar")?.includes("Occultism"));
+});
+
+test("repeated Exemplar ikon prompts consume distinct WG answers", () => {
+  const operations = ["a", "b", "c"].map((id) => ({
+    id,
+    type: "select",
+    data: { optionsPredefined: [
+      { id: `${id}-1`, title: "Gleaming Blade" },
+      { id: `${id}-2`, title: "Skin Hard as Horn" },
+      { id: `${id}-3`, title: "Victor's Wreath" },
+    ] },
+  }));
+  const exp = {
+    character: {
+      operation_data: { selections: {
+        class_a: "a-1",
+        class_b: "b-2",
+        class_c: "c-3",
+      } },
+      details: { class: { name: "Exemplar", operations } },
+    },
+    content: { feats_features: { classFeatures: [{ name: "Exemplar", operations }] } },
+  };
+  const ctx = choiceContext(exp, {}, [], null);
+  assert.equal(ctx.pick("Exemplar", ["Gleaming Blade", "Skin Hard as Horn", "Victor's Wreath"]), 0);
+  assert.equal(ctx.pick("Exemplar", ["Gleaming Blade", "Skin Hard as Horn", "Victor's Wreath"]), 1);
+  assert.equal(ctx.pick("Exemplar", ["Gleaming Blade", "Skin Hard as Horn", "Victor's Wreath"]), 2);
+  assert.equal(ctx.pick("Exemplar", ["Gleaming Blade", "Skin Hard as Horn", "Victor's Wreath"]), null);
 });
 
 test("summarizeCharacters reads wgui-ext rows", () => {

@@ -82,7 +82,7 @@ async function restoreSpellcastingState(actor, state) {
 //   2. on re-import, the selection already stored on the actor for the same compendium item, if still legal.
 // Nothing is guessed from other names and the first option is never taken. Anything left open is
 // recorded as unresolved and PF2e's own prompt is shown to the user (AMBA_REUSE_PLAN section 3).
-function choiceContext(exp, plan, index, actor) {
+export function choiceContext(exp, plan, index, actor) {
   const hints = wgChoiceHints(exp);
   const uuidName = new Map(index.map((r) => [r.uuid, r.name]));
   const previous = new Map();
