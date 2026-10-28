@@ -62,7 +62,7 @@ export function buildPlan(exp) {
     const key = `${s.id}:${s.rank}`;
     if (seenSpells.has(key)) continue;
     seenSpells.add(key);
-    add("spell", "spell", s.name, { wgContentId: s.id, rank: s.rank, castingSource: s.casting_source, focus: focusIds.has(s.id) && !(ct.spells?.all ?? []).some((x) => x.id === s.id), sourcePath });
+    add("spell", "spell", s.name, { wgContentId: s.id, rank: s.rank, castingSource: spellListSource(s.casting_source), focus: focusIds.has(s.id) && !(ct.spells?.all ?? []).some((x) => x.id === s.id), sourcePath });
   }
   // Prepared casters: WG keeps the day's preparation in content.spell_slots (spell_id plus the spell
   // record), not in content.spells.all. Each prepared slot becomes a spell on its source's entry.

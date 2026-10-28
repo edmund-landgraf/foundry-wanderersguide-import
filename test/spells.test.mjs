@@ -89,7 +89,7 @@ test("cleric divine font Heal slots are prepared on the cleric entry", () => {
         { source: "CLERIC_DIVINE_FONT", rank: 1, spell_id: 2, spell: { id: 2, name: "Heal" } },
         { source: "CLERIC_DIVINE_FONT", rank: 1, spell_id: 2, spell: { id: 2, name: "Heal" } },
       ],
-      spells: { all: [] },
+      spells: { all: [{ id: 2, name: "Heal", rank: 1, casting_source: "CLERIC_DIVINE_FONT" }] },
       focus_spells: [],
       innate_spells: [],
     },
@@ -99,9 +99,10 @@ test("cleric divine font Heal slots are prepared on the cleric entry", () => {
   const entries = spellcastingPlan(cleric);
   assert.equal(entries.some((e) => e.source === "CLERIC_DIVINE_FONT"), false);
   assert.deepEqual(entries.find((e) => e.source === "CLERIC").slots, { 1: 5 });
-  const heal = spellsOf(plan).find((e) => e.name === "Heal");
-  assert.equal(heal.castingSource, "CLERIC");
-  assert.equal(heal.prepared, 4);
+  const heals = spellsOf(plan).filter((e) => e.name === "Heal");
+  assert.equal(heals.length, 1);
+  assert.equal(heals[0].castingSource, "CLERIC");
+  assert.equal(heals[0].prepared, 4);
   assert.ok(placed(plan).includes("Bless|1|src:CLERIC|prepared 1"));
 });
 

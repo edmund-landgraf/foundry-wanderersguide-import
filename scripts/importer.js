@@ -348,7 +348,7 @@ function watchPrompts(ctx, notes) {
       if (domainPromptWithoutDeity(app)) {
         if (!domainWarned) {
           domainWarned = true;
-          const named = ctx.specific(owner)[0] ?? ctx.specific("Domain")[0] ?? null;
+          const named = ctx.specific(owner)[0] ?? ctx.specific("Domain")[0] ?? ctx.specific("domains")[0] ?? null;
           ctx.unresolved.push({ owner: owner || app.title, flag: null, reason: named ? `WG chose ${named}; no deity imported, so this prompt has no options` : "no deity imported; domain prompt has no options" });
           ui.notifications?.warn?.(`Wanderer's Guide import: ${app.title || "domain choice"} has no options without a deity; left unresolved`);
         }
