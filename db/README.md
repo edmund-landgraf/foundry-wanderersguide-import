@@ -106,6 +106,8 @@ The database can decide that an action is eligible for review; Foundry remains t
 - `009_class_rename_and_plan_batches.sql`: class-scoped renames, grant provenance, and dependency batches.
 - `010_seed_registry_lookup_rows.sql`: class identity lookups, shared selection policies, proposed spell-source rows, and narrow registry coverage cases.
 - `011_add_lightslayer_oath_mapping.sql`: maps WG Lightslayer Oath to PF2e Oath of the Slayer.
+- `024_create_wg_source_entity_snapshot.sql`: preserves non-keyword WG entities and their native relationship inventory for offline matching.
+- `025_seed_exact_wg_class_sources.sql`: records exact WG class IDs against the 29 PF2e class identities; unmatched WG class rows remain unresolved.
 
 ## Rename and plan functions
 

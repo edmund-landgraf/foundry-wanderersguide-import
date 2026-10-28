@@ -5,7 +5,7 @@ INSERT INTO compendium_match_aliases
    target_slug, match_strategy, rename_via, priority, status, evidence_ref, notes)
 SELECT v.*
 FROM (VALUES
-  ('pf2e-remaster', NULL, 'feat', 'Lightslayer Oath', 'Oath of the Slayer',
+  ('pf2e-remaster', NULL::text, 'feat', 'Lightslayer Oath', 'Oath of the Slayer',
    'lightslayer-oath', 'oath-of-the-slayer', 'canonical', 'class-rename',
    100, 'active', 'user-provided Foundry/WG comparison',
    'Multiple WG names may map to the same PF2e canonical item; this alias is exact and not fuzzy.')

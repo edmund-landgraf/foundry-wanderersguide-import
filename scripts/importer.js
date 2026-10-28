@@ -137,11 +137,14 @@ export function choiceContext(exp, plan, index, actor) {
   };
   const pick = (owner, labels, ownerWgId = null) => {
     const alreadyUsed = assigned.get(hintKey(owner, ownerWgId)) ?? new Set();
-    const candidate = specific(owner, ownerWgId)
-      .filter((hint) => !alreadyUsed.has(sluggify(hint)))
-      .map((hint) => ({ hint, index: matchChoice(labels, [hint]) }))
+    const available = specific(owner, ownerWgId).filter((hint) => !alreadyUsed.has(sluggify(hint)));
+    // Exact labels are considered before prefix matches, so "Halfling Luck" cannot select Halfling
+    // while "Human" is also an answer. The first still-unused exact answer is the one consumed.
+    const exact = available
+      .map((hint) => ({ hint, index: labels.findIndex((label) => sluggify(label) === sluggify(hint)) }))
       .find((x) => x.index >= 0);
-    if (!candidate) return null;
+    const candidate = exact ?? available.map((hint) => ({ hint, index: matchChoice(labels, [hint]) })).find((x) => x.index >= 0);
+    if (!candidate?.hint) return null;
     consume(owner, candidate.hint, ownerWgId);
     return candidate.index;
   };
@@ -376,7 +379,12 @@ export function deityPromptChoice(app, beliefs) {
 
 export function domainPromptWithoutDeity(app) {
   const title = `${app?.title ?? ""} ${app?.item?.name ?? ""}`;
-  return DOMAIN_PROMPT.test(title) && Array.isArray(app?.choices) && app.choices.length === 0;
+  return DOMAIN_PROMPT.test(title) && emptyChoicePrompt(app);
+}
+
+/** A rendered PF2e ChoiceSet with nothing to pick. Closing it is the only way the import can continue. */
+export function emptyChoicePrompt(app) {
+  return Array.isArray(app?.choices) && app.choices.length === 0;
 }
 
 /** Every explicit WG answer, used when the prompt's item name is not the selection owner. */
@@ -394,19 +402,27 @@ function watchPrompts(ctx, notes) {
       if (!Array.isArray(app.choices) || !app.rendered) continue;
       const labels = app.choices.map((c) => c.label ?? "");
       const signature = `${app.title ?? ""}|${app.item?.name ?? ""}|${labels.join("|")}`;
-      if (seen.has(signature)) continue;
-      seen.add(signature);
       const owner = app.item?.name ?? app.options?.item?.name ?? "";
-      if (domainPromptWithoutDeity(app)) {
-        if (!domainWarned) {
-          domainWarned = true;
-          const named = ctx.specific(owner)[0] ?? ctx.specific("Domain")[0] ?? ctx.specific("domains")[0] ?? null;
-          ctx.unresolved.push({ owner: owner || app.title, flag: null, reason: named ? `WG chose ${named}; no deity imported, so this prompt has no options` : "no deity imported; domain prompt has no options" });
-          ui.notifications?.warn?.(`Wanderer's Guide import: ${app.title || "domain choice"} has no options without a deity; left unresolved`);
+      if (emptyChoicePrompt(app)) {
+        if (!seen.has(signature)) {
+          seen.add(signature);
+          if (domainPromptWithoutDeity(app)) {
+            if (!domainWarned) {
+              domainWarned = true;
+              const named = ctx.specific(owner)[0] ?? ctx.specific("Domain")[0] ?? ctx.specific("domains")[0] ?? null;
+              ctx.unresolved.push({ owner: owner || app.title, flag: null, reason: named ? `WG chose ${named}; no deity imported, so this prompt has no options` : "no deity imported; domain prompt has no options" });
+              ui.notifications?.warn?.(`Wanderer's Guide import: ${app.title || "domain choice"} has no options without a deity; left unresolved`);
+            }
+          } else {
+            ctx.unresolved.push({ owner: owner || app.title, flag: null, reason: "PF2e choice prompt has no options; left unresolved" });
+            ui.notifications?.warn?.(`Wanderer's Guide import: ${app.title || owner || "choice"} has no options; left unresolved`);
+          }
         }
         app.close?.();
         continue;
       }
+      if (seen.has(signature)) continue;
+      seen.add(signature);
       const ownerWgId = app.item?.flags?.[MODULE_ID]?.wgContentId ?? null;
       const specific = ctx.specific(owner, ownerWgId);
       let i = specific.length ? ctx.pick(owner, labels, ownerWgId) : null;
@@ -585,10 +601,38 @@ export function runtimeGrantMatch(entry, grants) {
   return hits.length === 1 ? hits[0] : null;
 }
 
+/** The one feat or action PF2e already granted under this entry's exact slug, if there is exactly one. */
+export function exactSlugGrant(entry, grants) {
+  if (entry.kind !== "feat") return null;
+  const hits = grants.filter(({ item }) => {
+    if (!["feat", "action"].includes(item.type)) return false;
+    return (item.system?.slug || sluggify(item.name)) === entry.slug;
+  });
+  return hits.length === 1 ? hits[0] : null;
+}
+
+/** True when a grant selected something other than WG's answer. An empty selection did not fix the choice. */
+export function grantFixedChoice(hints, selections, itemName) {
+  if (!hints?.length || !selections?.length) return false;
+  const matched = hints.some((hint) => selections.some((value) => selectionMatchesHint(value, hint)) || sluggify(itemName).includes(sluggify(hint)));
+  return !matched;
+}
+
+function selectionMatchesHint(value, hint) {
+  const wanted = sluggify(hint);
+  if (!wanted) return false;
+  if (typeof value === "string") {
+    const got = sluggify(value);
+    return got === wanted || got === `${wanted}-dragon` || wanted === `${got}-dragon`;
+  }
+  if (value && typeof value === "object") return Object.values(value).some((part) => selectionMatchesHint(part, hint));
+  return false;
+}
+
 export function reconcileRuntimeGrants(entries, grants, unresolved = null) {
   for (const e of entries) {
-    if (!e.unresolved || e.match || e.custom || e.coveredBy) continue;
-    const hit = runtimeGrantMatch(e, grants);
+    if (e.custom || e.coveredBy || !e.unresolved || e.match) continue;
+    const hit = runtimeGrantMatch(e, grants) ?? exactSlugGrant(e, grants);
     if (!hit) continue;
     delete e.unresolved;
     e.coveredBy = hit.item.name;
@@ -862,7 +906,8 @@ async function applyImport(p, { onStep, parity, failAfter }) {
       // Items with GrantItem rules go first so their grants exist before the rest are checked
       // (e.g. Web Weaver grants Specialty Crafting, which WG also lists as a feat).
       const grants = (e) => (e.data.system?.rules ?? []).some((r) => r?.key === "GrantItem");
-      const todo = dependencyOrder(matched.filter((x) => x.kind === kind && x.data));
+      reconcileRuntimeGrants(matched, explicitGrants(actor.items, old), p.ctx.unresolved);
+      const todo = dependencyOrder(matched.filter((x) => x.kind === kind && x.data && !x.coveredBy));
       for (const pass of [todo.filter(grants), todo.filter((e) => !grants(e))]) {
         const batch = [];
         const batchEntries = [];
@@ -879,20 +924,21 @@ async function applyImport(p, { onStep, parity, failAfter }) {
           // Dedupe only against items PF2e explicitly granted from something
           // this run created. This uses source UUIDs or exact slugs only.
           const granted = explicitGrants(actor.items, old);
-          const g = kind === "equipment" ? null : granted.find(({ item }) => sameThing(e, item));
+          const g = kind === "equipment" ? null : granted.find(({ item }) => sameThing(e, item)) ?? exactSlugGrant(e, granted);
           if (g) {
             e.outcome = "granted"; e.grantedBy = g.parent.name; e.itemId = g.item.id;
+            delete e.unresolved;
             for (const n of e.notes ?? []) { const j = notes.indexOf(n); if (j >= 0) notes.splice(j, 1); }
             const k = misses.findIndex((m) => m === `${e.kind}: ${e.name}`); if (k >= 0) misses.splice(k, 1);
             if (kind === "spell" && e.entryId && g.item.system.location?.value !== e.entryId) await g.item.update({ "system.location.value": e.entryId });
             const hints = p.ctx.specific(e.name);
             const selections = [
-              ...Object.values(g.item._source.flags?.pf2e?.rulesSelections ?? {}),
-              ...(g.item._source.system?.rules ?? []).filter((r) => r?.key === "ChoiceSet" && r.selection != null).map((r) => r.selection),
-            ].map(String);
-            if (hints.length && !hints.some((h) => selections.some((v) => sluggify(v) === sluggify(h) || sluggify(g.item.name).includes(sluggify(h))))) {
+              ...Object.values(g.item._source?.flags?.pf2e?.rulesSelections ?? g.item.flags?.pf2e?.rulesSelections ?? {}),
+              ...(g.item._source?.system?.rules ?? g.item.system?.rules ?? []).filter((r) => r?.key === "ChoiceSet" && r.selection != null).map((r) => r.selection),
+            ];
+            if (grantFixedChoice(hints, selections, g.item.name)) {
               p.ctx.unresolved.push({ owner: g.item.name, flag: null, reason: `WG answer ${hints.join(", ")} differs from PF2e's grant via ${g.parent.name}; kept PF2e's rule` });
-              for (const key of p.ctx.hints.keys?.get(sluggify(e.name)) ?? []) p.ctx.conflicts.set(key, `WG answer ${hints.join(", ")} for ${e.name}; PF2e's ${g.parent.name} grant fixes it (${selections.join(", ") || "no selection"}); kept PF2e's rule`);
+              for (const key of p.ctx.hints.keys?.get(sluggify(e.name)) ?? []) p.ctx.conflicts.set(key, `WG answer ${hints.join(", ")} for ${e.name}; PF2e's ${g.parent.name} grant fixes it (${selections.map(String).join(", ")}); kept PF2e's rule`);
             }
             continue;
           }
