@@ -17,7 +17,7 @@ test("managedTree: module items plus everything granted from them, nothing else"
   ];
   assert.deepEqual([...managedTree(items)].sort(), ["cls", "feat", "loc", "sub", "viaParent"]);
 });
-import { explicitGrants, sameThing, duplicateItemDiagnostics } from "../scripts/importer.js";
+import { explicitGrants, sameThing, duplicateItemDiagnostics, focusResourcePatch } from "../scripts/importer.js";
 test("dedupe: only explicit grants from this run's items, same compendium source", () => {
   const it = (id, type, name, src, extra = {}) => ({ id, type, name, _stats: { compendiumSource: src }, flags: extra.flags ?? {}, system: extra.system ?? {} });
   const items = [
@@ -59,6 +59,18 @@ test("duplicate diagnostics distinguish a PF2e grant pair from an unexplained du
     { id: "tangle-vine-action", type: "feat", name: "Tangle Vine", system: {}, flags: { pf2e: { grantedBy: { id: "animist-feature" } } } },
   ];
   assert.equal(duplicateItemDiagnostics(differentlyNamedGrant)[0].expectedGrantPair, true);
+});
+
+test("focus resources initialize even when the export has no max HP", () => {
+  assert.deepEqual(focusResourcePatch({ focusMax: 1 }, undefined, false), {
+    "system.resources.focus.max": 1,
+    "system.resources.focus.value": 1,
+  });
+  assert.deepEqual(focusResourcePatch({ focusMax: 1 }, { focus: { value: 2 } }, true), {
+    "system.resources.focus.max": 1,
+    "system.resources.focus.value": 1,
+  });
+  assert.equal(focusResourcePatch({ maxHp: 20 }, undefined, false), null);
 });
 import { auditImportCoverage, leftoverValues, CLASS_SUPPORT_NOTE } from "../scripts/coverage.js";
 import { buildPlan, sluggify } from "../scripts/mapping.js";

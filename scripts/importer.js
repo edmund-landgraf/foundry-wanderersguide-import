@@ -65,6 +65,19 @@ export function preservedCurrentHp(state, newMaxHp, existing) {
   return Math.max(0, Math.min(Number(state.currentHp), Number(newMaxHp)));
 }
 
+/** Build the PF2e focus-resource update independently of HP availability. */
+export function focusResourcePatch(plan, runtime, existing) {
+  if (plan?.focusMax == null) return null;
+  const max = Number(plan.focusMax);
+  const value = existing && runtime?.focus?.value != null
+    ? Math.max(0, Math.min(Number(runtime.focus.value), max))
+    : max;
+  return {
+    "system.resources.focus.max": max,
+    "system.resources.focus.value": value,
+  };
+}
+
 async function restoreSpellcastingState(actor, state) {
   if (!state || !Object.keys(state).length) return;
   for (const item of [...(actor.items ?? [])]) {
@@ -682,16 +695,12 @@ async function applyImport(p, { onStep, parity, failAfter }) {
         // to prepared-system changes.
         await actor.update(hpPatch, { render: false });
       }
-      if (plan.focusMax != null) {
-        const focusValue = existing && runtime?.focus?.value != null
-          ? Math.max(0, Math.min(Number(runtime.focus.value), Number(plan.focusMax)))
-          : Number(plan.focusMax);
-        await actor.update({
-          "system.resources.focus.max": Number(plan.focusMax),
-          "system.resources.focus.value": focusValue,
-        }, { render: false });
-      }
     }
+    // Focus resources are independent of HP. Some valid WG exports omit
+    // content.max_hp, but their focus spells still require initializing the
+    // PF2e pool (for example a level-1 Champion at 1/1).
+    const focusPatch = focusResourcePatch(plan, runtime, existing);
+    if (focusPatch) await actor.update(focusPatch, { render: false });
   } catch (err) {
     stopPrompts();
     closeChoicePrompts();
