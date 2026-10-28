@@ -3,7 +3,7 @@ import { MODULE_ID, HOMEBREW_FOLDER } from "./constants.js";
 import { customItemData, customItemsHtml } from "./custom-items.js";
 import { mergeFormulas, assignContainers, formulasHtml } from "./formulas.js";
 import { auditImportCoverage, leftoverValues, CLASS_SUPPORT_NOTE } from "./coverage.js";
-import { buildPlan, matchEntries, missReport, sluggify, resolveImageUrl, FALLBACK_IMG, wgChoiceHints, matchChoice, choiceNameKeys, defaultFlag, spellcastingPlan, spellSlotWarnings, preparedSlotUpdates, entryKeyFor, diffPlan, parityCheck } from "./mapping.js";
+import { buildPlan, matchEntries, missReport, sluggify, resolveImageUrl, FALLBACK_IMG, wgChoiceHints, matchChoice, choiceNameKeys, defaultFlag, spellcastingPlan, spellSlotWarnings, preparedSlotUpdates, entryKeyFor, diffPlan, parityCheck, WG_CANONICAL_ALIASES } from "./mapping.js";
 
 const PACK_TYPES = new Set(["ancestry", "heritage", "background", "class", "feat", "spell", "weapon", "armor", "shield", "equipment", "consumable", "treasure", "backpack", "kit"]);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -115,7 +115,13 @@ export function choiceContext(exp, plan, index, actor) {
   }
   const used = new Set();
   const markUsed = (owner) => { for (const k of hints.keys?.get(sluggify(owner)) ?? []) used.add(k); };
-  const markHintUsed = (hint) => { const wanted = sluggify(hint); for (const [owner, values] of hints.keys ?? []) if (values.some((value) => sluggify(value) === wanted)) used.add(owner); };
+  const markHintUsed = (hint) => {
+    const wanted = sluggify(hint);
+    for (const [owner, values] of hints) {
+      if (!values.some((value) => sluggify(value) === wanted)) continue;
+      for (const key of hints.keys?.get(owner) ?? []) used.add(key);
+    }
+  };
   const assigned = new Map();
   const hintKey = (owner, ownerWgId) => ownerWgId != null && hints.byId?.has(String(ownerWgId))
     ? `id:${ownerWgId}`
@@ -460,8 +466,8 @@ export function summarizeActor(actor) {
 const findActor = (plan, host) => game.actors.find((a) => a.getFlag(MODULE_ID, "wgId") === plan.wgId && a.getFlag(MODULE_ID, "host") === host);
 
 /** Dry run (PLAN 8): what an import would change. Reads only; nothing is created or written. */
-export async function previewImport(exp, { host }) {
-  const p = await planImport(exp, { host });
+export async function previewImport(exp, { host, matchCatalog = null }) {
+  const p = await planImport(exp, { host, matchCatalog });
   return { plan: p.plan, diff: p.diff, misses: p.misses, actor: p.actor, coverage: p.coverage, unresolved: p.ctx.unresolved, review: reviewHtml(p) };
 }
 
@@ -521,6 +527,82 @@ export function explicitGrants(items, old) {
     if (parent && parent.id !== i.id) out.push({ item: i, parent });
   }
   return out;
+}
+
+/**
+ * Order entries so static GrantItem dependencies are created first. PF2e also
+ * evaluates actor-dependent ChoiceSets against the actor as it exists at the
+ * time an item is created, so those entries are isolated into their own
+ * batches by applyImport below.
+ */
+export function dependencyOrder(entries) {
+  const byUuid = new Map(entries.filter((e) => e.match?.uuid).map((e) => [e.match.uuid, e]));
+  const deps = new Map(entries.map((e) => [e, new Set()]));
+  for (const e of entries) {
+    for (const rule of e.data?.system?.rules ?? []) {
+      if (rule?.key !== "GrantItem" || typeof rule.uuid !== "string") continue;
+      const parent = byUuid.get(rule.uuid);
+      if (parent && parent !== e) deps.get(e).add(parent);
+    }
+  }
+  const out = [];
+  const remaining = new Set(entries);
+  while (remaining.size) {
+    const ready = [...remaining].filter((e) => [...deps.get(e)].every((d) => !remaining.has(d)));
+    const batch = ready.length ? ready : [...remaining].slice(0, 1); // cycle: preserve source order
+    for (const e of batch) { remaining.delete(e); out.push(e); }
+  }
+  return out;
+}
+
+/** True when PF2e needs prior actor state to evaluate this item's rules. */
+export function dependsOnActor(entry) {
+  return (entry.data?.system?.rules ?? []).some((rule) => {
+    if (!["ChoiceSet", "GrantItem"].includes(rule?.key)) return false;
+    if (Array.isArray(rule.predicate) && rule.predicate.length) return true;
+    if (rule.key !== "ChoiceSet") return false;
+    const choices = rule.choices;
+    if (typeof choices === "string") return true;
+    if (choices && typeof choices === "object" && !Array.isArray(choices)) {
+      if (choices.ownedItems || choices.attacks || choices.unarmedAttacks) return true;
+      return Array.isArray(choices.filter) && choices.filter.some((x) => typeof x === "string" && !/^(item|parent):/.test(x));
+    }
+    return false;
+  });
+}
+
+/**
+ * Match an unresolved WG entry to a unique item explicitly granted during the
+ * current run, using only the reviewed canonical aliases. No name similarity
+ * or first-candidate fallback is allowed.
+ */
+export function runtimeGrantMatch(entry, grants) {
+  const aliases = WG_CANONICAL_ALIASES
+    .filter(([kind, source]) => kind === entry.kind && sluggify(source) === entry.slug)
+    .map(([, , target]) => sluggify(target));
+  if (!aliases.length) return null;
+  const hits = grants.filter(({ item }) => aliases.includes(sluggify(item.name)));
+  return hits.length === 1 ? hits[0] : null;
+}
+
+export function reconcileRuntimeGrants(entries, grants, unresolved = null) {
+  for (const e of entries) {
+    if (!e.unresolved || e.match || e.custom || e.coveredBy) continue;
+    const hit = runtimeGrantMatch(e, grants);
+    if (!hit) continue;
+    delete e.unresolved;
+    e.coveredBy = hit.item.name;
+    e.coverageReason = `covered by PF2e grant from ${hit.parent.name}`;
+    e.outcome = "granted";
+    e.grantedBy = hit.parent.name;
+    e.itemId = hit.item.id;
+    if (unresolved) {
+      for (let i = unresolved.length - 1; i >= 0; i--) {
+        if (unresolved[i].owner === `${e.kind}: ${e.name}`) unresolved.splice(i, 1);
+      }
+    }
+  }
+  return entries;
 }
 
 /** Explain duplicate item names without treating valid PF2e grant pairs as errors. */
@@ -641,6 +723,15 @@ export async function planImport(exp, { host, matchCatalog = null }) {
     if (e.via === "ambiguous") { e.unresolved = `several compendium items share this name: ${e.candidates.join(", ")}`; ctx.unresolved.push({ owner: `: ${e.name}`, flag: null, reason: e.unresolved }); continue; }
     if (e.unresolved) continue;
     if (e.kind === "formula") { if (!e.match) e.unresolved = "no compendium formula match; add it on PF2e's crafting tab"; continue; }
+    // Standard WG content that has no exact or evidence-backed canonical
+    // target is never guessed into a world item. WG custom inventory items
+    // are handled separately by custom-items.js; everything else remains
+    // visible as unresolved for explicit review.
+    if (!e.match && !e.custom) {
+      e.unresolved = "no unambiguous PF2e compendium match; left unresolved (no homebrew copy created)";
+      ctx.unresolved.push({ owner: `${e.kind}: ${e.name}`, flag: null, reason: e.unresolved });
+      continue;
+    }
     const n0 = notes.length;
     try { e.data = await itemDataFor(e, null, ctx, notes); e.notes = notes.slice(n0); }
     catch (err) { e.error = err.message; problems.push(`${e.kind}: ${e.name} (${err.message})`); }
@@ -771,42 +862,52 @@ async function applyImport(p, { onStep, parity, failAfter }) {
       // Items with GrantItem rules go first so their grants exist before the rest are checked
       // (e.g. Web Weaver grants Specialty Crafting, which WG also lists as a feat).
       const grants = (e) => (e.data.system?.rules ?? []).some((r) => r?.key === "GrantItem");
-      const todo = matched.filter((x) => x.kind === kind && x.data);
+      const todo = dependencyOrder(matched.filter((x) => x.kind === kind && x.data));
       for (const pass of [todo.filter(grants), todo.filter((e) => !grants(e))]) {
-      const batch = [];
-      const batchEntries = [];
-      // Dedupe only against items PF2e explicitly granted from something this run created
-      // (grantedBy, the parent's itemGrants, or an ABC feature's system.location) and only when it is
-      // the same compendium item (or, for a WG entry with no same-type match, the same slug).
-      const granted = explicitGrants(actor.items, old);
-      for (const e of pass) {
-        const g = kind === "equipment" ? null : granted.find(({ item }) => sameThing(e, item));
-        if (g) {
-          e.outcome = "granted"; e.grantedBy = g.parent.name; e.itemId = g.item.id;
-          // The planned pre-fill never reached the actor; drop its note so the report only shows applied choices.
-          for (const n of e.notes ?? []) { const j = notes.indexOf(n); if (j >= 0) notes.splice(j, 1); }
-          const k = misses.findIndex((m) => m === `${e.kind}: ${e.name}`); if (k >= 0) misses.splice(k, 1);
-          if (kind === "spell" && e.entryId && g.item.system.location?.value !== e.entryId) await g.item.update({ "system.location.value": e.entryId });
-          const hints = p.ctx.specific(e.name);
-          const sel = [...Object.values(g.item._source.flags?.pf2e?.rulesSelections ?? {}), ...(g.item._source.system?.rules ?? []).filter((r) => r?.key === "ChoiceSet" && r.selection != null).map((r) => r.selection)].map(String);
-          if (hints.length && !hints.some((h) => sel.some((v) => sluggify(v) === sluggify(h) || sluggify(g.item.name).includes(sluggify(h))))) {
-            p.ctx.unresolved.push({ owner: g.item.name, flag: null, reason: `WG answer ${hints.join(", ")} differs from PF2e's grant via ${g.parent.name}; kept PF2e's grant` });
-            for (const k of p.ctx.hints.keys?.get(sluggify(e.name)) ?? []) p.ctx.conflicts.set(k, `WG answer ${hints.join(", ")} for ${e.name}; PF2e's ${g.parent.name} grant fixes it (${sel.join(", ") || "no selection"}); kept PF2e's rule`);
+        const batch = [];
+        const batchEntries = [];
+        const flush = async () => {
+          if (!batch.length) return;
+          step(`build ${kind} ${batch.length}`);
+          const docs = batch.splice(0);
+          const entries = batchEntries.splice(0);
+          const made = await createItems(docs, kind === "equipment" ? { keepId: true } : {});
+          made.forEach((doc, i) => { if (entries[i]) entries[i].itemId = doc.id; });
+          reconcileRuntimeGrants(matched, explicitGrants(actor.items, old), p.ctx.unresolved);
+        };
+        for (const e of pass) {
+          // Dedupe only against items PF2e explicitly granted from something
+          // this run created. This uses source UUIDs or exact slugs only.
+          const granted = explicitGrants(actor.items, old);
+          const g = kind === "equipment" ? null : granted.find(({ item }) => sameThing(e, item));
+          if (g) {
+            e.outcome = "granted"; e.grantedBy = g.parent.name; e.itemId = g.item.id;
+            for (const n of e.notes ?? []) { const j = notes.indexOf(n); if (j >= 0) notes.splice(j, 1); }
+            const k = misses.findIndex((m) => m === `${e.kind}: ${e.name}`); if (k >= 0) misses.splice(k, 1);
+            if (kind === "spell" && e.entryId && g.item.system.location?.value !== e.entryId) await g.item.update({ "system.location.value": e.entryId });
+            const hints = p.ctx.specific(e.name);
+            const selections = [
+              ...Object.values(g.item._source.flags?.pf2e?.rulesSelections ?? {}),
+              ...(g.item._source.system?.rules ?? []).filter((r) => r?.key === "ChoiceSet" && r.selection != null).map((r) => r.selection),
+            ].map(String);
+            if (hints.length && !hints.some((h) => selections.some((v) => sluggify(v) === sluggify(h) || sluggify(g.item.name).includes(sluggify(h))))) {
+              p.ctx.unresolved.push({ owner: g.item.name, flag: null, reason: `WG answer ${hints.join(", ")} differs from PF2e's grant via ${g.parent.name}; kept PF2e's rule` });
+              for (const key of p.ctx.hints.keys?.get(sluggify(e.name)) ?? []) p.ctx.conflicts.set(key, `WG answer ${hints.join(", ")} for ${e.name}; PF2e's ${g.parent.name} grant fixes it (${selections.join(", ") || "no selection"}); kept PF2e's rule`);
+            }
+            continue;
           }
-          continue;
+          // Custom items: preserve the existing actor item and its manual edits.
+          if (e.custom && existing) {
+            const keep = actor.items.find((i) => old.has(i.id) && i.flags?.[MODULE_ID]?.customItem && (e.wgInvId ? i.flags[MODULE_ID].wgInvId === e.wgInvId : i.flags[MODULE_ID].wgItemId === e.wgContentId));
+            if (keep) { old.delete(keep.id); e.outcome = "kept existing"; e.itemId = keep.id; continue; }
+          }
+          e.outcome = e.match ? "created" : "created (custom)";
+          if (dependsOnActor(e) && batch.length) await flush();
+          batch.push(foundry.utils.deepClone(e.data));
+          batchEntries.push(e);
+          if (dependsOnActor(e)) await flush();
         }
-        // Custom items: an existing actor item for the same WG inventory row is kept as is, so manual
-        // edits survive a re-import (it is taken out of the stale set below).
-        if (e.custom && existing) {
-          const keep = actor.items.find((i) => old.has(i.id) && i.flags?.[MODULE_ID]?.customItem && (e.wgInvId ? i.flags[MODULE_ID].wgInvId === e.wgInvId : i.flags[MODULE_ID].wgItemId === e.wgContentId));
-          if (keep) { old.delete(keep.id); e.outcome = "kept existing"; e.itemId = keep.id; continue; }
-        }
-        e.outcome = e.match ? "created" : e.custom ? "created (custom)" : "homebrew";
-        batch.push(foundry.utils.deepClone(e.data));
-        batchEntries.push(e);
-      }      step(`build ${kind} ${batch.length}`);
-      const made = await createItems(batch, kind === "equipment" ? { keepId: true } : {});
-      made.forEach((doc, i) => { if (batchEntries[i]) batchEntries[i].itemId = doc.id; });
+        await flush();
       }
       step(`created ${kind}`);
     }

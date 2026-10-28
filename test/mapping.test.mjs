@@ -236,6 +236,27 @@ test("Champion Redemption Cause resolves to PF2e's canonical Redemption item", (
   assert.equal(match.canonicalSlug, "redemption");
 });
 
+test("WG issue aliases resolve only their evidence-backed canonical targets", () => {
+  const cases = [
+    ["Animal Companion (Druid)", "animal-companion"],
+    ["Animal Empathy (Druid)", "animal-empathy"],
+    ["Imperial Bloodline", "bloodline-imperial"],
+    ["Inexorable Iron Hybrid Study", "inexorable-iron"],
+    ["Telekinetic Hand (Psi)", "telekinetic-hand"],
+    ["Telekinetic Projectile (Psi)", "telekinetic-projectile"],
+    ["Flurry Edge", "flurry"],
+    ["Precision Edge", "precision"],
+  ];
+  for (const [source, target] of cases) {
+    const [hit] = matchEntries(
+      [{ kind: source.includes("Telekinetic") ? "spell" : "feat", packType: source.includes("Telekinetic") ? "spell" : "feat", name: source, slug: sluggify(source) }],
+      [{ type: source.includes("Telekinetic") ? "spell" : "feat", slug: target, name: target, uuid: `U:${target}` }],
+    );
+    assert.equal(hit.match?.uuid, `U:${target}`, source);
+    assert.equal(hit.via, "catalog-alias", source);
+  }
+});
+
 test("semantic-name matching is confidence gated by type and level", () => {
   const entry = [{ kind: "feat", packType: "feat", name: "Liberation Cause", slug: "liberation-cause", level: 1 }];
   const index = [

@@ -17,7 +17,7 @@ test("managedTree: module items plus everything granted from them, nothing else"
   ];
   assert.deepEqual([...managedTree(items)].sort(), ["cls", "feat", "loc", "sub", "viaParent"]);
 });
-import { applyKeyAbilityData, coverFeatureGaps, explicitGrants, sameThing, duplicateItemDiagnostics, focusResourcePatch, domainPromptWithoutDeity, deityPromptChoice, allChoiceHints, uniqueChoice } from "../scripts/importer.js";
+import { applyKeyAbilityData, coverFeatureGaps, explicitGrants, sameThing, duplicateItemDiagnostics, focusResourcePatch, domainPromptWithoutDeity, deityPromptChoice, allChoiceHints, uniqueChoice, dependencyOrder, dependsOnActor, reconcileRuntimeGrants } from "../scripts/importer.js";
 test("dedupe: only explicit grants from this run's items, same compendium source", () => {
   const it = (id, type, name, src, extra = {}) => ({ id, type, name, _stats: { compendiumSource: src }, flags: extra.flags ?? {}, system: extra.system ?? {} });
   const items = [
@@ -39,6 +39,37 @@ test("dedupe: only explicit grants from this run's items, same compendium source
   assert.equal(hit(e("Toughness", "C:feats.toughness")), null, "grant from an old (non-run) parent does not count");
   assert.equal(hit(e("Fleet", "C:feats.fleet")), null, "an ungranted item never dedupes");
   assert.equal(hit(e("Shield", null)), null, "no prefix matching");
+});
+
+test("runtime grants reconcile only unique evidence-backed aliases", () => {
+  const entries = [
+    { kind: "feat", name: "Flurry Edge", slug: "flurry-edge", unresolved: "no match" },
+    { kind: "feat", name: "Precision Edge", slug: "precision-edge", unresolved: "no match" },
+  ];
+  const grants = [
+    { item: { id: "flurry", name: "Flurry" }, parent: { name: "Hunter's Edge" } },
+    { item: { id: "precision", name: "Precision" }, parent: { name: "Hunter's Edge" } },
+  ];
+  const unresolved = entries.map((e) => ({ owner: `${e.kind}: ${e.name}` }));
+  reconcileRuntimeGrants(entries, grants, unresolved);
+  assert.equal(entries[0].coveredBy, "Flurry");
+  assert.equal(entries[0].grantedBy, "Hunter's Edge");
+  assert.equal(entries[1].coveredBy, "Precision");
+  assert.equal(unresolved.length, 0);
+
+  const ambiguous = [{ kind: "feat", name: "Flurry Edge", slug: "flurry-edge", unresolved: "no match" }];
+  reconcileRuntimeGrants(ambiguous, [
+    ...grants,
+    { item: { id: "flurry2", name: "Flurry" }, parent: { name: "Other" } },
+  ]);
+  assert.equal(ambiguous[0].unresolved, "no match", "ambiguous grants remain unresolved");
+});
+
+test("dependency order puts static GrantItem parents first", () => {
+  const parent = { name: "Parent", match: { uuid: "P" }, data: { system: { rules: [] } } };
+  const child = { name: "Child", match: { uuid: "C" }, data: { system: { rules: [{ key: "GrantItem", uuid: "P" }] } } };
+  assert.deepEqual(dependencyOrder([child, parent]), [parent, child]);
+  assert.equal(dependsOnActor({ data: { system: { rules: [{ key: "ChoiceSet", choices: { ownedItems: true } }] } } }), true);
 });
 
 test("duplicate diagnostics distinguish a PF2e grant pair from an unexplained duplicate", () => {
