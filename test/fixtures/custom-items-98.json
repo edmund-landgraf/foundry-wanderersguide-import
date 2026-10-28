@@ -1,0 +1,5118 @@
+{
+  "version": 4,
+  "character": {
+    "id": 98,
+    "created_at": "2026-10-28T02:53:36.549658+00:00",
+    "user_id": "a61ffe5f-bde0-4a98-a1f0-cb6aa9938725",
+    "name": "Quill Hollowmere",
+    "level": 1,
+    "experience": 0,
+    "hp_current": 1,
+    "hp_temp": 0,
+    "hero_points": 1,
+    "stamina_current": 0,
+    "resolve_current": 0,
+    "inventory": {
+      "coins": {
+        "cp": 0,
+        "sp": 150,
+        "gp": 0,
+        "pp": 0
+      },
+      "items": [
+        {
+          "id": "ab74a644-cfb2-426e-bdf1-f788d05e6e34",
+          "item": {
+            "id": 23480,
+            "created_at": "2026-10-28T02:53:26.006661+00:00",
+            "name": "FWI Climber's Grip Gloves",
+            "bulk": "L",
+            "level": 1,
+            "rarity": "COMMON",
+            "description": "Tacky gloves. You gain a +1 item bonus to Athletics checks.",
+            "group": "GENERAL",
+            "hands": null,
+            "size": "MEDIUM",
+            "craft_requirements": null,
+            "usage": "worn gloves",
+            "meta_data": {},
+            "operations": [
+              {
+                "id": "f8b71795-7c9c-408a-8aab-2e9b577f4db4",
+                "type": "addBonusToValue",
+                "data": {
+                  "variable": "SKILL_ATHLETICS",
+                  "value": 1,
+                  "type": "item",
+                  "text": ""
+                }
+              }
+            ],
+            "content_source_id": 907,
+            "version": "1.0",
+            "uuid": 6758771501662976,
+            "price": {
+              "gp": 20
+            },
+            "traits": [
+              1504
+            ],
+            "availability": null,
+            "updated_at": "2026-10-28T02:53:26.006661+00:00"
+          },
+          "is_formula": false,
+          "is_equipped": false,
+          "is_invested": false,
+          "is_implanted": false,
+          "container_contents": []
+        },
+        {
+          "id": "3124ef97-e5b2-479e-84e2-69349189a593",
+          "item": {
+            "id": 23486,
+            "created_at": "2026-10-28T02:53:26.184299+00:00",
+            "name": "FWI Duskweave Coat",
+            "bulk": "1",
+            "level": 1,
+            "rarity": "COMMON",
+            "description": "Supple dark leather.",
+            "group": "ARMOR",
+            "hands": null,
+            "size": "MEDIUM",
+            "craft_requirements": null,
+            "usage": "worn armor",
+            "meta_data": {
+              "bulk": {},
+              "group": "leather",
+              "runes": {
+                "potency": 0,
+                "property": [],
+                "resilient": 0
+              },
+              "dex_cap": 3,
+              "ac_bonus": 2,
+              "category": "light",
+              "strength": 1,
+              "check_penalty": -1,
+              "speed_penalty": 0
+            },
+            "operations": [],
+            "content_source_id": 907,
+            "version": "1.0",
+            "uuid": 1570232013393911,
+            "price": {
+              "gp": 10
+            },
+            "traits": [],
+            "availability": null,
+            "updated_at": "2026-10-28T02:53:26.184299+00:00"
+          },
+          "is_formula": false,
+          "is_equipped": false,
+          "is_invested": false,
+          "is_implanted": false,
+          "container_contents": []
+        },
+        {
+          "id": "66b619ca-0f96-45b5-ba46-38c177a4a228",
+          "item": {
+            "id": 23481,
+            "created_at": "2026-10-28T02:53:26.047694+00:00",
+            "name": "FWI Emberward Charm",
+            "bulk": "L",
+            "level": 4,
+            "rarity": "COMMON",
+            "description": "A warm coal in a cage. Resistance 5 to fire; +1 item bonus to Reflex saves; +2 circumstance bonus to Reflex saves against fire.",
+            "group": "GENERAL",
+            "hands": null,
+            "size": "MEDIUM",
+            "craft_requirements": null,
+            "usage": "worn",
+            "meta_data": {},
+            "operations": [
+              {
+                "id": "8ee24c73-5bde-44d5-8b3d-dd42a29d02b0",
+                "type": "adjValue",
+                "data": {
+                  "variable": "RESISTANCES",
+                  "value": "Fire, 5"
+                }
+              },
+              {
+                "id": "c1e27183-6db7-4222-bdba-fe69ea29adc7",
+                "type": "addBonusToValue",
+                "data": {
+                  "variable": "SAVE_REFLEX",
+                  "value": 1,
+                  "type": "item",
+                  "text": ""
+                }
+              },
+              {
+                "id": "742f3896-3662-42de-ae93-9662d734fc0b",
+                "type": "addBonusToValue",
+                "data": {
+                  "variable": "SAVE_REFLEX",
+                  "value": 2,
+                  "type": "circumstance",
+                  "text": "against fire effects"
+                }
+              }
+            ],
+            "content_source_id": 907,
+            "version": "1.0",
+            "uuid": 834253639389220,
+            "price": {
+              "gp": 90
+            },
+            "traits": [
+              1504
+            ],
+            "availability": null,
+            "updated_at": "2026-10-28T02:53:26.047694+00:00"
+          },
+          "is_formula": false,
+          "is_equipped": false,
+          "is_invested": false,
+          "is_implanted": false,
+          "container_contents": []
+        },
+        {
+          "id": "0793d9c8-9f70-4e68-adec-ded8bb1436d6",
+          "item": {
+            "id": 23484,
+            "created_at": "2026-10-28T02:53:26.135786+00:00",
+            "name": "FWI Oddity Tome",
+            "bulk": "L",
+            "level": 1,
+            "rarity": "COMMON",
+            "description": "Exercises the report-only operations: conditional, injectText, sendNotification, giveTrait, and a proficiency adjValue.",
+            "group": "GENERAL",
+            "hands": "1",
+            "size": "MEDIUM",
+            "craft_requirements": null,
+            "usage": "held in 1 hand",
+            "meta_data": {
+              "bulk": {}
+            },
+            "operations": [
+              {
+                "id": "4acee09f-3a83-4d73-880b-7020435d2ed5",
+                "type": "conditional",
+                "data": {
+                  "conditions": [
+                    {
+                      "id": "ee081ec0-7efd-4b31-940a-474e6ab45206",
+                      "name": "LEVEL",
+                      "type": "num",
+                      "operator": "GREATER_THAN_OR_EQUALS",
+                      "value": 1
+                    }
+                  ],
+                  "trueOperations": [
+                    {
+                      "id": "2b46d83a-275c-4798-a92b-24befba29389",
+                      "type": "addBonusToValue",
+                      "data": {
+                        "variable": "SKILL_OCCULTISM",
+                        "value": 1,
+                        "type": "item",
+                        "text": ""
+                      }
+                    }
+                  ],
+                  "falseOperations": []
+                }
+              },
+              {
+                "id": "52eb2a00-f1e1-4ed2-a6cb-5f8477ccf33e",
+                "type": "adjValue",
+                "data": {
+                  "variable": "SKILL_STEALTH",
+                  "value": {
+                    "value": "T"
+                  }
+                }
+              },
+              {
+                "id": "8679938e-c4af-4d38-bb9a-2140da352512",
+                "type": "injectText",
+                "data": {
+                  "type": "feat",
+                  "id": 20375,
+                  "text": "The tome whispers."
+                }
+              },
+              {
+                "id": "c4e6afad-4591-43f3-a171-1b7da987d3a1",
+                "type": "sendNotification",
+                "data": {
+                  "title": "Tome",
+                  "message": "It whispers.",
+                  "color": "blue"
+                }
+              },
+              {
+                "id": "b1c479dd-f4da-4612-b6e0-2f1d1940c05a",
+                "type": "giveTrait",
+                "data": {
+                  "traitId": 1514
+                }
+              }
+            ],
+            "content_source_id": 907,
+            "version": "1.0",
+            "uuid": 7683944556726542,
+            "price": {
+              "gp": 15
+            },
+            "traits": [
+              1514
+            ],
+            "availability": null,
+            "updated_at": "2026-10-28T02:54:23.349424+00:00"
+          },
+          "is_formula": false,
+          "is_equipped": false,
+          "is_invested": false,
+          "is_implanted": false,
+          "container_contents": []
+        },
+        {
+          "id": "273e278d-93b1-469f-a1b6-e20a78b659b9",
+          "item": {
+            "id": 23482,
+            "created_at": "2026-10-28T02:53:26.078034+00:00",
+            "name": "FWI Owl-Eye Lenses",
+            "bulk": "L",
+            "level": 2,
+            "rarity": "COMMON",
+            "description": "Grants darkvision and imprecise scent 30 feet, and a +1 item bonus to Perception.",
+            "group": "GENERAL",
+            "hands": null,
+            "size": "MEDIUM",
+            "craft_requirements": null,
+            "usage": "worn eyepiece",
+            "meta_data": {},
+            "operations": [
+              {
+                "id": "a6bc6793-96be-4ae5-ac95-ec15e08ee574",
+                "type": "adjValue",
+                "data": {
+                  "variable": "SENSES_PRECISE",
+                  "value": "DARKVISION"
+                }
+              },
+              {
+                "id": "610c0335-f1a4-4eb2-93c3-34c826356bbc",
+                "type": "adjValue",
+                "data": {
+                  "variable": "SENSES_IMPRECISE",
+                  "value": "SCENT, 30"
+                }
+              },
+              {
+                "id": "d95e9945-0fca-4b8f-a6f8-aeecff98d1f0",
+                "type": "addBonusToValue",
+                "data": {
+                  "variable": "PERCEPTION",
+                  "value": 1,
+                  "type": "item",
+                  "text": ""
+                }
+              }
+            ],
+            "content_source_id": 907,
+            "version": "1.0",
+            "uuid": 2315837995467107,
+            "price": {
+              "gp": 35
+            },
+            "traits": [
+              1504
+            ],
+            "availability": null,
+            "updated_at": "2026-10-28T02:53:26.078034+00:00"
+          },
+          "is_formula": false,
+          "is_equipped": false,
+          "is_invested": false,
+          "is_implanted": false,
+          "container_contents": []
+        },
+        {
+          "id": "66be47a9-719a-48cb-bb0f-96d4d53e50fa",
+          "item": {
+            "id": 23485,
+            "created_at": "2026-10-28T02:53:26.162522+00:00",
+            "name": "FWI Starfall Glaive",
+            "bulk": "2",
+            "level": 2,
+            "rarity": "COMMON",
+            "description": "A glaive forged from a fallen star.",
+            "group": "WEAPON",
+            "hands": "2",
+            "size": "MEDIUM",
+            "craft_requirements": null,
+            "usage": "held in 2 hands",
+            "meta_data": {
+              "hp": 0,
+              "bulk": {},
+              "group": "polearm",
+              "runes": {
+                "potency": 1,
+                "property": [],
+                "striking": 0
+              },
+              "damage": {
+                "die": "d10",
+                "dice": 1,
+                "extra": "",
+                "damageType": "slashing"
+              },
+              "hp_max": 0,
+              "category": "martial",
+              "hardness": 0,
+              "attack_bonus": 0,
+              "broken_threshold": 0
+            },
+            "operations": [],
+            "content_source_id": 907,
+            "version": "1.0",
+            "uuid": 3222890042733132,
+            "price": {
+              "gp": 40
+            },
+            "traits": [
+              1573,
+              1598
+            ],
+            "availability": null,
+            "updated_at": "2026-10-28T02:53:26.162522+00:00"
+          },
+          "is_formula": false,
+          "is_equipped": false,
+          "is_invested": false,
+          "is_implanted": false,
+          "container_contents": []
+        },
+        {
+          "id": "8340c4f5-3e87-4ee4-b90f-0242d5d8241a",
+          "item": {
+            "id": 23483,
+            "created_at": "2026-10-28T02:53:26.109225+00:00",
+            "name": "FWI Windstride Anklets",
+            "bulk": "L",
+            "level": 3,
+            "rarity": "COMMON",
+            "description": "+5-foot status bonus to Speed, swim Speed 15 feet, +3 max HP, and you can speak Draconic.",
+            "group": "GENERAL",
+            "hands": null,
+            "size": "MEDIUM",
+            "craft_requirements": null,
+            "usage": "worn anklets",
+            "meta_data": {},
+            "operations": [
+              {
+                "id": "5b518e82-b409-49e0-891f-8ea566fd9566",
+                "type": "addBonusToValue",
+                "data": {
+                  "variable": "SPEED",
+                  "value": 5,
+                  "type": "status",
+                  "text": ""
+                }
+              },
+              {
+                "id": "890d473f-a51c-44f1-b8e2-a7c25742d7ee",
+                "type": "setValue",
+                "data": {
+                  "variable": "SPEED_SWIM",
+                  "value": 15
+                }
+              },
+              {
+                "id": "81bc8941-b1ae-440d-96bf-f1369a14d965",
+                "type": "adjValue",
+                "data": {
+                  "variable": "MAX_HEALTH_BONUS",
+                  "value": 3
+                }
+              },
+              {
+                "id": "552b1d39-fc82-4b28-8295-f2531637a721",
+                "type": "giveLanguage",
+                "data": {
+                  "languageId": 82
+                }
+              }
+            ],
+            "content_source_id": 907,
+            "version": "1.0",
+            "uuid": 8773734544611283,
+            "price": {
+              "gp": 60
+            },
+            "traits": [
+              1504
+            ],
+            "availability": null,
+            "updated_at": "2026-10-28T02:53:26.109225+00:00"
+          },
+          "is_formula": false,
+          "is_equipped": false,
+          "is_invested": false,
+          "is_implanted": false,
+          "container_contents": []
+        },
+        {
+          "id": "1f54bb83-fce3-4d51-8844-0610c12d9582",
+          "item": {
+            "id": 23470,
+            "created_at": "2026-10-26T06:25:41.248686+00:00",
+            "name": "Lantern of Last Echoes",
+            "bulk": "L",
+            "level": 2,
+            "rarity": "UNCOMMON",
+            "description": "An ornate brass-framed lantern holds cloudy teal glass and a pale, smokeless flame. A skull-shaped face decorates its cage. Old investigators of the river trade used such lanterns to reconstruct disasters and disappearances.\n\nWhile the shutter is open, the lantern’s flame sheds bright light in a 20-foot radius and dim light for the next 20 feet. The flame stays with the lantern, requires no fuel or oxygen, and gives off no heat. An Interact action opens or closes the shutter, revealing or concealing that flame.\n\nPassive: While the shutter is open, you gain the [Oddity Identification](link_feat_20375) skill feat. It works as that feat normally does.\n\nActivate—[Light](link_spell_4699) (two actions, concentrate, manipulate). Effect: you cast light, creating a separate orb. The orb uses the spell’s radius, range, and duration, and you can sustain the spell to move it or attach it to a willing creature. The lantern’s own flame is unaffected.\n\nActivate—Final Glimmer (two actions, concentrate, manipulate). Frequency three times per day. Requirements: you are within 10 feet of identifiable physical remains of a creature that died within the past 7 days. Effect: the lantern projects a silent image of one sensory fragment from the creature’s final moments, chosen by the GM. The image lasts up to 6 seconds and provides at least one concrete, truthful clue. Eligible remains always yield a clue; no check is required.\n\nThe image cannot communicate, answer questions, disclose thoughts, or reproduce legible writing. It can show an attacker’s outline or visible features but does not supply a name or confirm an identity. The lantern draws a lingering echo from the remains; it neither summons nor speaks to the dead.\n\nSpecial: no investment or spellcasting is required. These activations have no effect on thralls and do not modify necromancer class abilities. Final Glimmer’s uses belong to the item and do not refresh when passed to another creature.",
+            "group": "GENERAL",
+            "hands": "1",
+            "size": "MEDIUM",
+            "craft_requirements": "",
+            "usage": "held in 1 hand",
+            "meta_data": {},
+            "operations": [
+              {
+                "id": "83b9f28a-7fc7-45e1-8339-df488b2466ca",
+                "type": "giveAbilityBlock",
+                "data": {
+                  "type": "feat",
+                  "abilityBlockId": 20375
+                }
+              },
+              {
+                "id": "3b104c51-a4cb-4a93-a5f1-e2c5aa98e0fa",
+                "type": "giveSpell",
+                "data": {
+                  "spellId": 4699,
+                  "type": "INNATE",
+                  "rank": 0,
+                  "tradition": "OCCULT",
+                  "casts": null
+                }
+              }
+            ],
+            "content_source_id": 905,
+            "version": "1.0",
+            "uuid": 433736584819228,
+            "price": {
+              "gp": 30
+            },
+            "traits": [
+              1514
+            ],
+            "availability": null,
+            "updated_at": "2026-10-27T18:27:22.435825+00:00"
+          },
+          "is_formula": false,
+          "is_equipped": false,
+          "is_invested": false,
+          "is_implanted": false,
+          "container_contents": []
+        }
+      ]
+    },
+    "notes": null,
+    "details": {
+      "ancestry": {
+        "id": 4,
+        "created_at": "2023-12-14T04:35:20.980759+00:00",
+        "name": "Dwarf",
+        "rarity": "COMMON",
+        "description": "> _Dwarves are a short, stocky people who are often stubborn, fierce, and devoted._\n\nDwarves have a well-earned reputation as a stoic and stern people, but they also have an unbridled zeal and deeply value artisanship. To a stranger, they can seem untrusting and clannish, but to their friends and family, they are warm and caring. While trust from a dwarf is hard-won, once gained it is as strong as iron.\n\nIf you want to play a character who is as hard as nails, a stubborn and unrelenting adventurer, with a mix of rugged toughness and deep wisdom, you should play a dwarf.",
+        "trait_id": 1467,
+        "artwork_url": "https://images.demiplane.com/elements/pathfinder-2e/ancestries/ancestry-dwarf-rm-detail.png?format=webp&quality=90&width=1920",
+        "content_source_id": 1,
+        "version": "1.0",
+        "operations": [
+          {
+            "id": "2ab7d55b-60a2-4051-9307-e4c73a6d6596",
+            "type": "setValue",
+            "data": {
+              "variable": "MAX_HEALTH_ANCESTRY",
+              "value": 10
+            }
+          },
+          {
+            "id": "09cbf36d-44d6-436d-9456-5499516314aa",
+            "type": "setValue",
+            "data": {
+              "variable": "SIZE",
+              "value": "medium"
+            }
+          },
+          {
+            "id": "72506287-ce22-4033-866d-ab849ac4ec9e",
+            "type": "setValue",
+            "data": {
+              "variable": "SPEED",
+              "value": 20
+            }
+          },
+          {
+            "id": "ca332abb-d0ae-43d6-915b-bb85688cf91e",
+            "type": "adjValue",
+            "data": {
+              "variable": "ATTRIBUTE_CHA",
+              "value": {
+                "value": -1
+              }
+            }
+          },
+          {
+            "id": "2406087d-787e-4a0d-9807-e167794d3471",
+            "type": "giveLanguage",
+            "data": {
+              "languageId": 81
+            }
+          },
+          {
+            "id": "d6dea13c-9849-4988-910b-786afad7f468",
+            "type": "giveLanguage",
+            "data": {
+              "languageId": 83
+            }
+          },
+          {
+            "id": "e423312d-baab-4e75-91ec-11599102f395",
+            "type": "setValue",
+            "data": {
+              "variable": "CORE_LANGUAGES",
+              "value": "[\n  \"Gnomish\",\n  \"Goblin\",\n  \"Jotun\",\n  \"Orcish\",\n  \"Petran\",\n  \"Sakvroth\"\n]"
+            }
+          },
+          {
+            "id": "013967a1-ba53-4692-a13a-ceae609481af",
+            "type": "giveAbilityBlock",
+            "data": {
+              "type": "sense",
+              "abilityBlockId": 20769
+            }
+          },
+          {
+            "id": "6849b687-67e5-4e8c-a232-7726c61a63f8",
+            "type": "adjValue",
+            "data": {
+              "variable": "ATTRIBUTE_CON",
+              "value": {
+                "value": 1
+              }
+            }
+          },
+          {
+            "id": "6e1941cd-a202-4d1c-a117-e3fc8ac9c1e3",
+            "type": "adjValue",
+            "data": {
+              "variable": "ATTRIBUTE_WIS",
+              "value": {
+                "value": 1
+              }
+            }
+          },
+          {
+            "id": "eabb4cd7-5aad-4f7c-a712-95d5e272bcf3",
+            "type": "select",
+            "data": {
+              "title": "Select an Attribute",
+              "modeType": "FILTERED",
+              "optionType": "ADJ_VALUE",
+              "optionsPredefined": [],
+              "optionsFilters": {
+                "id": "8c1e7659-5029-4d00-8d77-f10f50b4688d",
+                "type": "ADJ_VALUE",
+                "group": "ATTRIBUTE",
+                "value": {
+                  "value": 1
+                }
+              }
+            }
+          },
+          {
+            "id": "802db98f-dfe6-4dac-b370-650edb781046",
+            "type": "giveAbilityBlock",
+            "data": {
+              "type": "physical-feature",
+              "abilityBlockId": 20771
+            }
+          },
+          {
+            "id": "1cfee0a2-58bd-41d0-9b56-6b1ec041198a",
+            "type": "giveTrait",
+            "data": {
+              "traitId": 2399
+            }
+          }
+        ],
+        "uuid": 518845481186385,
+        "deprecated": null,
+        "updated_at": "2026-08-27T16:49:19.460496+00:00",
+        "meta_data": {
+          "source": {
+            "url": "https://2e.aonprd.com/Ancestries.aspx?ID=59",
+            "book": "Player Core",
+            "page": "42"
+          }
+        }
+      },
+      "background": {
+        "id": 725,
+        "created_at": "2024-04-07T07:52:42.41471+00:00",
+        "name": "Acolyte",
+        "rarity": "COMMON",
+        "description": "> _You spent your early days in a religious monastery or cloister. You may have traveled out into the world to spread the message of your religion or because you cast away the teachings of your faith, but deep down, you'll always carry within you the lessons you learned._\n\nChoose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost.\n\nYou're trained in the Religion skill and the Scribing Lore skill. You gain the [Student of the Canon](link_feat_20599) skill feat.",
+        "operations": [
+          {
+            "id": "3c76bbc6-9cd8-4dbb-a335-453e564921e0",
+            "type": "select",
+            "data": {
+              "title": "Select an Attribute",
+              "modeType": "PREDEFINED",
+              "optionType": "ADJ_VALUE",
+              "optionsPredefined": [
+                {
+                  "id": "0d4f9895-6b03-48b2-bc59-6b12f411edf0",
+                  "type": "ADJ_VALUE",
+                  "operation": {
+                    "id": "76283aca-e4a8-44e3-8ba7-6afc49de5dd0",
+                    "type": "adjValue",
+                    "data": {
+                      "variable": "ATTRIBUTE_INT",
+                      "value": {
+                        "value": 1
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "a6441cf6-fd1a-40c9-acfd-f601caa9243e",
+                  "type": "ADJ_VALUE",
+                  "operation": {
+                    "id": "35bb18eb-dde9-47a4-a1ca-56b72fc14305",
+                    "type": "adjValue",
+                    "data": {
+                      "variable": "ATTRIBUTE_WIS",
+                      "value": {
+                        "value": 1
+                      }
+                    }
+                  }
+                }
+              ],
+              "optionsFilters": {
+                "id": "3f50c19a-4f15-4932-810a-b3266a8284b0",
+                "type": "ADJ_VALUE",
+                "group": "SKILL",
+                "value": {
+                  "value": "U"
+                }
+              }
+            }
+          },
+          {
+            "id": "d9ba4046-be08-42a1-aae9-1ac7a9f011f0",
+            "type": "select",
+            "data": {
+              "title": "Select an Attribute",
+              "modeType": "FILTERED",
+              "optionType": "ADJ_VALUE",
+              "optionsPredefined": [],
+              "optionsFilters": {
+                "id": "cf7a32ea-ead9-4bc8-9f41-54db61b54299",
+                "type": "ADJ_VALUE",
+                "group": "ATTRIBUTE",
+                "value": {
+                  "value": 1
+                }
+              }
+            }
+          },
+          {
+            "id": "fbfa208f-5a42-4955-8798-8556d1540fc0",
+            "type": "adjValue",
+            "data": {
+              "variable": "SKILL_RELIGION",
+              "value": {
+                "value": "T"
+              }
+            }
+          },
+          {
+            "id": "0e1f8f6d-e193-4e6d-874a-290bdf6e78d0",
+            "type": "giveAbilityBlock",
+            "data": {
+              "type": "feat",
+              "abilityBlockId": 20599
+            }
+          },
+          {
+            "id": "96a35043-ac29-4c58-bfc7-ca9337481fb3",
+            "type": "createValue",
+            "data": {
+              "variable": "SKILL_LORE_SCRIBING",
+              "value": {
+                "value": "T",
+                "attribute": "ATTRIBUTE_INT"
+              },
+              "type": "prof"
+            }
+          }
+        ],
+        "content_source_id": 1,
+        "version": "1.0",
+        "uuid": 1175918453307956,
+        "artwork_url": null,
+        "deprecated": null,
+        "updated_at": "2026-08-27T16:49:19.969852+00:00",
+        "meta_data": {
+          "source": {
+            "url": "https://2e.aonprd.com/Backgrounds.aspx?ID=406",
+            "book": "Player Core",
+            "page": "84"
+          }
+        }
+      },
+      "class": {
+        "id": 20,
+        "created_at": "2023-12-02T21:24:50.423188+00:00",
+        "name": "Fighter",
+        "rarity": "COMMON",
+        "description": "> _Fighting for honor, greed, loyalty, or simply the thrill of battle, you are an undisputed master of weaponry and combat techniques. You combine your actions through clever combinations of opening moves, finishing strikes, and counterattacks whenever your foes are unwise enough to drop their guard. Whether you are a knight, mercenary, sharpshooter, or blade master, you have honed your martial skills into an art form and perform devastating critical attacks on your enemies._\n\n* * *\n\n### **During Combat Encounters…**\n\nYou strike with unmatched accuracy and use specialized combat techniques. A melee fighter stands between allies and enemies, attacking foes who try to get past. A ranged fighter delivers precise shots from a distance.\n\n### **During Social Encounters…**\n\nYou can be an intimidating presence. This can be useful when negotiating with enemies, but is sometimes a liability in more genteel interactions.\n\n### **While Exploring…**\n\nYou keep up your defenses in preparation for combat, and keep an eye out for hidden threats. You also overcome physical challenges in your way, breaking down doors, lifting obstacles, climbing adeptly, and leaping across pits.\n\n### **In Downtime…**\n\nYou might perform manual labor or craft and repair armaments. If you know techniques you no longer favor, you might train yourself in new ones. If you've established your reputation, you might build an organization or a stronghold of your own.\n\n### **You Might…**\n\n*   Know the purpose and quality of every weapon and piece of armor you own.\n    \n*   Recognize that the danger of an adventurer's life must be balanced out with great revelry or ambitious works.\n    \n*   Have little patience for puzzles or problems that require detailed logic or study.\n    \n\n### **Others Probably…**\n\n*   Find you intimidating until they get to know you—and maybe even after they get to know you.\n    \n*   Expect you're all brawn and no brains.\n    \n*   Respect your expertise in the art of warfare and value your opinion on the quality of armaments.",
+        "operations": [
+          {
+            "id": "9f432764-ef23-41bb-b8f9-32e90a52ca0f",
+            "type": "adjValue",
+            "data": {
+              "variable": "PERCEPTION",
+              "value": {
+                "value": "E"
+              }
+            }
+          },
+          {
+            "id": "25cb8ba8-5fea-4f4c-ad54-90a925ec2076",
+            "type": "adjValue",
+            "data": {
+              "variable": "SAVE_FORT",
+              "value": {
+                "value": "E"
+              }
+            }
+          },
+          {
+            "id": "7455fa24-10b5-4b05-8a72-30262cf78aee",
+            "type": "adjValue",
+            "data": {
+              "variable": "SAVE_REFLEX",
+              "value": {
+                "value": "E"
+              }
+            }
+          },
+          {
+            "id": "b8747434-818c-4d5a-bc29-d154dd751673",
+            "type": "adjValue",
+            "data": {
+              "variable": "SAVE_WILL",
+              "value": {
+                "value": "T"
+              }
+            }
+          },
+          {
+            "id": "06998ca1-5e85-45a9-ba1b-b7f28915da6b",
+            "type": "adjValue",
+            "data": {
+              "variable": "ADVANCED_WEAPONS",
+              "value": {
+                "value": "T"
+              }
+            }
+          },
+          {
+            "id": "fa30cbe0-911d-467d-be31-0ec887b08809",
+            "type": "adjValue",
+            "data": {
+              "variable": "MARTIAL_WEAPONS",
+              "value": {
+                "value": "E"
+              }
+            }
+          },
+          {
+            "id": "3f8b5113-a180-4793-bc33-26ca959d23d0",
+            "type": "adjValue",
+            "data": {
+              "variable": "SIMPLE_WEAPONS",
+              "value": {
+                "value": "E"
+              }
+            }
+          },
+          {
+            "id": "d0aa5541-a714-4fb4-8c08-0f5834c9fb55",
+            "type": "adjValue",
+            "data": {
+              "variable": "UNARMED_ATTACKS",
+              "value": {
+                "value": "E"
+              }
+            }
+          },
+          {
+            "id": "d4deb603-e828-4298-bd5b-604dacce475f",
+            "type": "adjValue",
+            "data": {
+              "variable": "UNARMORED_DEFENSE",
+              "value": {
+                "value": "T"
+              }
+            }
+          },
+          {
+            "id": "aebee823-c98d-48d6-8ae9-4e5ac42041bf",
+            "type": "adjValue",
+            "data": {
+              "variable": "LIGHT_ARMOR",
+              "value": {
+                "value": "T"
+              }
+            }
+          },
+          {
+            "id": "2385cce5-e648-4713-99ec-a7242c4316eb",
+            "type": "adjValue",
+            "data": {
+              "variable": "MEDIUM_ARMOR",
+              "value": {
+                "value": "T"
+              }
+            }
+          },
+          {
+            "id": "cd7ab0a2-51ca-44df-a2af-7b66662edd45",
+            "type": "adjValue",
+            "data": {
+              "variable": "HEAVY_ARMOR",
+              "value": {
+                "value": "T"
+              }
+            }
+          },
+          {
+            "id": "61a7c026-da6b-4107-9956-eb24cba2ac4e",
+            "type": "setValue",
+            "data": {
+              "variable": "MAX_HEALTH_CLASS_PER_LEVEL",
+              "value": 10
+            }
+          },
+          {
+            "id": "80dd35b2-5bdd-4bac-8006-33af4ba0b54d",
+            "type": "select",
+            "data": {
+              "title": "Select an Attribute",
+              "modeType": "PREDEFINED",
+              "optionType": "CUSTOM",
+              "optionsPredefined": [
+                {
+                  "id": "05454c13-9686-4b9f-be7c-5cebf8ecdc31",
+                  "type": "CUSTOM",
+                  "title": "Dexterity",
+                  "description": "You select Dexterity as your key attribute.",
+                  "operations": [
+                    {
+                      "id": "d80a5b9d-b4b4-4a8c-9f91-74d0e0e0226e",
+                      "type": "adjValue",
+                      "data": {
+                        "variable": "ATTRIBUTE_DEX",
+                        "value": {
+                          "value": 1
+                        }
+                      }
+                    },
+                    {
+                      "id": "4a9ea57e-71d4-41f9-8f5a-d5125fed34db",
+                      "type": "setValue",
+                      "data": {
+                        "variable": "CLASS_DC",
+                        "value": {
+                          "value": "T",
+                          "attribute": "ATTRIBUTE_DEX"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "8bcaeebd-538f-4271-855c-ce1ba107d3bd",
+                  "type": "CUSTOM",
+                  "title": "Strength",
+                  "description": "You select Strength as your key attribute.",
+                  "operations": [
+                    {
+                      "id": "f4a0114c-7c4a-4654-84a1-0e69c3e24316",
+                      "type": "adjValue",
+                      "data": {
+                        "variable": "ATTRIBUTE_STR",
+                        "value": {
+                          "value": 1
+                        }
+                      }
+                    },
+                    {
+                      "id": "97724504-b579-409c-9b89-305e3efd39c8",
+                      "type": "setValue",
+                      "data": {
+                        "variable": "CLASS_DC",
+                        "value": {
+                          "value": "T",
+                          "attribute": "ATTRIBUTE_STR"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "50a8c863-dd99-448f-931e-bf1164494779",
+            "type": "select",
+            "data": {
+              "title": "Select Acrobatics or Athletics",
+              "modeType": "PREDEFINED",
+              "optionType": "ADJ_VALUE",
+              "optionsPredefined": [
+                {
+                  "id": "03369abb-b8b7-493c-815f-76bfefecebbf",
+                  "type": "ADJ_VALUE",
+                  "operation": {
+                    "id": "2202a296-8ea8-47f8-98bf-e48960a845e1",
+                    "type": "adjValue",
+                    "data": {
+                      "variable": "SKILL_ATHLETICS",
+                      "value": {
+                        "value": "T"
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "7b76ce52-d23f-469d-bb5e-216d263854da",
+                  "type": "ADJ_VALUE",
+                  "operation": {
+                    "id": "be1dfe3f-274e-4805-b9f1-067c7b8a04bf",
+                    "type": "adjValue",
+                    "data": {
+                      "variable": "SKILL_ACROBATICS",
+                      "value": {
+                        "value": "T"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "trait_id": 1339,
+        "artwork_url": "https://images.demiplane.com/elements/pathfinder-2e/classes/class-fighter-rm-detail.png?format=webp&quality=90&width=1920",
+        "content_source_id": 1,
+        "version": "1.0",
+        "uuid": 5527386749589384,
+        "skill_training_base": 3,
+        "deprecated": null,
+        "updated_at": "2026-08-27T16:49:14.833831+00:00",
+        "meta_data": {
+          "source": {
+            "url": "https://2e.aonprd.com/Classes.aspx?ID=35",
+            "book": "Player Core",
+            "page": "136"
+          }
+        }
+      }
+    },
+    "roll_history": null,
+    "custom_operations": null,
+    "meta_data": {
+      "reset_hp": true
+    },
+    "options": {
+      "dice_roller": true,
+      "auto_detect_prerequisites": true
+    },
+    "variants": null,
+    "content_sources": {
+      "enabled": [
+        1,
+        8,
+        7,
+        905,
+        907
+      ]
+    },
+    "operation_data": {
+      "selections": {}
+    },
+    "spells": null,
+    "companions": null,
+    "campaign_id": 42,
+    "updated_at": "2026-10-28T02:54:47.361865+00:00"
+  },
+  "content": {
+    "_README": "Here's some compiled data about the character. Should be fairly human-readable. The <character> section is what WG reads, this section is solely for you! Should give you an abundance of compiled stats and info about the character. If you have any questions, feel free to ask on our Discord!",
+    "all_sources": [
+      {
+        "id": 1,
+        "created_at": "2023-10-13T17:01:05.041818+00:00",
+        "name": "Player Core",
+        "foundry_id": "Pathfinder Player Core",
+        "url": "https://paizo.com/products/btq02eoj?Pathfinder-Player-Core",
+        "description": "The Pathfinder Player Core presents a new entry point to Pathfinder Second Edition, with everything a player needs to learn how to play the game! Choose from eight ancestries, eight complete character classes, and hundreds of feats and spells to make unique characters ready for deadly adventures in a world beset by magic and evil! This 464-page hardcover tome is the definitive rules resource for all Pathfinder Second Edition players!",
+        "operations": [],
+        "user_id": null,
+        "contact_info": "",
+        "require_key": false,
+        "is_published": true,
+        "required_content_sources": [],
+        "group": "pathfinder-core",
+        "meta_data": {
+          "counts": {
+            "background": 40,
+            "action": 96,
+            "class-feature": 237,
+            "feat": 986,
+            "class": 8,
+            "ancestry": 8,
+            "trait": 238,
+            "spell": 491,
+            "heritage": 50,
+            "item": 266,
+            "language": 25,
+            "sense": 38,
+            "physical-feature": 5,
+            "archetype": 8,
+            "versatile_heritage": 5,
+            "content_update": 1950,
+            "mode": 4,
+            "creature": 20
+          }
+        },
+        "artwork_url": null,
+        "keys": null,
+        "deprecated": null,
+        "updated_at": "2026-10-07T20:56:53.56128+00:00"
+      },
+      {
+        "id": 3,
+        "created_at": "2025-08-19T02:45:48.489733+00:00",
+        "name": "Common Core",
+        "foundry_id": null,
+        "url": null,
+        "description": "Content that's shared between Pathfinder Second Edition and Starfinder Second Edition.",
+        "operations": [],
+        "user_id": null,
+        "contact_info": null,
+        "require_key": false,
+        "is_published": true,
+        "required_content_sources": [],
+        "group": "common-core",
+        "meta_data": {
+          "counts": {
+            "content_update": 100,
+            "heritage": 3,
+            "feat": 131
+          }
+        },
+        "artwork_url": null,
+        "keys": null,
+        "deprecated": false,
+        "updated_at": "2026-10-08T07:19:22.175689+00:00"
+      },
+      {
+        "id": 7,
+        "created_at": "2023-12-03T18:43:29.957134+00:00",
+        "name": "GM Core",
+        "foundry_id": "Pathfinder GM Core",
+        "url": "https://paizo.com/products/btq02ej3?Pathfinder-GM-Core",
+        "description": "Unleash your imagination, creating worlds and stories beyond measure with the new Pathfinder GM Core for Pathfinder Second Edition! This comprehensive 336-page hardcover rulebook gives Game Masters everything they need to craft thrilling tales of adventure, from a single-night’s dungeon delve to complex epics spanning years. Within these pages you’ll find clear guidelines for creating new hazards and monsters, tools to design challenging, balanced encounters, and rules for rewarding characters for the dastardly challenges you array before them! Pathfinder GM Core also contains a dragon’s hoard of magic items and treasure to entice and reward your players, from simple healing potions to magic weapons and armor and legendary artifacts, including dozens of brand-new items!",
+        "operations": [],
+        "user_id": null,
+        "contact_info": null,
+        "require_key": false,
+        "is_published": true,
+        "required_content_sources": [
+          1
+        ],
+        "group": "pathfinder-core",
+        "meta_data": {
+          "counts": {
+            "trait": 59,
+            "item": 675,
+            "spell": 1,
+            "content_update": 729,
+            "language": 9,
+            "feat": 90,
+            "action": 1
+          }
+        },
+        "artwork_url": null,
+        "keys": null,
+        "deprecated": null,
+        "updated_at": "2026-10-07T20:56:49.657173+00:00"
+      },
+      {
+        "id": 8,
+        "created_at": "2024-03-24T16:17:47.581819+00:00",
+        "name": "Monster Core",
+        "foundry_id": "Pathfinder Monster Core",
+        "url": "https://paizo.com/products/btq02ej4?Pathfinder-Monster-Core",
+        "description": "Heroes are defined by their foes—from shambling skeletons to terrifying dragons, each enemy leaves a mark on their growing legend. Make your legends memorable with foes from the new Pathfinder Monster Core rulebook for Pathfinder Second Edition! This 376-page hardcover book is packed with a wide range of monsters useful to all Pathfinder campaigns, giving the Game Master plenty of threats to throw at their adventurers, at any level of experience. The lavishly illustrated tome also includes guidelines for reading monster entries and adjusting existing monsters to tailor fit your story! This is the definitive resource for Pathfinder Second Edition monsters!",
+        "operations": [],
+        "user_id": null,
+        "contact_info": null,
+        "require_key": false,
+        "is_published": true,
+        "required_content_sources": [
+          1
+        ],
+        "group": "pathfinder-core",
+        "meta_data": {
+          "counts": {
+            "physical-feature": 2,
+            "creature": 492,
+            "language": 4,
+            "item": 2,
+            "sense": 1,
+            "trait": 65,
+            "spell": 3
+          }
+        },
+        "artwork_url": null,
+        "keys": null,
+        "deprecated": null,
+        "updated_at": "2026-10-23T18:11:23.808994+00:00"
+      },
+      {
+        "id": 905,
+        "created_at": "2026-10-26T06:13:39.350898+00:00",
+        "name": "The Price of Prophecy",
+        "foundry_id": null,
+        "url": "",
+        "description": "Custom items from Amba. Lantern of Last Echoes is a custom item with a custom Final Glimmer activation.",
+        "operations": [],
+        "user_id": "3fab79c9-c8a8-4848-90b7-84df9872fb38",
+        "contact_info": "",
+        "require_key": false,
+        "is_published": true,
+        "required_content_sources": [],
+        "group": null,
+        "meta_data": {
+          "counts": {
+            "item": 1,
+            "spell": 2
+          }
+        },
+        "artwork_url": "",
+        "keys": null,
+        "deprecated": null,
+        "updated_at": "2026-10-27T18:27:22.435825+00:00"
+      },
+      {
+        "id": 907,
+        "created_at": "2026-10-28T02:53:17.707093+00:00",
+        "name": "FWI Custom Items Test (local)",
+        "foundry_id": null,
+        "url": null,
+        "description": "Local test source for the Foundry importer custom-items PR.",
+        "operations": [],
+        "user_id": "a61ffe5f-bde0-4a98-a1f0-cb6aa9938725",
+        "contact_info": "",
+        "require_key": false,
+        "is_published": false,
+        "required_content_sources": [],
+        "group": null,
+        "meta_data": {
+          "counts": {
+            "item": 7
+          }
+        },
+        "artwork_url": null,
+        "keys": null,
+        "deprecated": null,
+        "updated_at": "2026-10-28T02:54:23.349424+00:00"
+      }
+    ],
+    "feats_features": {
+      "generalAndSkillFeats": [
+        {
+          "id": 20375,
+          "created_at": "2023-12-14T02:57:46.280049+00:00",
+          "operations": null,
+          "name": "Oddity Identification",
+          "actions": null,
+          "level": 1,
+          "rarity": "COMMON",
+          "prerequisites": [
+            "trained in Occultism"
+          ],
+          "frequency": null,
+          "cost": null,
+          "trigger": null,
+          "requirements": null,
+          "access": null,
+          "description": "When you become aware of a magical effect or see a spell being cast, you can immediately determine if it twists minds (with the [mental](link_trait_1448) trait), fights against fortune (with the [fortune](link_trait_1460) or [misfortune](link_trait_1677) trait), or reveals secrets (with the [detection](link_trait_1508), [prediction](link_trait_1896), [revelation](link_trait_1907), or [scrying](link_trait_1590) traits). At the GM's discretion, similar effects can also fall into these categories. When you [Identify Magic](link_action_19730) or [Recall Knowledge](link_action_19753) to learn more about these effects, you can always use [Occultism](link_trait_1514) without penalty and gain a +2 circumstance bonus.",
+          "special": null,
+          "type": "feat",
+          "meta_data": {
+            "source": {
+              "url": "https://2e.aonprd.com/Feats.aspx?ID=5185",
+              "book": "Player Core",
+              "page": "259"
+            },
+            "foundry": {
+              "rules": [
+                {
+                  "key": "FlatModifier",
+                  "type": "circumstance",
+                  "label": "Oddity Identification (identify magic with specific traits)",
+                  "value": 2,
+                  "selector": "occultism",
+                  "predicate": [
+                    "action:identify-magic",
+                    {
+                      "or": [
+                        "mental",
+                        "possession",
+                        "prediction",
+                        "scrying"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "traits": [
+            1437,
+            1438
+          ],
+          "content_source_id": 3,
+          "version": "1.0",
+          "uuid": 2226992238796568,
+          "availability": null,
+          "updated_at": "2026-08-27T16:53:40.818195+00:00"
+        },
+        {
+          "id": 20534,
+          "created_at": "2023-12-14T03:34:10.797344+00:00",
+          "operations": null,
+          "name": "Shield Block",
+          "actions": "REACTION",
+          "level": 1,
+          "rarity": "COMMON",
+          "prerequisites": [],
+          "frequency": null,
+          "cost": null,
+          "trigger": "While you have your shield raised, you would take physical damage (bludgeoning, piercing, or slashing) from an attack.",
+          "requirements": null,
+          "access": null,
+          "description": "You snap your shield in place to ward off a blow. Your shield prevents you from taking an amount of damage up to the shield's Hardness. You and the shield each take any remaining damage, possibly breaking or destroying the shield.",
+          "special": null,
+          "type": "feat",
+          "meta_data": {
+            "foundry": {
+              "rules": []
+            }
+          },
+          "traits": [
+            1437
+          ],
+          "content_source_id": 3,
+          "version": "1.0",
+          "uuid": 4880963151232844,
+          "availability": null,
+          "updated_at": "2023-12-14T03:34:10.797344+00:00"
+        },
+        {
+          "id": 20599,
+          "created_at": "2023-12-14T03:48:56.901496+00:00",
+          "operations": null,
+          "name": "Student of the Canon",
+          "actions": null,
+          "level": 1,
+          "rarity": "COMMON",
+          "prerequisites": [
+            "trained in Religion"
+          ],
+          "frequency": null,
+          "cost": null,
+          "trigger": null,
+          "requirements": null,
+          "access": null,
+          "description": "You've researched many faiths enough to recognize notions about them that are unlikely to be true. If you roll a critical failure at a Religion check to [Decipher Writing](link_action_19622) of a religious nature or to Recall Knowledge about the tenets of faiths, you get a failure instead. When attempting to [Recall Knowledge](link_action_19753) about the tenets of your own faith, if you roll a failure, you get a success instead, and if you roll a success, you get a critical success instead.",
+          "special": null,
+          "type": "feat",
+          "meta_data": {
+            "source": {
+              "url": "https://2e.aonprd.com/Feats.aspx?ID=5219",
+              "book": "Player Core",
+              "page": "263"
+            },
+            "foundry": {
+              "rules": [
+                {
+                  "key": "Note",
+                  "text": "When you roll a critical failure at a Religion check to Decipher Writing of a religious nature or to Recall Knowledge about the tenets of faiths, you get a failure instead.",
+                  "title": "{item|name}",
+                  "selector": "religion",
+                  "predicate": [
+                    {
+                      "or": [
+                        "action:recall-knowledge",
+                        "action:decipher-writing"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "key": "Note",
+                  "text": "When attempting to Recall Knowledge about the tenets of your own faith, if you roll a failure, you get a success instead, and if you roll a success, you get a critical success instead.",
+                  "title": "{item|name}",
+                  "selector": "religion",
+                  "predicate": [
+                    {
+                      "or": [
+                        "action:recall-knowledge",
+                        "your-faith"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "traits": [
+            1437,
+            1438
+          ],
+          "content_source_id": 3,
+          "version": "1.0",
+          "uuid": 5321027593544325,
+          "availability": null,
+          "updated_at": "2026-08-27T16:53:40.818195+00:00"
+        }
+      ],
+      "classFeats": [
+        {
+          "id": 19751,
+          "created_at": "2023-12-13T22:38:26.762767+00:00",
+          "operations": [],
+          "name": "Reactive Strike",
+          "actions": "REACTION",
+          "level": 1,
+          "rarity": "COMMON",
+          "prerequisites": [],
+          "frequency": null,
+          "cost": null,
+          "trigger": "A creature within your reach uses a manipulate action or a move action, makes a ranged attack, or leaves a square during a move action it’s using.",
+          "requirements": null,
+          "access": null,
+          "description": "You lash out at a foe that leaves an opening. Make a melee [Strike](link_action_19856) against the triggering creature. If your attack is a critical hit and the trigger was a [manipulate](link_trait_1433) action, you disrupt that action. This [Strike](link_action_19856) doesn’t count toward your multiple attack penalty, and your multiple attack penalty doesn’t apply to this [Strike](link_action_19856).",
+          "special": null,
+          "type": "feat",
+          "meta_data": {
+            "foundry": {
+              "rules": []
+            },
+            "unselectable": true
+          },
+          "traits": [
+            1339
+          ],
+          "content_source_id": 1,
+          "version": "1.0",
+          "uuid": 4548156761295409,
+          "availability": null,
+          "updated_at": "2023-12-13T22:38:26.762767+00:00"
+        }
+      ],
+      "ancestryFeats": [],
+      "otherFeats": [],
+      "classFeatures": [
+        {
+          "id": 19201,
+          "created_at": "2023-12-02T23:37:39.437386+00:00",
+          "operations": [
+            {
+              "id": "135fe3c1-46ef-4dd3-94ca-02712daceb1a",
+              "type": "giveAbilityBlock",
+              "data": {
+                "type": "feat",
+                "abilityBlockId": 19751
+              }
+            }
+          ],
+          "name": "Reactive Strike",
+          "actions": null,
+          "level": 1,
+          "rarity": "COMMON",
+          "prerequisites": [],
+          "frequency": null,
+          "cost": null,
+          "trigger": null,
+          "requirements": null,
+          "access": null,
+          "description": "Ever watchful for weaknesses, you can quickly attack foes that leave an opening in their defenses. You gain the [Reactive Strike](link_feat_19751) reaction.",
+          "special": null,
+          "type": "class-feature",
+          "meta_data": {
+            "foundry": {
+              "rules": [
+                {
+                  "key": "GrantItem",
+                  "uuid": "Compendium.pf2e.actionspf2e.Item.Reactive Strike"
+                }
+              ]
+            }
+          },
+          "traits": [
+            1339
+          ],
+          "content_source_id": 1,
+          "version": "1.0",
+          "uuid": 4186371866805795,
+          "availability": null,
+          "updated_at": "2023-12-02T23:37:39.437386+00:00"
+        },
+        {
+          "id": 19228,
+          "created_at": "2023-12-02T23:38:02.577406+00:00",
+          "operations": [
+            {
+              "id": "bde4cc00-62e8-41f1-bc94-10675cd19520",
+              "type": "giveAbilityBlock",
+              "data": {
+                "type": "feat",
+                "abilityBlockId": 20534
+              }
+            }
+          ],
+          "name": "Shield Block",
+          "actions": null,
+          "level": 1,
+          "rarity": "COMMON",
+          "prerequisites": [],
+          "frequency": null,
+          "cost": null,
+          "trigger": null,
+          "requirements": null,
+          "access": null,
+          "description": "You gain the [Shield Block](link_feat_20534) general feat, a reaction that lets you reduce damage with your shield.",
+          "special": null,
+          "type": "class-feature",
+          "meta_data": {
+            "foundry": {
+              "rules": [
+                {
+                  "key": "GrantItem",
+                  "uuid": "Compendium.pf2e.feats-srd.Item.Shield Block"
+                }
+              ]
+            }
+          },
+          "traits": [
+            1339,
+            1343
+          ],
+          "content_source_id": 1,
+          "version": "1.0",
+          "uuid": 83931783487265,
+          "availability": null,
+          "updated_at": "2023-12-02T23:38:02.577406+00:00"
+        }
+      ],
+      "physicalFeatures": [
+        {
+          "id": 20771,
+          "created_at": "2023-12-15T00:49:01.55917+00:00",
+          "operations": [
+            {
+              "id": "4a54cb82-df74-402f-bf79-7a361f0b9aaa",
+              "type": "giveItem",
+              "data": {
+                "itemId": 6796
+              }
+            }
+          ],
+          "name": "Clan Dagger",
+          "actions": null,
+          "level": 1,
+          "rarity": "COMMON",
+          "prerequisites": [],
+          "frequency": "",
+          "cost": "",
+          "trigger": "",
+          "requirements": "",
+          "access": "",
+          "description": "You get one [clan dagger](link_item_6796) for free, as it was given to you at birth. Selling this clan dagger is a terrible taboo and earns you the disdain of other dwarves.",
+          "special": "",
+          "type": "physical-feature",
+          "meta_data": {
+            "source": {
+              "url": "https://2e.aonprd.com/Weapons.aspx?ID=368",
+              "book": "Player Core",
+              "page": "277"
+            },
+            "unselectable": true
+          },
+          "traits": [
+            1467
+          ],
+          "content_source_id": 1,
+          "version": "1.0",
+          "uuid": 5509761219133077,
+          "availability": null,
+          "updated_at": "2026-08-27T17:20:36.846183+00:00"
+        }
+      ],
+      "heritages": [],
+      "baseAbilities": [],
+      "addedAbilities": []
+    },
+    "character_traits": [
+      {
+        "id": 2399,
+        "created_at": "2024-03-30T02:28:30.447007+00:00",
+        "name": "Humanoid",
+        "description": "Humanoid creatures reason and act much like [humans](link_trait_1436). They typically stand upright and have two arms and two legs.",
+        "meta_data": {
+          "source": {
+            "url": "https://2e.aonprd.com/Traits.aspx?ID=628",
+            "book": "Player Core",
+            "page": "457"
+          },
+          "important": false,
+          "class_trait": false,
+          "unselectable": false,
+          "ancestry_trait": false,
+          "creature_trait": true,
+          "archetype_trait": false,
+          "versatile_heritage_trait": false
+        },
+        "content_source_id": 3,
+        "uuid": 4637282396389759,
+        "updated_at": "2026-08-27T16:53:39.273543+00:00"
+      },
+      {
+        "id": 1467,
+        "created_at": "2023-12-14T04:35:20.548618+00:00",
+        "name": "Dwarf",
+        "description": "This indicates content from the dwarf ancestry.",
+        "meta_data": {
+          "source": {
+            "url": "https://2e.aonprd.com/Traits.aspx?ID=584",
+            "book": "Player Core",
+            "page": "455"
+          },
+          "ancestry_trait": true
+        },
+        "content_source_id": 1,
+        "uuid": 7327654871424708,
+        "updated_at": "2026-08-27T16:49:13.252728+00:00"
+      },
+      {
+        "id": 1514,
+        "created_at": "2023-12-02T23:22:27.613893+00:00",
+        "name": "Occult",
+        "description": "This magic comes from the occult tradition, calling upon bizarre and ephemeral mysteries. Anything with this trait is [magical](link_trait_1504).",
+        "meta_data": {
+          "source": {
+            "url": "https://2e.aonprd.com/Traits.aspx?ID=662",
+            "book": "Player Core",
+            "page": "459"
+          },
+          "important": false,
+          "class_trait": false,
+          "unselectable": false,
+          "ancestry_trait": false,
+          "creature_trait": true,
+          "archetype_trait": false,
+          "versatile_heritage_trait": false
+        },
+        "content_source_id": 3,
+        "uuid": 7684663810066007,
+        "updated_at": "2026-08-27T16:53:39.273543+00:00"
+      }
+    ],
+    "languages": [
+      "COMMON",
+      "DWARVEN",
+      "DRACONIC"
+    ],
+    "senses": {
+      "precise": [
+        {
+          "sense": {
+            "id": 20769,
+            "created_at": "2023-12-14T23:25:55.882053+00:00",
+            "operations": [
+              {
+                "id": "85ad67ec-6db0-407a-a46c-a5477825b724",
+                "type": "adjValue",
+                "data": {
+                  "variable": "SENSES_PRECISE",
+                  "value": "darkvision"
+                }
+              }
+            ],
+            "name": "Darkvision",
+            "actions": null,
+            "level": 1,
+            "rarity": "COMMON",
+            "prerequisites": [],
+            "frequency": "",
+            "cost": "",
+            "trigger": "",
+            "requirements": "",
+            "access": "",
+            "description": "A creature with darkvision can see perfectly well in areas of darkness and dim light, though such vision is in black and white only. Some forms of magical darkness, such as a 4th-rank [darkness](link_spell_4552) spell, block normal darkvision.",
+            "special": "",
+            "type": "sense",
+            "meta_data": {
+              "source": {
+                "url": "https://2e.aonprd.com/Familiars.aspx?ID=142",
+                "book": "Player Core",
+                "page": "259"
+              },
+              "unselectable": true
+            },
+            "traits": [],
+            "content_source_id": 3,
+            "version": "1.0",
+            "uuid": 990708369957964,
+            "availability": null,
+            "updated_at": "2026-08-27T16:53:40.818195+00:00"
+          },
+          "senseName": "Darkvision",
+          "range": "",
+          "type": "precise"
+        },
+        {
+          "sense": {
+            "id": 20769,
+            "created_at": "2023-12-14T23:25:55.882053+00:00",
+            "operations": [
+              {
+                "id": "85ad67ec-6db0-407a-a46c-a5477825b724",
+                "type": "adjValue",
+                "data": {
+                  "variable": "SENSES_PRECISE",
+                  "value": "darkvision"
+                }
+              }
+            ],
+            "name": "Darkvision",
+            "actions": null,
+            "level": 1,
+            "rarity": "COMMON",
+            "prerequisites": [],
+            "frequency": "",
+            "cost": "",
+            "trigger": "",
+            "requirements": "",
+            "access": "",
+            "description": "A creature with darkvision can see perfectly well in areas of darkness and dim light, though such vision is in black and white only. Some forms of magical darkness, such as a 4th-rank [darkness](link_spell_4552) spell, block normal darkvision.",
+            "special": "",
+            "type": "sense",
+            "meta_data": {
+              "source": {
+                "url": "https://2e.aonprd.com/Familiars.aspx?ID=142",
+                "book": "Player Core",
+                "page": "259"
+              },
+              "unselectable": true
+            },
+            "traits": [],
+            "content_source_id": 3,
+            "version": "1.0",
+            "uuid": 990708369957964,
+            "availability": null,
+            "updated_at": "2026-08-27T16:53:40.818195+00:00"
+          },
+          "senseName": "Darkvision",
+          "range": "",
+          "type": "precise"
+        }
+      ],
+      "imprecise": [
+        {
+          "sense": {
+            "id": 21081,
+            "created_at": "2024-04-05T21:29:53.369732+00:00",
+            "operations": [
+              {
+                "id": "d093403b-7e30-48b0-865b-d823f756f54c",
+                "type": "adjValue",
+                "data": {
+                  "variable": "SENSES_IMPRECISE",
+                  "value": "hearing"
+                }
+              }
+            ],
+            "name": "Hearing",
+            "actions": null,
+            "level": 1,
+            "rarity": "COMMON",
+            "prerequisites": [],
+            "frequency": "",
+            "cost": "",
+            "trigger": "",
+            "requirements": "",
+            "access": "",
+            "description": "Hearing is the ability to perceive sound by detecting vibrations through an organ such as the ear. A creature might be undetected by you if it’s in an environment that distorts the sense, such as a noisy room. In those cases, you have to use the [Seek](link_action_19845) basic action to detect the creature.",
+            "special": "",
+            "type": "sense",
+            "meta_data": {
+              "unselectable": true
+            },
+            "traits": [],
+            "content_source_id": 3,
+            "version": "1.0",
+            "uuid": 7294419213926000,
+            "availability": null,
+            "updated_at": "2024-04-05T21:29:53.369732+00:00"
+          },
+          "senseName": "Hearing",
+          "range": "",
+          "type": "imprecise"
+        },
+        {
+          "sense": {
+            "id": 20773,
+            "created_at": "2023-12-15T02:59:38.851639+00:00",
+            "operations": [
+              {
+                "id": "f5bdde27-0128-4c78-9b0b-052461f323e5",
+                "type": "addBonusToValue",
+                "data": {
+                  "variable": "PERCEPTION",
+                  "value": 2,
+                  "type": "circumstance",
+                  "text": "whenever you’re trying to locate an undetected creature that is within the range of your scent"
+                }
+              },
+              {
+                "id": "1e04f745-f127-4ff1-a75c-710538bd8c6d",
+                "type": "adjValue",
+                "data": {
+                  "variable": "SENSES_IMPRECISE",
+                  "value": "scent, 30"
+                }
+              }
+            ],
+            "name": "Scent (imprecise 30 ft)",
+            "actions": null,
+            "level": 1,
+            "rarity": "COMMON",
+            "prerequisites": [],
+            "frequency": "",
+            "cost": "",
+            "trigger": "",
+            "requirements": "",
+            "access": "",
+            "description": "You can use your sense of smell to determine the location of a creature. The GM will usually double the range if you’re downwind from the creature or halve the range if you’re upwind.\n\nIn addition, you gain a +2 circumstance bonus to Perception checks whenever you’re trying to locate an undetected creature that is within the range of your scent.",
+            "special": "",
+            "type": "sense",
+            "meta_data": {
+              "unselectable": true
+            },
+            "traits": [],
+            "content_source_id": 3,
+            "version": "1.0",
+            "uuid": 987176158247911,
+            "availability": null,
+            "updated_at": "2023-12-15T02:59:38.851639+00:00"
+          },
+          "senseName": "Scent",
+          "range": "30",
+          "type": "imprecise"
+        }
+      ],
+      "vague": []
+    },
+    "weapons": [],
+    "inventory_flat": [
+      {
+        "id": "ab74a644-cfb2-426e-bdf1-f788d05e6e34",
+        "item": {
+          "id": 23480,
+          "created_at": "2026-10-28T02:53:26.006661+00:00",
+          "name": "FWI Climber's Grip Gloves",
+          "bulk": "L",
+          "level": 1,
+          "rarity": "COMMON",
+          "description": "Tacky gloves. You gain a +1 item bonus to Athletics checks.",
+          "group": "GENERAL",
+          "hands": null,
+          "size": "MEDIUM",
+          "craft_requirements": null,
+          "usage": "worn gloves",
+          "meta_data": {},
+          "operations": [
+            {
+              "id": "f8b71795-7c9c-408a-8aab-2e9b577f4db4",
+              "type": "addBonusToValue",
+              "data": {
+                "variable": "SKILL_ATHLETICS",
+                "value": 1,
+                "type": "item",
+                "text": ""
+              }
+            }
+          ],
+          "content_source_id": 907,
+          "version": "1.0",
+          "uuid": 6758771501662976,
+          "price": {
+            "gp": 20
+          },
+          "traits": [
+            1504
+          ],
+          "availability": null,
+          "updated_at": "2026-10-28T02:53:26.006661+00:00"
+        },
+        "is_formula": false,
+        "is_equipped": false,
+        "is_invested": false,
+        "is_implanted": false,
+        "container_contents": []
+      },
+      {
+        "id": "3124ef97-e5b2-479e-84e2-69349189a593",
+        "item": {
+          "id": 23486,
+          "created_at": "2026-10-28T02:53:26.184299+00:00",
+          "name": "FWI Duskweave Coat",
+          "bulk": "1",
+          "level": 1,
+          "rarity": "COMMON",
+          "description": "Supple dark leather.",
+          "group": "ARMOR",
+          "hands": null,
+          "size": "MEDIUM",
+          "craft_requirements": null,
+          "usage": "worn armor",
+          "meta_data": {
+            "bulk": {},
+            "group": "leather",
+            "runes": {
+              "potency": 0,
+              "property": [],
+              "resilient": 0
+            },
+            "dex_cap": 3,
+            "ac_bonus": 2,
+            "category": "light",
+            "strength": 1,
+            "check_penalty": -1,
+            "speed_penalty": 0
+          },
+          "operations": [],
+          "content_source_id": 907,
+          "version": "1.0",
+          "uuid": 1570232013393911,
+          "price": {
+            "gp": 10
+          },
+          "traits": [],
+          "availability": null,
+          "updated_at": "2026-10-28T02:53:26.184299+00:00"
+        },
+        "is_formula": false,
+        "is_equipped": false,
+        "is_invested": false,
+        "is_implanted": false,
+        "container_contents": []
+      },
+      {
+        "id": "66b619ca-0f96-45b5-ba46-38c177a4a228",
+        "item": {
+          "id": 23481,
+          "created_at": "2026-10-28T02:53:26.047694+00:00",
+          "name": "FWI Emberward Charm",
+          "bulk": "L",
+          "level": 4,
+          "rarity": "COMMON",
+          "description": "A warm coal in a cage. Resistance 5 to fire; +1 item bonus to Reflex saves; +2 circumstance bonus to Reflex saves against fire.",
+          "group": "GENERAL",
+          "hands": null,
+          "size": "MEDIUM",
+          "craft_requirements": null,
+          "usage": "worn",
+          "meta_data": {},
+          "operations": [
+            {
+              "id": "8ee24c73-5bde-44d5-8b3d-dd42a29d02b0",
+              "type": "adjValue",
+              "data": {
+                "variable": "RESISTANCES",
+                "value": "Fire, 5"
+              }
+            },
+            {
+              "id": "c1e27183-6db7-4222-bdba-fe69ea29adc7",
+              "type": "addBonusToValue",
+              "data": {
+                "variable": "SAVE_REFLEX",
+                "value": 1,
+                "type": "item",
+                "text": ""
+              }
+            },
+            {
+              "id": "742f3896-3662-42de-ae93-9662d734fc0b",
+              "type": "addBonusToValue",
+              "data": {
+                "variable": "SAVE_REFLEX",
+                "value": 2,
+                "type": "circumstance",
+                "text": "against fire effects"
+              }
+            }
+          ],
+          "content_source_id": 907,
+          "version": "1.0",
+          "uuid": 834253639389220,
+          "price": {
+            "gp": 90
+          },
+          "traits": [
+            1504
+          ],
+          "availability": null,
+          "updated_at": "2026-10-28T02:53:26.047694+00:00"
+        },
+        "is_formula": false,
+        "is_equipped": false,
+        "is_invested": false,
+        "is_implanted": false,
+        "container_contents": []
+      },
+      {
+        "id": "0793d9c8-9f70-4e68-adec-ded8bb1436d6",
+        "item": {
+          "id": 23484,
+          "created_at": "2026-10-28T02:53:26.135786+00:00",
+          "name": "FWI Oddity Tome",
+          "bulk": "L",
+          "level": 1,
+          "rarity": "COMMON",
+          "description": "Exercises the report-only operations: conditional, injectText, sendNotification, giveTrait, and a proficiency adjValue.",
+          "group": "GENERAL",
+          "hands": "1",
+          "size": "MEDIUM",
+          "craft_requirements": null,
+          "usage": "held in 1 hand",
+          "meta_data": {
+            "bulk": {}
+          },
+          "operations": [
+            {
+              "id": "4acee09f-3a83-4d73-880b-7020435d2ed5",
+              "type": "conditional",
+              "data": {
+                "conditions": [
+                  {
+                    "id": "ee081ec0-7efd-4b31-940a-474e6ab45206",
+                    "name": "LEVEL",
+                    "type": "num",
+                    "operator": "GREATER_THAN_OR_EQUALS",
+                    "value": 1
+                  }
+                ],
+                "trueOperations": [
+                  {
+                    "id": "2b46d83a-275c-4798-a92b-24befba29389",
+                    "type": "addBonusToValue",
+                    "data": {
+                      "variable": "SKILL_OCCULTISM",
+                      "value": 1,
+                      "type": "item",
+                      "text": ""
+                    }
+                  }
+                ],
+                "falseOperations": []
+              }
+            },
+            {
+              "id": "52eb2a00-f1e1-4ed2-a6cb-5f8477ccf33e",
+              "type": "adjValue",
+              "data": {
+                "variable": "SKILL_STEALTH",
+                "value": {
+                  "value": "T"
+                }
+              }
+            },
+            {
+              "id": "8679938e-c4af-4d38-bb9a-2140da352512",
+              "type": "injectText",
+              "data": {
+                "type": "feat",
+                "id": 20375,
+                "text": "The tome whispers."
+              }
+            },
+            {
+              "id": "c4e6afad-4591-43f3-a171-1b7da987d3a1",
+              "type": "sendNotification",
+              "data": {
+                "title": "Tome",
+                "message": "It whispers.",
+                "color": "blue"
+              }
+            },
+            {
+              "id": "b1c479dd-f4da-4612-b6e0-2f1d1940c05a",
+              "type": "giveTrait",
+              "data": {
+                "traitId": 1514
+              }
+            }
+          ],
+          "content_source_id": 907,
+          "version": "1.0",
+          "uuid": 7683944556726542,
+          "price": {
+            "gp": 15
+          },
+          "traits": [
+            1514
+          ],
+          "availability": null,
+          "updated_at": "2026-10-28T02:54:23.349424+00:00"
+        },
+        "is_formula": false,
+        "is_equipped": false,
+        "is_invested": false,
+        "is_implanted": false,
+        "container_contents": []
+      },
+      {
+        "id": "273e278d-93b1-469f-a1b6-e20a78b659b9",
+        "item": {
+          "id": 23482,
+          "created_at": "2026-10-28T02:53:26.078034+00:00",
+          "name": "FWI Owl-Eye Lenses",
+          "bulk": "L",
+          "level": 2,
+          "rarity": "COMMON",
+          "description": "Grants darkvision and imprecise scent 30 feet, and a +1 item bonus to Perception.",
+          "group": "GENERAL",
+          "hands": null,
+          "size": "MEDIUM",
+          "craft_requirements": null,
+          "usage": "worn eyepiece",
+          "meta_data": {},
+          "operations": [
+            {
+              "id": "a6bc6793-96be-4ae5-ac95-ec15e08ee574",
+              "type": "adjValue",
+              "data": {
+                "variable": "SENSES_PRECISE",
+                "value": "DARKVISION"
+              }
+            },
+            {
+              "id": "610c0335-f1a4-4eb2-93c3-34c826356bbc",
+              "type": "adjValue",
+              "data": {
+                "variable": "SENSES_IMPRECISE",
+                "value": "SCENT, 30"
+              }
+            },
+            {
+              "id": "d95e9945-0fca-4b8f-a6f8-aeecff98d1f0",
+              "type": "addBonusToValue",
+              "data": {
+                "variable": "PERCEPTION",
+                "value": 1,
+                "type": "item",
+                "text": ""
+              }
+            }
+          ],
+          "content_source_id": 907,
+          "version": "1.0",
+          "uuid": 2315837995467107,
+          "price": {
+            "gp": 35
+          },
+          "traits": [
+            1504
+          ],
+          "availability": null,
+          "updated_at": "2026-10-28T02:53:26.078034+00:00"
+        },
+        "is_formula": false,
+        "is_equipped": false,
+        "is_invested": false,
+        "is_implanted": false,
+        "container_contents": []
+      },
+      {
+        "id": "66be47a9-719a-48cb-bb0f-96d4d53e50fa",
+        "item": {
+          "id": 23485,
+          "created_at": "2026-10-28T02:53:26.162522+00:00",
+          "name": "FWI Starfall Glaive",
+          "bulk": "2",
+          "level": 2,
+          "rarity": "COMMON",
+          "description": "A glaive forged from a fallen star.",
+          "group": "WEAPON",
+          "hands": "2",
+          "size": "MEDIUM",
+          "craft_requirements": null,
+          "usage": "held in 2 hands",
+          "meta_data": {
+            "hp": 0,
+            "bulk": {},
+            "group": "polearm",
+            "runes": {
+              "potency": 1,
+              "property": [],
+              "striking": 0
+            },
+            "damage": {
+              "die": "d10",
+              "dice": 1,
+              "extra": "",
+              "damageType": "slashing"
+            },
+            "hp_max": 0,
+            "category": "martial",
+            "hardness": 0,
+            "attack_bonus": 0,
+            "broken_threshold": 0
+          },
+          "operations": [],
+          "content_source_id": 907,
+          "version": "1.0",
+          "uuid": 3222890042733132,
+          "price": {
+            "gp": 40
+          },
+          "traits": [
+            1573,
+            1598
+          ],
+          "availability": null,
+          "updated_at": "2026-10-28T02:53:26.162522+00:00"
+        },
+        "is_formula": false,
+        "is_equipped": false,
+        "is_invested": false,
+        "is_implanted": false,
+        "container_contents": []
+      },
+      {
+        "id": "8340c4f5-3e87-4ee4-b90f-0242d5d8241a",
+        "item": {
+          "id": 23483,
+          "created_at": "2026-10-28T02:53:26.109225+00:00",
+          "name": "FWI Windstride Anklets",
+          "bulk": "L",
+          "level": 3,
+          "rarity": "COMMON",
+          "description": "+5-foot status bonus to Speed, swim Speed 15 feet, +3 max HP, and you can speak Draconic.",
+          "group": "GENERAL",
+          "hands": null,
+          "size": "MEDIUM",
+          "craft_requirements": null,
+          "usage": "worn anklets",
+          "meta_data": {},
+          "operations": [
+            {
+              "id": "5b518e82-b409-49e0-891f-8ea566fd9566",
+              "type": "addBonusToValue",
+              "data": {
+                "variable": "SPEED",
+                "value": 5,
+                "type": "status",
+                "text": ""
+              }
+            },
+            {
+              "id": "890d473f-a51c-44f1-b8e2-a7c25742d7ee",
+              "type": "setValue",
+              "data": {
+                "variable": "SPEED_SWIM",
+                "value": 15
+              }
+            },
+            {
+              "id": "81bc8941-b1ae-440d-96bf-f1369a14d965",
+              "type": "adjValue",
+              "data": {
+                "variable": "MAX_HEALTH_BONUS",
+                "value": 3
+              }
+            },
+            {
+              "id": "552b1d39-fc82-4b28-8295-f2531637a721",
+              "type": "giveLanguage",
+              "data": {
+                "languageId": 82
+              }
+            }
+          ],
+          "content_source_id": 907,
+          "version": "1.0",
+          "uuid": 8773734544611283,
+          "price": {
+            "gp": 60
+          },
+          "traits": [
+            1504
+          ],
+          "availability": null,
+          "updated_at": "2026-10-28T02:53:26.109225+00:00"
+        },
+        "is_formula": false,
+        "is_equipped": false,
+        "is_invested": false,
+        "is_implanted": false,
+        "container_contents": []
+      },
+      {
+        "id": "1f54bb83-fce3-4d51-8844-0610c12d9582",
+        "item": {
+          "id": 23470,
+          "created_at": "2026-10-26T06:25:41.248686+00:00",
+          "name": "Lantern of Last Echoes",
+          "bulk": "L",
+          "level": 2,
+          "rarity": "UNCOMMON",
+          "description": "An ornate brass-framed lantern holds cloudy teal glass and a pale, smokeless flame. A skull-shaped face decorates its cage. Old investigators of the river trade used such lanterns to reconstruct disasters and disappearances.\n\nWhile the shutter is open, the lantern’s flame sheds bright light in a 20-foot radius and dim light for the next 20 feet. The flame stays with the lantern, requires no fuel or oxygen, and gives off no heat. An Interact action opens or closes the shutter, revealing or concealing that flame.\n\nPassive: While the shutter is open, you gain the [Oddity Identification](link_feat_20375) skill feat. It works as that feat normally does.\n\nActivate—[Light](link_spell_4699) (two actions, concentrate, manipulate). Effect: you cast light, creating a separate orb. The orb uses the spell’s radius, range, and duration, and you can sustain the spell to move it or attach it to a willing creature. The lantern’s own flame is unaffected.\n\nActivate—Final Glimmer (two actions, concentrate, manipulate). Frequency three times per day. Requirements: you are within 10 feet of identifiable physical remains of a creature that died within the past 7 days. Effect: the lantern projects a silent image of one sensory fragment from the creature’s final moments, chosen by the GM. The image lasts up to 6 seconds and provides at least one concrete, truthful clue. Eligible remains always yield a clue; no check is required.\n\nThe image cannot communicate, answer questions, disclose thoughts, or reproduce legible writing. It can show an attacker’s outline or visible features but does not supply a name or confirm an identity. The lantern draws a lingering echo from the remains; it neither summons nor speaks to the dead.\n\nSpecial: no investment or spellcasting is required. These activations have no effect on thralls and do not modify necromancer class abilities. Final Glimmer’s uses belong to the item and do not refresh when passed to another creature.",
+          "group": "GENERAL",
+          "hands": "1",
+          "size": "MEDIUM",
+          "craft_requirements": "",
+          "usage": "held in 1 hand",
+          "meta_data": {},
+          "operations": [
+            {
+              "id": "83b9f28a-7fc7-45e1-8339-df488b2466ca",
+              "type": "giveAbilityBlock",
+              "data": {
+                "type": "feat",
+                "abilityBlockId": 20375
+              }
+            },
+            {
+              "id": "3b104c51-a4cb-4a93-a5f1-e2c5aa98e0fa",
+              "type": "giveSpell",
+              "data": {
+                "spellId": 4699,
+                "type": "INNATE",
+                "rank": 0,
+                "tradition": "OCCULT",
+                "casts": null
+              }
+            }
+          ],
+          "content_source_id": 905,
+          "version": "1.0",
+          "uuid": 433736584819228,
+          "price": {
+            "gp": 30
+          },
+          "traits": [
+            1514
+          ],
+          "availability": null,
+          "updated_at": "2026-10-27T18:27:22.435825+00:00"
+        },
+        "is_formula": false,
+        "is_equipped": false,
+        "is_invested": false,
+        "is_implanted": false,
+        "container_contents": []
+      }
+    ],
+    "total_bulk": "4",
+    "spell_raw_data": {
+      "slots": [],
+      "list": [],
+      "focus": [],
+      "innate": [
+        {
+          "spell_id": 4699,
+          "tradition": "OCCULT",
+          "rank": 0,
+          "casts_max": 0,
+          "casts_current": 0,
+          "attribute": "ATTRIBUTE_CHA"
+        }
+      ],
+      "sources": []
+    },
+    "spell_sources": [],
+    "spell_slots": [],
+    "spells": {
+      "all": [],
+      "cantrips": [],
+      "normal": [],
+      "rituals": []
+    },
+    "focus_spells": [],
+    "innate_spells": [
+      {
+        "spell_id": 4699,
+        "tradition": "OCCULT",
+        "rank": 0,
+        "casts_max": 0,
+        "casts_current": 0,
+        "attribute": "ATTRIBUTE_CHA",
+        "spell": {
+          "id": 4699,
+          "created_at": "2024-03-23T20:49:12.96187+00:00",
+          "name": "Light",
+          "rank": 0,
+          "traditions": [
+            "arcane",
+            "divine",
+            "occult",
+            "primal"
+          ],
+          "rarity": "COMMON",
+          "cast": "TWO-ACTIONS",
+          "traits": [
+            1858,
+            1432,
+            1517,
+            1433
+          ],
+          "defense": null,
+          "cost": "",
+          "trigger": null,
+          "requirements": null,
+          "range": "120 feet",
+          "area": null,
+          "targets": "",
+          "duration": "until your next daily preparations",
+          "description": "You create an orb of light that sheds bright light in a 20-foot radius (and dim light for the next 20 feet) in a color you choose. If you create the light in the same space as a willing creature, you can attach the light to the creature, causing it to float near that creature as it moves. You can [Sustain](link_action_19858) the spell to move the light up to 60 feet; you can attach or detach it from a creature as part of this movement.\n\nYou can [Dismiss](link_action_19627) the spell. If you [Cast the Spell](link_action_19611) while you already have four light spells active, you must choose one of the existing spells to end.",
+          "meta_data": {
+            "damage": [],
+            "source": {
+              "url": "https://2e.aonprd.com/Spells.aspx?ID=1585",
+              "book": "Player Core",
+              "page": "340"
+            },
+            "foundry": {
+              "rules": [],
+              "is_focus": false
+            }
+          },
+          "content_source_id": 3,
+          "version": "1.0",
+          "uuid": 2956398977648258,
+          "heightened": {
+            "text": [
+              {
+                "amount": "(4th)",
+                "text": "The orb sheds light in a 60-foot radius (and dim light for the next 60 feet)."
+              }
+            ],
+            "data": {}
+          },
+          "availability": null,
+          "updated_at": "2026-08-27T16:53:39.643494+00:00"
+        },
+        "stats": {
+          "spell_attack": {
+            "total": [
+              2,
+              -3,
+              -8
+            ],
+            "parts": {},
+            "conditionals": []
+          },
+          "spell_dc": {
+            "total": 12,
+            "parts": {}
+          }
+        }
+      }
+    ],
+    "size": "Medium",
+    "speeds": [
+      {
+        "name": "SPEED",
+        "value": {
+          "bonus": 5,
+          "bmap": {},
+          "conditionals": [],
+          "total": 25,
+          "value": 20
+        }
+      },
+      {
+        "name": "SPEED_FLY",
+        "value": {
+          "bonus": 0,
+          "bmap": {},
+          "conditionals": [],
+          "total": 5,
+          "value": 0
+        }
+      },
+      {
+        "name": "SPEED_CLIMB",
+        "value": {
+          "bonus": 0,
+          "bmap": {},
+          "conditionals": [],
+          "total": 5,
+          "value": 0
+        }
+      },
+      {
+        "name": "SPEED_BURROW",
+        "value": {
+          "bonus": 0,
+          "bmap": {},
+          "conditionals": [],
+          "total": 5,
+          "value": 0
+        }
+      },
+      {
+        "name": "SPEED_SWIM",
+        "value": {
+          "bonus": 0,
+          "bmap": {},
+          "conditionals": [],
+          "total": 15,
+          "value": 15
+        }
+      }
+    ],
+    "max_hp": 24,
+    "ac": 13,
+    "shield_item": null,
+    "armor_item": null,
+    "resist_weaks": {
+      "resists": [
+        "Fire  5"
+      ],
+      "weaks": [],
+      "immunes": []
+    },
+    "proficiencies": {
+      "SAVE_FORT": {
+        "total": "+6",
+        "parts": {
+          "level": 1,
+          "profValue": 4,
+          "attributeMod": 1,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "SAVE_REFLEX": {
+        "total": "+6",
+        "parts": {
+          "level": 1,
+          "profValue": 4,
+          "attributeMod": 0,
+          "isInheritedDefense": false,
+          "hasConditionals": true,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 1,
+            "baseValue": 0,
+            "conditionals": [
+              {
+                "text": "+2 circumstance bonus against fire effects",
+                "source": "FWI Emberward Charm"
+              }
+            ]
+          }
+        }
+      },
+      "SAVE_WILL": {
+        "total": "+4",
+        "parts": {
+          "level": 1,
+          "profValue": 2,
+          "attributeMod": 1,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "SKILL_ACROBATICS": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": 0,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "SKILL_ARCANA": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": 0,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "SKILL_ATHLETICS": {
+        "total": "+1",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": 0,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 1,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "SKILL_CRAFTING": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": 0,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "SKILL_DECEPTION": {
+        "total": "-1",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": -1,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "SKILL_DIPLOMACY": {
+        "total": "-1",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": -1,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "SKILL_INTIMIDATION": {
+        "total": "-1",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": -1,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "SKILL_MEDICINE": {
+        "total": "+1",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": 1,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "SKILL_NATURE": {
+        "total": "+1",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": 1,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "SKILL_OCCULTISM": {
+        "total": "+1",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": 0,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 1,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "SKILL_PERFORMANCE": {
+        "total": "-1",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": -1,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "SKILL_RELIGION": {
+        "total": "+4",
+        "parts": {
+          "level": 1,
+          "profValue": 2,
+          "attributeMod": 1,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "SKILL_SOCIETY": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": 0,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "SKILL_STEALTH": {
+        "total": "+3",
+        "parts": {
+          "level": 1,
+          "profValue": 2,
+          "attributeMod": 0,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "SKILL_SURVIVAL": {
+        "total": "+1",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": 1,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "SKILL_THIEVERY": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": 0,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "SKILL_LORE____": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": 0,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "SPELL_ATTACK": {
+        "total": "+3",
+        "parts": {
+          "level": 1,
+          "profValue": 2,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "SPELL_DC": {
+        "total": "+3",
+        "parts": {
+          "level": 1,
+          "profValue": 2,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "LIGHT_ARMOR": {
+        "total": "+3",
+        "parts": {
+          "level": 1,
+          "profValue": 2,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "MEDIUM_ARMOR": {
+        "total": "+3",
+        "parts": {
+          "level": 1,
+          "profValue": 2,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "HEAVY_ARMOR": {
+        "total": "+3",
+        "parts": {
+          "level": 1,
+          "profValue": 2,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "UNARMORED_DEFENSE": {
+        "total": "+3",
+        "parts": {
+          "level": 1,
+          "profValue": 2,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "LIGHT_BARDING": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "HEAVY_BARDING": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "SIMPLE_WEAPONS": {
+        "total": "+5",
+        "parts": {
+          "level": 1,
+          "profValue": 4,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "MARTIAL_WEAPONS": {
+        "total": "+5",
+        "parts": {
+          "level": 1,
+          "profValue": 4,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "ADVANCED_WEAPONS": {
+        "total": "+3",
+        "parts": {
+          "level": 1,
+          "profValue": 2,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "UNARMED_ATTACKS": {
+        "total": "+5",
+        "parts": {
+          "level": 1,
+          "profValue": 4,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "PERCEPTION": {
+        "total": "+7",
+        "parts": {
+          "level": 1,
+          "profValue": 4,
+          "attributeMod": 1,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 1,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "CLASS_DC": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_AXE": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_BOMB": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_BOW": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_BRAWLING": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_CLUB": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_CROSSBOW": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_DART": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_FIREARM": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_FLAIL": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_HAMMER": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_KNIFE": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_PICK": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_POLEARM": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_SHIELD": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_SLING": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_SPEAR": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_SPEAR_SIMPLE": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_SPEAR_MARTIAL": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_SPEAR_ADVANCED": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_SPEAR_UNARMED_ATTACK": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_POLEARM_SIMPLE": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_POLEARM_MARTIAL": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_POLEARM_ADVANCED": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_POLEARM_UNARMED_ATTACK": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_SWORD": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_LASER": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_GROUP_PROJECTILE": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_DIVISION_GUN": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_DIVISION_GUN_SIMPLE": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_DIVISION_GUN_MARTIAL": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_DIVISION_GUN_ADVANCED": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "WEAPON_DIVISION_ONE_HANDED_AGILE_FINESSE": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "ARMOR_GROUP_CLOTH": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "ARMOR_GROUP_CHAIN": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "ARMOR_GROUP_COMPOSITE": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "ARMOR_GROUP_LEATHER": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "ARMOR_GROUP_PLATE": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "ARMOR_GROUP_CERAMIC": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "ARMOR_GROUP_POLYMER": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "ARMOR_GROUP_SKELETAL": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "ARMOR_GROUP_WOOD": {
+        "total": "+0",
+        "parts": {
+          "level": 0,
+          "profValue": 0,
+          "attributeMod": null,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "SKILL_LORE_SCRIBING": {
+        "total": "+3",
+        "parts": {
+          "level": 1,
+          "profValue": 2,
+          "attributeMod": 0,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "INNATE_SPELL_ATTACK": {
+        "total": "+2",
+        "parts": {
+          "level": 1,
+          "profValue": 2,
+          "attributeMod": -1,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      },
+      "INNATE_SPELL_DC": {
+        "total": "12",
+        "parts": {
+          "level": 1,
+          "profValue": 2,
+          "attributeMod": -1,
+          "isInheritedDefense": false,
+          "hasConditionals": false,
+          "breakdown": {
+            "bonuses": {},
+            "bonusValue": 0,
+            "baseValue": 0,
+            "conditionals": []
+          }
+        }
+      }
+    },
+    "attributes": {
+      "ATTRIBUTE_STR": {
+        "value": 0,
+        "partial": false
+      },
+      "ATTRIBUTE_DEX": {
+        "value": 0,
+        "partial": false
+      },
+      "ATTRIBUTE_CON": {
+        "value": 1,
+        "partial": false
+      },
+      "ATTRIBUTE_INT": {
+        "value": 0,
+        "partial": false
+      },
+      "ATTRIBUTE_WIS": {
+        "value": 1,
+        "partial": false
+      },
+      "ATTRIBUTE_CHA": {
+        "value": -1,
+        "partial": false
+      }
+    },
+    "raw_data_dump": {
+      "variables": {
+        "ATTRIBUTE_STR": {
+          "name": "ATTRIBUTE_STR",
+          "type": "attr",
+          "value": {
+            "value": 0,
+            "partial": false
+          }
+        },
+        "ATTRIBUTE_DEX": {
+          "name": "ATTRIBUTE_DEX",
+          "type": "attr",
+          "value": {
+            "value": 0,
+            "partial": false
+          }
+        },
+        "ATTRIBUTE_CON": {
+          "name": "ATTRIBUTE_CON",
+          "type": "attr",
+          "value": {
+            "value": 1,
+            "partial": false
+          }
+        },
+        "ATTRIBUTE_INT": {
+          "name": "ATTRIBUTE_INT",
+          "type": "attr",
+          "value": {
+            "value": 0,
+            "partial": false
+          }
+        },
+        "ATTRIBUTE_WIS": {
+          "name": "ATTRIBUTE_WIS",
+          "type": "attr",
+          "value": {
+            "value": 1,
+            "partial": false
+          }
+        },
+        "ATTRIBUTE_CHA": {
+          "name": "ATTRIBUTE_CHA",
+          "type": "attr",
+          "value": {
+            "value": -1,
+            "partial": false
+          }
+        },
+        "SAVE_FORT": {
+          "name": "SAVE_FORT",
+          "type": "prof",
+          "value": {
+            "value": "E",
+            "increases": 0,
+            "attribute": "ATTRIBUTE_CON"
+          }
+        },
+        "SAVE_REFLEX": {
+          "name": "SAVE_REFLEX",
+          "type": "prof",
+          "value": {
+            "value": "E",
+            "increases": 0,
+            "attribute": "ATTRIBUTE_DEX"
+          }
+        },
+        "SAVE_WILL": {
+          "name": "SAVE_WILL",
+          "type": "prof",
+          "value": {
+            "value": "T",
+            "increases": 0,
+            "attribute": "ATTRIBUTE_WIS"
+          }
+        },
+        "SKILL_ACROBATICS": {
+          "name": "SKILL_ACROBATICS",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0,
+            "attribute": "ATTRIBUTE_DEX"
+          }
+        },
+        "SKILL_ARCANA": {
+          "name": "SKILL_ARCANA",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0,
+            "attribute": "ATTRIBUTE_INT"
+          }
+        },
+        "SKILL_ATHLETICS": {
+          "name": "SKILL_ATHLETICS",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0,
+            "attribute": "ATTRIBUTE_STR"
+          }
+        },
+        "SKILL_CRAFTING": {
+          "name": "SKILL_CRAFTING",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0,
+            "attribute": "ATTRIBUTE_INT"
+          }
+        },
+        "SKILL_DECEPTION": {
+          "name": "SKILL_DECEPTION",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0,
+            "attribute": "ATTRIBUTE_CHA"
+          }
+        },
+        "SKILL_DIPLOMACY": {
+          "name": "SKILL_DIPLOMACY",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0,
+            "attribute": "ATTRIBUTE_CHA"
+          }
+        },
+        "SKILL_INTIMIDATION": {
+          "name": "SKILL_INTIMIDATION",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0,
+            "attribute": "ATTRIBUTE_CHA"
+          }
+        },
+        "SKILL_MEDICINE": {
+          "name": "SKILL_MEDICINE",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0,
+            "attribute": "ATTRIBUTE_WIS"
+          }
+        },
+        "SKILL_NATURE": {
+          "name": "SKILL_NATURE",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0,
+            "attribute": "ATTRIBUTE_WIS"
+          }
+        },
+        "SKILL_OCCULTISM": {
+          "name": "SKILL_OCCULTISM",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0,
+            "attribute": "ATTRIBUTE_INT"
+          }
+        },
+        "SKILL_PERFORMANCE": {
+          "name": "SKILL_PERFORMANCE",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0,
+            "attribute": "ATTRIBUTE_CHA"
+          }
+        },
+        "SKILL_RELIGION": {
+          "name": "SKILL_RELIGION",
+          "type": "prof",
+          "value": {
+            "value": "T",
+            "increases": 0,
+            "attribute": "ATTRIBUTE_WIS"
+          }
+        },
+        "SKILL_SOCIETY": {
+          "name": "SKILL_SOCIETY",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0,
+            "attribute": "ATTRIBUTE_INT"
+          }
+        },
+        "SKILL_STEALTH": {
+          "name": "SKILL_STEALTH",
+          "type": "prof",
+          "value": {
+            "value": "T",
+            "increases": 0,
+            "attribute": "ATTRIBUTE_DEX"
+          }
+        },
+        "SKILL_SURVIVAL": {
+          "name": "SKILL_SURVIVAL",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0,
+            "attribute": "ATTRIBUTE_WIS"
+          }
+        },
+        "SKILL_THIEVERY": {
+          "name": "SKILL_THIEVERY",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0,
+            "attribute": "ATTRIBUTE_DEX"
+          }
+        },
+        "SKILL_LORE____": {
+          "name": "SKILL_LORE____",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0,
+            "attribute": "ATTRIBUTE_INT"
+          }
+        },
+        "SPELL_ATTACK": {
+          "name": "SPELL_ATTACK",
+          "type": "prof",
+          "value": {
+            "value": "T",
+            "increases": 0
+          }
+        },
+        "SPELL_DC": {
+          "name": "SPELL_DC",
+          "type": "prof",
+          "value": {
+            "value": "T",
+            "increases": 0
+          }
+        },
+        "CASTING_SOURCES": {
+          "name": "CASTING_SOURCES",
+          "type": "list-str",
+          "value": []
+        },
+        "SPELL_SLOTS": {
+          "name": "SPELL_SLOTS",
+          "type": "list-str",
+          "value": []
+        },
+        "SPELL_DATA": {
+          "name": "SPELL_DATA",
+          "type": "list-str",
+          "value": [
+            "{\"spellId\":4699,\"type\":\"INNATE\",\"rank\":0,\"tradition\":\"OCCULT\",\"casts\":null}"
+          ]
+        },
+        "FOCUS_POINT_BONUS": {
+          "name": "FOCUS_POINT_BONUS",
+          "type": "num",
+          "value": 0
+        },
+        "LIGHT_ARMOR": {
+          "name": "LIGHT_ARMOR",
+          "type": "prof",
+          "value": {
+            "value": "T",
+            "increases": 0
+          }
+        },
+        "MEDIUM_ARMOR": {
+          "name": "MEDIUM_ARMOR",
+          "type": "prof",
+          "value": {
+            "value": "T",
+            "increases": 0
+          }
+        },
+        "HEAVY_ARMOR": {
+          "name": "HEAVY_ARMOR",
+          "type": "prof",
+          "value": {
+            "value": "T",
+            "increases": 0
+          }
+        },
+        "UNARMORED_DEFENSE": {
+          "name": "UNARMORED_DEFENSE",
+          "type": "prof",
+          "value": {
+            "value": "T",
+            "increases": 0
+          }
+        },
+        "LIGHT_BARDING": {
+          "name": "LIGHT_BARDING",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "HEAVY_BARDING": {
+          "name": "HEAVY_BARDING",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "SIMPLE_WEAPONS": {
+          "name": "SIMPLE_WEAPONS",
+          "type": "prof",
+          "value": {
+            "value": "E",
+            "increases": 0
+          }
+        },
+        "MARTIAL_WEAPONS": {
+          "name": "MARTIAL_WEAPONS",
+          "type": "prof",
+          "value": {
+            "value": "E",
+            "increases": 0
+          }
+        },
+        "ADVANCED_WEAPONS": {
+          "name": "ADVANCED_WEAPONS",
+          "type": "prof",
+          "value": {
+            "value": "T",
+            "increases": 0
+          }
+        },
+        "UNARMED_ATTACKS": {
+          "name": "UNARMED_ATTACKS",
+          "type": "prof",
+          "value": {
+            "value": "E",
+            "increases": 0
+          }
+        },
+        "PERCEPTION": {
+          "name": "PERCEPTION",
+          "type": "prof",
+          "value": {
+            "value": "E",
+            "increases": 0,
+            "attribute": "ATTRIBUTE_WIS"
+          }
+        },
+        "CLASS_DC": {
+          "name": "CLASS_DC",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "LEVEL": {
+          "name": "LEVEL",
+          "type": "num",
+          "value": 1
+        },
+        "SIZE": {
+          "name": "SIZE",
+          "type": "str",
+          "value": "medium"
+        },
+        "CORE_LANGUAGES": {
+          "name": "CORE_LANGUAGES",
+          "type": "list-str",
+          "value": [
+            "Gnomish",
+            "Goblin",
+            "Jotun",
+            "Orcish",
+            "Petran",
+            "Sakvroth"
+          ]
+        },
+        "PROF_WITHOUT_LEVEL": {
+          "name": "PROF_WITHOUT_LEVEL",
+          "type": "bool",
+          "value": false
+        },
+        "STAMINA_VARIANT": {
+          "name": "STAMINA_VARIANT",
+          "type": "bool",
+          "value": false
+        },
+        "MAX_HEALTH_ANCESTRY": {
+          "name": "MAX_HEALTH_ANCESTRY",
+          "type": "num",
+          "value": 10
+        },
+        "MAX_HEALTH_CLASS_PER_LEVEL": {
+          "name": "MAX_HEALTH_CLASS_PER_LEVEL",
+          "type": "num",
+          "value": 10
+        },
+        "MAX_HEALTH_BONUS": {
+          "name": "MAX_HEALTH_BONUS",
+          "type": "num",
+          "value": 3
+        },
+        "AC_BONUS": {
+          "name": "AC_BONUS",
+          "type": "num",
+          "value": 0
+        },
+        "SPEED": {
+          "name": "SPEED",
+          "type": "num",
+          "value": 20
+        },
+        "SPEED_FLY": {
+          "name": "SPEED_FLY",
+          "type": "num",
+          "value": 0
+        },
+        "SPEED_CLIMB": {
+          "name": "SPEED_CLIMB",
+          "type": "num",
+          "value": 0
+        },
+        "SPEED_BURROW": {
+          "name": "SPEED_BURROW",
+          "type": "num",
+          "value": 0
+        },
+        "SPEED_SWIM": {
+          "name": "SPEED_SWIM",
+          "type": "num",
+          "value": 15
+        },
+        "SENSES_PRECISE": {
+          "name": "SENSES_PRECISE",
+          "type": "list-str",
+          "value": [
+            "NORMAL_VISION",
+            "darkvision",
+            "DARKVISION"
+          ]
+        },
+        "SENSES_IMPRECISE": {
+          "name": "SENSES_IMPRECISE",
+          "type": "list-str",
+          "value": [
+            "HEARING",
+            "SCENT, 30"
+          ]
+        },
+        "SENSES_VAGUE": {
+          "name": "SENSES_VAGUE",
+          "type": "list-str",
+          "value": [
+            "SMELL"
+          ]
+        },
+        "RESISTANCES": {
+          "name": "RESISTANCES",
+          "type": "list-str",
+          "value": [
+            "Fire, 5"
+          ]
+        },
+        "WEAKNESSES": {
+          "name": "WEAKNESSES",
+          "type": "list-str",
+          "value": []
+        },
+        "IMMUNITIES": {
+          "name": "IMMUNITIES",
+          "type": "list-str",
+          "value": []
+        },
+        "SENSE_NAMES": {
+          "name": "SENSE_NAMES",
+          "type": "list-str",
+          "value": [
+            "DARKVISION"
+          ]
+        },
+        "MODE_NAMES": {
+          "name": "MODE_NAMES",
+          "type": "list-str",
+          "value": []
+        },
+        "CLASS_NAMES": {
+          "name": "CLASS_NAMES",
+          "type": "list-str",
+          "value": [
+            "FIGHTER"
+          ]
+        },
+        "ANCESTRY_NAMES": {
+          "name": "ANCESTRY_NAMES",
+          "type": "list-str",
+          "value": [
+            "DWARF"
+          ]
+        },
+        "BACKGROUND_NAMES": {
+          "name": "BACKGROUND_NAMES",
+          "type": "list-str",
+          "value": [
+            "ACOLYTE"
+          ]
+        },
+        "HERITAGE_NAMES": {
+          "name": "HERITAGE_NAMES",
+          "type": "list-str",
+          "value": []
+        },
+        "CLASS_ARCHETYPE_NAMES": {
+          "name": "CLASS_ARCHETYPE_NAMES",
+          "type": "list-str",
+          "value": []
+        },
+        "FEAT_NAMES": {
+          "name": "FEAT_NAMES",
+          "type": "list-str",
+          "value": [
+            "STUDENT OF THE CANON",
+            "REACTIVE STRIKE",
+            "SHIELD BLOCK",
+            "ODDITY IDENTIFICATION"
+          ]
+        },
+        "SPELL_NAMES": {
+          "name": "SPELL_NAMES",
+          "type": "list-str",
+          "value": [
+            "LIGHT"
+          ]
+        },
+        "LANGUAGE_NAMES": {
+          "name": "LANGUAGE_NAMES",
+          "type": "list-str",
+          "value": [
+            "COMMON",
+            "DWARVEN",
+            "DRACONIC"
+          ]
+        },
+        "TRAIT_NAMES": {
+          "name": "TRAIT_NAMES",
+          "type": "list-str",
+          "value": [
+            "FIGHTER",
+            "HUMANOID",
+            "DWARF",
+            "OCCULT"
+          ]
+        },
+        "CLASS_FEATURE_NAMES": {
+          "name": "CLASS_FEATURE_NAMES",
+          "type": "list-str",
+          "value": [
+            "ATTRIBUTE BOOSTS",
+            "FIGHTER FEAT",
+            "REACTIVE STRIKE",
+            "SHIELD BLOCK"
+          ]
+        },
+        "PHYSICAL_FEATURE_NAMES": {
+          "name": "PHYSICAL_FEATURE_NAMES",
+          "type": "list-str",
+          "value": [
+            "CLAN DAGGER"
+          ]
+        },
+        "EXTRA_ITEM_NAMES": {
+          "name": "EXTRA_ITEM_NAMES",
+          "type": "list-str",
+          "value": [
+            "FIST",
+            "CLAN DAGGER"
+          ]
+        },
+        "SENSE_IDS": {
+          "name": "SENSE_IDS",
+          "type": "list-str",
+          "value": [
+            "20769"
+          ]
+        },
+        "MODE_IDS": {
+          "name": "MODE_IDS",
+          "type": "list-str",
+          "value": []
+        },
+        "CLASS_IDS": {
+          "name": "CLASS_IDS",
+          "type": "list-str",
+          "value": [
+            "20"
+          ]
+        },
+        "ANCESTRY_IDS": {
+          "name": "ANCESTRY_IDS",
+          "type": "list-str",
+          "value": [
+            "4"
+          ]
+        },
+        "BACKGROUND_IDS": {
+          "name": "BACKGROUND_IDS",
+          "type": "list-str",
+          "value": [
+            "725"
+          ]
+        },
+        "HERITAGE_IDS": {
+          "name": "HERITAGE_IDS",
+          "type": "list-str",
+          "value": []
+        },
+        "CLASS_ARCHETYPE_IDS": {
+          "name": "CLASS_ARCHETYPE_IDS",
+          "type": "list-str",
+          "value": []
+        },
+        "FEAT_IDS": {
+          "name": "FEAT_IDS",
+          "type": "list-str",
+          "value": [
+            "20599",
+            "19751",
+            "20534",
+            "20375"
+          ]
+        },
+        "SPELL_IDS": {
+          "name": "SPELL_IDS",
+          "type": "list-str",
+          "value": [
+            "4699"
+          ]
+        },
+        "LANGUAGE_IDS": {
+          "name": "LANGUAGE_IDS",
+          "type": "list-str",
+          "value": [
+            "81",
+            "83",
+            "82"
+          ]
+        },
+        "CLASS_FEATURE_IDS": {
+          "name": "CLASS_FEATURE_IDS",
+          "type": "list-str",
+          "value": [
+            "19285",
+            "19286",
+            "19201",
+            "19228"
+          ]
+        },
+        "PHYSICAL_FEATURE_IDS": {
+          "name": "PHYSICAL_FEATURE_IDS",
+          "type": "list-str",
+          "value": [
+            "20771"
+          ]
+        },
+        "EXTRA_ITEM_IDS": {
+          "name": "EXTRA_ITEM_IDS",
+          "type": "list-str",
+          "value": [
+            "6796"
+          ]
+        },
+        "BULK_LIMIT_BONUS": {
+          "name": "BULK_LIMIT_BONUS",
+          "type": "num",
+          "value": 0
+        },
+        "INVEST_LIMIT_BONUS": {
+          "name": "INVEST_LIMIT_BONUS",
+          "type": "num",
+          "value": 0
+        },
+        "IMPLANT_LIMIT_BONUS": {
+          "name": "IMPLANT_LIMIT_BONUS",
+          "type": "num",
+          "value": 0
+        },
+        "INJECT_SELECT_OPTIONS": {
+          "name": "INJECT_SELECT_OPTIONS",
+          "type": "list-str",
+          "value": []
+        },
+        "INJECT_TEXT": {
+          "name": "INJECT_TEXT",
+          "type": "list-str",
+          "value": [
+            "{\"type\":\"feat\",\"id\":20375,\"text\":\"The tome whispers.\"}"
+          ]
+        },
+        "BLACKLIST_ABILITY_BLOCKS": {
+          "name": "BLACKLIST_ABILITY_BLOCKS",
+          "type": "list-str",
+          "value": []
+        },
+        "BLACKLIST_TRAITS": {
+          "name": "BLACKLIST_TRAITS",
+          "type": "list-str",
+          "value": []
+        },
+        "BLACKLIST_SPELLS": {
+          "name": "BLACKLIST_SPELLS",
+          "type": "list-str",
+          "value": []
+        },
+        "BLACKLIST_ITEMS": {
+          "name": "BLACKLIST_ITEMS",
+          "type": "list-str",
+          "value": []
+        },
+        "WEAPON_SPECIALIZATION": {
+          "name": "WEAPON_SPECIALIZATION",
+          "type": "bool",
+          "value": false
+        },
+        "WEAPON_SPECIALIZATION_GREATER": {
+          "name": "WEAPON_SPECIALIZATION_GREATER",
+          "type": "bool",
+          "value": false
+        },
+        "EXEMPLAR_HUMBLE_STRIKES": {
+          "name": "EXEMPLAR_HUMBLE_STRIKES",
+          "type": "bool",
+          "value": false
+        },
+        "ARMOR_SPECIALIZATION_LIGHT": {
+          "name": "ARMOR_SPECIALIZATION_LIGHT",
+          "type": "bool",
+          "value": false
+        },
+        "ARMOR_SPECIALIZATION_MEDIUM": {
+          "name": "ARMOR_SPECIALIZATION_MEDIUM",
+          "type": "bool",
+          "value": false
+        },
+        "ARMOR_SPECIALIZATION_HEAVY": {
+          "name": "ARMOR_SPECIALIZATION_HEAVY",
+          "type": "bool",
+          "value": false
+        },
+        "WEAPON_CRITICAL_SPECIALIZATIONS": {
+          "name": "WEAPON_CRITICAL_SPECIALIZATIONS",
+          "type": "list-str",
+          "value": []
+        },
+        "WEAPON_FAMILIARITY": {
+          "name": "WEAPON_FAMILIARITY",
+          "type": "list-str",
+          "value": []
+        },
+        "MARTIAL_EXPERIENCE": {
+          "name": "MARTIAL_EXPERIENCE",
+          "type": "bool",
+          "value": false
+        },
+        "UNBURDENED_IRON": {
+          "name": "UNBURDENED_IRON",
+          "type": "bool",
+          "value": false
+        },
+        "UNTRAINED_IMPROVISATION": {
+          "name": "UNTRAINED_IMPROVISATION",
+          "type": "str",
+          "value": ""
+        },
+        "IMPROVED_MULTILINGUAL": {
+          "name": "IMPROVED_MULTILINGUAL",
+          "type": "bool",
+          "value": false
+        },
+        "USE_DEX_FOR_MELEE_FINESSE": {
+          "name": "USE_DEX_FOR_MELEE_FINESSE",
+          "type": "bool",
+          "value": false
+        },
+        "ADD_CON_TO_BULK_LIMIT": {
+          "name": "ADD_CON_TO_BULK_LIMIT",
+          "type": "bool",
+          "value": false
+        },
+        "USE_CON_FOR_ARMOR_STR_REQ": {
+          "name": "USE_CON_FOR_ARMOR_STR_REQ",
+          "type": "bool",
+          "value": false
+        },
+        "MINIMUM_WEAPON_DAMAGE_DICE": {
+          "name": "MINIMUM_WEAPON_DAMAGE_DICE",
+          "type": "num",
+          "value": 1
+        },
+        "ATTACK_ROLLS_BONUS": {
+          "name": "ATTACK_ROLLS_BONUS",
+          "type": "num",
+          "value": 0
+        },
+        "ATTACK_DAMAGE_BONUS": {
+          "name": "ATTACK_DAMAGE_BONUS",
+          "type": "num",
+          "value": 0
+        },
+        "DEX_ATTACK_ROLLS_BONUS": {
+          "name": "DEX_ATTACK_ROLLS_BONUS",
+          "type": "num",
+          "value": 0
+        },
+        "DEX_ATTACK_DAMAGE_BONUS": {
+          "name": "DEX_ATTACK_DAMAGE_BONUS",
+          "type": "num",
+          "value": 0
+        },
+        "STR_ATTACK_ROLLS_BONUS": {
+          "name": "STR_ATTACK_ROLLS_BONUS",
+          "type": "num",
+          "value": 0
+        },
+        "STR_ATTACK_DAMAGE_BONUS": {
+          "name": "STR_ATTACK_DAMAGE_BONUS",
+          "type": "num",
+          "value": 0
+        },
+        "RANGED_ATTACK_ROLLS_BONUS": {
+          "name": "RANGED_ATTACK_ROLLS_BONUS",
+          "type": "num",
+          "value": 0
+        },
+        "RANGED_ATTACK_DAMAGE_BONUS": {
+          "name": "RANGED_ATTACK_DAMAGE_BONUS",
+          "type": "num",
+          "value": 0
+        },
+        "MELEE_ATTACK_ROLLS_BONUS": {
+          "name": "MELEE_ATTACK_ROLLS_BONUS",
+          "type": "num",
+          "value": 0
+        },
+        "MELEE_ATTACK_DAMAGE_BONUS": {
+          "name": "MELEE_ATTACK_DAMAGE_BONUS",
+          "type": "num",
+          "value": 0
+        },
+        "NON_SPELL_ATTACK_ROLLS_BONUS": {
+          "name": "NON_SPELL_ATTACK_ROLLS_BONUS",
+          "type": "num",
+          "value": 0
+        },
+        "NON_SPELL_ATTACK_DAMAGE_BONUS": {
+          "name": "NON_SPELL_ATTACK_DAMAGE_BONUS",
+          "type": "num",
+          "value": 0
+        },
+        "WEAPON_GROUP_AXE": {
+          "name": "WEAPON_GROUP_AXE",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_BOMB": {
+          "name": "WEAPON_GROUP_BOMB",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_BOW": {
+          "name": "WEAPON_GROUP_BOW",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_BRAWLING": {
+          "name": "WEAPON_GROUP_BRAWLING",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_CLUB": {
+          "name": "WEAPON_GROUP_CLUB",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_CROSSBOW": {
+          "name": "WEAPON_GROUP_CROSSBOW",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_DART": {
+          "name": "WEAPON_GROUP_DART",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_FIREARM": {
+          "name": "WEAPON_GROUP_FIREARM",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_FLAIL": {
+          "name": "WEAPON_GROUP_FLAIL",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_HAMMER": {
+          "name": "WEAPON_GROUP_HAMMER",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_KNIFE": {
+          "name": "WEAPON_GROUP_KNIFE",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_PICK": {
+          "name": "WEAPON_GROUP_PICK",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_POLEARM": {
+          "name": "WEAPON_GROUP_POLEARM",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_SHIELD": {
+          "name": "WEAPON_GROUP_SHIELD",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_SLING": {
+          "name": "WEAPON_GROUP_SLING",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_SPEAR": {
+          "name": "WEAPON_GROUP_SPEAR",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_SPEAR_SIMPLE": {
+          "name": "WEAPON_GROUP_SPEAR_SIMPLE",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_SPEAR_MARTIAL": {
+          "name": "WEAPON_GROUP_SPEAR_MARTIAL",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_SPEAR_ADVANCED": {
+          "name": "WEAPON_GROUP_SPEAR_ADVANCED",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_SPEAR_UNARMED_ATTACK": {
+          "name": "WEAPON_GROUP_SPEAR_UNARMED_ATTACK",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_POLEARM_SIMPLE": {
+          "name": "WEAPON_GROUP_POLEARM_SIMPLE",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_POLEARM_MARTIAL": {
+          "name": "WEAPON_GROUP_POLEARM_MARTIAL",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_POLEARM_ADVANCED": {
+          "name": "WEAPON_GROUP_POLEARM_ADVANCED",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_POLEARM_UNARMED_ATTACK": {
+          "name": "WEAPON_GROUP_POLEARM_UNARMED_ATTACK",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_SWORD": {
+          "name": "WEAPON_GROUP_SWORD",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_LASER": {
+          "name": "WEAPON_GROUP_LASER",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_GROUP_PROJECTILE": {
+          "name": "WEAPON_GROUP_PROJECTILE",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_DIVISION_GUN": {
+          "name": "WEAPON_DIVISION_GUN",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_DIVISION_GUN_SIMPLE": {
+          "name": "WEAPON_DIVISION_GUN_SIMPLE",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_DIVISION_GUN_MARTIAL": {
+          "name": "WEAPON_DIVISION_GUN_MARTIAL",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_DIVISION_GUN_ADVANCED": {
+          "name": "WEAPON_DIVISION_GUN_ADVANCED",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "WEAPON_DIVISION_ONE_HANDED_AGILE_FINESSE": {
+          "name": "WEAPON_DIVISION_ONE_HANDED_AGILE_FINESSE",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "ARMOR_GROUP_CLOTH": {
+          "name": "ARMOR_GROUP_CLOTH",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "ARMOR_GROUP_CHAIN": {
+          "name": "ARMOR_GROUP_CHAIN",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "ARMOR_GROUP_COMPOSITE": {
+          "name": "ARMOR_GROUP_COMPOSITE",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "ARMOR_GROUP_LEATHER": {
+          "name": "ARMOR_GROUP_LEATHER",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "ARMOR_GROUP_PLATE": {
+          "name": "ARMOR_GROUP_PLATE",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "ARMOR_GROUP_CERAMIC": {
+          "name": "ARMOR_GROUP_CERAMIC",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "ARMOR_GROUP_POLYMER": {
+          "name": "ARMOR_GROUP_POLYMER",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "ARMOR_GROUP_SKELETAL": {
+          "name": "ARMOR_GROUP_SKELETAL",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "ARMOR_GROUP_WOOD": {
+          "name": "ARMOR_GROUP_WOOD",
+          "type": "prof",
+          "value": {
+            "value": "U",
+            "increases": 0
+          }
+        },
+        "PAGE_CONTEXT": {
+          "name": "PAGE_CONTEXT",
+          "type": "str",
+          "value": "CHARACTER-BUILDER"
+        },
+        "PATHFINDER": {
+          "name": "PATHFINDER",
+          "type": "bool",
+          "value": true
+        },
+        "STARFINDER": {
+          "name": "STARFINDER",
+          "type": "bool",
+          "value": false
+        },
+        "ORGANIZED_PLAY": {
+          "name": "ORGANIZED_PLAY",
+          "type": "bool",
+          "value": false
+        },
+        "ACTIVE_MODES": {
+          "name": "ACTIVE_MODES",
+          "type": "list-str",
+          "value": []
+        },
+        "PRIMARY_SHEET_TABS": {
+          "name": "PRIMARY_SHEET_TABS",
+          "type": "list-str",
+          "value": [
+            "skills-actions",
+            "inventory",
+            "feats-features",
+            "details",
+            "notes"
+          ]
+        },
+        "TRAIT_CLASS_FIGHTER_IDS": {
+          "name": "TRAIT_CLASS_FIGHTER_IDS",
+          "type": "num",
+          "value": 1339
+        },
+        "TRAIT_ANCESTRY_HUMANOID_IDS": {
+          "name": "TRAIT_ANCESTRY_HUMANOID_IDS",
+          "type": "num",
+          "value": 2399
+        },
+        "TRAIT_ANCESTRY_DWARF_IDS": {
+          "name": "TRAIT_ANCESTRY_DWARF_IDS",
+          "type": "num",
+          "value": 1467
+        },
+        "SKILL_LORE_SCRIBING": {
+          "name": "SKILL_LORE_SCRIBING",
+          "type": "prof",
+          "value": {
+            "value": "T",
+            "increases": 0,
+            "attribute": "ATTRIBUTE_INT"
+          }
+        },
+        "TRAIT_ANCESTRY_OCCULT_IDS": {
+          "name": "TRAIT_ANCESTRY_OCCULT_IDS",
+          "type": "num",
+          "value": 1514
+        },
+        "HAS_EIDOLON_COMPANION": {
+          "name": "HAS_EIDOLON_COMPANION",
+          "type": "bool",
+          "value": false
+        },
+        "EIDOLON_WEAPON_POTENCY": {
+          "name": "EIDOLON_WEAPON_POTENCY",
+          "type": "num",
+          "value": 0
+        },
+        "EIDOLON_WEAPON_STRIKING": {
+          "name": "EIDOLON_WEAPON_STRIKING",
+          "type": "num",
+          "value": 0
+        }
+      }
+    },
+    "all_traits": [
+      {
+        "id": 1504,
+        "name": "Magical",
+        "content_source_id": 3
+      },
+      {
+        "id": 1514,
+        "name": "Occult",
+        "content_source_id": 3
+      },
+      {
+        "id": 1573,
+        "name": "Reach",
+        "content_source_id": 3
+      },
+      {
+        "id": 1598,
+        "name": "Forceful",
+        "content_source_id": 3
+      }
+    ]
+  },
+  "slim": {
+    "version": 1,
+    "dropped": {
+      "all_traits": 361,
+      "all_spells": 0,
+      "raw_data_dump.bonuses": 1,
+      "raw_data_dump.history": 1,
+      "raw_data_dump.petOwnerDefenses": 1
+    }
+  }
+}

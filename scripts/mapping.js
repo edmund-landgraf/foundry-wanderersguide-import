@@ -1,5 +1,6 @@
 import { classifySelections } from "./selections.js";
 import { resolveFormula, extraItemIds, containerParents } from "./formulas.js";
+import { homebrewSourceIds, isCustomItem } from "./custom-items.js";
 // Pure mapping: WG JSON v4 export -> import plan. No Foundry globals here, so it is unit-testable in Node.
 
 export function sluggify(name) {
@@ -85,6 +86,7 @@ export function buildPlan(exp) {
   const parents = containerParents(exp);
   const skipped = [];
   const grantedExtras = [];
+  const homebrewIds = homebrewSourceIds(ct);
   for (const [invIndex, inv] of (ct.inventory_flat ?? []).entries()) {
     const it = inv.item ?? inv;
     if (SKIP_ITEMS.has(sluggify(it.name))) continue; // built-in strikes, not items
@@ -94,6 +96,11 @@ export function buildPlan(exp) {
     // WG grants these itself (EXTRA_ITEM_IDS, e.g. Versatile Vial); PF2e's class grants them too.
     if (extraIds.has(String(it.id))) { skipped.push({ sourcePath, name: it.name, reason: `${it.name}: WG-granted extra item; PF2e grants its own` }); grantedExtras.push(it.name); continue; }
     const invIds = inv.id ? { wgInvId: inv.id, ...(parents.get(inv.id) ? { parentInvId: parents.get(inv.id) } : {}) } : {};
+    // WG custom (homebrew) items: built from the export itself, never matched by name (custom-items.js).
+    if (isCustomItem(it, homebrewIds) && !inv.is_formula) {
+      add("equipment", "equipment", it.name, { wgContentId: it.id, quantity: inv.quantity ?? it.meta_data?.quantity ?? 1, equipped: !!inv.is_equipped, custom: true, customInv: inv, sourcePath, ...invIds });
+      continue;
+    }
     const c = parseComposedName(it.name, it.meta_data ?? {});
     const hasRunes = c.runes.potency || c.runes.striking || c.runes.resilient || c.runes.property.length;
     add("equipment", "equipment", it.name, { wgContentId: it.id, quantity: inv.quantity ?? it.meta_data?.quantity ?? 1, equipped: !!inv.is_equipped,
@@ -181,6 +188,7 @@ export function matchEntries(entries, index) {
   };
   return entries.map((e) => {
     if (e.kind === "formula") return resolveFormula(e, index);
+    if (e.custom) return { ...e, match: null, via: "custom" };
     for (const t of typesFor(e.packType)) {
       const hit = bySlug.get(`${t}:${e.slug}`);
       if (hit) return { ...e, match: hit, via: "slug" };
@@ -210,7 +218,7 @@ export function matchEntries(entries, index) {
 }
 
 export function missReport(matched) {
-  return matched.filter((m) => !m.match).map((m) => `${m.kind}: ${m.name}`);
+  return matched.filter((m) => !m.match && !m.custom).map((m) => `${m.kind}: ${m.name}`);
 }
 
 export const FALLBACK_IMG = "icons/svg/mystery-man.svg";

@@ -1,5 +1,6 @@
 // Foundry-side import. Uses Foundry/PF2e globals (game, Actor, Item, Folder, ChatMessage).
 import { MODULE_ID, HOMEBREW_FOLDER } from "./constants.js";
+import { customItemData, customItemsHtml } from "./custom-items.js";
 import { mergeFormulas, assignContainers, formulasHtml } from "./formulas.js";
 import { auditImportCoverage, leftoverValues, CLASS_SUPPORT_NOTE } from "./coverage.js";
 import { buildPlan, matchEntries, missReport, sluggify, resolveImageUrl, FALLBACK_IMG, wgChoiceHints, matchChoice, choiceNameKeys, defaultFlag, spellcastingPlan, spellSlotWarnings, preparedSlotUpdates, entryKeyFor, diffPlan, parityCheck } from "./mapping.js";
@@ -271,6 +272,11 @@ async function prefillChoices(data, ctx, notes, sourceName = null, sourceWgId = 
 }
 async function itemDataFor(entry, folderId, ctx, notes) {
   let data;
+  if (entry.custom) {
+    const built = customItemData(entry.customInv, entry.customLook ?? {});
+    entry.customReport = built.report;
+    return built.data;
+  }
   if (entry.match) {
     const doc = await fromUuid(entry.match.uuid);
     data = doc.toObject();
@@ -577,6 +583,8 @@ export async function planImport(exp, { host }) {
     e.entryId = entryIds[entryKeyFor(e)] ?? null;
     if (!e.entryId) { e.unresolved = "no spellcasting entry for WG casting source " + JSON.stringify(e.castingSource ?? null); ctx.unresolved.push({ owner: `spell: ${e.name}`, flag: null, reason: e.unresolved }); }
   }
+  const customLook = customLookups(exp, matched);
+  for (const e of matched) if (e.custom) e.customLook = customLook;
   // Build every item's data now; homebrew world items are only described here and created on apply.
   for (const e of matched) {
     if (e.via === "ambiguous") { e.unresolved = `several compendium items share this name: ${e.candidates.join(", ")}`; ctx.unresolved.push({ owner: `: ${e.name}`, flag: null, reason: e.unresolved }); continue; }
@@ -586,11 +594,47 @@ export async function planImport(exp, { host }) {
     try { e.data = await itemDataFor(e, null, ctx, notes); e.notes = notes.slice(n0); }
     catch (err) { e.error = err.message; problems.push(`${e.kind}: ${e.name} (${err.message})`); }
   }
+  // Feats a custom item gives (WG giveAbilityBlock): record the item on the feat, since PF2e cannot link them by rule.
+  for (const e of matched) for (const o of e.customReport?.ops ?? []) {
+    if (o.type !== "giveAbilityBlock" || o.status !== "covered") continue;
+    const feat = matched.find((x) => x.kind === "feat" && x.wgContentId === o.raw?.data?.abilityBlockId && x.data);
+    if (feat) feat.data.flags[MODULE_ID] = { ...feat.data.flags[MODULE_ID], givenByCustomItem: { wgItemId: e.wgContentId, name: e.name } };
+  }
   const warnings = [...spellSlotWarnings(exp, matched), ...assignContainers(matched, () => foundry.utils.randomID())];
   const diff = diffPlan(plan, summarizeActor(actor));
-  const homebrew = matched.filter((e) => !e.match && e.data);
+  const homebrew = matched.filter((e) => !e.match && !e.custom && e.data);
   const coverage = auditImportCoverage(exp, { ...plan, entries: matched }, { applied: false, grantedSlugs: grantedSlugsOf(actor), choiceUsed: ctx.used, slug: sluggify });
   return { coverage, exp, plan, host, index, ctx, matched, misses, notes, problems, warnings, actor, entryData, diff, homebrew, valid: problems.length === 0 };
+}
+
+function customReports(matched) {
+  return matched.filter((e) => e.custom && e.customReport).map((e) => ({ ...e.customReport, outcome: e.outcome ?? null }));
+}
+
+/** Lookups for custom-item translation, from this import's own plan and Foundry's PF2e config. */
+export function customLookups(exp, matched, cfg = globalThis.CONFIG?.PF2E) {
+  const ct = exp?.content ?? {};
+  const traits = new Map((ct.all_traits ?? []).map((t) => [t.id, t.name]));
+  const sources = new Map((ct.all_sources ?? []).map((s) => [s.id, s.name]));
+  const uuidOf = (kinds, id) => matched.find((x) => kinds.includes(x.kind) && x.wgContentId === id && x.match)?.match?.uuid ?? null;
+  const traitTable = { weapon: cfg?.weaponTraits, armor: cfg?.armorTraits, shield: cfg?.shieldTraits, equipment: cfg?.equipmentTraits };
+  const iwrTable = { Resistance: cfg?.resistanceTypes, Weakness: cfg?.weaknessTypes, Immunity: cfg?.immunityTypes };
+  return {
+    traitName: (id) => traits.get(id) ?? null,
+    sourceName: (id) => sources.get(id) ?? null,
+    validTrait: (type, s) => (traitTable[type] ? s in traitTable[type] : true),
+    validDamageType: (key, s) => (iwrTable[key] ? s in iwrTable[key] : true),
+    abilityUuid: (type, id) => (String(type).toLowerCase() === "feat" ? uuidOf(["feat"], id) : null),
+    linkUuid: (kind, id) => (kind === "feat" ? uuidOf(["feat"], id) : kind === "spell" ? uuidOf(["spell"], id) : null),
+    spellCovered: (id, type) => {
+      const t = String(type ?? "").toUpperCase();
+      if (t === "INNATE" && (ct.innate_spells ?? []).some((s) => (s.spell_id ?? s.spell?.id) === id)) return "innate spell in content.innate_spells; imported on the innate spellcasting entry";
+      if (t === "FOCUS" && (ct.focus_spells ?? []).some((s) => s.id === id)) return "focus spell in content.focus_spells; imported with the focus spells";
+      if (t === "NORMAL" && (ct.spells?.all ?? []).some((s) => s.id === id)) return "spell in content.spells; imported on its spellcasting entry";
+      return null;
+    },
+    languagesCovered: (ct.languages ?? []).length > 0,
+  };
 }
 
 function grantedSlugsOf(actor) {
@@ -618,6 +662,7 @@ export function reviewHtml(p) {
     + (p.warnings?.length ? `<p><strong>Warnings:</strong></p>${li(p.warnings)}` : "")
     + (p.problems.length ? `<p><strong>Plan problems (import blocked):</strong></p>${li(p.problems)}` : "")
     + formulasHtml(p.matched, p.plan)
+    + customItemsHtml(customReports(p.matched))
     + coverageHtml(p.coverage);
 }
 
@@ -698,7 +743,13 @@ async function applyImport(p, { onStep, parity, failAfter }) {
           }
           continue;
         }
-        e.outcome = e.match ? "created" : "homebrew";
+        // Custom items: an existing actor item for the same WG inventory row is kept as is, so manual
+        // edits survive a re-import (it is taken out of the stale set below).
+        if (e.custom && existing) {
+          const keep = actor.items.find((i) => old.has(i.id) && i.flags?.[MODULE_ID]?.customItem && (e.wgInvId ? i.flags[MODULE_ID].wgInvId === e.wgInvId : i.flags[MODULE_ID].wgItemId === e.wgContentId));
+          if (keep) { old.delete(keep.id); e.outcome = "kept existing"; e.itemId = keep.id; continue; }
+        }
+        e.outcome = e.match ? "created" : e.custom ? "created (custom)" : "homebrew";
         batch.push(foundry.utils.deepClone(e.data));
         batchEntries.push(e);
       }      step(`build ${kind} ${batch.length}`);
@@ -839,7 +890,7 @@ export async function importCharacter(exp, { host, onStep = () => {}, parity = f
     : "";
   await ChatMessage.create({
     whisper: [game.user.id],
-    content: `<h3>WG import: ${esc(plan.name)}</h3><p>${matched.length - misses.length} matched, ${misses.length} created as homebrew or missed.</p>${misses.length ? `<ul>${misses.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${notes.length ? `<p>Choices:</p><ul>${notes.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${p.ctx.unresolved.length ? `<p>Unresolved choices:</p><ul>${p.ctx.unresolved.map((u) => `<li>${esc(u.owner)}${u.flag ? ` [${esc(u.flag)}]` : ""}: ${esc(u.reason)}</li>`).join("")}</ul>` : ""}${p.warnings.length ? `<p><strong>Warnings:</strong></p><ul>${p.warnings.map((w) => `<li>${esc(w)}</li>`).join("")}</ul>` : ""}${duplicateHtml}${formulasHtml(matched, plan)}${parityResult ? parityHtml(plan.name, parityResult) : ""}${coverageHtml(p.coverage)}`,
+    content: `<h3>WG import: ${esc(plan.name)}</h3><p>${matched.length - misses.length} matched, ${misses.length} created as homebrew or missed.</p>${misses.length ? `<ul>${misses.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${notes.length ? `<p>Choices:</p><ul>${notes.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${p.ctx.unresolved.length ? `<p>Unresolved choices:</p><ul>${p.ctx.unresolved.map((u) => `<li>${esc(u.owner)}${u.flag ? ` [${esc(u.flag)}]` : ""}: ${esc(u.reason)}</li>`).join("")}</ul>` : ""}${p.warnings.length ? `<p><strong>Warnings:</strong></p><ul>${p.warnings.map((w) => `<li>${esc(w)}</li>`).join("")}</ul>` : ""}${duplicateHtml}${formulasHtml(matched, plan)}${customItemsHtml(customReports(matched))}${parityResult ? parityHtml(plan.name, parityResult) : ""}${coverageHtml(p.coverage)}`,
   });
-  return { actor, misses, notes, warnings: p.warnings, unresolved: p.ctx.unresolved, coverage: p.coverage, matched: matched.length - misses.length, parity: parityResult };
+  return { actor, customItems: customReports(matched), misses, notes, warnings: p.warnings, unresolved: p.ctx.unresolved, coverage: p.coverage, matched: matched.length - misses.length, parity: parityResult };
 }

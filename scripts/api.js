@@ -1,4 +1,5 @@
 import { PROD_FUNCTIONS_URL, DEFAULT_FUNCTIONS_URL } from "./constants.js";
+import { needsTraitCatalog } from "./custom-items.js";
 // WG edge-function client. API key is the only auth (see docs/PLAN.md section 2).
 // The key is never logged or included in error messages.
 
@@ -108,6 +109,11 @@ export async function exportCharacter(opts, id) {
     json = await callFunction({ ...opts, fn: FULL_EXPORT_FN, body });
   }
   if (!json || json.version !== 4 || !json.character) throw new WgApiError(0, "Export was not a JSON v4 character.");
+  // Custom items reference official traits by id; the slim file drops those names. Fetch the full file
+  // only then, so homebrew traits are never guessed.
+  if (json.slim && needsTraitCatalog(json)) {
+    try { const full = await callFunction({ ...opts, fn: FULL_EXPORT_FN, body }); if (full?.version === 4 && full.character) return full; } catch { /* keep the slim file; traits are reported unresolved */ }
+  }
   return json;
 }
 
