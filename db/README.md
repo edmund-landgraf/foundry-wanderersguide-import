@@ -104,6 +104,7 @@ The database can decide that an action is eligible for review; Foundry remains t
 - `007_create_import_log_summary.sql`: best-log summaries and external-file references.
 - `008_create_import_gap_rollup.sql`: best-log gaps, unresolved choices, and warnings by character and feature.
 - `009_class_rename_and_plan_batches.sql`: class-scoped renames, grant provenance, and dependency batches.
+- `010_seed_registry_lookup_rows.sql`: class identity lookups, shared selection policies, proposed spell-source rows, and narrow registry coverage cases.
 
 ## Rename and plan functions
 
