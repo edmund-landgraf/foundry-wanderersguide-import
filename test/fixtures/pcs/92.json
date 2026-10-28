@@ -1,0 +1,3783 @@
+{
+ "version": 4,
+ "character": {
+  "id": 92,
+  "name": "Corvin Saltmark",
+  "level": 1,
+  "experience": 0,
+  "hp_current": 1,
+  "hp_temp": 0,
+  "hero_points": 1,
+  "stamina_current": 0,
+  "resolve_current": 0,
+  "inventory": {
+   "coins": {
+    "cp": 0,
+    "sp": 150,
+    "gp": 0,
+    "pp": 0
+   },
+   "items": []
+  },
+  "notes": null,
+  "details": {
+   "ancestry": {
+    "id": 7,
+    "created_at": "2023-12-14T04:41:36.86084+00:00",
+    "name": "Halfling",
+    "rarity": "COMMON",
+    "description": "> _Halflings are a short, resilient people who exhibit remarkable curiosity and humor._\n\nClaiming no place as their own, halflings control few settlements larger than villages. Instead, they frequently live among [humans](link_trait_1436) within larger cities, carving out small communities alongside taller folk. Optimistic, cheerful, and driven by powerful wanderlust, halflings make up for their short stature with an abundance of bravado. At once excitable and easygoing, halflings are the best kind of opportunists, and their passions favor joy over violence. While their curiosity sometimes drives them toward adventure, halflings also carry strong ties to house and home.\n\nIf you want to play a character who must contend with these opposing drives toward adventure and comfort, you should play a halfling.",
+    "trait_id": 1474,
+    "artwork_url": "https://images.demiplane.com/elements/pathfinder-2e/ancestries/ancestry-halfling-rm-detail.png?format=webp&quality=90&width=1920",
+    "content_source_id": 1,
+    "version": "1.0",
+    "operations": [
+     {
+      "id": "2ab7d55b-60a2-4051-9307-e4c73a6d6596",
+      "type": "setValue",
+      "data": {
+       "variable": "MAX_HEALTH_ANCESTRY",
+       "value": 6
+      }
+     },
+     {
+      "id": "09cbf36d-44d6-436d-9456-5499516314aa",
+      "type": "setValue",
+      "data": {
+       "variable": "SIZE",
+       "value": "small"
+      }
+     },
+     {
+      "id": "72506287-ce22-4033-866d-ab849ac4ec9e",
+      "type": "setValue",
+      "data": {
+       "variable": "SPEED",
+       "value": 25
+      }
+     },
+     {
+      "id": "ca332abb-d0ae-43d6-915b-bb85688cf91e",
+      "type": "adjValue",
+      "data": {
+       "variable": "ATTRIBUTE_STR",
+       "value": {
+        "value": -1
+       }
+      }
+     },
+     {
+      "id": "2406087d-787e-4a0d-9807-e167794d3471",
+      "type": "giveLanguage",
+      "data": {
+       "languageId": 81
+      }
+     },
+     {
+      "id": "d6dea13c-9849-4988-910b-786afad7f468",
+      "type": "giveLanguage",
+      "data": {
+       "languageId": 87
+      }
+     },
+     {
+      "id": "e423312d-baab-4e75-91ec-11599102f395",
+      "type": "setValue",
+      "data": {
+       "variable": "CORE_LANGUAGES",
+       "value": "[\n  \"Dwarven\",\n  \"Elven\",\n  \"Gnomish\",\n  \"Goblin\"\n]"
+      }
+     },
+     {
+      "id": "013967a1-ba53-4692-a13a-ceae609481af",
+      "type": "giveAbilityBlock",
+      "data": {
+       "type": "sense",
+       "abilityBlockId": 21333
+      }
+     },
+     {
+      "id": "6849b687-67e5-4e8c-a232-7726c61a63f8",
+      "type": "adjValue",
+      "data": {
+       "variable": "ATTRIBUTE_DEX",
+       "value": {
+        "value": 1
+       }
+      }
+     },
+     {
+      "id": "6e1941cd-a202-4d1c-a117-e3fc8ac9c1e3",
+      "type": "adjValue",
+      "data": {
+       "variable": "ATTRIBUTE_WIS",
+       "value": {
+        "value": 1
+       }
+      }
+     },
+     {
+      "id": "eabb4cd7-5aad-4f7c-a712-95d5e272bcf3",
+      "type": "select",
+      "data": {
+       "title": "Select an Attribute",
+       "modeType": "FILTERED",
+       "optionType": "ADJ_VALUE",
+       "optionsPredefined": [],
+       "optionsFilters": {
+        "id": "8c1e7659-5029-4d00-8d77-f10f50b4688d",
+        "type": "ADJ_VALUE",
+        "group": "ATTRIBUTE",
+        "value": {
+         "value": 1
+        }
+       }
+      }
+     },
+     {
+      "id": "ef38d67c-fdb2-4bf6-aa2d-3e90502764f2",
+      "type": "giveTrait",
+      "data": {
+       "traitId": 2399
+      }
+     }
+    ],
+    "uuid": 8172245851438367,
+    "deprecated": null,
+    "updated_at": "2026-08-27T16:49:19.460496+00:00",
+    "meta_data": {
+     "source": {
+      "url": "https://2e.aonprd.com/Ancestries.aspx?ID=63",
+      "book": "Player Core",
+      "page": "58"
+     }
+    }
+   },
+   "background": {
+    "id": 743,
+    "created_at": "2024-04-07T07:53:31.106851+00:00",
+    "name": "Fortune Teller",
+    "rarity": "COMMON",
+    "description": "> _The strands of fate are clear to you, as you have learned many traditional forms by which laypeople can divine the future. You might have used these skills to guide your community, or simply to make money. But even the slightest peek into these practices connects you to the occult mysteries of the universe._\n\nChoose two attribute boosts. One must be to Intelligence or Charisma, and one is a free attribute boost.\n\nYou're trained in the Occultism skill and the Fortune-Telling Lore skill. You gain the [Oddity Identification](link_feat_20375) skill feat.",
+    "operations": [
+     {
+      "id": "9f490c5f-999f-4f9c-a54a-7a6f49012238",
+      "type": "select",
+      "data": {
+       "title": "Select an Attribute",
+       "modeType": "PREDEFINED",
+       "optionType": "ADJ_VALUE",
+       "optionsPredefined": [
+        {
+         "id": "614043f0-1db9-4e6b-bdc3-cc7b70740310",
+         "type": "ADJ_VALUE",
+         "operation": {
+          "id": "08d10804-0ddc-480c-9124-35d7bcdf41b4",
+          "type": "adjValue",
+          "data": {
+           "variable": "ATTRIBUTE_INT",
+           "value": {
+            "value": 1
+           }
+          }
+         }
+        },
+        {
+         "id": "b7cd6ca8-8996-48e3-b584-b8a36bdf5c7d",
+         "type": "ADJ_VALUE",
+         "operation": {
+          "id": "b4810ad4-bd53-4153-892c-f4a666d80301",
+          "type": "adjValue",
+          "data": {
+           "variable": "ATTRIBUTE_CHA",
+           "value": {
+            "value": 1
+           }
+          }
+         }
+        }
+       ],
+       "optionsFilters": {
+        "id": "8b9bb426-629a-40ff-bef0-ed67337d93b9",
+        "type": "ADJ_VALUE",
+        "group": "SKILL",
+        "value": {
+         "value": "U"
+        }
+       }
+      }
+     },
+     {
+      "id": "6c8b3b58-2ad8-491d-b084-06d378de624e",
+      "type": "select",
+      "data": {
+       "title": "Select an Attribute",
+       "modeType": "FILTERED",
+       "optionType": "ADJ_VALUE",
+       "optionsPredefined": [],
+       "optionsFilters": {
+        "id": "896118eb-8be4-4d58-a943-25c7206ffed4",
+        "type": "ADJ_VALUE",
+        "group": "ATTRIBUTE",
+        "value": {
+         "value": 1
+        }
+       }
+      }
+     },
+     {
+      "id": "2796e4c6-a88d-40cd-b725-d91a89f167c4",
+      "type": "adjValue",
+      "data": {
+       "variable": "SKILL_OCCULTISM",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "5df5d62f-2834-4ac5-997b-10c67afb6a12",
+      "type": "giveAbilityBlock",
+      "data": {
+       "type": "feat",
+       "abilityBlockId": 20375
+      }
+     },
+     {
+      "id": "ac7033e2-1210-4c1b-a495-979786f39229",
+      "type": "createValue",
+      "data": {
+       "variable": "SKILL_LORE_FORTUNE_TELLING",
+       "value": {
+        "value": "T",
+        "attribute": "ATTRIBUTE_INT"
+       },
+       "type": "prof"
+      }
+     }
+    ],
+    "content_source_id": 1,
+    "version": "1.0",
+    "uuid": 5476647001027052,
+    "artwork_url": null,
+    "deprecated": null,
+    "updated_at": "2026-08-27T16:49:19.969852+00:00",
+    "meta_data": {
+     "source": {
+      "url": "https://2e.aonprd.com/Backgrounds.aspx?ID=424",
+      "book": "Player Core",
+      "page": "86"
+     }
+    }
+   },
+   "class": {
+    "id": 39,
+    "created_at": "2024-04-18T17:15:39.256747+00:00",
+    "name": "Thaumaturge",
+    "rarity": "COMMON",
+    "description": "> _The world is full of the unexplainable: ancient magic, dead gods, and even stranger things. In response, you’ve scavenged the best parts of every magical tradition and built up a collection of esoterica—a broken holy relic here, a sprig of mistletoe there—that you can use to best any creature by exploiting their weaknesses and vulnerabilities. The mystic implement you carry is both badge and weapon, its symbolic weight helping you bargain with and subdue the supernatural. Every path to power has its restrictions and costs, but you turn them all to your advantage. You’re a thaumaturge, and you work wonders._\n\n* * *\n\n### **During Combat Encounters…**\n\nYou use your implements and diverse arsenal of mystic tools and tricks to assist in combat, always presenting the right bane to exploit enemies' weaknesses or shield your allies against the supernatural.\n\n### **During Social Encounters…**\n\nYou understand and nudge the social connections between people, much as you strive to understand the larger ties between mysteries and concepts. This helps you to find common ground when negotiating between the mundane and supernatural or even to play one side against the other.\n\n### **While Exploring…**\n\nYou investigate unexplainable phenomena around you, taking appropriate precautions to ward yourself and your allies against paranormal threats. Where necessary, you create your own path through the unknown.\n\n### **In Downtime…**\n\nYou research deeper into the supernatural mysteries you discovered on your last adventure to see how they can be applied in the future. You dust off relics, cultivate herbs, or forge trinkets, updating your collection of scavenged supernatural tools after each new threat you encounter. You return or call in favors with other people, strange creatures, and mystical forces.\n\n### **You Might…**\n\n*   Prepare for the worst while improvising as necessary, impressing your allies when you're able to handle anything that fate throws at you.\n    \n*   Assume everything is connected on a deeper level, rather than be content with what you find on the surface.\n    \n*   Obsess over a certain supernatural phenomenon, attempting to tie everything back to it.\n    \n\n### **Others Probably…**\n\n*   Look to you to learn the weaknesses of a supernatural threat when one rears its head. Even when your explanations are invented on the fly, they just seem to work.\n    \n*   Rely on you to come up with a solution when the situation seems hopeless.\n    \n*   Mistake you for a common wizard or magician.",
+    "operations": [
+     {
+      "id": "f094de9f-5f44-4a3c-a6c7-fdd6f76c7c0d",
+      "type": "adjValue",
+      "data": {
+       "variable": "PERCEPTION",
+       "value": {
+        "value": "E"
+       }
+      }
+     },
+     {
+      "id": "507959a8-70a9-46af-a430-0f1945d18eb0",
+      "type": "adjValue",
+      "data": {
+       "variable": "SAVE_FORT",
+       "value": {
+        "value": "E"
+       }
+      }
+     },
+     {
+      "id": "a5bf762b-3c54-48e6-b2a4-475a35ae050f",
+      "type": "adjValue",
+      "data": {
+       "variable": "SAVE_REFLEX",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "2b80b92f-984a-4830-9b24-30804e392204",
+      "type": "adjValue",
+      "data": {
+       "variable": "SAVE_WILL",
+       "value": {
+        "value": "E"
+       }
+      }
+     },
+     {
+      "id": "101967e3-951e-46fe-9077-7ed2b8e75a10",
+      "type": "adjValue",
+      "data": {
+       "variable": "SKILL_ARCANA",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "e2b988e7-68e0-4082-9fa0-e79f80d80ee8",
+      "type": "adjValue",
+      "data": {
+       "variable": "SKILL_NATURE",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "8b4a8601-263c-4402-b4a7-229ad2307ca6",
+      "type": "adjValue",
+      "data": {
+       "variable": "SKILL_OCCULTISM",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "9f3a55bc-1f49-4056-8f8f-276068bfc8dc",
+      "type": "adjValue",
+      "data": {
+       "variable": "SKILL_RELIGION",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "7f896b4a-94b7-49c0-9a8c-d66cdd543889",
+      "type": "adjValue",
+      "data": {
+       "variable": "SIMPLE_WEAPONS",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "81438e42-5488-4aea-8b3f-c14ebf40f29b",
+      "type": "adjValue",
+      "data": {
+       "variable": "MARTIAL_WEAPONS",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "f44e5647-c639-4d18-8a87-0b11de90e9cc",
+      "type": "adjValue",
+      "data": {
+       "variable": "UNARMED_ATTACKS",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "3596f216-9891-4d1b-8f4f-928831a0604c",
+      "type": "adjValue",
+      "data": {
+       "variable": "LIGHT_ARMOR",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "473d8f57-476c-4ce3-8511-4767d76df0e4",
+      "type": "adjValue",
+      "data": {
+       "variable": "MEDIUM_ARMOR",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "bb578515-efde-4033-80f4-6be457ef81ae",
+      "type": "adjValue",
+      "data": {
+       "variable": "UNARMORED_DEFENSE",
+       "value": {
+        "value": "T"
+       }
+      }
+     },
+     {
+      "id": "013751a1-2e60-477b-9f15-b07f3ad864d9",
+      "type": "setValue",
+      "data": {
+       "variable": "CLASS_DC",
+       "value": {
+        "value": "T",
+        "attribute": "ATTRIBUTE_CHA"
+       }
+      }
+     },
+     {
+      "id": "22c2300f-06c8-4bd1-a874-a02d38ed0055",
+      "type": "adjValue",
+      "data": {
+       "variable": "ATTRIBUTE_CHA",
+       "value": {
+        "value": 1
+       }
+      }
+     },
+     {
+      "id": "c537f47c-32f3-47fd-b2b6-6c946e365641",
+      "type": "setValue",
+      "data": {
+       "variable": "MAX_HEALTH_CLASS_PER_LEVEL",
+       "value": 8
+      }
+     }
+    ],
+    "trait_id": 2534,
+    "artwork_url": "https://images.demiplane.com/elements/pathfinder-2e/classes/class-thaumaturge-detail.png?format=webp&quality=90&width=1920",
+    "content_source_id": 12,
+    "version": "1.0",
+    "uuid": 7967103511733634,
+    "skill_training_base": 3,
+    "deprecated": null,
+    "updated_at": "2026-08-27T16:49:14.833831+00:00",
+    "meta_data": {
+     "source": {
+      "url": "https://2e.aonprd.com/Classes.aspx?ID=22",
+      "book": "Dark Archive",
+      "page": "30"
+     }
+    }
+   }
+  },
+  "roll_history": null,
+  "custom_operations": null,
+  "meta_data": {
+   "reset_hp": true
+  },
+  "options": {
+   "dice_roller": true,
+   "auto_detect_prerequisites": true
+  },
+  "variants": null,
+  "content_sources": {
+   "enabled": [
+    1,
+    8,
+    7,
+    12
+   ]
+  },
+  "operation_data": {
+   "selections": {
+    "ancestry_eabb4cd7-5aad-4f7c-a712-95d5e272bcf3": "ATTRIBUTE_CHA",
+    "background_9f490c5f-999f-4f9c-a54a-7a6f49012238": "b4810ad4-bd53-4153-892c-f4a666d80301",
+    "background_6c8b3b58-2ad8-491d-b084-06d378de624e": "ATTRIBUTE_CON",
+    "background_2796e4c6-a88d-40cd-b725-d91a89f167c4": "SKILL_DIPLOMACY",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-0": "SKILL_ARCANA",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-1": "SKILL_RELIGION",
+    "class_720d2fe6-f042-4353-8313-1293375b1301-2": "SKILL_DECEPTION",
+    "ancestry-section-5742419753466526_3fd6a268-771b-49fc-93ed-9b53695d1a29": "21335",
+    "ancestry-section-2707339574403411_9f26290c-a2db-4c45-9b34-5053e60c106d-0": "20205",
+    "class-feature-25334_feb3edcb-bdda-4522-b139-340043676c70": "ATTRIBUTE_CHA",
+    "class-feature-25334_b7207962-2042-47a0-ab1b-2fc1d820596e": "ATTRIBUTE_DEX",
+    "class-feature-25334_0b542f19-0478-49df-a065-aeee55dd4cca": "ATTRIBUTE_CON",
+    "class-feature-25334_e33d4460-6156-4e99-91b1-55abdd0ddf03": "ATTRIBUTE_WIS",
+    "class-feature-26614_6b9d3bd2-c329-4a2b-9b6f-71f8fdcffb18": "34319",
+    "class-feature-26071_2f05b66b-9c53-4e5f-9fa4-a8f286108e9b": "22688"
+   }
+  },
+  "spells": null,
+  "companions": null,
+  "campaign_id": 42
+ },
+ "content": {
+  "_README": "Here's some compiled data about the character. Should be fairly human-readable. The <character> section is what WG reads, this section is solely for you! Should give you an abundance of compiled stats and info about the character. If you have any questions, feel free to ask on our Discord!",
+  "feats_features": {
+   "generalAndSkillFeats": [
+    {
+     "id": 20087,
+     "created_at": "2023-12-14T01:50:59.793097+00:00",
+     "operations": null,
+     "name": "Dubious Knowledge",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [
+      "trained in a skill with the Recall Knowledge action"
+     ],
+     "frequency": null,
+     "cost": null,
+     "trigger": null,
+     "requirements": null,
+     "access": null,
+     "description": "You're a treasure trove of information, but not all of it comes from reputable sources. When you fail (but don't critically fail) a [Recall Knowledge](link_action_19753) check using any skill, you learn the correct answer and an erroneous answer, but you don't have any way to differentiate which is which. This can occur as knowing something is significant, but not whether it's good or bad.",
+     "special": null,
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=5142",
+       "book": "Player Core",
+       "page": "254"
+      },
+      "foundry": {
+       "rules": [
+        {
+         "key": "Note",
+         "text": "When you fail (but don't critically fail) a Recall Knowledge check using any skill, you learn a bit of true knowledge and a bit of erroneous knowledge.",
+         "title": "{item|name}",
+         "selector": "skill-check",
+         "predicate": [
+          "action:recall-knowledge"
+         ]
+        }
+       ]
+      }
+     },
+     "traits": [
+      1437,
+      1438
+     ],
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 2279999909342359,
+     "availability": null,
+     "updated_at": "2026-08-27T16:53:40.818195+00:00"
+    },
+    {
+     "id": 20375,
+     "created_at": "2023-12-14T02:57:46.280049+00:00",
+     "operations": null,
+     "name": "Oddity Identification",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [
+      "trained in Occultism"
+     ],
+     "frequency": null,
+     "cost": null,
+     "trigger": null,
+     "requirements": null,
+     "access": null,
+     "description": "When you become aware of a magical effect or see a spell being cast, you can immediately determine if it twists minds (with the [mental](link_trait_1448) trait), fights against fortune (with the [fortune](link_trait_1460) or [misfortune](link_trait_1677) trait), or reveals secrets (with the [detection](link_trait_1508), [prediction](link_trait_1896), [revelation](link_trait_1907), or [scrying](link_trait_1590) traits). At the GM's discretion, similar effects can also fall into these categories. When you [Identify Magic](link_action_19730) or [Recall Knowledge](link_action_19753) to learn more about these effects, you can always use [Occultism](link_trait_1514) without penalty and gain a +2 circumstance bonus.",
+     "special": null,
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=5185",
+       "book": "Player Core",
+       "page": "259"
+      },
+      "foundry": {
+       "rules": [
+        {
+         "key": "FlatModifier",
+         "type": "circumstance",
+         "label": "Oddity Identification (identify magic with specific traits)",
+         "value": 2,
+         "selector": "occultism",
+         "predicate": [
+          "action:identify-magic",
+          {
+           "or": [
+            "mental",
+            "possession",
+            "prediction",
+            "scrying"
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     },
+     "traits": [
+      1437,
+      1438
+     ],
+     "content_source_id": 3,
+     "version": "1.0",
+     "uuid": 2226992238796568,
+     "availability": null,
+     "updated_at": "2026-08-27T16:53:40.818195+00:00"
+    }
+   ],
+   "classFeats": [
+    {
+     "id": 22688,
+     "created_at": "2024-04-20T07:11:57.837031+00:00",
+     "operations": null,
+     "name": "Divine Disharmony",
+     "actions": "ONE-ACTION",
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": null,
+     "cost": null,
+     "trigger": null,
+     "requirements": null,
+     "access": null,
+     "description": "From your collection of religious trinkets, you pull out opposing [divine](link_trait_1475) objects—such as the religious symbols of two deities that are hated enemies—and combine them in a display that causes discordant clashes of divine energy that are especially distracting to the faithful. Roll your choice of a Deception or Intimidation check against the Will DC of a creature you can see within 60 feet, with the following results. If the creature is particularly devoted to a deity, such as a [cleric](link_trait_1342), [celestial](link_trait_2404), [monitor](link_trait_2408), [fiend](link_trait_2415), or other creature with [divine](link_trait_1475) spells, you gain a +2 circumstance bonus to your skill check. The GM might determine that a creature that despises all deities, such as an alghollthu, is unaffected.\n\n**Critical Success** The creature is off-guard to your attacks until the end of your next turn.\n\n**Success** The creature is off-guard against your attacks until the end of your current turn.",
+     "special": null,
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=3700",
+       "book": "Dark Archive",
+       "page": "42"
+      },
+      "foundry": {
+       "rules": [
+        {
+         "key": "FlatModifier",
+         "type": "circumstance",
+         "value": 2,
+         "selector": [
+          "intimidation",
+          "deception"
+         ],
+         "predicate": [
+          "action:divine-disharmony",
+          {
+           "or": [
+            "target:trait:cleric",
+            "target:trait:fiend",
+            "target:trait:monitor",
+            "target:trait:celestial",
+            "target:caster:tradition:divine"
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     },
+     "traits": [
+      1475,
+      2543,
+      1433,
+      2534
+     ],
+     "content_source_id": 12,
+     "version": null,
+     "uuid": 3926091209592472,
+     "availability": null,
+     "updated_at": "2026-08-27T16:49:25.686839+00:00"
+    },
+    {
+     "id": 21367,
+     "created_at": "2024-04-18T21:38:56.037261+00:00",
+     "operations": [],
+     "name": "Exploit Vulnerability",
+     "actions": "ONE-ACTION",
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "once per round",
+     "cost": "",
+     "trigger": "",
+     "requirements": "You are holding your implement.",
+     "access": "",
+     "description": "You scour your experiences and learning to identify something that might repel your foe. You retrieve an object from your esoterica with the appropriate supernatural qualities, then use your implement to stoke the remnants of its power into a blaze. Select a creature you can see and attempt an Esoteric Lore check against a standard DC for its level, as you retrieve the right object from your esoterica and use your implement to empower it. You gain the following effects until you Exploit Vulnerabilities again.\n\n**Critical Success** You remember the creature's weaknesses, and as you empower your esoterica, you have a flash of insight that grants even more knowledge about the creature. You learn all of the creature's resistances, weaknesses, and immunities, including the amounts of the resistances and weaknesses and any unusual weaknesses or vulnerabilities, such as what spells will pass through a golem's antimagic. You can exploit either the creature's mortal weakness or personal antithesis (see below). Your unarmed and weapon [Strikes](link_action_19856) against the creature also become [magical](link_trait_1504) if they weren't already.\n\n**Success** You recall an important fact about the creature, learning its highest weakness (or one of its highest weaknesses, if it has multiple with the same value) but not its other weaknesses, resistances, or immunities. You can exploit either the creature's mortal weakness or personal antithesis. Your unarmed and weapon [Strikes](link_action_19856) against the creature also become [magical](link_trait_1504) if they weren't already.\n\n**Failure** Failing to recall a salient weakness about the creature, you instead attempt to exploit a more personal vulnerability. You can exploit only the creature's personal antithesis. Your unarmed and weapon [Strikes](link_action_19856) against the creature also become [magical](link_trait_1504) if they weren't already.\n\n**Critical Failure** You couldn't remember the right object to use and become distracted while you rummage through your esoterica. You become off-guard until the beginning of your next turn.",
+     "special": "",
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Actions.aspx?ID=1227",
+       "book": "Dark Archive",
+       "page": "32"
+      },
+      "unselectable": true
+     },
+     "traits": [
+      2543,
+      1433,
+      2534
+     ],
+     "content_source_id": 12,
+     "version": null,
+     "uuid": 6282664534052274,
+     "availability": null,
+     "updated_at": "2026-08-27T16:49:25.686839+00:00"
+    }
+   ],
+   "ancestryFeats": [
+    {
+     "id": 20205,
+     "created_at": "2023-12-14T02:21:11.552935+00:00",
+     "operations": [],
+     "name": "Halfling Luck",
+     "actions": "FREE-ACTION",
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "once per day",
+     "cost": null,
+     "trigger": "You fail a skill check or saving throw.",
+     "requirements": null,
+     "access": null,
+     "description": "Your happy-go-lucky nature makes it seem like misfortune avoids you, and to an extent, that might even be true. You can reroll the triggering check, but you must use the new result, even if it's worse.",
+     "special": null,
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Feats.aspx?ID=4458",
+       "book": "Player Core",
+       "page": "60"
+      },
+      "foundry": {
+       "rules": []
+      }
+     },
+     "traits": [
+      1460,
+      1474
+     ],
+     "content_source_id": 1,
+     "version": "1.0",
+     "uuid": 849602522077222,
+     "availability": null,
+     "updated_at": "2026-08-27T16:49:23.919185+00:00"
+    }
+   ],
+   "otherFeats": [
+    {
+     "id": 19734,
+     "created_at": "2023-12-13T22:30:05.266333+00:00",
+     "operations": [],
+     "name": "Jinx",
+     "actions": "TWO-ACTIONS",
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "once per day",
+     "cost": null,
+     "trigger": null,
+     "requirements": null,
+     "access": null,
+     "description": "You can curse another creature with clumsiness. This curse has a range of 30 feet, and you must be able to see your target. The target gets a Will saving throw against your class DC or spell DC, whichever is higher.\n\n**Success** The target is unaffected and temporarily immune for 24 hours.\n\n**Failure** The target is clumsy 1 for 1 minute.\n\n**Critical Failure** The target is clumsy 2 for 1 minute.",
+     "special": null,
+     "type": "feat",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Actions.aspx?ID=2255",
+       "book": "Player Core",
+       "page": "59"
+      },
+      "foundry": {
+       "rules": []
+      },
+      "unselectable": true
+     },
+     "traits": [
+      1855,
+      1514
+     ],
+     "content_source_id": 1,
+     "version": "1.0",
+     "uuid": 7362875149237347,
+     "availability": null,
+     "updated_at": "2026-08-27T16:49:23.919185+00:00"
+    },
+    {
+     "id": 34319,
+     "created_at": "2024-08-25T02:58:13.930915+00:00",
+     "operations": [
+      {
+       "id": "e86cfaad-91e1-4bce-a50c-cb9a002850f5",
+       "type": "addBonusToValue",
+       "data": {
+        "variable": "PERCEPTION",
+        "value": "1",
+        "type": "status",
+        "text": "You gain a +1 status bonus to visual Perception checks to notice anything that is within the bright light of your lantern implement."
+       }
+      }
+     ],
+     "name": "Lantern Implement",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "Lantern implements shine the light of revelation to part shadows and expose truth. You might use a common glass lantern, [torch](link_item_7899), paper lantern, or other similar light source. Lantern implements are associated with the harrow suit of stars and the astrological signs of the lantern bearer and the archer.\n\n**Initiate Benefit** While you hold your lantern, its burning light leaves secrets no place to hide. You can light or extinguish your lantern with nothing but a thought, as a free action that has the [concentrate](link_trait_1432) trait. While lit, the lantern emits an aura of light in a 20-foot emanation; the aura has the [light](link_trait_1517) and [magical](link_trait_1504) traits. Everything in the aura is magically lit with bright light regardless of cover, and dim light extends beyond the aura an additional distance equal to the size of the aura. The aura’s [counteract](link_action_27519) rank against [magical](link_trait_1504) [darkness](link_trait_1900) is equal to half your level rounded up.\n\nThe lantern's magical light attempts to reveal the unseen. You and your allies in the lantern’s aura gain a +1 status bonus to [visual](link_trait_1479) Perception checks to notice anything that is also within the aura and a +1 status bonus to checks to [Recall Knowledge](link_action_19753) against creatures within the aura, as the light exposes their true natures. During exploration, even if you aren't [Searching](link_action_21204), the GM rolls a [secret](link_trait_1463) check for you to find [traps](link_trait_1541), environmental hazards, [haunts](link_trait_2967), and secrets (such as secret doors). The GM rolls each time a given hazard or secret comes within 20 feet of you and within the lantern's bright light. These effects have the [magical](link_trait_1504) and [revelation](link_trait_1907) traits.\n\n**Adept Benefit**\n\nIn addition to the initiate benefits, when you hold your lantern, its light reveals the invisible and the [ethereal](link_trait_2459). The lantern’s aura of light increases to a 30-foot emanation. While you're holding your lantern, invisible and [ethereal](link_trait_2459) creatures within the bright light become visible as rippling distortions, though they're still concealed. This doesn't give you any special ability to affect a creature on the Ethereal Plane, but it ensures you're aware of the creatures' presence.\n\n**Intensify Vulnerability**\n\nYour lantern’s light flares and burns bright, leaving no shadows in which secrets and enemies can hide. The emanation of your lantern’s aura doubles in size. Against the target of your [Exploit Vulnerability](link_feat_21367), the status bonuses from the lantern’s initiate benefit increase to +2. The creature takes a –2 status penalty to Deception checks and Stealth checks as long as it’s within the aura. Additionally, the target of your [Exploit Vulnerability](link_feat_21367) can’t be concealed while it’s in the lantern’s aura, though it still can potentially become hidden or undetected using cover or means other than the concealed condition.\n\n**Paragon Benefit**\n\nIn addition to the other benefits, your lantern reveals all things as they truly are. The lantern’s aura of light increases to a 40-foot emanation. While you’re holding your lantern, the GM rolls a [secret](link_trait_1463) [counteract](link_action_27519) check against any [illusion](link_trait_1447), [morph](link_trait_1456), or [polymorph](link_trait_1453) effects that come within the lantern’s aura, but only for the purpose of determining whether you and others can see through it (for instance, if the check succeeds against a [polymorph](link_trait_1453) spell, you can see the creature’s true form, but you don’t end the spell). Use half your level rounded up as the [counteract](link_action_27519) rank and your class DC – 10 as the [counteract](link_action_27519) modifier. On a failed counteract check, the lantern can't attempt to [counteract](link_action_27519) that [illusion](link_trait_1447), [morph](link_trait_1456), or [polymorph](link_trait_1453) effect again until midnight. You can choose to leave any [illusion](link_trait_1447) or [polymorph](link_trait_1453) you discover intact, instead of [counteracting](link_action_27519) it.",
+     "special": "",
+     "type": "feat",
+     "meta_data": {},
+     "traits": [
+      3868
+     ],
+     "content_source_id": 12,
+     "version": null,
+     "uuid": 580914813732120,
+     "availability": null,
+     "updated_at": "2024-08-25T02:58:13.930915+00:00"
+    }
+   ],
+   "classFeatures": [
+    {
+     "id": 21360,
+     "created_at": "2024-04-18T18:50:00.468699+00:00",
+     "operations": [
+      {
+       "id": "05bf7045-2518-46d7-9bd8-6837ca5fa08f",
+       "type": "createValue",
+       "data": {
+        "variable": "SKILL_LORE_ESOTERIC",
+        "value": {
+         "value": "T",
+         "attribute": "ATTRIBUTE_CHA"
+        },
+        "type": "prof"
+       }
+      },
+      {
+       "id": "adc83b8b-31f2-4c2b-b561-f0dda7593f56",
+       "type": "conditional",
+       "data": {
+        "conditions": [
+         {
+          "id": "0faac8bd-5e87-4136-9327-0f67a97e5df6",
+          "name": "LEVEL",
+          "data": {
+           "name": "LEVEL",
+           "type": "num",
+           "value": 4
+          },
+          "operator": "GREATER_THAN_OR_EQUALS",
+          "value": 3
+         },
+         {
+          "id": "1791159a-dad9-4d04-a3e0-ea783e99de4d",
+          "name": "LEVEL",
+          "data": {
+           "name": "LEVEL",
+           "type": "num",
+           "value": 4
+          },
+          "operator": "LESS_THAN",
+          "value": 7
+         }
+        ],
+        "trueOperations": [
+         {
+          "id": "69ce451b-b3c9-4892-a513-fb9c9dc5ca33",
+          "type": "adjValue",
+          "data": {
+           "variable": "SKILL_LORE_ESOTERIC",
+           "value": {
+            "value": "E"
+           }
+          }
+         }
+        ],
+        "falseOperations": []
+       }
+      },
+      {
+       "id": "fe2dadcb-3ac4-4f9f-8ee2-6b6aba2ccb37",
+       "type": "conditional",
+       "data": {
+        "conditions": [
+         {
+          "id": "9e98682d-a787-4d12-ba9a-924a64f48be4",
+          "name": "LEVEL",
+          "data": {
+           "name": "LEVEL",
+           "type": "num",
+           "value": 4
+          },
+          "operator": "GREATER_THAN_OR_EQUALS",
+          "value": 7
+         },
+         {
+          "id": "233a7c4f-eedc-4b52-85d5-8c1d8d4e1619",
+          "name": "LEVEL",
+          "data": {
+           "name": "LEVEL",
+           "type": "num",
+           "value": 4
+          },
+          "operator": "LESS_THAN",
+          "value": 15
+         }
+        ],
+        "trueOperations": [
+         {
+          "id": "4d9e688f-2ce7-4523-bcf8-407cdffd7291",
+          "type": "adjValue",
+          "data": {
+           "variable": "SKILL_LORE_ESOTERIC",
+           "value": {
+            "value": "M"
+           }
+          }
+         }
+        ],
+        "falseOperations": []
+       }
+      },
+      {
+       "id": "877027f4-4c81-4b88-90c6-3781b749e7f1",
+       "type": "conditional",
+       "data": {
+        "conditions": [
+         {
+          "id": "ab7f47f1-5c01-4851-9744-8011a5a4374a",
+          "name": "LEVEL",
+          "data": {
+           "name": "LEVEL",
+           "type": "num",
+           "value": 4
+          },
+          "operator": "GREATER_THAN_OR_EQUALS",
+          "value": 15
+         }
+        ],
+        "trueOperations": [
+         {
+          "id": "dc460715-b17e-4468-b9be-6a51051bbe5b",
+          "type": "adjValue",
+          "data": {
+           "variable": "SKILL_LORE_ESOTERIC",
+           "value": {
+            "value": "L"
+           }
+          }
+         }
+        ],
+        "falseOperations": []
+       }
+      },
+      {
+       "id": "87f441ff-b362-4b0b-8597-586413ff5232",
+       "type": "giveAbilityBlock",
+       "data": {
+        "type": "feat",
+        "abilityBlockId": 20087
+       }
+      }
+     ],
+     "name": "Esoteric Lore",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "Your experience with the unknown, as well as the tales you've exchanged with other thaumaturges, has taught you about strange phenomena of every kind. You become trained in Esoteric Lore, a special lore skill that can be used to [Recall Knowledge](link_action_19753) regarding haunts, curses and creatures of any type, but that can't be used to Recall Knowledge of other topics. Unlike a normal Lore skill, you use Charisma as your modifier on Esoteric Lore checks. You also gain the [Dubious Knowledge](link_feat_20087) skill feat.  \n  \nAt 3rd level, you become an expert in Esoteric Lore; at 7th level, you become a master in Esoteric Lore; and at 15th level, you become legendary in Esoteric Lore.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Classes.aspx?ID=22",
+       "book": "Dark Archive",
+       "page": "30"
+      },
+      "unselectable": false
+     },
+     "traits": [
+      2534
+     ],
+     "content_source_id": 12,
+     "version": null,
+     "uuid": 2243219228349115,
+     "availability": null,
+     "updated_at": "2026-08-27T16:49:25.686839+00:00"
+    },
+    {
+     "id": 26474,
+     "created_at": "2024-05-10T03:49:51.184484+00:00",
+     "operations": [],
+     "name": "Esoterica",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "While your implements are your primary tools in your dealings with the supernatural, you know the value of always being prepared. You constantly collect and carry various smaller mystic objects, bits of materials with paranormal affinities, and items used in folk practices: your esoterica. These might include cold iron nails, scraps of scrolls and scriptures, fragments of bones purportedly from a saint, and other similar objects. You keep your esoterica in easy-to-access places on your person and are well practiced in brandishing your implement and esoterica together, so you can draw and use esoterica with the same hand you're using to wield an implement.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Traits.aspx?ID=427",
+       "book": "Dark Archive",
+       "page": "220"
+      }
+     },
+     "traits": [
+      2534
+     ],
+     "content_source_id": 12,
+     "version": null,
+     "uuid": 4826324446365717,
+     "availability": null,
+     "updated_at": "2026-08-27T17:20:36.846183+00:00"
+    },
+    {
+     "id": 26084,
+     "created_at": "2024-05-09T01:06:01.387444+00:00",
+     "operations": [
+      {
+       "id": "89f58805-4d1e-49f9-96ef-2465031177a3",
+       "type": "giveAbilityBlock",
+       "data": {
+        "type": "feat",
+        "abilityBlockId": 21367
+       }
+      }
+     ],
+     "name": "Exploit Vulnerability",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You know that every creature, no matter how obscure, has a weakness. By identifying and empowering the right object, you can strike down even the most resilient of monsters.\n\nYou gain the [Exploit Vulnerability](link_feat_21367) action.\n\nYou can attempt to Exploit Vulnerabilities in one of two ways: either by invoking properties that repel that type of creature, or by attempting a more improvisational, ad-hoc method with your [esoterica](link_trait_2543) that can impose a custom weakness on any creature, albeit one that usually isn't as dire as a creature's existing weakness.\n\n**Mortal Weakness** After identifying a creature's weakness, you use a thematically resonant bit of [esoterica](link_trait_2543) to attune your attacks to your discovery. Your unarmed and weapon [Strikes](link_action_19856) activate the highest weakness you discovered with [Exploit Vulnerability](link_feat_21367), even though the damage type your weapon deals doesn't change. This damage affects the target of your Exploit Vulnerability, as well as any other creatures of the exact same type, but not other creatures with the same weakness. For example, when fighting a pack of [werewolves](link_trait_2471) you might use silver shavings or crushed moonstone to deal damage that applies their weakness to silver to your attacks against any of the werewolves, but you wouldn't apply this damage to any other monsters with a weakness to silver.\n\n**Personal Antithesis** You improvise a custom weakness on a creature by forcefully presenting and empowering a piece of [esoterica](link_trait_2543) that repels it on an individual level; for instance, against a tyrant, you might procure a broken chain that once held a captive. This causes the target creature, and only the target creature, to gain a weakness against your unarmed and weapon [Strikes](link_action_19856) equal to 2 + half your level (⬆️ {{2+floor(level/2)}}).",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Actions.aspx?ID=1227",
+       "book": "Dark Archive",
+       "page": "32"
+      }
+     },
+     "traits": [
+      2534
+     ],
+     "content_source_id": 12,
+     "version": null,
+     "uuid": 463648375687814,
+     "availability": null,
+     "updated_at": "2026-08-27T16:49:25.686839+00:00"
+    },
+    {
+     "id": 26614,
+     "created_at": "2024-05-10T19:56:04.292372+00:00",
+     "operations": [
+      {
+       "id": "6b9d3bd2-c329-4a2b-9b6f-71f8fdcffb18",
+       "type": "select",
+       "data": {
+        "title": "Select an Implement",
+        "modeType": "FILTERED",
+        "optionType": "ABILITY_BLOCK",
+        "optionsPredefined": [],
+        "optionsFilters": {
+         "id": "00885213-944e-4f17-81c0-982dc5c3d5b9",
+         "type": "ABILITY_BLOCK",
+         "level": {
+          "min": 1,
+          "max": 1
+         },
+         "traits": [
+          "Thaumaturge Implement"
+         ],
+         "abilityBlockType": "feat"
+        }
+       }
+      }
+     ],
+     "name": "First Implement",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "Your implement is a special object of symbolic importance: your badge as you treat with the supernatural and a powerful tool if things turn violent. Choose an implement from the options to which you have access. You begin play with a mundane item of that type, and you gain the initiate benefit for that implement. While an implement is useful to you, it typically has no value if sold. If you acquire a new object of the same general implement type, you can switch your implement to the new object by spending 1 day of downtime with the new item. As you advance as a thaumaturge, you will collect up to three implements and unlock the hidden potential stored within each, so you can mix and match their benefits to suit your situation.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {},
+     "traits": [
+      2534
+     ],
+     "content_source_id": 12,
+     "version": null,
+     "uuid": 1268761523189634,
+     "availability": null,
+     "updated_at": "2024-05-10T19:56:04.292372+00:00"
+    },
+    {
+     "id": 26085,
+     "created_at": "2024-05-09T01:06:56.706961+00:00",
+     "operations": [],
+     "name": "Implement's Empowerment",
+     "actions": null,
+     "level": 1,
+     "rarity": "COMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "The power of your implement can also be turned to the more common task of combat, its power adding to and amplifying the effects of runes and other [magical](link_trait_1504) empowerments. When you [Strike](link_action_19856), you can trace mystic patterns with an implement you're holding to empower the [Strike](link_action_19856), causing it to deal 2 additional damage per weapon damage die. Channeling the power requires full use of your hands. You don't gain the benefit of implement's empowerment if you are holding anything in either hand other than a single one-handed weapon, other implements, or [esoterica](link_trait_2543), and you must be holding at least one implement to gain the benefit.",
+     "special": "",
+     "type": "class-feature",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Classes.aspx?ID=22",
+       "book": "Dark Archive",
+       "page": "30"
+      }
+     },
+     "traits": [
+      2534
+     ],
+     "content_source_id": 12,
+     "version": null,
+     "uuid": 8636113178668564,
+     "availability": null,
+     "updated_at": "2026-08-27T16:49:25.686839+00:00"
+    }
+   ],
+   "physicalFeatures": [],
+   "heritages": [
+    {
+     "id": 21335,
+     "created_at": "2024-04-17T05:20:06.352872+00:00",
+     "operations": [
+      {
+       "id": "1e69b522-13e2-468d-a69a-94057ffcd61f",
+       "type": "giveAbilityBlock",
+       "data": {
+        "type": "feat",
+        "abilityBlockId": 19734
+       }
+      }
+     ],
+     "name": "Jinxed Halfling",
+     "actions": null,
+     "level": 1,
+     "rarity": "UNCOMMON",
+     "prerequisites": [],
+     "frequency": "",
+     "cost": "",
+     "trigger": "",
+     "requirements": "",
+     "access": "",
+     "description": "You were born with a strange blessing: bereft of the typical halfling luck, you can instead manipulate the fortunes of others. You can never take the [Halfling Luck](link_feat_20205) feat, and you gain the [Jinx](link_feat_19734) action.",
+     "special": "",
+     "type": "heritage",
+     "meta_data": {
+      "source": {
+       "url": "https://2e.aonprd.com/Heritages.aspx?ID=257",
+       "book": "Player Core",
+       "page": "59"
+      }
+     },
+     "traits": [
+      1474
+     ],
+     "content_source_id": 1,
+     "version": "1.0",
+     "uuid": 2545911901409139,
+     "availability": null,
+     "updated_at": "2026-08-27T16:49:23.919185+00:00"
+    }
+   ],
+   "baseAbilities": [],
+   "addedAbilities": []
+  },
+  "character_traits": [
+   {
+    "id": 2399,
+    "created_at": "2024-03-30T02:28:30.447007+00:00",
+    "name": "Humanoid",
+    "description": "Humanoid creatures reason and act much like [humans](link_trait_1436). They typically stand upright and have two arms and two legs.",
+    "meta_data": {
+     "source": {
+      "url": "https://2e.aonprd.com/Traits.aspx?ID=628",
+      "book": "Player Core",
+      "page": "457"
+     },
+     "important": false,
+     "class_trait": false,
+     "unselectable": false,
+     "ancestry_trait": false,
+     "creature_trait": true,
+     "archetype_trait": false,
+     "versatile_heritage_trait": false
+    },
+    "content_source_id": 3,
+    "uuid": 4637282396389759,
+    "updated_at": "2026-08-27T16:53:39.273543+00:00"
+   },
+   {
+    "id": 1474,
+    "created_at": "2023-12-14T04:41:36.398774+00:00",
+    "name": "Halfling",
+    "description": "This indicates content from the halfling ancestry.",
+    "meta_data": {
+     "source": {
+      "url": "https://2e.aonprd.com/Traits.aspx?ID=621",
+      "book": "Player Core",
+      "page": "457"
+     },
+     "ancestry_trait": true
+    },
+    "content_source_id": 1,
+    "uuid": 1814241673844771,
+    "updated_at": "2026-08-27T16:49:13.252728+00:00"
+   }
+  ],
+  "languages": [
+   "COMMON",
+   "HALFLING"
+  ],
+  "senses": {
+   "precise": [
+    {
+     "sense": {
+      "id": 20776,
+      "created_at": "2024-03-23T17:24:22.611991+00:00",
+      "operations": [
+       {
+        "id": "1c98e2a2-5228-4d57-bb09-d0c87d3d055a",
+        "type": "adjValue",
+        "data": {
+         "variable": "SENSES_PRECISE",
+         "value": "normal vision"
+        }
+       }
+      ],
+      "name": "Normal Vision",
+      "actions": null,
+      "level": 1,
+      "rarity": "COMMON",
+      "prerequisites": [],
+      "frequency": "",
+      "cost": "",
+      "trigger": "",
+      "requirements": "",
+      "access": "",
+      "description": "In bright light, such as sunlight, you can observe things clearly. However, creatures and objects in areas of dim light have the concealed condition for you and, in darkness, they're hidden or undetected.  \n  \nYou have the blinded condition while in darkness, though you may be able to see illuminated areas beyond the darkness. If you can see into an illuminated area, it can observe creatures within that illuminated area normally. After being in darkness, sudden exposure to bright light might make you dazzled for a short time, as determined by the GM.",
+      "special": "",
+      "type": "sense",
+      "meta_data": {
+       "unselectable": true
+      },
+      "traits": [],
+      "content_source_id": 3,
+      "version": "1.0",
+      "uuid": 423202486919968,
+      "availability": null,
+      "updated_at": "2024-03-23T17:24:22.611991+00:00"
+     },
+     "senseName": "Normal Vision",
+     "range": "",
+     "type": "precise"
+    }
+   ],
+   "imprecise": [
+    {
+     "sense": {
+      "id": 21081,
+      "created_at": "2024-04-05T21:29:53.369732+00:00",
+      "operations": [
+       {
+        "id": "d093403b-7e30-48b0-865b-d823f756f54c",
+        "type": "adjValue",
+        "data": {
+         "variable": "SENSES_IMPRECISE",
+         "value": "hearing"
+        }
+       }
+      ],
+      "name": "Hearing",
+      "actions": null,
+      "level": 1,
+      "rarity": "COMMON",
+      "prerequisites": [],
+      "frequency": "",
+      "cost": "",
+      "trigger": "",
+      "requirements": "",
+      "access": "",
+      "description": "Hearing is the ability to perceive sound by detecting vibrations through an organ such as the ear. A creature might be undetected by you if it’s in an environment that distorts the sense, such as a noisy room. In those cases, you have to use the [Seek](link_action_19845) basic action to detect the creature.",
+      "special": "",
+      "type": "sense",
+      "meta_data": {
+       "unselectable": true
+      },
+      "traits": [],
+      "content_source_id": 3,
+      "version": "1.0",
+      "uuid": 7294419213926000,
+      "availability": null,
+      "updated_at": "2024-04-05T21:29:53.369732+00:00"
+     },
+     "senseName": "Hearing",
+     "range": "",
+     "type": "imprecise"
+    }
+   ],
+   "vague": [
+    {
+     "sense": {
+      "id": 21082,
+      "created_at": "2024-04-05T21:31:08.459485+00:00",
+      "operations": [
+       {
+        "id": "d093403b-7e30-48b0-865b-d823f756f54c",
+        "type": "adjValue",
+        "data": {
+         "variable": "SENSES_VAGUE",
+         "value": "smell"
+        }
+       }
+      ],
+      "name": "Smell",
+      "actions": null,
+      "level": 1,
+      "rarity": "COMMON",
+      "prerequisites": [],
+      "frequency": "",
+      "cost": "",
+      "trigger": "",
+      "requirements": "",
+      "access": "",
+      "description": "Smell allows you to detect and identify chemical substances in your environment through your [olfactory](link_trait_2131) system. This involves the detection of odor molecules by receptor cells in the nose.",
+      "special": "",
+      "type": "sense",
+      "meta_data": {
+       "unselectable": true
+      },
+      "traits": [],
+      "content_source_id": 3,
+      "version": "1.0",
+      "uuid": 5653374427219146,
+      "availability": null,
+      "updated_at": "2024-04-05T21:31:08.459485+00:00"
+     },
+     "senseName": "Smell",
+     "range": "",
+     "type": "vague"
+    }
+   ]
+  },
+  "weapons": [],
+  "inventory_flat": [],
+  "total_bulk": "0",
+  "spell_raw_data": {
+   "slots": [],
+   "list": [],
+   "focus": [],
+   "innate": [],
+   "sources": []
+  },
+  "spell_sources": [],
+  "spell_slots": [],
+  "spells": {
+   "all": [],
+   "cantrips": [],
+   "normal": [],
+   "rituals": []
+  },
+  "focus_spells": [],
+  "innate_spells": [],
+  "size": "Small",
+  "speeds": [
+   {
+    "name": "SPEED",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 25,
+     "value": 25
+    }
+   },
+   {
+    "name": "SPEED_FLY",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 5,
+     "value": 0
+    }
+   },
+   {
+    "name": "SPEED_CLIMB",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 5,
+     "value": 0
+    }
+   },
+   {
+    "name": "SPEED_BURROW",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 5,
+     "value": 0
+    }
+   },
+   {
+    "name": "SPEED_SWIM",
+    "value": {
+     "bonus": 0,
+     "bmap": {},
+     "conditionals": [],
+     "total": 5,
+     "value": 0
+    }
+   }
+  ],
+  "max_hp": 16,
+  "ac": 15,
+  "shield_item": null,
+  "armor_item": null,
+  "resist_weaks": {
+   "resists": [],
+   "weaks": [],
+   "immunes": []
+  },
+  "proficiencies": {
+   "SAVE_FORT": {
+    "total": "+7",
+    "parts": {
+     "level": 1,
+     "profValue": 4,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SAVE_REFLEX": {
+    "total": "+5",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SAVE_WILL": {
+    "total": "+7",
+    "parts": {
+     "level": 1,
+     "profValue": 4,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_ACROBATICS": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_ARCANA": {
+    "total": "+3",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 0,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_ATHLETICS": {
+    "total": "-1",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": -1,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_CRAFTING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 0,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_DECEPTION": {
+    "total": "+7",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_DIPLOMACY": {
+    "total": "+7",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_INTIMIDATION": {
+    "total": "+4",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_MEDICINE": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_NATURE": {
+    "total": "+5",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_OCCULTISM": {
+    "total": "+3",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 0,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_PERFORMANCE": {
+    "total": "+4",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_RELIGION": {
+    "total": "+5",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_SOCIETY": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 0,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_STEALTH": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_SURVIVAL": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_THIEVERY": {
+    "total": "+2",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 2,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_LORE____": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 0,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SPELL_ATTACK": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SPELL_DC": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "LIGHT_ARMOR": {
+    "total": "+3",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "MEDIUM_ARMOR": {
+    "total": "+3",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "HEAVY_ARMOR": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "UNARMORED_DEFENSE": {
+    "total": "+3",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "LIGHT_BARDING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "HEAVY_BARDING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SIMPLE_WEAPONS": {
+    "total": "+3",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "MARTIAL_WEAPONS": {
+    "total": "+3",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ADVANCED_WEAPONS": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "UNARMED_ATTACKS": {
+    "total": "+3",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "PERCEPTION": {
+    "total": "+7",
+    "parts": {
+     "level": 1,
+     "profValue": 4,
+     "attributeMod": 2,
+     "hasConditionals": true,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": [
+       {
+        "text": "+2 circumstance bonus when using the Seek action to find hidden or undetected creatures within 30 feet of you",
+        "source": "Keen Eyes"
+       },
+       {
+        "text": "+1 status bonus You gain a +1 status bonus to visual Perception checks to notice anything that is within the bright light of your lantern implement.",
+        "source": "Lantern Implement"
+       }
+      ]
+     }
+    }
+   },
+   "CLASS_DC": {
+    "total": "+7",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_AXE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_BOMB": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_BOW": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_BRAWLING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_CLUB": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_CROSSBOW": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_DART": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_FIREARM": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_FLAIL": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_HAMMER": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_KNIFE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_PICK": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_POLEARM": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_SHIELD": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_SLING": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_SPEAR": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_SWORD": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_LASER": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_GROUP_PROJECTILE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_GUN": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_GUN_SIMPLE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_GUN_MARTIAL": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_GUN_ADVANCED": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "WEAPON_DIVISION_ONE_HANDED_AGILE_FINESSE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_CLOTH": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_CHAIN": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_COMPOSITE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_LEATHER": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_PLATE": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_CERAMIC": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_POLYMER": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_SKELETAL": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "ARMOR_GROUP_WOOD": {
+    "total": "+0",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": null,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_LORE_FORTUNE_TELLING": {
+    "total": "+3",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 0,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "SKILL_LORE_ESOTERIC": {
+    "total": "+7",
+    "parts": {
+     "level": 1,
+     "profValue": 2,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "INNATE_SPELL_ATTACK": {
+    "total": "+4",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   },
+   "INNATE_SPELL_DC": {
+    "total": "14",
+    "parts": {
+     "level": 0,
+     "profValue": 0,
+     "attributeMod": 4,
+     "hasConditionals": false,
+     "breakdown": {
+      "bonuses": {},
+      "bonusValue": 0,
+      "baseValue": 0,
+      "conditionals": []
+     }
+    }
+   }
+  },
+  "attributes": {
+   "ATTRIBUTE_STR": {
+    "value": -1,
+    "partial": false
+   },
+   "ATTRIBUTE_DEX": {
+    "value": 2,
+    "partial": false
+   },
+   "ATTRIBUTE_CON": {
+    "value": 2,
+    "partial": false
+   },
+   "ATTRIBUTE_INT": {
+    "value": 0,
+    "partial": false
+   },
+   "ATTRIBUTE_WIS": {
+    "value": 2,
+    "partial": false
+   },
+   "ATTRIBUTE_CHA": {
+    "value": 4,
+    "partial": false
+   }
+  },
+  "raw_data_dump": {
+   "variables": {
+    "ATTRIBUTE_STR": {
+     "name": "ATTRIBUTE_STR",
+     "type": "attr",
+     "value": {
+      "value": -1,
+      "partial": false
+     }
+    },
+    "ATTRIBUTE_DEX": {
+     "name": "ATTRIBUTE_DEX",
+     "type": "attr",
+     "value": {
+      "value": 2,
+      "partial": false
+     }
+    },
+    "ATTRIBUTE_CON": {
+     "name": "ATTRIBUTE_CON",
+     "type": "attr",
+     "value": {
+      "value": 2,
+      "partial": false
+     }
+    },
+    "ATTRIBUTE_INT": {
+     "name": "ATTRIBUTE_INT",
+     "type": "attr",
+     "value": {
+      "value": 0,
+      "partial": false
+     }
+    },
+    "ATTRIBUTE_WIS": {
+     "name": "ATTRIBUTE_WIS",
+     "type": "attr",
+     "value": {
+      "value": 2,
+      "partial": false
+     }
+    },
+    "ATTRIBUTE_CHA": {
+     "name": "ATTRIBUTE_CHA",
+     "type": "attr",
+     "value": {
+      "value": 4,
+      "partial": false
+     }
+    },
+    "SAVE_FORT": {
+     "name": "SAVE_FORT",
+     "type": "prof",
+     "value": {
+      "value": "E",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_CON"
+     }
+    },
+    "SAVE_REFLEX": {
+     "name": "SAVE_REFLEX",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_DEX"
+     }
+    },
+    "SAVE_WILL": {
+     "name": "SAVE_WILL",
+     "type": "prof",
+     "value": {
+      "value": "E",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_WIS"
+     }
+    },
+    "SKILL_ACROBATICS": {
+     "name": "SKILL_ACROBATICS",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_DEX"
+     }
+    },
+    "SKILL_ARCANA": {
+     "name": "SKILL_ARCANA",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_INT"
+     }
+    },
+    "SKILL_ATHLETICS": {
+     "name": "SKILL_ATHLETICS",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_STR"
+     }
+    },
+    "SKILL_CRAFTING": {
+     "name": "SKILL_CRAFTING",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_INT"
+     }
+    },
+    "SKILL_DECEPTION": {
+     "name": "SKILL_DECEPTION",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_CHA"
+     }
+    },
+    "SKILL_DIPLOMACY": {
+     "name": "SKILL_DIPLOMACY",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_CHA"
+     }
+    },
+    "SKILL_INTIMIDATION": {
+     "name": "SKILL_INTIMIDATION",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_CHA"
+     }
+    },
+    "SKILL_MEDICINE": {
+     "name": "SKILL_MEDICINE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_WIS"
+     }
+    },
+    "SKILL_NATURE": {
+     "name": "SKILL_NATURE",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_WIS"
+     }
+    },
+    "SKILL_OCCULTISM": {
+     "name": "SKILL_OCCULTISM",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_INT"
+     }
+    },
+    "SKILL_PERFORMANCE": {
+     "name": "SKILL_PERFORMANCE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_CHA"
+     }
+    },
+    "SKILL_RELIGION": {
+     "name": "SKILL_RELIGION",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_WIS"
+     }
+    },
+    "SKILL_SOCIETY": {
+     "name": "SKILL_SOCIETY",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_INT"
+     }
+    },
+    "SKILL_STEALTH": {
+     "name": "SKILL_STEALTH",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_DEX"
+     }
+    },
+    "SKILL_SURVIVAL": {
+     "name": "SKILL_SURVIVAL",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_WIS"
+     }
+    },
+    "SKILL_THIEVERY": {
+     "name": "SKILL_THIEVERY",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_DEX"
+     }
+    },
+    "SKILL_LORE____": {
+     "name": "SKILL_LORE____",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_INT"
+     }
+    },
+    "SPELL_ATTACK": {
+     "name": "SPELL_ATTACK",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "SPELL_DC": {
+     "name": "SPELL_DC",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "CASTING_SOURCES": {
+     "name": "CASTING_SOURCES",
+     "type": "list-str",
+     "value": []
+    },
+    "SPELL_SLOTS": {
+     "name": "SPELL_SLOTS",
+     "type": "list-str",
+     "value": []
+    },
+    "SPELL_DATA": {
+     "name": "SPELL_DATA",
+     "type": "list-str",
+     "value": []
+    },
+    "FOCUS_POINT_BONUS": {
+     "name": "FOCUS_POINT_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "LIGHT_ARMOR": {
+     "name": "LIGHT_ARMOR",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0
+     }
+    },
+    "MEDIUM_ARMOR": {
+     "name": "MEDIUM_ARMOR",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0
+     }
+    },
+    "HEAVY_ARMOR": {
+     "name": "HEAVY_ARMOR",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "UNARMORED_DEFENSE": {
+     "name": "UNARMORED_DEFENSE",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0
+     }
+    },
+    "LIGHT_BARDING": {
+     "name": "LIGHT_BARDING",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "HEAVY_BARDING": {
+     "name": "HEAVY_BARDING",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "SIMPLE_WEAPONS": {
+     "name": "SIMPLE_WEAPONS",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0
+     }
+    },
+    "MARTIAL_WEAPONS": {
+     "name": "MARTIAL_WEAPONS",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0
+     }
+    },
+    "ADVANCED_WEAPONS": {
+     "name": "ADVANCED_WEAPONS",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "UNARMED_ATTACKS": {
+     "name": "UNARMED_ATTACKS",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0
+     }
+    },
+    "PERCEPTION": {
+     "name": "PERCEPTION",
+     "type": "prof",
+     "value": {
+      "value": "E",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_WIS"
+     }
+    },
+    "CLASS_DC": {
+     "name": "CLASS_DC",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "increases": 0,
+      "attribute": "ATTRIBUTE_CHA"
+     }
+    },
+    "LEVEL": {
+     "name": "LEVEL",
+     "type": "num",
+     "value": 1
+    },
+    "SIZE": {
+     "name": "SIZE",
+     "type": "str",
+     "value": "small"
+    },
+    "CORE_LANGUAGES": {
+     "name": "CORE_LANGUAGES",
+     "type": "list-str",
+     "value": [
+      "Dwarven",
+      "Elven",
+      "Gnomish",
+      "Goblin"
+     ]
+    },
+    "PROF_WITHOUT_LEVEL": {
+     "name": "PROF_WITHOUT_LEVEL",
+     "type": "bool",
+     "value": false
+    },
+    "STAMINA_VARIANT": {
+     "name": "STAMINA_VARIANT",
+     "type": "bool",
+     "value": false
+    },
+    "MAX_HEALTH_ANCESTRY": {
+     "name": "MAX_HEALTH_ANCESTRY",
+     "type": "num",
+     "value": 6
+    },
+    "MAX_HEALTH_CLASS_PER_LEVEL": {
+     "name": "MAX_HEALTH_CLASS_PER_LEVEL",
+     "type": "num",
+     "value": 8
+    },
+    "MAX_HEALTH_BONUS": {
+     "name": "MAX_HEALTH_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "AC_BONUS": {
+     "name": "AC_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "SPEED": {
+     "name": "SPEED",
+     "type": "num",
+     "value": 25
+    },
+    "SPEED_FLY": {
+     "name": "SPEED_FLY",
+     "type": "num",
+     "value": 0
+    },
+    "SPEED_CLIMB": {
+     "name": "SPEED_CLIMB",
+     "type": "num",
+     "value": 0
+    },
+    "SPEED_BURROW": {
+     "name": "SPEED_BURROW",
+     "type": "num",
+     "value": 0
+    },
+    "SPEED_SWIM": {
+     "name": "SPEED_SWIM",
+     "type": "num",
+     "value": 0
+    },
+    "SENSES_PRECISE": {
+     "name": "SENSES_PRECISE",
+     "type": "list-str",
+     "value": [
+      "NORMAL_VISION"
+     ]
+    },
+    "SENSES_IMPRECISE": {
+     "name": "SENSES_IMPRECISE",
+     "type": "list-str",
+     "value": [
+      "HEARING"
+     ]
+    },
+    "SENSES_VAGUE": {
+     "name": "SENSES_VAGUE",
+     "type": "list-str",
+     "value": [
+      "SMELL"
+     ]
+    },
+    "RESISTANCES": {
+     "name": "RESISTANCES",
+     "type": "list-str",
+     "value": []
+    },
+    "WEAKNESSES": {
+     "name": "WEAKNESSES",
+     "type": "list-str",
+     "value": []
+    },
+    "IMMUNITIES": {
+     "name": "IMMUNITIES",
+     "type": "list-str",
+     "value": []
+    },
+    "SENSE_NAMES": {
+     "name": "SENSE_NAMES",
+     "type": "list-str",
+     "value": [
+      "KEEN EYES"
+     ]
+    },
+    "MODE_NAMES": {
+     "name": "MODE_NAMES",
+     "type": "list-str",
+     "value": []
+    },
+    "CLASS_NAMES": {
+     "name": "CLASS_NAMES",
+     "type": "list-str",
+     "value": [
+      "THAUMATURGE"
+     ]
+    },
+    "ANCESTRY_NAMES": {
+     "name": "ANCESTRY_NAMES",
+     "type": "list-str",
+     "value": [
+      "HALFLING"
+     ]
+    },
+    "BACKGROUND_NAMES": {
+     "name": "BACKGROUND_NAMES",
+     "type": "list-str",
+     "value": [
+      "FORTUNE TELLER"
+     ]
+    },
+    "HERITAGE_NAMES": {
+     "name": "HERITAGE_NAMES",
+     "type": "list-str",
+     "value": [
+      "JINXED HALFLING"
+     ]
+    },
+    "CLASS_ARCHETYPE_NAMES": {
+     "name": "CLASS_ARCHETYPE_NAMES",
+     "type": "list-str",
+     "value": []
+    },
+    "FEAT_NAMES": {
+     "name": "FEAT_NAMES",
+     "type": "list-str",
+     "value": [
+      "ODDITY IDENTIFICATION",
+      "JINX",
+      "HALFLING LUCK",
+      "DUBIOUS KNOWLEDGE",
+      "EXPLOIT VULNERABILITY",
+      "LANTERN IMPLEMENT",
+      "DIVINE DISHARMONY"
+     ]
+    },
+    "SPELL_NAMES": {
+     "name": "SPELL_NAMES",
+     "type": "list-str",
+     "value": []
+    },
+    "LANGUAGE_NAMES": {
+     "name": "LANGUAGE_NAMES",
+     "type": "list-str",
+     "value": [
+      "COMMON",
+      "HALFLING"
+     ]
+    },
+    "TRAIT_NAMES": {
+     "name": "TRAIT_NAMES",
+     "type": "list-str",
+     "value": [
+      "THAUMATURGE",
+      "HUMANOID",
+      "HALFLING"
+     ]
+    },
+    "CLASS_FEATURE_NAMES": {
+     "name": "CLASS_FEATURE_NAMES",
+     "type": "list-str",
+     "value": [
+      "ATTRIBUTE BOOSTS",
+      "ESOTERIC LORE",
+      "ESOTERICA",
+      "EXPLOIT VULNERABILITY",
+      "FIRST IMPLEMENT",
+      "IMPLEMENT'S EMPOWERMENT",
+      "THAUMATURGE FEAT"
+     ]
+    },
+    "PHYSICAL_FEATURE_NAMES": {
+     "name": "PHYSICAL_FEATURE_NAMES",
+     "type": "list-str",
+     "value": []
+    },
+    "EXTRA_ITEM_NAMES": {
+     "name": "EXTRA_ITEM_NAMES",
+     "type": "list-str",
+     "value": [
+      "FIST"
+     ]
+    },
+    "SENSE_IDS": {
+     "name": "SENSE_IDS",
+     "type": "list-str",
+     "value": [
+      "21333"
+     ]
+    },
+    "MODE_IDS": {
+     "name": "MODE_IDS",
+     "type": "list-str",
+     "value": []
+    },
+    "CLASS_IDS": {
+     "name": "CLASS_IDS",
+     "type": "list-str",
+     "value": [
+      "39"
+     ]
+    },
+    "ANCESTRY_IDS": {
+     "name": "ANCESTRY_IDS",
+     "type": "list-str",
+     "value": [
+      "7"
+     ]
+    },
+    "BACKGROUND_IDS": {
+     "name": "BACKGROUND_IDS",
+     "type": "list-str",
+     "value": [
+      "743"
+     ]
+    },
+    "HERITAGE_IDS": {
+     "name": "HERITAGE_IDS",
+     "type": "list-str",
+     "value": [
+      "21335"
+     ]
+    },
+    "CLASS_ARCHETYPE_IDS": {
+     "name": "CLASS_ARCHETYPE_IDS",
+     "type": "list-str",
+     "value": []
+    },
+    "FEAT_IDS": {
+     "name": "FEAT_IDS",
+     "type": "list-str",
+     "value": [
+      "20375",
+      "19734",
+      "20205",
+      "20087",
+      "21367",
+      "34319",
+      "22688"
+     ]
+    },
+    "SPELL_IDS": {
+     "name": "SPELL_IDS",
+     "type": "list-str",
+     "value": []
+    },
+    "LANGUAGE_IDS": {
+     "name": "LANGUAGE_IDS",
+     "type": "list-str",
+     "value": [
+      "81",
+      "87"
+     ]
+    },
+    "CLASS_FEATURE_IDS": {
+     "name": "CLASS_FEATURE_IDS",
+     "type": "list-str",
+     "value": [
+      "25334",
+      "21360",
+      "26474",
+      "26084",
+      "26614",
+      "26085",
+      "26071"
+     ]
+    },
+    "PHYSICAL_FEATURE_IDS": {
+     "name": "PHYSICAL_FEATURE_IDS",
+     "type": "list-str",
+     "value": []
+    },
+    "EXTRA_ITEM_IDS": {
+     "name": "EXTRA_ITEM_IDS",
+     "type": "list-str",
+     "value": []
+    },
+    "BULK_LIMIT_BONUS": {
+     "name": "BULK_LIMIT_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "INVEST_LIMIT_BONUS": {
+     "name": "INVEST_LIMIT_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "IMPLANT_LIMIT_BONUS": {
+     "name": "IMPLANT_LIMIT_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "INJECT_SELECT_OPTIONS": {
+     "name": "INJECT_SELECT_OPTIONS",
+     "type": "list-str",
+     "value": [
+      "{\"opId\":\"fc37a4c6-a52e-4c6d-981f-20080ab7c944\",\"option\":{\"id\":\"260203f1-b8d7-44b8-81fb-303b3f3bd1a8\",\"type\":\"CUSTOM\",\"title\":\"Time\",\"description\":\"Whether by accident, fate, or purposeful meddling, you exist slightly outside of time. While initially unmoored by moments, the countless march of milliseconds builds up to drift you further and further out of sync with your natural timeline, often in contradictory directions. You might view this as a blessing, perhaps as a sign you're somehow beyond mortality or you can't be contained within reality's limitations, or you might view it as a cruel curse that causes your own life to slip by adrift even as you gain power over time. Many oracles of time are without faith and either come to rely upon their own instincts to survive or else turn to strange rituals and forbidden magic in an attempt to break free of time's grasp. Those oracles who worship deities most often worship Pharasma, goddess of fate who sees all possible futures for all who ever lived, or Alseta, goddess of transitions and the passage through time.\\n\\n**Mystery Benefit** Time passes more swiftly for you than it does for those around you, enabling you to cover more distance in what others perceive as the same amount of time. You gain a +10-foot status bonus to your Speed. At 6th level, this increases to a +15-foot status bonus; at 10th level, this increases to a +20-foot status bonus; at 14th level, this increases to a +25-foot status bonus; and at 18th level, it increases to a +30-foot status bonus. Your disjointed movement makes it harder for creatures to hit you as you move. You gain a +1 status bonus to AC against attacks made against you from reactions or free actions while you're moving.\\n\\n**Trained Skill** Occultism\\n\\n**Granted Cantrip** [time sense](link_spell_5526)\\n\\n**Revelation Spells** initial: [temporal distortion](link_spell_5499); advanced: [time skip](link_spell_5512); greater: [manifold lives](link_spell_5524)\\n\\n**Related Domains** fate, time\\n\\n#### Curse of Turbulent Moments\\n\\nTime passes differently for you than everyone else. You experience fluxes that might manifest as minor day-to-day changes in your apparent age, such as a gray lock of hair or a disappearing wrinkle, or as occasional ghostly temporal afterimages that slightly trail your movement.\\n\\n**Minor Curse** As you draw upon your mystery, time's passage becomes more disjointed, aging, regressing, or warping you out of sync. You become enfeebled 1. In addition, you take a –2 penalty to saving throws against effects that would make you fatigued or slowed.\\n\\n**Moderate Curse** Time distorts further, increasing your muscular atrophy, age regression, or warping while making effects pass you by at an increased rate. The value of your enfeebled condition increases to 2 and the penalty from your minor curse increases to –3. Your status bonus to AC against attacks made against you from reactions or free actions while you're moving increases to +2. In addition, spells affecting you last less time; their duration is reduced by half, to a minimum of 1 round. This doesn't reduce the spell's duration for other targets affected by the same spell. Finally, all non-permanent conditions affecting you that have a duration measured in rounds, minutes, or hours have their duration reduced by half, to a minimum of 1 round. Any afflictions (such as [poisons](link_trait_1476), [diseases](link_trait_1857), and [curses](link_trait_1855)) affecting you have their maximum duration, onset time, and time for each stage reduced by half. Spells, conditions, and afflictions that last “until your next daily preparations” last for 12 hours or until your next daily preparations, whichever comes first. This doesn't change the duration you're temporarily immune, the rate at which you can use abilities that have a frequency, or any other features based on the passage of time.\\n\\n**Major Curse** You become so out of sync with time that it's hard for you to act, but when you do act, you do so with incredible speed. You become slowed 1, the value of your enfeebled condition increases to 3, and the penalty from your minor curse increases to –4. Time passes so much faster for you that your steps appear as a blur of motion to others. You gain a +4 status bonus to initiative rolls. Whenever you move, you're concealed while you're moving and until the start of your next turn. As normal for concealment where your location is still obvious, you can't use this concealment to [Hide](link_action_19726) or [Sneak](link_action_19850). Your status bonus to AC against attacks made against you from reactions or free actions while you're moving increases to +4.\",\"operations\":[{\"id\":\"d3d29cb9-01e9-4fba-b22f-0924e22e452c\",\"type\":\"conditional\",\"data\":{\"conditions\":[{\"id\":\"d2b0e98f-340d-4b6a-b672-2a7e9953c63b\",\"name\":\"LEVEL\",\"data\":{\"name\":\"LEVEL\",\"type\":\"num\",\"value\":0},\"type\":\"num\",\"operator\":\"GREATER_THAN_OR_EQUALS\",\"value\":6}],\"trueOperations\":[{\"id\":\"625c5288-880b-47ca-b0a5-cbf9f70380c1\",\"type\":\"addBonusToValue\",\"data\":{\"variable\":\"SPEED\",\"value\":15,\"type\":\"status\",\"text\":\"\"}}],\"falseOperations\":[]}},{\"id\":\"a9c2e88b-a3ff-441a-afbe-b3c1e79b50a6\",\"type\":\"conditional\",\"data\":{\"conditions\":[{\"id\":\"0baa984e-932c-431e-9065-b7c206ace7dd\",\"name\":\"LEVEL\",\"data\":{\"name\":\"LEVEL\",\"type\":\"num\",\"value\":0},\"type\":\"num\",\"operator\":\"GREATER_THAN_OR_EQUALS\",\"value\":10}],\"trueOperations\":[{\"id\":\"52fcd328-00e9-4937-a405-e9d1fd00bffc\",\"type\":\"addBonusToValue\",\"data\":{\"variable\":\"SPEED\",\"value\":20,\"type\":\"status\",\"text\":\"\"}}],\"falseOperations\":[]}},{\"id\":\"3faefb73-ad5e-4d0c-a51a-61dffa5ea479\",\"type\":\"conditional\",\"data\":{\"conditions\":[{\"id\":\"7c92ad36-ca06-4eca-90dc-3092a2e9f8d6\",\"name\":\"LEVEL\",\"data\":{\"name\":\"LEVEL\",\"type\":\"num\",\"value\":0},\"type\":\"num\",\"operator\":\"GREATER_THAN_OR_EQUALS\",\"value\":14}],\"trueOperations\":[{\"id\":\"6513d965-ad30-4c22-90d5-824fcffccabf\",\"type\":\"addBonusToValue\",\"data\":{\"variable\":\"SPEED\",\"value\":25,\"type\":\"status\",\"text\":\"\"}}],\"falseOperations\":[]}},{\"id\":\"1d4459bb-96c4-4937-be2b-da4fecefd49d\",\"type\":\"conditional\",\"data\":{\"conditions\":[{\"id\":\"ead4bde0-c4ba-4636-9272-5de21600c006\",\"name\":\"LEVEL\",\"data\":{\"name\":\"LEVEL\",\"type\":\"num\",\"value\":0},\"type\":\"num\",\"operator\":\"GREATER_THAN_OR_EQUALS\",\"value\":18}],\"trueOperations\":[{\"id\":\"99a84dc1-b240-405c-92e4-b27bd73b28bd\",\"type\":\"addBonusToValue\",\"data\":{\"variable\":\"SPEED\",\"value\":30,\"type\":\"status\",\"text\":\"\"}}],\"falseOperations\":[]}},{\"id\":\"f171ddc5-4edf-4bd5-b455-500d529f0dc0\",\"type\":\"addBonusToValue\",\"data\":{\"variable\":\"AC_BONUS\",\"value\":1,\"type\":\"status\",\"text\":\"Applies to attacks made against you from reactions or free actions while you're moving.\"}},{\"id\":\"985a4189-6c1f-47cd-851f-50fab94ee5df\",\"type\":\"adjValue\",\"data\":{\"variable\":\"SKILL_OCCULTISM\",\"value\":{\"value\":\"T\"}}},{\"id\":\"f759ecdc-e8d6-4db3-b15b-ab92c7391e0e\",\"type\":\"giveSpell\",\"data\":{\"spellId\":5526,\"type\":\"NORMAL\",\"castingSource\":\"ORACLE\",\"rank\":1}},{\"id\":\"cbec2c87-3e69-46ad-98dd-31cc14a6ddc4\",\"type\":\"giveSpell\",\"data\":{\"spellId\":5499,\"type\":\"FOCUS\",\"castingSource\":\"ORACLE\",\"rank\":1}},{\"id\":\"251b1f14-28e2-40b9-a63f-dde163235eea\",\"type\":\"conditional\",\"data\":{\"conditions\":[{\"id\":\"4afa7e2c-449b-4570-bc29-e3c97b245f0e\",\"name\":\"FEAT_NAMES\",\"data\":{\"name\":\"FEAT_NAMES\",\"type\":\"list-str\",\"value\":[]},\"type\":\"list-str\",\"operator\":\"INCLUDES\",\"value\":\"advanced revelation\"}],\"trueOperations\":[{\"id\":\"ee8041b7-9519-4dab-bfb1-8a9a40238230\",\"type\":\"giveSpell\",\"data\":{\"spellId\":5512,\"type\":\"FOCUS\",\"castingSource\":\"ORACLE\",\"rank\":3}}],\"falseOperations\":[]}},{\"id\":\"5a7839c3-b665-472f-85f9-9c94fa87859b\",\"type\":\"conditional\",\"data\":{\"conditions\":[{\"id\":\"76c8cadf-9907-4471-87dc-ae232cf76aa8\",\"name\":\"FEAT_NAMES\",\"data\":{\"name\":\"FEAT_NAMES\",\"type\":\"list-str\",\"value\":[]},\"type\":\"list-str\",\"operator\":\"INCLUDES\",\"value\":\"greater revelation\"}],\"trueOperations\":[{\"id\":\"8920ce7c-b5c3-4e0d-b00f-5fde5ce9cd6d\",\"type\":\"giveSpell\",\"data\":{\"spellId\":5524,\"type\":\"FOCUS\",\"castingSource\":\"ORACLE\",\"rank\":6}}],\"falseOperations\":[]}},{\"id\":\"3058558d-4650-49ad-8e88-73c2692cbf70\",\"type\":\"addBonusToValue\",\"data\":{\"variable\":\"SPEED\",\"value\":10,\"type\":\"status\",\"text\":\"\"}}]}}"
+     ]
+    },
+    "INJECT_TEXT": {
+     "name": "INJECT_TEXT",
+     "type": "list-str",
+     "value": []
+    },
+    "BLACKLIST_ABILITY_BLOCKS": {
+     "name": "BLACKLIST_ABILITY_BLOCKS",
+     "type": "list-str",
+     "value": []
+    },
+    "BLACKLIST_TRAITS": {
+     "name": "BLACKLIST_TRAITS",
+     "type": "list-str",
+     "value": []
+    },
+    "BLACKLIST_SPELLS": {
+     "name": "BLACKLIST_SPELLS",
+     "type": "list-str",
+     "value": []
+    },
+    "BLACKLIST_ITEMS": {
+     "name": "BLACKLIST_ITEMS",
+     "type": "list-str",
+     "value": []
+    },
+    "WEAPON_SPECIALIZATION": {
+     "name": "WEAPON_SPECIALIZATION",
+     "type": "bool",
+     "value": false
+    },
+    "WEAPON_SPECIALIZATION_GREATER": {
+     "name": "WEAPON_SPECIALIZATION_GREATER",
+     "type": "bool",
+     "value": false
+    },
+    "ARMOR_SPECIALIZATION_LIGHT": {
+     "name": "ARMOR_SPECIALIZATION_LIGHT",
+     "type": "bool",
+     "value": false
+    },
+    "ARMOR_SPECIALIZATION_MEDIUM": {
+     "name": "ARMOR_SPECIALIZATION_MEDIUM",
+     "type": "bool",
+     "value": false
+    },
+    "ARMOR_SPECIALIZATION_HEAVY": {
+     "name": "ARMOR_SPECIALIZATION_HEAVY",
+     "type": "bool",
+     "value": false
+    },
+    "WEAPON_CRITICAL_SPECIALIZATIONS": {
+     "name": "WEAPON_CRITICAL_SPECIALIZATIONS",
+     "type": "list-str",
+     "value": []
+    },
+    "WEAPON_FAMILIARITY": {
+     "name": "WEAPON_FAMILIARITY",
+     "type": "list-str",
+     "value": []
+    },
+    "MARTIAL_EXPERIENCE": {
+     "name": "MARTIAL_EXPERIENCE",
+     "type": "bool",
+     "value": false
+    },
+    "UNBURDENED_IRON": {
+     "name": "UNBURDENED_IRON",
+     "type": "bool",
+     "value": false
+    },
+    "UNTRAINED_IMPROVISATION": {
+     "name": "UNTRAINED_IMPROVISATION",
+     "type": "str",
+     "value": ""
+    },
+    "IMPROVED_MULTILINGUAL": {
+     "name": "IMPROVED_MULTILINGUAL",
+     "type": "bool",
+     "value": false
+    },
+    "USE_DEX_FOR_MELEE_FINESSE": {
+     "name": "USE_DEX_FOR_MELEE_FINESSE",
+     "type": "bool",
+     "value": false
+    },
+    "ADD_CON_TO_BULK_LIMIT": {
+     "name": "ADD_CON_TO_BULK_LIMIT",
+     "type": "bool",
+     "value": false
+    },
+    "USE_CON_FOR_ARMOR_STR_REQ": {
+     "name": "USE_CON_FOR_ARMOR_STR_REQ",
+     "type": "bool",
+     "value": false
+    },
+    "MINIMUM_WEAPON_DAMAGE_DICE": {
+     "name": "MINIMUM_WEAPON_DAMAGE_DICE",
+     "type": "num",
+     "value": 1
+    },
+    "ATTACK_ROLLS_BONUS": {
+     "name": "ATTACK_ROLLS_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "ATTACK_DAMAGE_BONUS": {
+     "name": "ATTACK_DAMAGE_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "DEX_ATTACK_ROLLS_BONUS": {
+     "name": "DEX_ATTACK_ROLLS_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "DEX_ATTACK_DAMAGE_BONUS": {
+     "name": "DEX_ATTACK_DAMAGE_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "STR_ATTACK_ROLLS_BONUS": {
+     "name": "STR_ATTACK_ROLLS_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "STR_ATTACK_DAMAGE_BONUS": {
+     "name": "STR_ATTACK_DAMAGE_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "RANGED_ATTACK_ROLLS_BONUS": {
+     "name": "RANGED_ATTACK_ROLLS_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "RANGED_ATTACK_DAMAGE_BONUS": {
+     "name": "RANGED_ATTACK_DAMAGE_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "MELEE_ATTACK_ROLLS_BONUS": {
+     "name": "MELEE_ATTACK_ROLLS_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "MELEE_ATTACK_DAMAGE_BONUS": {
+     "name": "MELEE_ATTACK_DAMAGE_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "NON_SPELL_ATTACK_ROLLS_BONUS": {
+     "name": "NON_SPELL_ATTACK_ROLLS_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "NON_SPELL_ATTACK_DAMAGE_BONUS": {
+     "name": "NON_SPELL_ATTACK_DAMAGE_BONUS",
+     "type": "num",
+     "value": 0
+    },
+    "WEAPON_GROUP_AXE": {
+     "name": "WEAPON_GROUP_AXE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_BOMB": {
+     "name": "WEAPON_GROUP_BOMB",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_BOW": {
+     "name": "WEAPON_GROUP_BOW",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_BRAWLING": {
+     "name": "WEAPON_GROUP_BRAWLING",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_CLUB": {
+     "name": "WEAPON_GROUP_CLUB",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_CROSSBOW": {
+     "name": "WEAPON_GROUP_CROSSBOW",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_DART": {
+     "name": "WEAPON_GROUP_DART",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_FIREARM": {
+     "name": "WEAPON_GROUP_FIREARM",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_FLAIL": {
+     "name": "WEAPON_GROUP_FLAIL",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_HAMMER": {
+     "name": "WEAPON_GROUP_HAMMER",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_KNIFE": {
+     "name": "WEAPON_GROUP_KNIFE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_PICK": {
+     "name": "WEAPON_GROUP_PICK",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_POLEARM": {
+     "name": "WEAPON_GROUP_POLEARM",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_SHIELD": {
+     "name": "WEAPON_GROUP_SHIELD",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_SLING": {
+     "name": "WEAPON_GROUP_SLING",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_SPEAR": {
+     "name": "WEAPON_GROUP_SPEAR",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_SWORD": {
+     "name": "WEAPON_GROUP_SWORD",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_LASER": {
+     "name": "WEAPON_GROUP_LASER",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_GROUP_PROJECTILE": {
+     "name": "WEAPON_GROUP_PROJECTILE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_DIVISION_GUN": {
+     "name": "WEAPON_DIVISION_GUN",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_DIVISION_GUN_SIMPLE": {
+     "name": "WEAPON_DIVISION_GUN_SIMPLE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_DIVISION_GUN_MARTIAL": {
+     "name": "WEAPON_DIVISION_GUN_MARTIAL",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_DIVISION_GUN_ADVANCED": {
+     "name": "WEAPON_DIVISION_GUN_ADVANCED",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "WEAPON_DIVISION_ONE_HANDED_AGILE_FINESSE": {
+     "name": "WEAPON_DIVISION_ONE_HANDED_AGILE_FINESSE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_CLOTH": {
+     "name": "ARMOR_GROUP_CLOTH",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_CHAIN": {
+     "name": "ARMOR_GROUP_CHAIN",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_COMPOSITE": {
+     "name": "ARMOR_GROUP_COMPOSITE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_LEATHER": {
+     "name": "ARMOR_GROUP_LEATHER",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_PLATE": {
+     "name": "ARMOR_GROUP_PLATE",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_CERAMIC": {
+     "name": "ARMOR_GROUP_CERAMIC",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_POLYMER": {
+     "name": "ARMOR_GROUP_POLYMER",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_SKELETAL": {
+     "name": "ARMOR_GROUP_SKELETAL",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "ARMOR_GROUP_WOOD": {
+     "name": "ARMOR_GROUP_WOOD",
+     "type": "prof",
+     "value": {
+      "value": "U",
+      "increases": 0
+     }
+    },
+    "PAGE_CONTEXT": {
+     "name": "PAGE_CONTEXT",
+     "type": "str",
+     "value": "CHARACTER-BUILDER"
+    },
+    "PATHFINDER": {
+     "name": "PATHFINDER",
+     "type": "bool",
+     "value": true
+    },
+    "STARFINDER": {
+     "name": "STARFINDER",
+     "type": "bool",
+     "value": false
+    },
+    "ORGANIZED_PLAY": {
+     "name": "ORGANIZED_PLAY",
+     "type": "bool",
+     "value": false
+    },
+    "ACTIVE_MODES": {
+     "name": "ACTIVE_MODES",
+     "type": "list-str",
+     "value": []
+    },
+    "PRIMARY_SHEET_TABS": {
+     "name": "PRIMARY_SHEET_TABS",
+     "type": "list-str",
+     "value": [
+      "skills-actions",
+      "inventory",
+      "feats-features",
+      "details",
+      "notes"
+     ]
+    },
+    "TRAIT_CLASS_THAUMATURGE_IDS": {
+     "name": "TRAIT_CLASS_THAUMATURGE_IDS",
+     "type": "num",
+     "value": 2534
+    },
+    "TRAIT_ANCESTRY_HUMANOID_IDS": {
+     "name": "TRAIT_ANCESTRY_HUMANOID_IDS",
+     "type": "num",
+     "value": 2399
+    },
+    "TRAIT_ANCESTRY_HALFLING_IDS": {
+     "name": "TRAIT_ANCESTRY_HALFLING_IDS",
+     "type": "num",
+     "value": 1474
+    },
+    "SKILL_LORE_FORTUNE_TELLING": {
+     "name": "SKILL_LORE_FORTUNE_TELLING",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "attribute": "ATTRIBUTE_INT"
+     }
+    },
+    "SKILL_LORE_ESOTERIC": {
+     "name": "SKILL_LORE_ESOTERIC",
+     "type": "prof",
+     "value": {
+      "value": "T",
+      "attribute": "ATTRIBUTE_CHA"
+     }
+    },
+    "HAS_EIDOLON_COMPANION": {
+     "name": "HAS_EIDOLON_COMPANION",
+     "type": "bool",
+     "value": false
+    },
+    "EIDOLON_WEAPON_POTENCY": {
+     "name": "EIDOLON_WEAPON_POTENCY",
+     "type": "num",
+     "value": 0
+    },
+    "EIDOLON_WEAPON_STRIKING": {
+     "name": "EIDOLON_WEAPON_STRIKING",
+     "type": "num",
+     "value": 0
+    }
+   }
+  }
+ }
+}
