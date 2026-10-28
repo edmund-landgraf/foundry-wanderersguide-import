@@ -210,6 +210,8 @@ export function resolveImageUrl(raw, functionsUrl) {
 // ChoiceSet hints (PLAN 7.2): WG stores each "select" operation's answer in
 // character.operation_data.selections, keyed "<owner>_<operationId>" -> option id (PREDEFINED) or
 // ability block id (FILTERED). Returns Map(slug of the feature/feat that owns the select -> [names]).
+// The map also exposes non-enumerable `byId` and `keys` indexes so callers can
+// use stable WG content IDs without changing the existing name-based API.
 export function wgChoiceHints(exp) {
   const sel = exp?.character?.operation_data?.selections ?? {};
   const ff = exp?.content?.feats_features ?? {};
@@ -221,11 +223,17 @@ export function wgChoiceHints(exp) {
   const out = new Map();
   // Non-enumerable: owner slug -> selection keys, so the coverage ledger can tell which answers were used.
   Object.defineProperty(out, "keys", { value: new Map(), enumerable: false });
-  const push = (owner, name, key) => {
-    const k = sluggify(owner);
+  const push = (owner, name, key, ownerId = null) => {
+    const ownerName = typeof owner === "object" ? owner?.name : owner;
+    const id = ownerId ?? (typeof owner === "object" ? owner?.id : null);
+    const k = sluggify(ownerName);
     if (key) (out.keys.get(k) ?? out.keys.set(k, []).get(k)).push(key);
     const list = out.get(k) ?? out.set(k, []).get(k);
     if (!list.includes(name)) list.push(name);
+    if (id != null) {
+      const byIdList = out.byId.get(String(id)) ?? out.byId.set(String(id), []).get(String(id));
+      if (!byIdList.includes(name)) byIdList.push(name);
+    }
   };
   const visit = (owner, ops, depth = 0) => {
     if (!Array.isArray(ops) || depth > 6) return;
@@ -253,7 +261,8 @@ export function wgChoiceHints(exp) {
       if (op.type === "conditional") { visit(owner, op.data?.trueOperations, depth + 1); visit(owner, op.data?.falseOperations, depth + 1); }
     }
   };
-  for (const o of owners) visit(o.name, o.operations);
+  Object.defineProperty(out, "byId", { value: new Map(), enumerable: false });
+  for (const o of owners) visit(o, o.operations);
   // Explicit picks the visitor cannot name itself (e.g. an ABILITY_BLOCK option that gives Plant Empathy),
   // named from the option's own giveAbilityBlock id (scripts/selections.js).
   for (const [k, x] of classifySelections(exp)) if (x.answer) push(x.answer.owner, x.answer.name, k);
