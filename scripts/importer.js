@@ -260,7 +260,7 @@ async function prefillChoices(data, ctx, notes, sourceName = null, sourceWgId = 
       }
       if (!hit) { ctx.unresolved.push({ owner: data.name, flag, reason: "no explicit WG answer matching exactly one legal option; PF2e will ask" }); continue; }
       rule.selection = hit.value;
-      if (hit.via === "WG selection") ctx.markUsed(owner);
+      if (hit.via === "WG selection") { ctx.markUsed(owner); ctx.markHintUsed?.(hit.label); }
       foundry.utils.setProperty(data, `flags.pf2e.rulesSelections.${flag}`, hit.value);
       notes.push(`choice ${data.name}: ${hit.label} (pre-filled from ${hit.via})`);
     } else if (rule?.key === "GrantItem" && typeof rule.uuid === "string" && rule.uuid.startsWith("Compendium.")) {
@@ -272,7 +272,7 @@ async function prefillChoices(data, ctx, notes, sourceName = null, sourceWgId = 
         const hit = await resolveChoiceSet(gr, granted.name, ctx, { sourceUuid: rule.uuid, flag, ownerWgId: sourceWgId });
         if (!hit) { ctx.unresolved.push({ owner: granted.name, flag, reason: `granted by ${data.name}; no explicit WG answer; PF2e will ask` }); continue; }
         rule.preselectChoices = { ...(rule.preselectChoices ?? {}), [flag]: hit.value };
-        if (hit.via === "WG selection") ctx.markUsed(granted.name);
+        if (hit.via === "WG selection") { ctx.markUsed(granted.name); ctx.markHintUsed?.(hit.label); }
         notes.push(`choice ${granted.name}: ${hit.label} (pre-filled via ${data.name}, from ${hit.via})`);
       }
     }
@@ -391,7 +391,7 @@ function watchPrompts(ctx, notes) {
       }
       if (i == null) {
         const deity = deityPromptChoice(app, ctx.beliefs);
-        if (deity != null) { i = deity; via = "WG deity"; }
+        if (deity != null) { i = deity; via = "WG deity"; ctx.markHintUsed?.(app.choices[i].label); }
       }
       if (i == null) {
         const src = app.item?._stats?.compendiumSource ?? app.item?.sourceId ?? null;
