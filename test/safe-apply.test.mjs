@@ -52,6 +52,13 @@ test("duplicate diagnostics distinguish a PF2e grant pair from an unexplained du
   ];
   assert.equal(duplicateItemDiagnostics(pair)[0].expectedGrantPair, true);
   assert.equal(duplicateItemDiagnostics(unexplained)[0].expectedGrantPair, false);
+
+  const differentlyNamedGrant = [
+    { id: "animist-feature", type: "feat", name: "Animist Apparition", system: {}, flags: { pf2e: { itemGrants: { tangleVine: { id: "tangle-vine-action" } } } } },
+    { id: "tangle-vine-direct", type: "feat", name: "Tangle Vine", system: {}, flags: {} },
+    { id: "tangle-vine-action", type: "feat", name: "Tangle Vine", system: {}, flags: { pf2e: { grantedBy: { id: "animist-feature" } } } },
+  ];
+  assert.equal(duplicateItemDiagnostics(differentlyNamedGrant)[0].expectedGrantPair, true);
 });
 import { auditImportCoverage, leftoverValues, CLASS_SUPPORT_NOTE } from "../scripts/coverage.js";
 import { buildPlan, sluggify } from "../scripts/mapping.js";

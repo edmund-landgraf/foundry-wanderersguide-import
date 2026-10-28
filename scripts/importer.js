@@ -428,17 +428,23 @@ export function explicitGrants(items, old) {
 
 /** Explain duplicate item names without treating valid PF2e grant pairs as errors. */
 export function duplicateItemDiagnostics(items) {
+  const all = [...(items ?? [])];
+  const byId = new Map(all.map((item) => [item.id, item]));
   const groups = new Map();
-  for (const item of items ?? []) {
+  for (const item of all) {
     const key = `${item.type ?? ""}:${item.system?.slug ?? sluggify(item.name)}`;
     const group = groups.get(key) ?? groups.set(key, []).get(key);
     group.push(item);
   }
   return [...groups].filter(([, group]) => group.length > 1).map(([key, group]) => {
-    const ids = new Set(group.map((i) => i.id));
+    const groupIds = new Set(group.map((i) => i.id));
     const grantPairs = group.filter((i) => {
       const parentId = i.flags?.pf2e?.grantedBy?.id ?? i.system?.location;
-      return typeof parentId === "string" && ids.has(parentId);
+      // The parent is often a differently named class feature (Animist's
+      // Tangle Vine is one example), so it need not be in this duplicate-name
+      // group. Require an actual actor item relationship to avoid hiding
+      // unrelated same-name items.
+      return typeof parentId === "string" && byId.has(parentId) && (groupIds.has(i.id) || i.flags?.pf2e?.grantedBy?.id === parentId);
     });
     return {
       key,
