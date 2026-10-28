@@ -35,6 +35,7 @@ export function auditImportCoverage(exp, plan, { applied = false, grantedSlugs =
   const tense = applied ? "" : " (planned)";
   const entryRow = (path, e) => {
     if (e.unresolved) return add(path, "unresolved", e.unresolved);
+    if (e.coveredBy) return add(path, "included", `${e.coverageReason} (no duplicate item created)`);
     if (applied && e.outcome === "granted") return add(path, "included", `granted by PF2e via ${e.grantedBy}`);
     if (applied && !e.outcome) return add(path, "dropped", e.error ? `item could not be built: ${e.error}` : "not created");
     if (e.match) return add(path, "mapped", `${e.kind} -> ${e.match.uuid}${tense}`);

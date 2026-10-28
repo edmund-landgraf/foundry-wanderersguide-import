@@ -17,7 +17,7 @@ test("managedTree: module items plus everything granted from them, nothing else"
   ];
   assert.deepEqual([...managedTree(items)].sort(), ["cls", "feat", "loc", "sub", "viaParent"]);
 });
-import { explicitGrants, sameThing, duplicateItemDiagnostics, focusResourcePatch, domainPromptWithoutDeity, deityPromptChoice, allChoiceHints, uniqueChoice } from "../scripts/importer.js";
+import { coverFeatureGaps, explicitGrants, sameThing, duplicateItemDiagnostics, focusResourcePatch, domainPromptWithoutDeity, deityPromptChoice, allChoiceHints, uniqueChoice } from "../scripts/importer.js";
 test("dedupe: only explicit grants from this run's items, same compendium source", () => {
   const it = (id, type, name, src, extra = {}) => ({ id, type, name, _stats: { compendiumSource: src }, flags: extra.flags ?? {}, system: extra.system ?? {} });
   const items = [
@@ -59,6 +59,20 @@ test("duplicate diagnostics distinguish a PF2e grant pair from an unexplained du
     { id: "tangle-vine-action", type: "feat", name: "Tangle Vine", system: {}, flags: { pf2e: { grantedBy: { id: "animist-feature" } } } },
   ];
   assert.equal(duplicateItemDiagnostics(differentlyNamedGrant)[0].expectedGrantPair, true);
+});
+
+test("Spark Transcendence is covered by Divine Spark and Ikons without a homebrew copy", () => {
+  const entries = [
+    { name: "Divine Spark and Ikons", match: { uuid: "Compendium.pf2e.classfeatures.Item.divine" } },
+    { name: "Spark Transcendence", match: null },
+  ];
+  coverFeatureGaps(entries);
+  assert.equal(entries[1].coveredBy, "Divine Spark and Ikons");
+  assert.equal(entries[1].unresolved, undefined);
+
+  const missing = [{ name: "Spark Transcendence", match: null }];
+  coverFeatureGaps(missing);
+  assert.match(missing[0].unresolved, /^PF2e gap:/);
 });
 
 test("focus resources initialize even when the export has no max HP", () => {
