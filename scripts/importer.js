@@ -733,7 +733,8 @@ async function applyImport(p, { onStep, parity, failAfter }) {
     step("actor");
     await actor.update(forcedFields(plan, host, actor, existing));
     step("forced");
-    const order = ["ancestry", "heritage", "background", "class", "feat", "spell", "equipment"];
+    // Create inventory before class features so PF2e ChoiceSets can see owned ikon items.
+    const order = ["ancestry", "heritage", "background", "equipment", "class", "feat", "spell"];
     for (const kind of order) {
       if (kind === "spell" && entryData.length) {
         await createItems(entryData, { keepId: true });
