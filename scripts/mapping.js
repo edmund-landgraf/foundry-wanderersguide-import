@@ -14,6 +14,14 @@ export function sluggify(name) {
 
 const SKIP_ITEMS = new Set(["fist"]);
 
+// WG's display names are occasionally more descriptive than PF2e's canonical
+// compendium names. Keep these aliases explicit and narrow: this is not a
+// fuzzy-match fallback, and every alias still has to resolve to one unique
+// compendium document of the expected type.
+const CANONICAL_SLUG_ALIASES = new Map([
+  ["redemption-cause", ["redemption"]],
+]);
+
 const ATTR_KEYS = { STR: "str", DEX: "dex", CON: "con", INT: "int", WIS: "wis", CHA: "cha" };
 
 function attrMod(v) {
@@ -131,6 +139,10 @@ export function matchEntries(entries, index) {
     if (e.baseSlug) for (const t of typesFor(e.packType)) {
       const hit = bySlug.get(`${t}:${e.baseSlug}`);
       if (hit) return { ...e, match: hit, via: "base+runes" };
+    }
+    for (const alias of CANONICAL_SLUG_ALIASES.get(e.slug) ?? []) for (const t of typesFor(e.packType)) {
+      const hit = bySlug.get(`${t}:${alias}`);
+      if (hit) return { ...e, match: hit, via: "canonical-alias", canonicalSlug: alias };
     }
     for (const t of typesFor(e.packType)) {
       const list = byName.get(`${t}:${e.name.toLowerCase()}`);

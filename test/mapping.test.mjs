@@ -199,6 +199,15 @@ test("name match confidence gate: ambiguous names are unresolved, never list[0]"
   assert.equal(lvl.match.uuid, "U2");
 });
 
+test("Champion Redemption Cause resolves to PF2e's canonical Redemption item", () => {
+  const entry = [{ kind: "feat", packType: "feat", name: "Redemption Cause", slug: "redemption-cause", level: 1 }];
+  const index = [{ type: "feat", slug: "redemption", name: "Redemption", level: 1, uuid: "Compendium.pf2e.feats-srd.Item.redemption" }];
+  const [match] = matchEntries(entry, index);
+  assert.equal(match.via, "canonical-alias");
+  assert.equal(match.match.name, "Redemption");
+  assert.equal(match.canonicalSlug, "redemption");
+});
+
 test("uniqueChoice: only an explicit WG answer naming exactly one legal option", async () => {
   const { uniqueChoice } = await import("../scripts/importer.js");
   assert.equal(uniqueChoice(["Enigma", "Maestro", "Polymath"], ["Polymath Muse"]), 2);
