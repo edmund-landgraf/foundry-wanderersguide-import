@@ -54,6 +54,7 @@ export function captureRuntimeState(actor) {
     currentHp: actor.system?.attributes?.hp?.value ?? null,
     maxHp: actor.system?.attributes?.hp?.max ?? null,
     tempHp: actor.system?.attributes?.hp?.temp ?? null,
+    ...(actor.system?.resources?.focus ? { focus: { ...actor.system.resources.focus } } : {}),
     spellcasting: slots,
   };
 }
@@ -184,7 +185,7 @@ export function applyFeatSlotData(entry, data) {
   // Class/ancestry features and actions are exported alongside selected feats,
   // but must remain in their feature/action groups rather than occupying slots.
   if (!group || !["ancestry", "class", "skill", "general"].includes(group) || !Number.isFinite(Number(entry.level))) return data;
-  data.system.location = group;
+  data.system.location = `${group}-${Number(entry.level)}`;
   data.system.level = { ...(data.system.level ?? {}), taken: Number(entry.level) };
   return data;
 }
@@ -438,6 +439,7 @@ function forcedFields(plan, host, actor, existing) {
     "system.build.attributes.manual": true,
     ...Object.fromEntries(Object.entries(plan.attributes).map(([k, v]) => [`system.abilities.${k}.mod`, v])),
   };
+  if (plan.keyAbility) forced["system.details.keyability.value"] = plan.keyAbility;
   // Currency and hero points are initialized from WG, but existing Foundry runtime
   // state remains authoritative on re-import.
   if (!existing) {
@@ -632,7 +634,16 @@ async function applyImport(p, { onStep, parity, failAfter }) {
         // Do this after the HP adjustment effect is embedded. PF2e prepares the
         // actor again when that effect is created, and a fresh actor otherwise
         // retains the system default current HP (the source of low fresh-import HP).
-        await actor.update(hpPatch, { diff: false, recursive: false, render: false });
+        await actor.update(hpPatch, { diff: false, render: false });
+      }
+      if (plan.focusMax != null) {
+        const focusValue = existing && runtime?.focus?.value != null
+          ? Math.max(0, Math.min(Number(runtime.focus.value), Number(plan.focusMax)))
+          : Number(plan.focusMax);
+        await actor.update({
+          "system.resources.focus.max": Number(plan.focusMax),
+          "system.resources.focus.value": focusValue,
+        }, { diff: false, render: false });
       }
     }
   } catch (err) {

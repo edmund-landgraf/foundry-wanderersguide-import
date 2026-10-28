@@ -25,6 +25,7 @@
    "wis": 4,
    "cha": 0
   },
+  "focusMax": 1,
   "entries": [
    {
     "kind": "ancestry",

@@ -83,6 +83,17 @@ export function buildPlan(exp) {
     if (short) attributes[short] = attrMod(v);
   }
 
+  // WG resolves the class DC's governing attribute in raw_data_dump, including
+  // class choices (for example a Champion's selected Strength). Keep that
+  // resolved value so Foundry does not retain its default key ability.
+  const keyAttr = exp?.content?.raw_data_dump?.variables?.CLASS_DC?.value?.attribute;
+  const keyAbility = ATTR_KEYS[String(keyAttr ?? "").replace(/^ATTRIBUTE_/, "")] ?? null;
+  // PF2e starts a character with one focus point when WG exports focus spells;
+  // the pool cannot exceed three. The raw WG bonus is additive for higher-level
+  // characters and is kept here so the importer can initialize the resource.
+  const focusBonus = Number(ct.raw_data_dump?.variables?.FOCUS_POINT_BONUS?.value ?? 0);
+  const focusMax = (ct.focus_spells ?? []).length ? Math.min(3, 1 + Math.max(0, focusBonus)) : 0;
+
   return {
     wgId: ch.id,
     name: ch.name ?? "Unnamed",
@@ -93,6 +104,8 @@ export function buildPlan(exp) {
     imageUrl: ch.details?.image_url || ch.details?.info?.image_url || null,
     languages: (ct.languages ?? []).map((l) => sluggify(l)),
     attributes,
+    ...(keyAbility ? { keyAbility } : {}),
+    ...(focusMax ? { focusMax } : {}),
     entries,
   };
 }

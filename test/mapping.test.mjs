@@ -23,14 +23,21 @@ test("buildPlan maps core fields", () => {
   assert.equal(p.entries.filter((e) => e.kind === "equipment").length, 2);
 });
 
+test("buildPlan carries WG key ability and focus pool", () => {
+  const exp81 = JSON.parse(readFileSync(new URL("./fixtures/pcs/81.json", import.meta.url)));
+  const p = buildPlan(exp81);
+  assert.equal(p.keyAbility, "int");
+  assert.equal(p.focusMax, 1);
+});
+
 test("selected feats carry PF2e feat-slot locations", () => {
   const ancestry = { kind: "feat", featGroup: "ancestry", level: 1, data: { type: "feat", system: { category: "ancestry", level: { value: 1 } } } };
   const classFeat = { kind: "feat", featGroup: "class", level: 1, data: { type: "feat", system: { category: "class", level: { value: 1 } } } };
   const skill = { kind: "feat", level: 1, data: { type: "feat", system: { category: "skill", level: { value: 1 } } } };
   const feature = { kind: "feat", featGroup: "class", level: 1, data: { type: "feat", system: { category: "classfeature", level: { value: 1 } } } };
-  assert.equal(applyFeatSlotData(ancestry, ancestry.data).system.location, "ancestry");
-  assert.equal(applyFeatSlotData(classFeat, classFeat.data).system.location, "class");
-  assert.equal(applyFeatSlotData(skill, skill.data).system.location, "skill");
+  assert.equal(applyFeatSlotData(ancestry, ancestry.data).system.location, "ancestry-1");
+  assert.equal(applyFeatSlotData(classFeat, classFeat.data).system.location, "class-1");
+  assert.equal(applyFeatSlotData(skill, skill.data).system.location, "skill-1");
   assert.equal(applyFeatSlotData(feature, feature.data).system.location, undefined);
   assert.equal(feature.data.system.level.taken, undefined);
 });
