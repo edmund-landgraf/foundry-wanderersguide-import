@@ -283,7 +283,10 @@ export function wgChoiceHints(exp) {
           const variableName = variable
             ? String(variable).replace(/^SKILL_|^ATTRIBUTE_/, "").toLowerCase().replace(/(^|_)([a-z])/g, (_, p, c) => `${p ? " " : ""}${c.toUpperCase()}`)
             : null;
-          const name = pre?.title ?? byId.get(String(v))?.name ?? variableName;
+          // FILTERED ADJ_VALUE selects (e.g. Skilled Human "Select a Skill") have no
+          // predefined options; WG stores the raw variable (SKILL_STEALTH) as the answer.
+          const rawSkill = !pre && /^SKILL_[A-Z]+$/.test(String(v)) ? String(v).slice(6).toLowerCase().replace(/(^|_)([a-z])/g, (_, p, c) => `${p ? " " : ""}${c.toUpperCase()}`) : null;
+          const name = pre?.title ?? byId.get(String(v))?.name ?? variableName ?? rawSkill;
           if (name) push(owner, name, key);
           if (pre?.operations) visit(owner, pre.operations, depth + 1);
           if (pre?.operation) visit(owner, [pre.operation], depth + 1);

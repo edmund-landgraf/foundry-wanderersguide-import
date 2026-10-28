@@ -171,10 +171,18 @@ async function filterAccepts(c, uuid) {
   return tags.every((x) => (t.otherTags ?? []).includes(x)) && traits.every((x) => (t.value ?? []).includes(x));
 }
 
+/** PF2e ChoiceSet `choices: { config: "skills" }` -> [{ value, label }] from CONFIG.PF2E (8.6.1). */
+export function configChoices(choices, config = globalThis.CONFIG?.PF2E) {
+  const key = choices && typeof choices === "object" && !Array.isArray(choices) ? choices.config : null;
+  const table = typeof key === "string" ? config?.[key] : null;
+  if (!table || typeof table !== "object") return choices;
+  return Object.entries(table).map(([value, x]) => ({ value, label: typeof x === "string" ? x : x?.label ?? value }));
+}
+
 async function resolveChoiceSet(rule, ownerName, ctx, { sourceUuid = null, flag = null, ownerWgId = null } = {}) {
   const specific = ctx.specific(ownerName, ownerWgId);
   const prev = sourceUuid && flag ? ctx.previous.get(sourceUuid)?.[flag] : undefined;
-  const c = rule.choices;
+  const c = configChoices(rule.choices);
   if (Array.isArray(c)) {
     const opts = c.map((o) => {
       const value = typeof o === "object" ? o.value : o;
