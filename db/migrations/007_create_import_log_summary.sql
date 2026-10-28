@@ -66,6 +66,11 @@ DECLARE
   new_id bigint;
   old_best bigint;
 BEGIN
+  -- Serialize replacement of the preferred row for this logical run/kind.
+  -- The partial unique index is the invariant; this lock prevents concurrent
+  -- writers from both clearing the old best before either inserts its row.
+  PERFORM pg_advisory_xact_lock(hashtextextended(format('%s:%s', p_import_run_id, p_log_kind), 0));
+
   SELECT log_id INTO old_best
   FROM pc_import_logs
   WHERE import_run_id = p_import_run_id AND log_kind = p_log_kind AND is_best
@@ -93,6 +98,10 @@ BEGIN
     result_status = EXCLUDED.result_status,
     quality_score = EXCLUDED.quality_score,
     captured_at = EXCLUDED.captured_at,
+    supersedes_log_id = CASE
+      WHEN old_best IS NOT NULL AND old_best <> pc_import_logs.log_id THEN old_best
+      ELSE pc_import_logs.supersedes_log_id
+    END,
     is_best = true
   RETURNING log_id INTO new_id;
 

@@ -40,6 +40,21 @@ test("database match catalog preserves the ambiguity gate", () => {
   assert.equal(hit.via, "miss");
 });
 
+test("PR74 catalog is forwarded through preview and real import planning", () => {
+  const importer = readFileSync(new URL("../scripts/importer.js", import.meta.url), "utf8");
+  assert.match(importer, /previewImport\(exp, \{ host, matchCatalog = null \}\)/);
+  assert.match(importer, /const p = await planImport\(exp, \{ host, matchCatalog \}\);/);
+  assert.match(importer, /importCharacter\(exp, \{ host, matchCatalog = null,/);
+});
+
+test("PR74 log replacement serializes best-row updates and preserves supersession", () => {
+  const migration = readFileSync(new URL("../db/migrations/007_create_import_log_summary.sql", import.meta.url), "utf8");
+  assert.match(migration, /pg_advisory_xact_lock\(hashtextextended\(/);
+  assert.match(migration, /CREATE UNIQUE INDEX IF NOT EXISTS uq_pc_import_logs_best/);
+  assert.match(migration, /supersedes_log_id = CASE/);
+  assert.match(migration, /old_best IS NOT NULL AND old_best <> pc_import_logs\.log_id/);
+});
+
 test("buildPlan maps core fields", () => {
   const p = buildPlan(exp);
   assert.equal(p.wgId, 9001);

@@ -186,7 +186,6 @@ export function normalizeMatchCatalog(catalog = null) {
   const typeMap = catalog?.typeMap ?? catalog?.type_map ?? null;
   return { aliases, typeMap };
 }
-
 export function matchEntries(entries, index, { catalog = null } = {}) {
   const matchCatalog = normalizeMatchCatalog(catalog);
   const bySlug = new Map();
