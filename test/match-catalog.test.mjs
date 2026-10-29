@@ -1,11 +1,13 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { checkCatalog, loadMatchCatalog, resetMatchCatalogCache, unwrapCatalog, CATALOG_NOT_LOADED } from "../scripts/match-catalog.js";
 import { matchEntries } from "../scripts/mapping.js";
 
 const fixture = JSON.parse(readFileSync(new URL("./fixtures/match-catalog.min.json", import.meta.url)));
-const bundled = JSON.parse(readFileSync(new URL("../data/match-catalog.json", import.meta.url)));
+// data/match-catalog.json is generated locally (git-ignored); check it only when present.
+const bundledUrl = new URL("../data/match-catalog.json", import.meta.url);
+const bundled = existsSync(bundledUrl) ? JSON.parse(readFileSync(bundledUrl)) : null;
 
 test("fixture loads on the matching PF2e version without warnings", () => {
   const r = checkCatalog(fixture, "8.6.1");
@@ -14,7 +16,7 @@ test("fixture loads on the matching PF2e version without warnings", () => {
   assert.equal(r.catalog.aliases.length, fixture.header.rowCount);
 });
 
-test("bundled snapshot is valid, built for PF2e 8.6.1, active rows only", () => {
+test("generated snapshot (if present) is valid, built for PF2e 8.6.1, active rows only", { skip: bundled ? false : "data/match-catalog.json not generated" }, () => {
   const r = checkCatalog(bundled, "8.6.1");
   assert.equal(r.status, "loaded");
   assert.equal(bundled.header.pf2eVersion, "8.6.1");
