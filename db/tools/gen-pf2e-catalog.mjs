@@ -28,7 +28,7 @@ for (const [dir, coll] of PACKS) {
     const cls = traits.filter((t) => CLASSES.has(t));
     const category = j.system?.category ?? null;
     const kind = dir === "class-features" ? "classfeature" : dir === "feats" ? (category === "classfeature" ? "classfeature" : "feat") : dir === "actions" ? "action" : "heritage";
-    rows.push([kind, j.type, j.name, slug, coll, rel, category, traits.join(","), j.system?.level?.value ?? null, cls.length === 1 ? cls[0] : null]);
+    rows.push([kind, j.type, j.name, slug, coll, rel, category, traits.join(","), j.system?.level?.value ?? null, cls.length === 1 ? cls[0] : null, j.system?.publication?.title || null]);
     for (const r of j.system?.rules ?? []) {
       if (r.key !== "GrantItem" || typeof r.uuid !== "string") continue;
       const m = r.uuid.match(/^Compendium\.pf2e\.([^.]+)\.Item\.(.+)$/);
@@ -53,20 +53,22 @@ CREATE TABLE IF NOT EXISTS pf2e_catalog_entries (
   level integer,
   class_id text REFERENCES classes(class_id),
   pf2e_version text NOT NULL DEFAULT 'pf2e-8.6.1',
+  pf2e_source_book text,
   UNIQUE (ruleset_id, compendium_collection, source_path)
 );
+ALTER TABLE pf2e_catalog_entries ADD COLUMN IF NOT EXISTS pf2e_source_book text; -- system.publication.title
 CREATE INDEX IF NOT EXISTS idx_pf2e_catalog_name ON pf2e_catalog_entries (lower(pf2e_name));
-CREATE TEMP TABLE _cat (item_kind text, foundry_type text, pf2e_name text, pf2e_slug text, compendium_collection text, source_path text, category text, traits text, level integer, class_id text) ON COMMIT DROP;
+CREATE TEMP TABLE _cat (item_kind text, foundry_type text, pf2e_name text, pf2e_slug text, compendium_collection text, source_path text, category text, traits text, level integer, class_id text, pf2e_source_book text) ON COMMIT DROP;
 `;
 for (let i = 0; i < rows.length; i += 500) {
   sql += "INSERT INTO _cat VALUES\n" + rows.slice(i, i + 500).map((r) => "(" + r.map((v, k) => (k === 8 ? (v === null ? "NULL" : Number(v)) : q(v))).join(",") + ")").join(",\n") + ";\n";
 }
 sql += `
-INSERT INTO pf2e_catalog_entries (ruleset_id,item_kind,foundry_type,pf2e_name,pf2e_slug,compendium_collection,source_path,category,traits,level,class_id)
-SELECT 'pf2e-remaster',item_kind,foundry_type,pf2e_name,pf2e_slug,compendium_collection,source_path,category,traits,level,class_id FROM _cat
+INSERT INTO pf2e_catalog_entries (ruleset_id,item_kind,foundry_type,pf2e_name,pf2e_slug,compendium_collection,source_path,category,traits,level,class_id,pf2e_source_book)
+SELECT 'pf2e-remaster',item_kind,foundry_type,pf2e_name,pf2e_slug,compendium_collection,source_path,category,traits,level,class_id,pf2e_source_book FROM _cat
 ON CONFLICT (ruleset_id, compendium_collection, source_path) DO UPDATE SET
   item_kind=EXCLUDED.item_kind, foundry_type=EXCLUDED.foundry_type, pf2e_name=EXCLUDED.pf2e_name, pf2e_slug=EXCLUDED.pf2e_slug,
-  category=EXCLUDED.category, traits=EXCLUDED.traits, level=EXCLUDED.level, class_id=EXCLUDED.class_id;
+  category=EXCLUDED.category, traits=EXCLUDED.traits, level=EXCLUDED.level, class_id=EXCLUDED.class_id, pf2e_source_book=EXCLUDED.pf2e_source_book;
 DELETE FROM pf2e_catalog_entries e WHERE e.pf2e_version='pf2e-8.6.1' AND NOT EXISTS (SELECT 1 FROM _cat c WHERE c.source_path=e.source_path AND c.compendium_collection=e.compendium_collection);
 `;
 fs.writeFileSync(path.join("db", "migrations", "023_pf2e_catalog_8_6_1.sql"), sql);
