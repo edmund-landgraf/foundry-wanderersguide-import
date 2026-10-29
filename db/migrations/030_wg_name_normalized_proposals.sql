@@ -1,7 +1,7 @@
 -- 030: Name-normalized WG <-> PF2e 8.6.1 match PROPOSALS and PF2e source-book scope.
 -- Nothing here creates a final association. Every row in wg_pf2e_name_proposals is
 -- 'proposed' (one candidate left) or 'ambiguous' (several left) and must go through
--- human review (see docs/design/human-matching-app.md, proposed 031_human_matching).
+-- human review (see docs/design/human-matching-app.md, proposed 032_human_matching).
 -- Rules:
 --   paren-strip     : trailing parentheticals are stripped on either side ("(Alchemist)",
 --                     "(legacy)", "(Monk)", "(Paragon)", "(Naari)", ...) and names compared.
@@ -19,7 +19,8 @@ BEGIN;
 
 ALTER TABLE wg_keyword_snapshot DROP CONSTRAINT IF EXISTS wg_keyword_snapshot_source_table_check;
 ALTER TABLE wg_keyword_snapshot ADD CONSTRAINT wg_keyword_snapshot_source_table_check
-  CHECK (source_table IN ('class', 'ability_block', 'item', 'spell', 'trait', 'content_source'));
+  CHECK (source_table IN ('class', 'ability_block', 'item', 'spell', 'trait', 'content_source',
+                          'ancestry', 'background', 'archetype', 'versatile_heritage'));
 ALTER TABLE pf2e_catalog_entries ADD COLUMN IF NOT EXISTS pf2e_source_book text;
 
 CREATE OR REPLACE FUNCTION wgi_strip_paren(n text) RETURNS text LANGUAGE sql IMMUTABLE AS $f$
@@ -49,8 +50,9 @@ CREATE TABLE IF NOT EXISTS pf2e_book_wg_scope (
 WITH cs AS (
   SELECT wg_id, wgi_book_key(wg_name) AS k FROM wg_keyword_snapshot WHERE source_table = 'content_source'
 ), ab AS (
+  -- every WG content table that carries content_source_id (ability blocks, spells, items, classes, ...)
   SELECT (row_data->>'content_source_id')::bigint AS cs_id, count(*) AS n
-  FROM wg_keyword_snapshot WHERE source_table = 'ability_block' GROUP BY 1
+  FROM wg_keyword_snapshot WHERE source_table NOT IN ('content_source', 'trait') AND row_data ? 'content_source_id' GROUP BY 1
 ), bk AS (
   SELECT coalesce(nullif(btrim(pf2e_source_book), ''), '(none)') AS book, count(*) AS n
   FROM pf2e_catalog_entries GROUP BY 1
@@ -85,6 +87,13 @@ CREATE TABLE IF NOT EXISTS wg_pf2e_name_proposals (
   evidence_ref text,
   UNIQUE (entry_id, wg_id)
 );
+-- 031 adds proposals for other WG tables; wg_id is only unique within its table.
+ALTER TABLE wg_pf2e_name_proposals ADD COLUMN IF NOT EXISTS source_table text;
+UPDATE wg_pf2e_name_proposals SET source_table = 'ability_block' WHERE source_table IS NULL;
+ALTER TABLE wg_pf2e_name_proposals ALTER COLUMN source_table SET NOT NULL;
+ALTER TABLE wg_pf2e_name_proposals DROP CONSTRAINT IF EXISTS wg_pf2e_name_proposals_entry_id_wg_id_key;
+ALTER TABLE wg_pf2e_name_proposals DROP CONSTRAINT IF EXISTS wg_pf2e_name_proposals_src_entry_wg_key;
+ALTER TABLE wg_pf2e_name_proposals ADD CONSTRAINT wg_pf2e_name_proposals_src_entry_wg_key UNIQUE (source_table, entry_id, wg_id);
 TRUNCATE wg_pf2e_name_proposals;
 
 CREATE TEMP TABLE _wg ON COMMIT DROP AS
@@ -102,7 +111,8 @@ SELECT e.entry_id, e.pf2e_name, e.item_kind, wgi_strip_paren(e.pf2e_name) AS nor
        string_to_array(coalesce(e.traits, ''), ',') AS traits,
        substring(e.pf2e_name FROM '^(?:First|Second|Third|Fourth|Fifth|Final) Doctrine \((.+)\)$') AS doctrine_of
 FROM pf2e_catalog_entries e
-WHERE NOT EXISTS (SELECT 1 FROM wg_pf2e_catalog_matches m WHERE m.entry_id = e.entry_id);
+WHERE e.item_kind IN ('feat', 'classfeature', 'action', 'heritage')
+  AND NOT EXISTS (SELECT 1 FROM wg_pf2e_catalog_matches m WHERE m.entry_id = e.entry_id);
 
 CREATE TEMP TABLE _c ON COMMIT DROP AS
 SELECT p.entry_id, p.pf2e_name, w.wg_id, w.wg_name, 'rename-doctrine'::text AS rule, p.item_kind, w.wg_type, p.traits, p.tags AS ptags, w.tags AS wtags, w.tnames
@@ -129,8 +139,8 @@ cnt AS (SELECT k4.*, count(*) OVER (PARTITION BY entry_id) AS n,
                (SELECT count(*) FROM _c c2 WHERE c2.entry_id = k4.entry_id) AS n0 FROM k4)
 SELECT * FROM cnt;
 
-INSERT INTO wg_pf2e_name_proposals (entry_id, pf2e_name, wg_id, wg_name, rule, status, candidate_count, disambiguated_by, evidence_ref)
-SELECT entry_id, pf2e_name, wg_id, wg_name, rule, CASE WHEN n = 1 THEN 'proposed' ELSE 'ambiguous' END, n,
+INSERT INTO wg_pf2e_name_proposals (source_table, entry_id, pf2e_name, wg_id, wg_name, rule, status, candidate_count, disambiguated_by, evidence_ref)
+SELECT 'ability_block', entry_id, pf2e_name, wg_id, wg_name, rule, CASE WHEN n = 1 THEN 'proposed' ELSE 'ambiguous' END, n,
   CASE WHEN n0 > n THEN concat_ws(' ', CASE WHEN mo > 0 THEN 'trait/tag overlap=' || mo END, 'narrowed ' || n0 || '->' || n) END,
   'wg ability_block#' || wg_id || ' vs pf2e entry#' || entry_id || ' [030 ' || rule || ']'
 FROM _r;
