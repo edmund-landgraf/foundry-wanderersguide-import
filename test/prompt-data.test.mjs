@@ -19,8 +19,14 @@ test("unknown spellcasting attribute is unresolved, not Charisma", () => {
 test("divine font suffix and prompt data", () => {
   assert.equal(spellListSource("CLERIC_DIVINE_FONT"), "CLERIC");
   assert.equal(spellListSource("CLERIC"), "CLERIC");
-  assert.ok(DOMAIN_PROMPT.test("Domain Initiate") && DOMAIN_PROMPT.test("domain focus") && !DOMAIN_PROMPT.test("Advanced Domain"));
+  assert.ok(DOMAIN_PROMPT.test("Domain Initiate") && DOMAIN_PROMPT.test("domain focus") && DOMAIN_PROMPT.test("Advanced Domain") && !DOMAIN_PROMPT.test("Domain Fluency"));
   assert.ok(DEITY_PROMPT.test("Select a Deity"));
   assert.equal(domainPromptWithoutDeity({ title: "Domain Initiate", choices: [] }), true);
   assert.equal(deityPromptChoice({ title: "Deity", choices: [{ label: "Sarenrae" }, { label: "Iomedae" }] }, "Iomedae"), 1);
+});
+
+test("Advanced Domain prompt with no deity is closed like Domain Initiate", () => {
+  assert.equal(domainPromptWithoutDeity({ title: "Advanced Domain", choices: [] }), true);
+  assert.equal(domainPromptWithoutDeity({ item: { name: "Advanced Domain" }, choices: [] }), true);
+  assert.equal(domainPromptWithoutDeity({ title: "Advanced Domain", choices: [{ label: "Fire" }] }), false);
 });
