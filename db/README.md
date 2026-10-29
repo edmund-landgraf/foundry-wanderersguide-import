@@ -124,3 +124,7 @@ already writes them. `record_pc_import_log` marks the new candidate as the
 best row for its import run and log kind, while retaining the previous row as
 an auditable superseded reference. `pc_import_log_highlights` stores concise
 facts such as matched counts, unresolved choices, warnings, and parity results.
+
+## Match catalog export
+
+`node db/tools/export-match-catalog.mjs --out data/match-catalog.json --wg-commit <sha>` reads `compendium_match_aliases` (status = 'active' only) from wgi_rules and writes a versioned snapshot (header: schemaVersion, pf2eVersion 8.6.1, wgContentCommit, generatedAt, rowCount, sha256). Identity aliases are dropped. The module loads it at runtime.
