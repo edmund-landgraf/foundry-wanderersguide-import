@@ -1,5 +1,6 @@
 import { KIND_TYPES, typesForKind } from "./item-types.js";
 import { structuralReason, STRUCTURAL_STATUS } from "./structural.js";
+import { DIVINE_FONT_SUFFIX, INNATE_ATTRIBUTE } from "./prompt-data.js";
 import { classifySelections } from "./selections.js";
 import { resolveFormula, extraItemIds, containerParents } from "./formulas.js";
 import { homebrewSourceIds, isCustomItem } from "./custom-items.js";
@@ -446,11 +447,13 @@ export function parseComposedName(name, meta = {}) {
 
 // ---------------------------------------------------------------------------------------------
 // Spellcasting (PLAN 6): one entry per WG spell source, plus focus and innate entries.
-const ATTR_SHORT = (a) => ATTR_KEYS[String(a ?? "").replace(/^ATTRIBUTE_/, "")] ?? "cha";
+// No fallback: an attribute WG did not export (or one we do not know) is null and reported unresolved.
+const ATTR_SHORT = (a) => ATTR_KEYS[String(a ?? "").replace(/^ATTRIBUTE_/, "")] ?? null;
+const abilityGap = (ability, raw) => (ability ? {} : { unresolved: `unknown spellcasting attribute ${JSON.stringify(raw ?? null)}` });
 /** Divine font slots are extra prepared Heal or Harm on the class entry, not a second caster. */
 export function spellListSource(name) {
   const raw = String(name ?? "");
-  return raw.match(/^(.*)_DIVINE_FONT$/)?.[1] || raw;
+  return raw.endsWith(DIVINE_FONT_SUFFIX) ? raw.slice(0, -DIVINE_FONT_SUFFIX.length) || raw : raw;
 }
 
 export function spellcastingPlan(exp) {
@@ -459,20 +462,20 @@ export function spellcastingPlan(exp) {
   const sources = new Map();
   for (const s of ct.spell_sources ?? []) {
     const src = s.source ?? s;
-    if (String(src.name ?? "").endsWith("_DIVINE_FONT")) continue;
+    if (String(src.name ?? "").endsWith(DIVINE_FONT_SUFFIX)) continue;
     sources.set(src.name, src);
     const type = String(src.type ?? "");
     const slots = {};
     for (const sl of ct.spell_slots ?? []) if (spellListSource(sl.source) === src.name) slots[sl.rank] = (slots[sl.rank] ?? 0) + 1;
-    entries.push({ key: `src:${src.name}`, source: src.name, name: `${titleCase(src.name)} Spells`, mode: type.startsWith("PREPARED") ? "prepared" : "spontaneous", tradition: String(src.tradition ?? "").toLowerCase() || null, ability: ATTR_SHORT(src.attribute), slots });
+    entries.push({ key: `src:${src.name}`, source: src.name, name: `${titleCase(src.name)} Spells`, mode: type.startsWith("PREPARED") ? "prepared" : "spontaneous", tradition: String(src.tradition ?? "").toLowerCase() || null, ability: ATTR_SHORT(src.attribute), ...abilityGap(ATTR_SHORT(src.attribute), src.attribute), slots });
   }
   const focusSrc = new Set((ct.focus_spells ?? []).map((s) => s.casting_source ?? null));
   for (const fs of focusSrc) {
     const src = sources.get(fs);
-    entries.push({ key: `focus:${fs}`, source: fs, name: `${fs ? titleCase(fs) + " " : ""}Focus Spells`, mode: "focus", tradition: String(src?.tradition ?? "").toLowerCase() || null, ability: ATTR_SHORT(src?.attribute), slots: {} });
+    entries.push({ key: `focus:${fs}`, source: fs, name: `${fs ? titleCase(fs) + " " : ""}Focus Spells`, mode: "focus", tradition: String(src?.tradition ?? "").toLowerCase() || null, ability: ATTR_SHORT(src?.attribute), ...abilityGap(ATTR_SHORT(src?.attribute), src?.attribute), slots: {} });
   }
   const innTrad = new Set((ct.innate_spells ?? []).map((s) => String(s.tradition ?? "").toLowerCase() || null));
-  for (const t of innTrad) entries.push({ key: `innate:${t}`, source: null, name: `Innate Spells${t ? ` (${titleCase(t)})` : ""}`, mode: "innate", tradition: t, ability: "cha", slots: {} });
+  for (const t of innTrad) entries.push({ key: `innate:${t}`, source: null, name: `Innate Spells${t ? ` (${titleCase(t)})` : ""}`, mode: "innate", tradition: t, ability: INNATE_ATTRIBUTE, slots: {} });
   return entries;
 }
 export function entryKeyFor(e) {
