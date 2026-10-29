@@ -1,6 +1,7 @@
 import { KIND_TYPES, PACK_TYPES } from "./item-types.js";
 // Foundry-side import. Uses Foundry/PF2e globals (game, Actor, Item, Folder, ChatMessage).
 import { MODULE_ID, HOMEBREW_FOLDER } from "./constants.js";
+import { DOMAIN_PROMPT, DEITY_PROMPT } from "./prompt-data.js";
 import { customItemData, customItemsHtml } from "./custom-items.js";
 import { mergeFormulas, assignContainers, formulasHtml } from "./formulas.js";
 import { auditImportCoverage, leftoverValues, CLASS_SUPPORT_NOTE } from "./coverage.js";
@@ -365,12 +366,11 @@ async function itemDataFor(entry, folderId, ctx, notes) {
 // Domain Initiate / Domain Focus have no options when WG exported no deity. Close those instead of
 // waiting. The watcher stays up for the whole import: class prompts open only after ancestry,
 // heritage, and background.
-const DOMAIN_PROMPT = /domain initiate|domain focus/i;
 
 /** Index of the deity whose name is the character's beliefs, when that prompt has exactly one match. */
 export function deityPromptChoice(app, beliefs) {
   const title = `${app?.title ?? ""} ${app?.item?.name ?? ""}`;
-  if (!/deity/i.test(title) || !String(beliefs ?? "").trim() || !Array.isArray(app?.choices) || !app.choices.length) return null;
+  if (!DEITY_PROMPT.test(title) || !String(beliefs ?? "").trim() || !Array.isArray(app?.choices) || !app.choices.length) return null;
   const i = uniqueChoice(app.choices.map((c) => c.label ?? ""), [String(beliefs).trim()]);
   return i >= 0 ? i : null;
 }
@@ -706,11 +706,12 @@ export async function planImport(exp, { host, matchCatalog = null }) {
   // Spellcasting entries get their ids now so spells can point at them.
   const entryIds = {};
   const entryData = spellcastingPlan(exp).map((se) => {
+    if (se.unresolved) ctx.unresolved.push({ owner: se.name, flag: null, reason: se.unresolved });
     const _id = foundry.utils.randomID();
     entryIds[se.key] = _id;
     const slots = {};
     for (let r = 0; r <= 10; r++) { const n = se.slots[r] ?? 0; slots[`slot${r}`] = { max: n, value: n, prepared: [] }; }
-    return { _id, name: se.name, type: "spellcastingEntry", system: { ability: { value: se.ability }, tradition: { value: se.tradition ?? "" }, prepared: { value: se.mode, flexible: false }, showSlotlessLevels: { value: false }, slots }, flags: { [MODULE_ID]: { kind: "spellcasting", wgSource: se.key } } };
+    return { _id, name: se.name, type: "spellcastingEntry", system: { ability: { value: se.ability ?? "" }, tradition: { value: se.tradition ?? "" }, prepared: { value: se.mode, flexible: false }, showSlotlessLevels: { value: false }, slots }, flags: { [MODULE_ID]: { kind: "spellcasting", wgSource: se.key } } };
   });
   for (const e of matched) if (e.kind === "spell") {
     // No silent fallback to the first entry: a spell whose WG casting source has no entry is unresolved.
