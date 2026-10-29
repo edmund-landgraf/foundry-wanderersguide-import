@@ -3,6 +3,7 @@ import { MODULE_ID, HOMEBREW_FOLDER } from "./constants.js";
 import { customItemData, customItemsHtml } from "./custom-items.js";
 import { mergeFormulas, assignContainers, formulasHtml } from "./formulas.js";
 import { auditImportCoverage, leftoverValues, CLASS_SUPPORT_NOTE } from "./coverage.js";
+import { unwrapCatalog, CATALOG_NOT_LOADED } from "./match-catalog.js";
 import { buildPlan, matchEntries, missReport, sluggify, resolveImageUrl, FALLBACK_IMG, wgChoiceHints, matchChoice, choiceNameKeys, defaultFlag, spellcastingPlan, spellSlotWarnings, preparedSlotUpdates, entryKeyFor, diffPlan, parityCheck, WG_CANONICAL_ALIASES } from "./mapping.js";
 
 const PACK_TYPES = new Set(["ancestry", "heritage", "background", "class", "feat", "spell", "weapon", "armor", "shield", "equipment", "consumable", "treasure", "backpack", "kit"]);
@@ -693,7 +694,8 @@ function forcedFields(plan, host, actor, existing) {
 export async function planImport(exp, { host, matchCatalog = null }) {
   const plan = buildPlan(exp);
   const index = await compendiumIndex();
-  const matched = matchEntries(plan.entries, index, { catalog: matchCatalog });
+  const catalogInfo = unwrapCatalog(matchCatalog);
+  const matched = matchEntries(plan.entries, index, { catalog: catalogInfo.catalog });
   for (const entry of matched) if (entry.kind === "class") entry.keyAbility = plan.keyAbility;
   coverFeatureGaps(matched, findActor(plan, host) ?? null, index);
   const misses = missReport(matched);
@@ -728,7 +730,7 @@ export async function planImport(exp, { host, matchCatalog = null }) {
     // are handled separately by custom-items.js; everything else remains
     // visible as unresolved for explicit review.
     if (!e.match && !e.custom) {
-      e.unresolved = "no unambiguous PF2e compendium match; left unresolved (no homebrew copy created)";
+      e.unresolved = `no unambiguous PF2e compendium match; left unresolved (no homebrew copy created)${catalogInfo.status === "loaded" ? "" : `; ${CATALOG_NOT_LOADED}`}`;
       ctx.unresolved.push({ owner: `${e.kind}: ${e.name}`, flag: null, reason: e.unresolved });
       continue;
     }
@@ -742,11 +744,11 @@ export async function planImport(exp, { host, matchCatalog = null }) {
     const feat = matched.find((x) => x.kind === "feat" && x.wgContentId === o.raw?.data?.abilityBlockId && x.data);
     if (feat) feat.data.flags[MODULE_ID] = { ...feat.data.flags[MODULE_ID], givenByCustomItem: { wgItemId: e.wgContentId, name: e.name } };
   }
-  const warnings = [...spellSlotWarnings(exp, matched), ...assignContainers(matched, () => foundry.utils.randomID())];
+  const warnings = [...catalogInfo.warnings, ...spellSlotWarnings(exp, matched), ...assignContainers(matched, () => foundry.utils.randomID())];
   const diff = diffPlan(plan, summarizeActor(actor));
   const homebrew = matched.filter((e) => !e.match && !e.custom && e.data);
   const coverage = auditImportCoverage(exp, { ...plan, entries: matched }, { applied: false, grantedSlugs: grantedSlugsOf(actor), choiceUsed: ctx.used, slug: sluggify });
-  return { coverage, exp, plan, host, index, ctx, matched, misses, notes, problems, warnings, actor, entryData, diff, homebrew, valid: problems.length === 0 };
+  return { coverage, catalog: { status: catalogInfo.status, header: catalogInfo.header }, exp, plan, host, index, ctx, matched, misses, notes, problems, warnings, actor, entryData, diff, homebrew, valid: problems.length === 0 };
 }
 
 function customReports(matched) {
