@@ -227,6 +227,15 @@
     "reason": "Anadi Fangs: WG-granted extra item; PF2e grants its own"
    }
   ],
+  "structural": [
+   {
+    "kind": "equipment",
+    "name": "Fist",
+    "sourcePath": "content.inventory_flat[1]",
+    "status": "structural",
+    "reason": "structural / no PF2e item: built-in strike, not an item"
+   }
+  ],
   "grantedExtras": [
    "Anadi Fangs"
   ]
