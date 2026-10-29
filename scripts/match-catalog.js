@@ -1,5 +1,8 @@
-// Runtime loader for the bundled WG -> PF2e match catalog (data/match-catalog.json), generated
-// from wgi_rules by db/tools/export-match-catalog.mjs. Only active rows are ever exported.
+// Runtime loader for the WG -> PF2e match catalog (data/match-catalog.json). The file is NOT in git:
+// db/tools/export-match-catalog.mjs generates it from wgi_rules (and stores the same payload in
+// match_catalog_snapshots), or it is restored from the latest snapshot row; see db/README.md
+// "Match catalog export". For an installed module, copy it into the module folder's data/.
+// Only active rows are ever exported.
 // A missing or invalid catalog never stops an import: matching falls back to exact names and
 // every miss is reported unresolved with the reason "match catalog not loaded". Nothing is guessed.
 import { MODULE_ID } from "./constants.js";
@@ -28,7 +31,7 @@ export function checkCatalog(raw, systemVersion = null) {
 }
 
 let cache = null;
-/** Fetch and validate the bundled catalog once per session. */
+/** Fetch and validate the installed catalog file once per session. */
 export async function loadMatchCatalog({ fetchImpl = globalThis.fetch, systemVersion = globalThis.game?.system?.version ?? null, url = `modules/${MODULE_ID}/data/match-catalog.json` } = {}) {
   if (cache) return cache;
   let raw = null;
