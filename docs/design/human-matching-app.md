@@ -62,7 +62,9 @@ Rules:
 - Rejected items come back to Match showing earlier rejected picks and their reasons.
 - Suggestions never change anything outside the new tables.
 
-## 5. Data model (proposed migration `030_human_matching.sql`)
+## 5. Data model (proposed migration `031_human_matching.sql`)
+
+> Source of machine suggestions: `030_wg_name_normalized_proposals.sql` fills `wg_pf2e_name_proposals` (status `proposed`/`ambiguous`, never final) and `pf2e_unmatched_entries` (`unmatched` vs `out-of-scope` by PF2e source book). These feed the review queue; they are not associations.
 
 No UUIDs. Identity keys, names and slugs only. Every table records who did what and when.
 
