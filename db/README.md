@@ -124,3 +124,15 @@ already writes them. `record_pc_import_log` marks the new candidate as the
 best row for its import run and log kind, while retaining the previous row as
 an auditable superseded reference. `pc_import_log_highlights` stores concise
 facts such as matched counts, unresolved choices, warnings, and parity results.
+
+## Match catalog export
+
+`node db/tools/export-match-catalog.mjs [--out data/match-catalog.json] [--wg-commit <sha>] [--no-db]` reads active rows from `compendium_match_aliases` and from `wg_pf2e_catalog_matches` (where the WG and PF2e names differ after sluggify; priority 200, so curated aliases win), builds a versioned snapshot (header: schemaVersion, pf2eVersion 8.6.1, wgContentCommit, generatedAt, rowCount, sha256; identity aliases dropped), inserts it as a row in `match_catalog_snapshots` (migration 033) and writes the same JSON to `data/match-catalog.json`.
+
+That file is git-ignored and never committed. Generate it locally (migration 033 must be applied; take a `pg_dump` backup first), or restore it from the latest snapshot row:
+
+```
+docker exec my-postgres psql -U appuser -d wgi_rules -Atc "select payload from match_catalog_snapshots where pf2e_version = '8.6.1' order by created_at desc limit 1" > data/match-catalog.json
+```
+
+The Foundry module fetches `modules/<module-id>/data/match-catalog.json` at runtime (scripts/match-catalog.js). For an installed module, copy the file into the module folder's `data/`. Without it, imports still run on exact names only and every alias-dependent miss is reported unresolved ("match catalog not loaded").
