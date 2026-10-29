@@ -1,4 +1,5 @@
 import { KIND_TYPES, typesForKind } from "./item-types.js";
+import { structuralReason, STRUCTURAL_STATUS } from "./structural.js";
 import { classifySelections } from "./selections.js";
 import { resolveFormula, extraItemIds, containerParents } from "./formulas.js";
 import { homebrewSourceIds, isCustomItem } from "./custom-items.js";
@@ -15,7 +16,6 @@ export function sluggify(name) {
     .replace(/^-|-$/g, "");
 }
 
-const SKIP_ITEMS = new Set(["fist"]);
 
 // WG sometimes labels a selected class feature as "<canonical option> <role>"
 // while PF2e stores the option itself (for example "Redemption Cause" vs
@@ -49,12 +49,15 @@ export function buildPlan(exp) {
     entries.push({ kind, packType, name, slug: sluggify(name), ...extra });
   };
 
+  // Rows with no PF2e Item by design are reported, never silently skipped (structural.js).
+  const structural = [];
+  const structuralAt = (kind, name, sourcePath) => { const reason = structuralReason(kind, sluggify(name)); if (reason) structural.push({ kind, name, sourcePath, status: STRUCTURAL_STATUS, reason }); return !!reason; };
   add("ancestry", "ancestry", ch.details?.ancestry?.name, { wgContentId: ch.details?.ancestry?.id, sourcePath: "character.details.ancestry" });
   (ff.heritages ?? []).forEach((h, i) => add("heritage", "heritage", h.name, { wgContentId: h.id, sourcePath: `content.feats_features.heritages[${i}]` }));
   add("background", "background", ch.details?.background?.name, { wgContentId: ch.details?.background?.id, sourcePath: "character.details.background" });
   add("class", "class", ch.details?.class?.name, { wgContentId: ch.details?.class?.id, sourcePath: "character.details.class" });
   for (const group of ["ancestryFeats", "classFeats", "generalAndSkillFeats", "otherFeats"]) {
-    (ff[group] ?? []).forEach((f, i) => add("feat", "feat", f.name, {
+    (ff[group] ?? []).forEach((f, i) => structuralAt("feat", f.name, `content.feats_features.${group}[${i}]`) || add("feat", "feat", f.name, {
       wgContentId: f.id,
       level: f.level ?? null,
       featGroup: group === "ancestryFeats" ? "ancestry" : group === "classFeats" ? "class" : null,
@@ -93,8 +96,8 @@ export function buildPlan(exp) {
   const homebrewIds = homebrewSourceIds(ct);
   for (const [invIndex, inv] of (ct.inventory_flat ?? []).entries()) {
     const it = inv.item ?? inv;
-    if (SKIP_ITEMS.has(sluggify(it.name))) continue; // built-in strikes, not items
     const sourcePath = `content.inventory_flat[${invIndex}]`;
+    if (structuralAt("equipment", it.name, sourcePath)) continue;
     // Formulas live in PF2e's formula book (system.crafting.formulas), not in the inventory.
     if (inv.is_formula) { add("formula", "formula", it.name, { wgContentId: it.id, level: it.level ?? null, sourcePath }); continue; }
     // WG grants these itself (EXTRA_ITEM_IDS, e.g. Versatile Vial); PF2e's class grants them too.
@@ -141,7 +144,7 @@ export function buildPlan(exp) {
     ...(keyAbility ? { keyAbility } : {}),
     ...(focusMax ? { focusMax } : {}),
     entries,
-    ...(skipped.length ? { skipped } : {}), ...(grantedExtras.length ? { grantedExtras } : {}),
+    ...(skipped.length ? { skipped } : {}), ...(structural.length ? { structural } : {}), ...(grantedExtras.length ? { grantedExtras } : {}),
   };
 }
 
