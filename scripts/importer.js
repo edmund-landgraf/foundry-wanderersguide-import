@@ -1,3 +1,4 @@
+import { KIND_TYPES, PACK_TYPES } from "./item-types.js";
 // Foundry-side import. Uses Foundry/PF2e globals (game, Actor, Item, Folder, ChatMessage).
 import { MODULE_ID, HOMEBREW_FOLDER } from "./constants.js";
 import { customItemData, customItemsHtml } from "./custom-items.js";
@@ -6,7 +7,6 @@ import { auditImportCoverage, leftoverValues, CLASS_SUPPORT_NOTE } from "./cover
 import { unwrapCatalog, CATALOG_NOT_LOADED } from "./match-catalog.js";
 import { buildPlan, matchEntries, missReport, sluggify, resolveImageUrl, FALLBACK_IMG, wgChoiceHints, matchChoice, choiceNameKeys, defaultFlag, spellcastingPlan, spellSlotWarnings, preparedSlotUpdates, entryKeyFor, diffPlan, parityCheck, normalizeMatchCatalog } from "./mapping.js";
 
-const PACK_TYPES = new Set(["ancestry", "heritage", "background", "class", "feat", "spell", "weapon", "armor", "shield", "equipment", "consumable", "treasure", "backpack", "kit"]);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
 let indexCache = null;
@@ -652,10 +652,10 @@ export function coverFeatureGaps(entries, actor = null, index = []) {
   return entries;
 }
 
-const KIND_ITEM_TYPES = { ancestry: ["ancestry"], heritage: ["heritage"], background: ["background"], class: ["class"], feat: ["feat", "action"], spell: ["spell"] };
 /** Same compendium source, or (when WG's entry has no match of that item type) the same slug. No prefix or fuzzy matching. */
 export function sameThing(entry, item) {
-  if (!(KIND_ITEM_TYPES[entry.kind] ?? []).includes(item.type)) return false;
+  // Equipment is never deduped by slug here (several items can share one); only character-building kinds.
+  if (entry.kind === "equipment" || !(KIND_TYPES[entry.kind] ?? []).includes(item.type)) return false;
   const src = item._stats?.compendiumSource ?? item.flags?.core?.sourceId ?? null;
   if (entry.match?.uuid && src) return src === entry.match.uuid;
   const slug = item.system?.slug || sluggify(item.name);
