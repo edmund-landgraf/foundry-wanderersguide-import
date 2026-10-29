@@ -38,7 +38,7 @@ What a person sees for each item:
 - **No PF2e equivalent:** records that WG has no PF2e match (homebrew or WG-only content).
 - **Skip:** releases the item. Nothing is recorded.
 
-## 3. Screens
+## 3. Screens (Match, Review, Many-to-one check; see 5b)
 
 1. **Match:** the next unclaimed queue item, its candidates, the search box, and the buttons *Suggest*, *No PF2e equivalent* and *Skip*. An optional one-line note can be added.
 2. **Review:** the next pending suggestion that *someone else* made. It shows the same WG and PF2e detail plus who suggested it and their note. Buttons: *Approve* or *Reject* (a reason is required to reject).
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS match_reviewers (
 CREATE TABLE IF NOT EXISTS match_claims (
   wg_name text PRIMARY KEY,
   claimed_by text NOT NULL REFERENCES match_reviewers(reviewer_name),
-  claim_kind text NOT NULL CHECK (claim_kind IN ('match','review')),
+  claim_kind text NOT NULL CHECK (claim_kind IN ('match','review','m2o')),
   claimed_at timestamptz NOT NULL DEFAULT now(),
   expires_at timestamptz NOT NULL DEFAULT now() + interval '10 minutes'
 );
@@ -87,8 +87,11 @@ CREATE TABLE IF NOT EXISTS match_suggestions (
   suggestion_id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   wg_name text NOT NULL,
   wg_type text,
-  queue_status text NOT NULL CHECK (queue_status IN ('ambiguous','unresolved')),
-  decision text NOT NULL CHECK (decision IN ('match','no_equivalent')),
+  kind text NOT NULL DEFAULT 'match' CHECK (kind IN ('match','many_to_one')),
+  queue_status text CHECK (queue_status IN ('ambiguous','unresolved')),   -- kind='match' only
+  catalog_match_id bigint,          -- kind='many_to_one': the wg_pf2e_catalog_matches row being checked
+  wg_id bigint,                     -- kind='many_to_one': the WG row being checked
+  decision text NOT NULL CHECK (decision IN ('match','no_equivalent','confirm','deny')),
   entry_id bigint REFERENCES pf2e_catalog_entries(entry_id),
   pf2e_name text,                 -- copied at suggest time, for the audit trail
   class_id text REFERENCES classes(class_id),
@@ -96,10 +99,38 @@ CREATE TABLE IF NOT EXISTS match_suggestions (
   suggested_by text NOT NULL REFERENCES match_reviewers(reviewer_name),
   suggested_at timestamptz NOT NULL DEFAULT now(),
   state text NOT NULL DEFAULT 'suggested' CHECK (state IN ('suggested','approved','rejected')),
-  CHECK ((decision = 'match') = (entry_id IS NOT NULL))
+  CHECK (kind <> 'match' OR decision IN ('match','no_equivalent')),
+  CHECK (kind <> 'many_to_one' OR (decision IN ('confirm','deny') AND wg_id IS NOT NULL AND entry_id IS NOT NULL)),
+  CHECK (decision <> 'match' OR entry_id IS NOT NULL)
 );
--- At most one open suggestion per WG name.
-CREATE UNIQUE INDEX IF NOT EXISTS uq_open_suggestion ON match_suggestions (wg_name) WHERE state = 'suggested';
+-- At most one open suggestion per WG name (match) / per WG row + PF2e target (many_to_one).
+CREATE UNIQUE INDEX IF NOT EXISTS uq_open_suggestion ON match_suggestions (wg_name) WHERE state = 'suggested' AND kind = 'match';
+CREATE UNIQUE INDEX IF NOT EXISTS uq_open_m2o ON match_suggestions (wg_id, entry_id) WHERE state = 'suggested' AND kind = 'many_to_one';
+
+-- Human verdicts on automated matches. Never deletes: a denied match is flagged, and 028 skips it.
+CREATE TABLE IF NOT EXISTS wg_match_verifications (
+  wg_id bigint NOT NULL,
+  entry_id bigint NOT NULL REFERENCES pf2e_catalog_entries(entry_id),
+  verdict text NOT NULL CHECK (verdict IN ('confirmed','denied')),
+  suggestion_id bigint NOT NULL REFERENCES match_suggestions(suggestion_id),
+  approved_by text NOT NULL REFERENCES match_reviewers(reviewer_name),
+  approved_at timestamptz NOT NULL DEFAULT now(),
+  PRIMARY KEY (wg_id, entry_id)
+);
+
+-- Many-to-one groups: one PF2e entry with more than one resolved WG row.
+CREATE OR REPLACE VIEW many_to_one_queue AS
+SELECT m.entry_id, e.pf2e_name, m.match_id AS catalog_match_id, m.wg_id, m.wg_name, m.wg_type, m.match_strategy,
+       count(*) OVER (PARTITION BY m.entry_id) AS group_size
+FROM wg_pf2e_catalog_matches m
+JOIN pf2e_catalog_entries e USING (entry_id)
+WHERE m.status IN ('active','proposed')
+  AND m.entry_id IN (SELECT entry_id FROM wg_pf2e_catalog_matches
+                     WHERE status IN ('active','proposed') AND entry_id IS NOT NULL
+                     GROUP BY entry_id HAVING count(*) > 1)
+  AND NOT EXISTS (SELECT 1 FROM wg_match_verifications v WHERE v.wg_id = m.wg_id AND v.entry_id = m.entry_id)
+  AND NOT EXISTS (SELECT 1 FROM match_suggestions s WHERE s.kind = 'many_to_one' AND s.state = 'suggested'
+                  AND s.wg_id = m.wg_id AND s.entry_id = m.entry_id);
 
 CREATE TABLE IF NOT EXISTS match_reviews (
   review_id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -149,13 +180,45 @@ GROUP BY m.wg_name;
 COMMIT;
 ```
 
+## 5b. Many-to-one check (third screen)
+
+**Why:** the automated matching assumes several WG entries all mean the same PF2e entry. Each of those assumptions should be checked by a person, and then confirmed by a second person.
+
+**Groups (real counts, local `wgi_rules`, 2026-10-28):** `wg_pf2e_catalog_matches` with `status IN ('active','proposed')`, grouped by `entry_id HAVING count(*) > 1`.
+- 1,506 PF2e entries have more than one WG row: 3,625 WG rows in total, out of 9,301 resolved rows.
+- 995 of those groups (2,417 rows) contain *different* WG names (e.g. "X" and "X (legacy)"). The other 511 groups are the same name repeated in WG.
+- Largest groups: Weapon Specialization 29, Weapon Expertise 23, Perception Expertise 21, Skillful Lessons 18, Reflex Expertise 18.
+- Groups with different names come first, then the rest, largest first.
+
+**Screen:** shows one PF2e target (name, kind, class, level, traits, path, description snippet) and a table with **one row per WG entry** in the group: WG name, type, level, traits, source id, how it was matched (`keyword`/`exact`/`alias`), and a description snippet. Each row has **Confirm** and **Deny** (a reason is required to deny). Rows are decided one at a time; there's no "confirm all". The person claims the whole group (`match_claims.wg_name` = `'m2o:' || entry_id`).
+
+**Flow:**
+```
+automated match (unverified)
+  └─ Confirm / Deny (person A) ──> suggested (kind='many_to_one')
+         ├─ Approve (person B ≠ A) ──> wg_match_verifications row: confirmed | denied
+         └─ Reject (person B)      ──> back to the many-to-one screen
+```
+- **Approved confirm:** the match is marked verified and leaves the screen. Nothing else changes.
+- **Approved deny:** a `denied` verification is written. Nothing is deleted. The 028 rebuild skips `(wg_id, entry_id)` pairs with a `denied` verification, so that WG row falls back to `unresolved` (or `ambiguous` if other candidates remain) and reappears in the Match queue. Any alias that produced the match stays in place; if a denied pair came from an alias, the review screen notes it so a person can retire the alias separately.
+- The two-person trigger covers these suggestions too, because they share `match_suggestions`/`match_reviews`.
+
+**Review screen:** many-to-one suggestions show up in the same Review queue, labeled "Many-to-one: confirm" or "Many-to-one: deny", showing the WG row next to the PF2e target.
+
+**Empty state:** when `many_to_one_queue` is empty, the screen shows "No many-to-one matches left to check."
+
+**Progress counter (header, all screens):** "Assumptions verified: V / T (P%)".
+- T = automated matches in `wg_pf2e_catalog_matches` (`active`/`proposed`, 9,301 today).
+- V = rows in `wg_match_verifications`, plus approved match suggestions.
+- Shown alongside: "many-to-one rows left: N" (3,625 today).
+
 ## 6. How approvals feed the existing tables (approval only)
 
 Everything happens in one transaction on **Approve**. Suggest and Reject never touch these tables.
 
 1. Insert the `match_reviews` row (the trigger enforces the two-person rule).
 2. Set the suggestion's `state` to `approved` or `rejected`.
-3. If approved:
+3. If approved, for `kind='many_to_one'`: insert into `wg_match_verifications` (`confirmed` or `denied`), then rebuild 028 (which skips denied pairs). For `kind='match'`:
    - **match:** insert into `compendium_match_aliases`:
      - `source_name` = WG name, `target_name` = `pf2e_name`
      - `source_slug` = `wgi_slugify(wg name)`, `target_slug` = `pf2e_slug`
@@ -174,6 +237,7 @@ Rejection leaves `compendium_match_aliases` and 028 untouched, and the item reap
 - **Auth (minimal):** the person types their name once; it's kept in `localStorage` and must exist in `match_reviewers` with `active = true`. An admin adds names with an `INSERT` into `match_reviewers`. The server listens on `127.0.0.1` only (or the LAN, if Edmund chooses), with no passwords. This is an honest-person model, not real security.
 - **Concurrency:** opening an item claims it with `INSERT ... ON CONFLICT (wg_name) DO UPDATE ... WHERE match_claims.expires_at < now()`. A claim lasts 10 minutes and is renewed by any action. *Skip*, *Suggest* and the review buttons release it, and expired claims are ignored. Review claims are keyed by the suggestion's `wg_name` too.
 - **Keyboard:**
+  - Many-to-one: `↑`/`↓` move between rows, `C` confirms the row, `D` denies it
   - `1`-`9`: pick candidate N
   - `/`: focus search
   - `Enter`: Suggest the picked candidate
@@ -192,7 +256,9 @@ Rejection leaves `compendium_match_aliases` and 028 untouched, and the item reap
 | POST | `/api/skip` | `{who, wg_name}` releases the claim |
 | GET | `/api/next-review?who=` | Claim and return the next open suggestion where `suggested_by <> who`, or `{empty:true}` |
 | POST | `/api/review` | `{who, suggestion_id, verdict, reason?}`, transactional as in section 6 |
-| GET | `/api/status` | Counts: queue, open suggestions, approved, rejected |
+| GET | `/api/next-m2o?who=` | Claim and return the next many-to-one group with its rows, or `{empty:true}` |
+| POST | `/api/m2o` | `{who, wg_id, entry_id, decision: confirm|deny, reason?}` creates a `kind='many_to_one'` suggestion |
+| GET | `/api/status` | Counts: queue, open suggestions, approved, rejected, many-to-one rows left, assumptions verified |
 
 ## 9. Tech (keep it small)
 
@@ -212,7 +278,8 @@ Rejection leaves `compendium_match_aliases` and 028 untouched, and the item reap
 6. Rejecting returns the item to the queue with the rejection reason shown.
 7. Two browsers can't claim the same item at once, and an abandoned claim frees itself after 10 minutes.
 8. Every target is a `pf2e_catalog_entries` row (8.6.1), and no UUID is stored anywhere.
-9. Every keyboard shortcut in section 7 works.
+9. Many-to-one: each WG row gets its own suggestion; an approved deny never deletes anything, and after the 028 rebuild that row is back in the Match queue; an approved confirm removes the row from the screen; the progress counter goes up.
+10. Every keyboard shortcut in section 7 works.
 
 ## 11. Open questions
 
