@@ -3,6 +3,8 @@
 -- More than one candidate after kind preference => 'ambiguous' (no pick is made).
 -- No candidate => an explicit 'unresolved' row (never defaulted).
 -- Derived table: rebuilt on every run, so it is idempotent.
+-- ability_block rows only match feat/classfeature/action/heritage entries, plus ancestry-feature
+-- entries for WG physical-feature/sense rows (031 matches the other catalog kinds per WG table).
 BEGIN;
 CREATE TABLE IF NOT EXISTS wg_pf2e_catalog_matches (
   match_id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -34,7 +36,7 @@ kw AS (
 ),
 ex AS (
   SELECT wg.wg_id, e.entry_id, 'exact'::text, 2, 'active'::text
-  FROM wg JOIN pf2e_catalog_entries e ON lower(e.pf2e_name) = lower(wg.wg_name)
+  FROM wg JOIN pf2e_catalog_entries e ON lower(e.pf2e_name) = lower(wg.wg_name) AND (e.item_kind IN ('feat', 'classfeature', 'action', 'heritage') OR (e.item_kind = 'ancestryfeature' AND wg.wg_type IN ('physical-feature', 'sense')))
 ),
 al AS (
   SELECT wg.wg_id, e.entry_id, 'alias'::text,
@@ -43,7 +45,7 @@ al AS (
   FROM wg
   JOIN compendium_match_aliases a ON lower(a.source_name) = lower(wg.wg_name)
    AND a.status IN ('active', 'proposed') AND a.item_kind IN ('feat', 'action', 'heritage')
-  JOIN pf2e_catalog_entries e ON lower(e.pf2e_name) = lower(a.target_name)
+  JOIN pf2e_catalog_entries e ON lower(e.pf2e_name) = lower(a.target_name) AND (e.item_kind IN ('feat', 'classfeature', 'action', 'heritage') OR (e.item_kind = 'ancestryfeature' AND wg.wg_type IN ('physical-feature', 'sense')))
 ),
 allc AS (SELECT * FROM kw UNION ALL SELECT * FROM ex UNION ALL SELECT * FROM al),
 best AS (
@@ -52,7 +54,8 @@ best AS (
 ),
 pref AS (
   SELECT b.*, (e.item_kind = CASE wg.wg_type WHEN 'feat' THEN 'feat' WHEN 'class-feature' THEN 'classfeature'
-                 WHEN 'heritage' THEN 'heritage' WHEN 'action' THEN 'action' END) IS TRUE AS pk
+                 WHEN 'heritage' THEN 'heritage' WHEN 'action' THEN 'action'
+                 WHEN 'physical-feature' THEN 'ancestryfeature' WHEN 'sense' THEN 'ancestryfeature' END) IS TRUE AS pk
   FROM best b JOIN wg USING (wg_id) JOIN pf2e_catalog_entries e USING (entry_id)
 ),
 p3 AS (
