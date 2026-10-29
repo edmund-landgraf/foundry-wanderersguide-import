@@ -1,3 +1,4 @@
+import { KIND_TYPES, typesForKind } from "./item-types.js";
 import { classifySelections } from "./selections.js";
 import { resolveFormula, extraItemIds, containerParents } from "./formulas.js";
 import { homebrewSourceIds, isCustomItem } from "./custom-items.js";
@@ -185,9 +186,7 @@ export function matchEntries(entries, index, { catalog = null } = {}) {
     const n = k + String(row.name).toLowerCase();
     (byName.get(n) ?? byName.set(n, []).get(n)).push(row);
   }
-  const typesFor = (pt) => pt === "equipment"
-    ? (matchCatalog.typeMap?.equipment ?? ["weapon", "armor", "shield", "equipment", "consumable", "treasure", "backpack", "kit"])
-    : pt === "feat" ? (matchCatalog.typeMap?.feat ?? ["feat", "action"]) : (matchCatalog.typeMap?.[pt] ?? [pt]);
+  const typesFor = (pt) => typesForKind(pt, matchCatalog.typeMap);
   const semanticStems = (name) => {
     const raw = String(name ?? "").trim();
     const lower = raw.toLowerCase();
@@ -519,7 +518,6 @@ function itemFound(entry, items) {
     || (entry.kind === "feat" && slugs.some((s) => s.startsWith(`${i.slug}-`) || (i.slug && i.slug.startsWith(`${s}-`)))));
 }
 // WG lists some granted actions (e.g. Indomitable Act from Dauntless) as feats; PF2e grants them as actions.
-const KIND_TYPES = { ancestry: ["ancestry"], heritage: ["heritage"], background: ["background"], class: ["class"], feat: ["feat", "action"], spell: ["spell"], equipment: ["weapon", "armor", "shield", "equipment", "consumable", "treasure", "backpack", "kit"] };
 
 export function diffPlan(plan, actor) {
   plan = { ...plan, entries: plan.entries.filter((e) => e.kind !== "formula") };
