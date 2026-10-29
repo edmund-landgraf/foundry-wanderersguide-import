@@ -251,7 +251,9 @@ test("Champion Redemption Cause resolves to PF2e's canonical Redemption item", (
   assert.equal(match.canonicalSlug, "redemption");
 });
 
-test("WG issue aliases resolve only their evidence-backed canonical targets", () => {
+const fixtureCatalog = JSON.parse(readFileSync(new URL("./fixtures/match-catalog.min.json", import.meta.url)));
+test("WG issue aliases resolve only their evidence-backed canonical targets (from the catalog)", () => {
+  assert.ok(!matchEntries([{ kind: "feat", packType: "feat", name: "Flurry Edge", slug: "flurry-edge" }], [{ type: "feat", slug: "flurry", name: "Flurry", uuid: "U:flurry" }])[0].match, "no built-in alias without a catalog");
   const cases = [
     ["Animal Companion (Druid)", "animal-companion"],
     ["Animal Empathy (Druid)", "animal-empathy"],
@@ -266,6 +268,7 @@ test("WG issue aliases resolve only their evidence-backed canonical targets", ()
     const [hit] = matchEntries(
       [{ kind: source.includes("Telekinetic") ? "spell" : "feat", packType: source.includes("Telekinetic") ? "spell" : "feat", name: source, slug: sluggify(source) }],
       [{ type: source.includes("Telekinetic") ? "spell" : "feat", slug: target, name: target, uuid: `U:${target}` }],
+      { catalog: fixtureCatalog },
     );
     assert.equal(hit.match?.uuid, `U:${target}`, source);
     assert.equal(hit.via, "catalog-alias", source);

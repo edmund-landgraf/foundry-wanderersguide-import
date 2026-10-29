@@ -51,7 +51,11 @@ test("runtime grants reconcile only unique evidence-backed aliases", () => {
     { item: { id: "precision", name: "Precision" }, parent: { name: "Hunter's Edge" } },
   ];
   const unresolved = entries.map((e) => ({ owner: `${e.kind}: ${e.name}` }));
-  reconcileRuntimeGrants(entries, grants, unresolved);
+  const fixtureCatalog = JSON.parse(rf(new URL("./fixtures/match-catalog.min.json", import.meta.url)));
+  const bare = entries.map((x) => ({ ...x }));
+  reconcileRuntimeGrants(bare, grants);
+  assert.equal(bare[0].unresolved, "no match", "no hard-coded aliases without the catalog");
+  reconcileRuntimeGrants(entries, grants, unresolved, fixtureCatalog);
   assert.equal(entries[0].coveredBy, "Flurry");
   assert.equal(entries[0].grantedBy, "Hunter's Edge");
   assert.equal(entries[1].coveredBy, "Precision");
@@ -61,7 +65,7 @@ test("runtime grants reconcile only unique evidence-backed aliases", () => {
   reconcileRuntimeGrants(ambiguous, [
     ...grants,
     { item: { id: "flurry2", name: "Flurry" }, parent: { name: "Other" } },
-  ]);
+  ], null, fixtureCatalog);
   assert.equal(ambiguous[0].unresolved, "no match", "ambiguous grants remain unresolved");
 });
 

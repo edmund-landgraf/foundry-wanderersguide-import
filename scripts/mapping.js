@@ -27,20 +27,8 @@ const SEMANTIC_ROLE_SUFFIXES = [
   "ikon", "implement", "apparition", "thesis", "curriculum", "order",
 ];
 
-// Evidence-backed WG -> PF2e names. These are deliberately exact aliases: they
-// are not fuzzy matching and they never select a first/closest candidate.
-// Keep this table small and reviewable; ambiguous or unsupported entries stay
-// unresolved instead of becoming homebrew.
-export const WG_CANONICAL_ALIASES = [
-  ["feat", "Animal Companion (Druid)", "Animal Companion"],
-  ["feat", "Animal Empathy (Druid)", "Animal Empathy"],
-  ["feat", "Imperial Bloodline", "Bloodline: Imperial"],
-  ["feat", "Inexorable Iron Hybrid Study", "Inexorable Iron"],
-  ["spell", "Telekinetic Hand (Psi)", "Telekinetic Hand"],
-  ["spell", "Telekinetic Projectile (Psi)", "Telekinetic Projectile"],
-  ["feat", "Flurry Edge", "Flurry"],
-  ["feat", "Precision Edge", "Precision"],
-];
+// WG -> PF2e name aliases come only from the wgi_rules match catalog (compendium_match_aliases,
+// active rows), bundled as data/match-catalog.json. There is no hard-coded alias table.
 
 const ATTR_KEYS = { STR: "str", DEX: "dex", CON: "con", INT: "int", WIS: "wis", CHA: "cha" };
 
@@ -170,8 +158,7 @@ export const choiceNameKeys = (h) => [sluggify(h), ...semanticStems(h)];
 export function normalizeMatchCatalog(catalog = null) {
   if (catalog?.aliases instanceof Map) return catalog;
   const aliases = new Map();
-  const builtin = WG_CANONICAL_ALIASES.map(([item_kind, source_name, target_name]) => ({ item_kind, source_name, target_name, match_strategy: "canonical", evidence_ref: "WG/PF2e issue evidence" }));
-  for (const a of [...builtin, ...(catalog?.aliases ?? catalog?.compendium_match_aliases ?? [])]) {
+  for (const a of (catalog?.aliases ?? catalog?.compendium_match_aliases ?? [])) {
     if (a?.status && a.status !== "active") continue;
     const kind = String(a.item_kind ?? a.itemKind ?? "*");
     const source = sluggify(a.source_slug ?? a.sourceName ?? a.source_name);

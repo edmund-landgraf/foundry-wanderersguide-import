@@ -4,7 +4,7 @@ import { customItemData, customItemsHtml } from "./custom-items.js";
 import { mergeFormulas, assignContainers, formulasHtml } from "./formulas.js";
 import { auditImportCoverage, leftoverValues, CLASS_SUPPORT_NOTE } from "./coverage.js";
 import { unwrapCatalog, CATALOG_NOT_LOADED } from "./match-catalog.js";
-import { buildPlan, matchEntries, missReport, sluggify, resolveImageUrl, FALLBACK_IMG, wgChoiceHints, matchChoice, choiceNameKeys, defaultFlag, spellcastingPlan, spellSlotWarnings, preparedSlotUpdates, entryKeyFor, diffPlan, parityCheck, WG_CANONICAL_ALIASES } from "./mapping.js";
+import { buildPlan, matchEntries, missReport, sluggify, resolveImageUrl, FALLBACK_IMG, wgChoiceHints, matchChoice, choiceNameKeys, defaultFlag, spellcastingPlan, spellSlotWarnings, preparedSlotUpdates, entryKeyFor, diffPlan, parityCheck, normalizeMatchCatalog } from "./mapping.js";
 
 const PACK_TYPES = new Set(["ancestry", "heritage", "background", "class", "feat", "spell", "weapon", "armor", "shield", "equipment", "consumable", "treasure", "backpack", "kit"]);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -577,19 +577,18 @@ export function dependsOnActor(entry) {
  * current run, using only the reviewed canonical aliases. No name similarity
  * or first-candidate fallback is allowed.
  */
-export function runtimeGrantMatch(entry, grants) {
-  const aliases = WG_CANONICAL_ALIASES
-    .filter(([kind, source]) => kind === entry.kind && sluggify(source) === entry.slug)
-    .map(([, , target]) => sluggify(target));
+export function runtimeGrantMatch(entry, grants, catalog = null) {
+  const cat = normalizeMatchCatalog(catalog);
+  const aliases = [...(cat.aliases.get(`${entry.packType ?? entry.kind}:${entry.slug}`) ?? []), ...(cat.aliases.get(`*:${entry.slug}`) ?? [])].map((a) => a.target);
   if (!aliases.length) return null;
   const hits = grants.filter(({ item }) => aliases.includes(sluggify(item.name)));
   return hits.length === 1 ? hits[0] : null;
 }
 
-export function reconcileRuntimeGrants(entries, grants, unresolved = null) {
+export function reconcileRuntimeGrants(entries, grants, unresolved = null, catalog = null) {
   for (const e of entries) {
     if (!e.unresolved || e.match || e.custom || e.coveredBy) continue;
-    const hit = runtimeGrantMatch(e, grants);
+    const hit = runtimeGrantMatch(e, grants, catalog);
     if (!hit) continue;
     delete e.unresolved;
     e.coveredBy = hit.item.name;
@@ -748,7 +747,7 @@ export async function planImport(exp, { host, matchCatalog = null }) {
   const diff = diffPlan(plan, summarizeActor(actor));
   const homebrew = matched.filter((e) => !e.match && !e.custom && e.data);
   const coverage = auditImportCoverage(exp, { ...plan, entries: matched }, { applied: false, grantedSlugs: grantedSlugsOf(actor), choiceUsed: ctx.used, slug: sluggify });
-  return { coverage, catalog: { status: catalogInfo.status, header: catalogInfo.header }, exp, plan, host, index, ctx, matched, misses, notes, problems, warnings, actor, entryData, diff, homebrew, valid: problems.length === 0 };
+  return { coverage, catalog: { status: catalogInfo.status, header: catalogInfo.header }, matchCatalog: normalizeMatchCatalog(catalogInfo.catalog), exp, plan, host, index, ctx, matched, misses, notes, problems, warnings, actor, entryData, diff, homebrew, valid: problems.length === 0 };
 }
 
 function customReports(matched) {
@@ -875,7 +874,7 @@ async function applyImport(p, { onStep, parity, failAfter }) {
           const entries = batchEntries.splice(0);
           const made = await createItems(docs, kind === "equipment" ? { keepId: true } : {});
           made.forEach((doc, i) => { if (entries[i]) entries[i].itemId = doc.id; });
-          reconcileRuntimeGrants(matched, explicitGrants(actor.items, old), p.ctx.unresolved);
+          reconcileRuntimeGrants(matched, explicitGrants(actor.items, old), p.ctx.unresolved, p.matchCatalog);
         };
         for (const e of pass) {
           // Dedupe only against items PF2e explicitly granted from something
