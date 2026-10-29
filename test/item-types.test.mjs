@@ -22,3 +22,8 @@ test("every mapped type is a PF2e 8.6.1 Item type (static/template.json)", () =>
   for (const t of [...PACK_TYPES, ...FORMULA_TYPES]) assert.ok(pf2e.has(t), t);
   assert.ok(Object.isFrozen(KIND_TYPES));
 });
+
+test("equipment kind includes PF2e 8.6.1 ammo items", () => {
+  assert.ok(KIND_TYPES.equipment.includes("ammo"));
+  assert.ok(PACK_TYPES.has("ammo"));
+});
