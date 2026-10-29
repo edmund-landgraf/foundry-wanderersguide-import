@@ -38,7 +38,7 @@ What a person sees for each item:
 - **No PF2e equivalent:** records that WG has no PF2e match (homebrew or WG-only content).
 - **Skip:** releases the item. Nothing is recorded.
 
-## 3. Screens (Match, Review, Many-to-one check; see 5b)
+## 3. Screens (Book picker, Match within a book, Review, Many-to-one check; see 5b, 5c)
 
 1. **Match:** the next unclaimed queue item, its candidates, the search box, and the buttons *Suggest*, *No PF2e equivalent* and *Skip*. An optional one-line note can be added.
 2. **Review:** the next pending suggestion that *someone else* made. It shows the same WG and PF2e detail plus who suggested it and their note. Buttons: *Approve* or *Reject* (a reason is required to reject).
@@ -214,6 +214,49 @@ automated match (unverified)
 - V = rows in `wg_match_verifications`, plus approved match suggestions.
 - Shown alongside: "many-to-one rows left: N" (3,625 today).
 
+## 5c. Match within a book (Book picker + per-book queue)
+
+Matching happens inside one book at a time. A WG row and a PF2e entry from the same book are far more likely to be the same thing, and a reviewer can hold one book's content in their head.
+
+**Pairing books.** A PF2e book (`pf2e_catalog_entries.pf2e_source_book`, from `system.publication.title`) is paired with a WG `content_source` by normalized name. Normalizing means lowercase, then strip "Pathfinder", "Adventure Path:", "Adventure:", "Lost Omens", "Player's Guide", and "(backport)", "(in progress)", "(remastered)", "(legacy)". A book with only one side is listed as *unpaired*. A human can link an unpaired pair by hand; that link is itself a suggestion and goes through review.
+
+### Book picker screen
+
+- One row per book (paired or unpaired), showing:
+  - PF2e total, matched, proposed and unmatched.
+  - WG total, matched and unresolved.
+  - WG slot placeholders.
+  - Real queue size, and a progress bar.
+- Sort by real queue size (default), name, or progress. Filter: paired, PF2e-only, WG-only, out-of-scope.
+- The book's scope comes from `pf2e_book_wg_scope` (`COALESCE(override_scope, scope)`). Books marked `wg-book-absent` or `wg-book-empty` show as **Out of scope** and are collapsed by default. Changing `override_scope` is a suggestion that goes to review like any other.
+
+### Per-book queue screen
+
+- **Two columns side by side:**
+  - Left: this book's unmatched PF2e entries (`pf2e_unmatched_entries`, minus `wg_pf2e_name_proposals`), with kind, name, level and traits.
+  - Right: this book's unresolved WG `ability_block` rows, with type, name and level.
+- **Fuzzy hints, never associations.** The app may show "possible match" hints, for example from bigram name similarity or a matching ancestry or class trait, with the score shown. A hint never writes anything. The human picks a left row and a right row; that pick becomes a **suggested tag** in the review queue, and a *different* human confirms or denies it (the existing two-person rule, section 4). Nothing is auto-associated, at any score.
+- **Slot placeholders are structural, not matched.** These are WG level-slot rows: type `class-feature` whose name is Skill Feat, General Feat, Ancestry Feat, "<Class> Feat", Skill Increase, Attribute Boost(s), or "Runic Repertoire (Nth)". They are collapsed under a "Structural (N)" header. The human's action on them is **"structural, no PF2e item"** (one row or bulk), not a match. That too is a suggestion that goes to review. Once approved, the row leaves the real queue.
+- **"Not in PF2e catalog" flag.** A WG row can be flagged when its PF2e counterpart lives in a pack the catalog doesn't import yet. This is a suggestion for review, and it feeds a catalog-coverage backlog.
+- **Progress counters** in the header: unmatched left on each side, pending review, structural confirmed, and approved this session. When both columns are empty, the screen shows "No ambiguous data left to match" for this book and offers the next book.
+
+### Worked example: Impossible Magic (snapshot 2026-10-28)
+
+| Side | Total | Matched | Proposed | Unmatched |
+|---|---|---|---|---|
+| PF2e (feat/classfeature/action/heritage) | 485 | 456 | 5 | 24 |
+| WG ability_block (content_source 842) | 675 | 504 | n/a | 171 |
+
+- About 100 of the 171 WG rows are slot placeholders: Skill Feat ×20, Skill Increase ×18, Runesmith Feat ×11, Attribute Boosts ×10, General Feat ×10, Magus, Necromancer and Summoner Feat ×10 each, and Runic Repertoire 5th, 9th, 13th and 17th. They go to the Structural group.
+- About 45 WG rows are Runesmith runes (for example "Atryl, Rune of Fire"). Their PF2e items are in a pack the catalog doesn't import, so they get the "Not in PF2e catalog" flag.
+- Fuzzy hints a human would see, as hints only:
+  - Eidolon Weapon Specialization ↔ Eidolon Weapons Specialization (0.96)
+  - Unbounded Invocations ↔ Unbound Invocations (0.95)
+  - Anatomical Quartering ↔ Automatic Quartering (0.74)
+- The rest of the PF2e side is mostly eidolon and magus actions (Spellstrike, Arcane Cascade and others) and necromancer choices (Spirit, Reaper, Bone and others) that WG has no row for. These stay unmatched.
+- What's left is about 30 items per side. That is a realistic size for a single sitting.
+
+Across all books (see `D:\tmp\wgui-newpc\all-books-unmatched-counts.md`): 50 paired books, real queue 1,696 (725 PF2e plus 971 WG once 710 placeholders are removed). WG-only sources, mostly Starfinder and playtests, add 3,314 rows and default to out-of-scope.
 ## 6. How approvals feed the existing tables (approval only)
 
 Everything happens in one transaction on **Approve**. Suggest and Reject never touch these tables.
