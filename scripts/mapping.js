@@ -27,6 +27,11 @@ const SEMANTIC_ROLE_SUFFIXES = [
   "ikon", "implement", "apparition", "thesis", "curriculum", "order",
 ];
 
+const DEFAULT_TYPE_MAP = {
+  equipment: ["weapon", "armor", "shield", "equipment", "consumable", "treasure", "backpack", "kit"],
+  feat: ["feat", "action"],
+};
+
 // WG -> PF2e name aliases come only from the wgi_rules match catalog (compendium_match_aliases,
 // active rows), bundled as data/match-catalog.json. There is no hard-coded alias table.
 
@@ -146,13 +151,19 @@ export function buildPlan(exp) {
 
 /** Match entries against a compendium index: slug first, then an unambiguous name (or name+level). */
 /** Sluggified semantic stems: "Bomber Research Field" -> ["bomber"]. */
-export function semanticStems(name) {
+export function semanticStems(name, suffixes = SEMANTIC_ROLE_SUFFIXES) {
   const raw = String(name ?? "").trim();
   const lower = raw.toLowerCase();
-  return SEMANTIC_ROLE_SUFFIXES.filter((suffix) => lower.endsWith(` ${suffix}`)).map((suffix) => raw.slice(0, -(suffix.length + 1)).trim()).filter(Boolean).map(sluggify);
+  return suffixes.filter((suffix) => lower.endsWith(` ${suffix}`)).map((suffix) => raw.slice(0, -(suffix.length + 1)).trim()).filter(Boolean).map(sluggify);
 }
 /** Names a WG choice answer may carry in PF2e: the full slug plus semantic stems. */
-export const choiceNameKeys = (h) => [sluggify(h), ...semanticStems(h)];
+export const choiceNameKeys = (h, suffixes) => [sluggify(h), ...semanticStems(h, suffixes)];
+
+function activeRules(catalog) {
+  return (catalog?.rules ?? []).filter((r) => r && (!r.status || r.status === "active"))
+    .slice()
+    .sort((a, b) => Number(a.priority ?? 100) - Number(b.priority ?? 100));
+}
 
 /** Normalize the Postgres-exported match registry into a small pure runtime catalog. */
 export function normalizeMatchCatalog(catalog = null) {
@@ -170,8 +181,13 @@ export function normalizeMatchCatalog(catalog = null) {
     aliases.set(key, list);
   }
   for (const list of aliases.values()) list.sort((a, b) => a.priority - b.priority);
-  const typeMap = catalog?.typeMap ?? catalog?.type_map ?? null;
-  return { aliases, typeMap };
+  let typeMap = catalog?.typeMap ?? catalog?.type_map ?? null;
+  let semanticSuffixes = null;
+  for (const rule of activeRules(catalog)) {
+    if (rule.rule_kind === "type-map" && rule.payload && typeof rule.payload === "object") typeMap = rule.payload;
+    if (rule.rule_kind === "semantic-suffix" && Array.isArray(rule.payload?.suffixes)) semanticSuffixes = rule.payload.suffixes.map((s) => String(s).toLowerCase());
+  }
+  return { aliases, typeMap, semanticSuffixes: semanticSuffixes ?? SEMANTIC_ROLE_SUFFIXES };
 }
 export function matchEntries(entries, index, { catalog = null } = {}) {
   const matchCatalog = normalizeMatchCatalog(catalog);
@@ -185,18 +201,8 @@ export function matchEntries(entries, index, { catalog = null } = {}) {
     const n = k + String(row.name).toLowerCase();
     (byName.get(n) ?? byName.set(n, []).get(n)).push(row);
   }
-  const typesFor = (pt) => pt === "equipment"
-    ? (matchCatalog.typeMap?.equipment ?? ["weapon", "armor", "shield", "equipment", "consumable", "treasure", "backpack", "kit"])
-    : pt === "feat" ? (matchCatalog.typeMap?.feat ?? ["feat", "action"]) : (matchCatalog.typeMap?.[pt] ?? [pt]);
-  const semanticStems = (name) => {
-    const raw = String(name ?? "").trim();
-    const lower = raw.toLowerCase();
-    return SEMANTIC_ROLE_SUFFIXES
-      .filter((suffix) => lower.endsWith(` ${suffix}`))
-      .map((suffix) => raw.slice(0, -(suffix.length + 1)).trim())
-      .filter(Boolean)
-      .map(sluggify);
-  };
+  const typesFor = (pt) => matchCatalog.typeMap?.[pt] ?? DEFAULT_TYPE_MAP[pt] ?? [pt];
+  const stemsFor = (name) => semanticStems(name, matchCatalog.semanticSuffixes);
   const uniqueSlugHit = (slug, types, entry) => {
     const candidates = types.flatMap((t) => {
       return bySlugAll.get(`${t}:${slug}`) ?? [];
@@ -228,7 +234,7 @@ export function matchEntries(entries, index, { catalog = null } = {}) {
       const hit = uniqueSlugHit(alias.target, typesFor(e.packType), e);
       if (hit) return { ...e, match: hit, via: "catalog-alias", canonicalSlug: alias.target, matchEvidence: alias.evidence };
     }
-    for (const stem of semanticStems(e.name)) {
+    for (const stem of stemsFor(e.name)) {
       const hit = uniqueSlugHit(stem, typesFor(e.packType), e);
       if (hit) return { ...e, match: hit, via: "semantic-name", canonicalSlug: stem };
     }
