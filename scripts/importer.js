@@ -99,7 +99,7 @@ async function restoreSpellcastingState(actor, state) {
 //   2. on re-import, the selection already stored on the actor for the same compendium item, if still legal.
 // Nothing is guessed from other names and the first option is never taken. Anything left open is
 // recorded as unresolved and PF2e's own prompt is shown to the user (AMBA_REUSE_PLAN section 3).
-export function choiceContext(exp, plan, index, actor) {
+export function choiceContext(exp, plan, index, actor, { semanticSuffixes = null } = {}) {
   const hints = wgChoiceHints(exp);
   const fixedNames = new Set(
     exp?.content?.raw_data_dump?.variables?.PHYSICAL_FEATURE_NAMES?.value
@@ -151,7 +151,7 @@ export function choiceContext(exp, plan, index, actor) {
     return candidate.index;
   };
   const beliefs = String(exp?.character?.details?.info?.beliefs ?? "").trim();
-  return { hints, fixedNames, index, uuidName, previous, used, markUsed, markHintUsed, conflicts: new Map(), unresolved: [], specific, consume, pick, assigned, beliefs };
+  return { hints, fixedNames, index, uuidName, previous, used, markUsed, markHintUsed, conflicts: new Map(), unresolved: [], specific, consume, pick, assigned, beliefs, semanticSuffixes };
 }
 
 /** Index of the single option matching the hints, or -1 when none or more than one match. */
@@ -231,7 +231,7 @@ async function resolveChoiceSet(rule, ownerName, ctx, { sourceUuid = null, flag 
     const type = c.itemType ?? "feat";
     for (const h of specific) {
       if ((ctx.assigned?.get(sluggify(ownerName)) ?? new Set()).has(sluggify(h))) continue;
-      const keys = choiceNameKeys(h);
+      const keys = choiceNameKeys(h, ctx.semanticSuffixes);
       const rows = ctx.index.filter((r) => r.type === type && keys.includes(sluggify(r.name)));
       const legal = [];
       for (const r of rows) if (await filterAccepts(c, r.uuid)) legal.push(r);
@@ -762,12 +762,13 @@ export async function planImport(exp, { host, matchCatalog = null }) {
   const plan = buildPlan(exp);
   const index = await compendiumIndex();
   const catalogInfo = unwrapCatalog(matchCatalog);
-  const matched = matchEntries(plan.entries, index, { catalog: catalogInfo.catalog });
+  const catalog = normalizeMatchCatalog(catalogInfo.catalog);
+  const matched = matchEntries(plan.entries, index, { catalog });
   for (const entry of matched) if (entry.kind === "class") entry.keyAbility = plan.keyAbility;
   coverFeatureGaps(matched, findActor(plan, host) ?? null, index);
   const misses = missReport(matched);
   const actor = findActor(plan, host) ?? null;
-  const ctx = choiceContext(exp, plan, index, actor);
+  const ctx = choiceContext(exp, plan, index, actor, { semanticSuffixes: catalog.semanticSuffixes });
   for (const s of plan.structural ?? []) ctx.unresolved.push({ owner: `${s.kind}: ${s.name}`, flag: null, status: s.status, reason: s.reason });
   const notes = [];
   const problems = [];
