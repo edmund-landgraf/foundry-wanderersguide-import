@@ -136,4 +136,4 @@ That file is git-ignored and never committed. Generate it locally (migration 033
 docker exec my-postgres psql -U appuser -d wgi_rules -Atc "select payload from match_catalog_snapshots where pf2e_version = '8.6.1' order by created_at desc limit 1" > data/match-catalog.json
 ```
 
-The Foundry module fetches `modules/<module-id>/data/match-catalog.json` at runtime (scripts/match-catalog.js). For an installed module, copy the file into the module folder's `data/`. Without it, imports still run on exact names only and every alias-dependent miss is reported unresolved ("match catalog not loaded").
+The Foundry module fetches `modules/<module-id>/data/match-catalog.json` at runtime (scripts/match-catalog.js). For an installed module, copy the file into the module folder's `data/`. Without it, or when its `pf2eVersion` does not match the running system, imports still run on exact names only and every alias-dependent miss is reported unresolved ("match catalog not loaded").

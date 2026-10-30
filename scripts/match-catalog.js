@@ -12,7 +12,7 @@ export const CATALOG_NOT_LOADED = "match catalog not loaded";
 
 /**
  * Pure: validate a parsed catalog against the running PF2e version.
- * Returns { status: "loaded"|"missing"|"invalid", catalog, warnings, header }.
+ * Returns { status: "loaded"|"missing"|"invalid"|"stale", catalog, warnings, header }.
  */
 export function checkCatalog(raw, systemVersion = null) {
   if (raw == null) return { status: "missing", catalog: null, warnings: [`WG match catalog: file not found; ${CATALOG_NOT_LOADED}, exact names only`], header: null };
@@ -31,7 +31,12 @@ export function checkCatalog(raw, systemVersion = null) {
   if (active.length !== aliases.length) warnings.push(`WG match catalog: ignored ${aliases.length - active.length} non-active row(s)`);
   if (rules.length !== rulesIn.length) warnings.push(`WG match catalog: ignored ${rulesIn.length - rules.length} non-active rule(s)`);
   if (systemVersion && h.pf2eVersion && systemVersion !== h.pf2eVersion) {
-    warnings.push(`WG match catalog was built for PF2e ${h.pf2eVersion}; this world runs PF2e ${systemVersion}. Matches may be stale; check the unresolved list.`);
+    return {
+      status: "stale",
+      catalog: null,
+      warnings: [`WG match catalog was built for PF2e ${h.pf2eVersion}; this world runs PF2e ${systemVersion}. ${CATALOG_NOT_LOADED}, exact names only`],
+      header: h,
+    };
   }
   return { status: "loaded", catalog: { aliases: active, rules }, warnings, header: h };
 }
