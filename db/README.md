@@ -104,6 +104,7 @@ The database can decide that an action is eligible for review; Foundry remains t
 - `007_create_import_log_summary.sql`: best-log summaries and external-file references.
 - `008_create_import_gap_rollup.sql`: best-log gaps, unresolved choices, and warnings by character and feature.
 - `009_class_rename_and_plan_batches.sql`: class-scoped renames, grant provenance, and dependency batches.
+- `034_align_match_rule_suffixes.sql`: add the hyphenated research-field semantic suffix.
 
 ## Rename and plan functions
 
@@ -127,7 +128,7 @@ facts such as matched counts, unresolved choices, warnings, and parity results.
 
 ## Match catalog export
 
-`node db/tools/export-match-catalog.mjs [--out data/match-catalog.json] [--wg-commit <sha>] [--no-db]` reads active rows from `compendium_match_aliases` and from `wg_pf2e_catalog_matches` (where the WG and PF2e names differ after sluggify; priority 200, so curated aliases win), builds a versioned snapshot (header: schemaVersion, pf2eVersion 8.6.1, wgContentCommit, generatedAt, rowCount, sha256; identity aliases dropped), inserts it as a row in `match_catalog_snapshots` (migration 033) and writes the same JSON to `data/match-catalog.json`.
+`node db/tools/export-match-catalog.mjs [--out data/match-catalog.json] [--wg-commit <sha>] [--no-db]` reads active rows from `compendium_match_aliases`, from `wg_pf2e_catalog_matches` (where the WG and PF2e names differ after sluggify; priority 200, so curated aliases win), and from `compendium_match_rules`. It builds a versioned snapshot (header: schemaVersion, pf2eVersion 8.6.1, wgContentCommit, generatedAt, rowCount, sha256; identity aliases dropped; active rules included and covered by the checksum), inserts it as a row in `match_catalog_snapshots` (migration 033) and writes the same JSON to `data/match-catalog.json`. Apply migration 034 before exporting so the semantic-suffix rule includes `research-field`. The importer uses a loaded catalog's type map and semantic suffixes; a file with no `rules` array keeps the previous built-in lists.
 
 That file is git-ignored and never committed. Generate it locally (migration 033 must be applied; take a `pg_dump` backup first), or restore it from the latest snapshot row:
 

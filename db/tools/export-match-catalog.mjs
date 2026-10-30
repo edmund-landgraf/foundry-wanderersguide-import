@@ -48,7 +48,23 @@ export function catalogMatchAliases(rows) {
 }
 
 /** Pure: raw alias rows -> catalog. Drops anything not active and anything that maps a name to itself. */
-export function buildCatalog(rows, { wgContentCommit = null, generatedAt = new Date().toISOString(), pf2eVersion = PF2E_VERSION } = {}) {
+/** Active match-policy rows, stable order. Non-active rows are dropped. */
+export function activeMatchRules(rows) {
+  return (rows ?? [])
+    .filter((r) => r?.status === "active" && r.rule_kind && r.payload && typeof r.payload === "object")
+    .map((r) => ({
+      item_kind: String(r.item_kind ?? "*"),
+      rule_key: r.rule_key,
+      rule_kind: r.rule_kind,
+      payload: r.payload,
+      priority: Number(r.priority ?? 100),
+      evidence_ref: r.evidence_ref ?? null,
+      status: "active",
+    }))
+    .sort((a, b) => a.rule_kind.localeCompare(b.rule_kind) || a.item_kind.localeCompare(b.item_kind) || a.priority - b.priority || String(a.rule_key).localeCompare(String(b.rule_key)));
+}
+
+export function buildCatalog(rows, { wgContentCommit = null, generatedAt = new Date().toISOString(), pf2eVersion = PF2E_VERSION, rules = [] } = {}) {
   const seen = new Set();
   const aliases = [];
   for (const r of rows ?? []) {
@@ -64,12 +80,13 @@ export function buildCatalog(rows, { wgContentCommit = null, generatedAt = new D
       priority: Number(r.priority ?? 100), match_strategy: r.match_strategy ?? "canonical", evidence_ref: r.evidence_ref ?? null, status: "active" });
   }
   aliases.sort((a, b) => a.item_kind.localeCompare(b.item_kind) || a.source_slug.localeCompare(b.source_slug) || a.priority - b.priority || a.target_slug.localeCompare(b.target_slug));
-  const body = { aliases };
+  const policy = activeMatchRules(rules);
+  const body = { aliases, rules: policy };
   return { header: { schemaVersion: SCHEMA_VERSION, pf2eVersion, wgContentCommit, generatedAt, rowCount: aliases.length, sha256: checksum(body) }, ...body };
 }
 
-/** True when the catalog body still matches its header checksum. */
-export const verifyCatalog = (cat) => !!cat?.header && cat.header.schemaVersion === SCHEMA_VERSION && checksum({ aliases: cat.aliases ?? [] }) === cat.header.sha256;
+/** True when the catalog body still matches its header checksum. Rules are part of the checksum when present. */
+export const verifyCatalog = (cat) => !!cat?.header && cat.header.schemaVersion === SCHEMA_VERSION && checksum({ aliases: cat.aliases ?? [], rules: cat.rules ?? [] }) === cat.header.sha256;
 
 /** Pure: SQL that stores a catalog as one match_catalog_snapshots row (dollar-quoted payload). */
 export function snapshotInsertSql(cat) {
@@ -83,6 +100,7 @@ export function snapshotInsertSql(cat) {
 
 const SQL_ALIASES = "select coalesce(json_agg(t), '[]') from (select item_kind, source_name, target_name, source_slug, target_slug, priority, match_strategy, evidence_ref, status from compendium_match_aliases where status = 'active') t";
 const SQL_MATCHES = "select coalesce(json_agg(t), '[]') from (select m.wg_name, e.pf2e_name, e.item_kind as pf2e_kind, m.match_strategy, m.evidence_ref, m.status from wg_pf2e_catalog_matches m join pf2e_catalog_entries e using (entry_id) where m.status = 'active' and lower(m.wg_name) <> lower(e.pf2e_name)) t";
+const SQL_RULES = "select coalesce(json_agg(t), '[]') from (select item_kind, rule_key, rule_kind, payload, priority, evidence_ref, status from compendium_match_rules where status = 'active') t";
 
 function main(argv) {
   const arg = (n) => { const i = argv.indexOf(n); return i >= 0 ? argv[i + 1] : null; };
@@ -94,10 +112,10 @@ function main(argv) {
     wgContentCommit = execSync(`git -c safe.directory=${repo.replace(/\\/g, "/")} -C "${repo}" rev-parse HEAD`).toString().trim();
   }
   const q = (sql) => JSON.parse(execSync(`${psql} -Atc "${sql}"`, { maxBuffer: 256 << 20 }).toString());
-  const cat = buildCatalog([...q(SQL_ALIASES), ...catalogMatchAliases(q(SQL_MATCHES))], { wgContentCommit });
+  const cat = buildCatalog([...q(SQL_ALIASES), ...catalogMatchAliases(q(SQL_MATCHES))], { wgContentCommit, rules: q(SQL_RULES) });
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, JSON.stringify(cat) + "\n");
-  console.log(`wrote ${out}: ${cat.header.rowCount} aliases, sha256 ${cat.header.sha256}`);
+  console.log(`wrote ${out}: ${cat.header.rowCount} aliases, ${cat.rules.length} rules, sha256 ${cat.header.sha256}`);
   if (argv.includes("--no-db")) return;
   const id = execSync(`${psql} -v ON_ERROR_STOP=1 -At`, { input: snapshotInsertSql(cat), maxBuffer: 256 << 20 }).toString().trim().split(/\r?\n/)[0];
   console.log(`stored match_catalog_snapshots id ${id}`);

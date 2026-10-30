@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { buildCatalog, verifyCatalog, catalogMatchAliases, snapshotInsertSql, PF2E_VERSION } from "../db/tools/export-match-catalog.mjs";
+import { buildCatalog, verifyCatalog, catalogMatchAliases, snapshotInsertSql, activeMatchRules, PF2E_VERSION } from "../db/tools/export-match-catalog.mjs";
 
 const rows = [
   { item_kind: "feat", source_name: "Flurry Edge", target_name: "Flurry", source_slug: "flurry-edge", target_slug: "flurry", status: "active" },
@@ -34,6 +34,20 @@ test("committed fixture catalog is valid", () => {
   const cat = JSON.parse(readFileSync(new URL("./fixtures/match-catalog.min.json", import.meta.url)));
   assert.ok(verifyCatalog(cat));
   assert.equal(cat.header.pf2eVersion, "8.6.1");
+});
+
+test("active match rules are exported and covered by the checksum", () => {
+  const rules = [
+    { item_kind: "*", rule_key: "type-map", rule_kind: "type-map", payload: { feat: ["feat", "action"] }, priority: 10, status: "active" },
+    { item_kind: "*", rule_key: "old", rule_kind: "semantic-suffix", payload: { suffixes: ["cause"] }, priority: 30, status: "retired" },
+  ];
+  assert.equal(activeMatchRules(rules).length, 1);
+  const cat = buildCatalog(rows, { generatedAt: "x", rules });
+  assert.equal(cat.rules.length, 1);
+  assert.equal(cat.rules[0].rule_kind, "type-map");
+  assert.ok(verifyCatalog(cat));
+  cat.rules[0].payload.feat.push("heritage");
+  assert.ok(!verifyCatalog(cat));
 });
 
 test("catalog matches become aliases only when slugs differ and kind is importable", () => {

@@ -22,12 +22,18 @@ export function checkCatalog(raw, systemVersion = null) {
     return { status: "invalid", catalog: null, warnings: [`WG match catalog: invalid file (schema ${h?.schemaVersion ?? "?"}); ${CATALOG_NOT_LOADED}, exact names only`], header: h ?? null };
   }
   const active = aliases.filter((a) => a?.status === "active");
+  const rulesIn = Array.isArray(raw.rules) ? raw.rules : [];
+  if (raw.rules != null && !Array.isArray(raw.rules)) {
+    return { status: "invalid", catalog: null, warnings: [`WG match catalog: rules must be an array; ${CATALOG_NOT_LOADED}, exact names only`], header: h };
+  }
+  const rules = rulesIn.filter((r) => r?.status === "active");
   const warnings = [];
   if (active.length !== aliases.length) warnings.push(`WG match catalog: ignored ${aliases.length - active.length} non-active row(s)`);
+  if (rules.length !== rulesIn.length) warnings.push(`WG match catalog: ignored ${rulesIn.length - rules.length} non-active rule(s)`);
   if (systemVersion && h.pf2eVersion && systemVersion !== h.pf2eVersion) {
     warnings.push(`WG match catalog was built for PF2e ${h.pf2eVersion}; this world runs PF2e ${systemVersion}. Matches may be stale; check the unresolved list.`);
   }
-  return { status: "loaded", catalog: { aliases: active }, warnings, header: h };
+  return { status: "loaded", catalog: { aliases: active, rules }, warnings, header: h };
 }
 
 let cache = null;

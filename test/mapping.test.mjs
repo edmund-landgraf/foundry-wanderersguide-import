@@ -12,6 +12,25 @@ test("sluggify", () => {
   assert.equal(sluggify("Champion's Reaction (Remastered)"), "champions-reaction");
 });
 
+test("catalog semantic suffixes replace the built-in list", () => {
+  const index = [{ type: "feat", slug: "redemption", name: "Redemption", uuid: "Compendium.pf2e.feats-srd.redemption", level: 1 }];
+  const entry = { kind: "feat", packType: "feat", name: "Redemption Cause", slug: "redemption-cause", level: 1 };
+  const [without] = matchEntries([entry], index, { catalog: { aliases: [], rules: [{ rule_kind: "semantic-suffix", payload: { suffixes: ["muse"] }, status: "active", priority: 30 }] } });
+  assert.equal(without.match, null);
+  const [withCause] = matchEntries([entry], index, { catalog: { aliases: [], rules: [{ rule_kind: "semantic-suffix", payload: { suffixes: ["cause"] }, status: "active", priority: 30 }] } });
+  assert.equal(withCause.via, "semantic-name");
+  assert.equal(withCause.canonicalSlug, "redemption");
+});
+
+test("catalog type map replaces the built-in document types", () => {
+  const index = [{ type: "action", slug: "hunt-prey", name: "Hunt Prey", uuid: "Compendium.pf2e.actions.hunt-prey" }];
+  const entry = { kind: "feat", packType: "feat", name: "Hunt Prey", slug: "hunt-prey" };
+  const [narrow] = matchEntries([entry], index, { catalog: { aliases: [], rules: [{ rule_kind: "type-map", payload: { feat: ["feat"] }, status: "active", priority: 10 }] } });
+  assert.equal(narrow.match, null);
+  const [wide] = matchEntries([entry], index, { catalog: { aliases: [], rules: [{ rule_kind: "type-map", payload: { feat: ["feat", "action"] }, status: "active", priority: 10 }] } });
+  assert.equal(wide.via, "slug");
+});
+
 test("database match catalog aliases are applied before semantic fallback", () => {
   const catalog = normalizeMatchCatalog({ aliases: [{
     item_kind: "feat", source_slug: "wg-special", target_slug: "pf2e-special",
