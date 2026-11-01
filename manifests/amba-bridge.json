@@ -1,0 +1,9 @@
+{
+  "id": "amba-bridge",
+  "title": "AMBA Bridge",
+  "description": "Publishes Adventure Maker By Act adventures into Foundry V14/PF2e and optionally archives completed combat logs to WGUI.",
+  "version": "0.1.0",
+  "url": "https://github.com/edmund-landgraf/foundry-wanderersguide-import",
+  "manifest": "https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/main/manifests/amba-bridge.json",
+  "download": "https://github.com/edmund-landgraf/foundry-wanderersguide-import/archive/refs/heads/main.zip"
+}
