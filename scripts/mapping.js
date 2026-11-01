@@ -223,6 +223,29 @@ export function matchEntries(entries, index, { catalog = null } = {}) {
     }
     return null;
   };
+  const kindOf = (row) => {
+    if (row.item_kind === "equipment" || row.item_kind === "npc") return row.item_kind;
+    if (row.item_kind) return null;
+    if (typesFor("equipment").includes(row.type)) return "equipment";
+    if (row.type === "npc") return "npc";
+    return null;
+  };
+  const catalogPhraseMaps = new Map();
+  const catalogPhrases = (kind) => {
+    if (catalogPhraseMaps.has(kind)) return catalogPhraseMaps.get(kind);
+    const map = new Map();
+    index.forEach((row, i) => {
+      if (kindOf(row) !== kind) return;
+      const key = phrase(row.name ?? row.pf2e_name);
+      if (!key) return;
+      const id = String(row.uuid ?? row.entry_id ?? row.source_path ?? `row:${i}`);
+      const list = map.get(key) ?? new Map();
+      if (!list.has(id)) list.set(id, row);
+      map.set(key, list);
+    });
+    catalogPhraseMaps.set(kind, map);
+    return map;
+  };
   return entries.map((e) => {
     if (e.kind === "formula") return resolveFormula(e, index);
     if (e.custom) return { ...e, match: null, via: "custom" };
@@ -245,6 +268,27 @@ export function matchEntries(entries, index, { catalog = null } = {}) {
     for (const stem of semanticStems(e.name)) {
       const hit = uniqueSlugHit(stem, typesFor(e.packType), e);
       if (hit) return { ...e, match: hit, via: "semantic-name", canonicalSlug: stem };
+    }
+    const catalogKind = e.packType === "npc" || e.kind === "npc" ? "npc"
+      : e.packType === "equipment" || e.kind === "equipment" ? "equipment" : null;
+    if (catalogKind) {
+      const phrases = catalogLookupNames(e.name, catalogKind);
+      const parsed = catalogKind === "equipment" ? parseComposedName(e.name) : null;
+      const map = catalogPhrases(catalogKind);
+      for (const key of phrases) {
+        const hits = [...(map.get(key)?.values() ?? [])];
+        if (hits.length > 1) return { ...e, match: null, via: "ambiguous", candidates: hits.map((r) => r.uuid ?? r.entry_id ?? r.source_path) };
+        if (hits.length === 1) {
+          const stripped = parsed?.material && phrase(parsed.base) === key;
+          return {
+            ...e,
+            match: hits[0],
+            via: key === phrases[0] ? "name" : "catalog-lookup",
+            ...(stripped ? { material: parsed.material, grade: parsed.material.grade } : {}),
+          };
+        }
+      }
+      return { ...e, match: null, via: "miss" };
     }
     for (const t of typesFor(e.packType)) {
       const list = byName.get(`${t}:${e.name.toLowerCase()}`);
@@ -466,6 +510,66 @@ export function parseComposedName(name, meta = {}) {
   if (mm && typeof mm === "object" && (mm.type || mm.name)) material = { type: sluggify(mm.type ?? mm.name), grade: GRADES[String(mm.grade ?? "standard").toLowerCase()] ?? "standard" };
   const composed = rest !== String(name ?? "").trim();
   return { base: rest.trim(), runes, material, composed };
+}
+
+/** Parentheticals that select a different use or size, not a source reprint. */
+const USAGE_PAREN = new Set(["melee", "ranged", "light", "heavy", "tiny", "small", "medium", "large", "huge", "gargantuan"]);
+/** Bases too broad to count as the same catalog item after a material is stripped. */
+const GENERIC_ITEM_BASE = new Set(["armor", "weapon", "shield", "object", "item", "tool", "tools"]);
+const DRAGON_AGES = "wyrmling|young|adult|ancient|old";
+
+function phrase(name) {
+  return String(name ?? "")
+    .normalize("NFKD")
+    .toLowerCase()
+    .replace(/['’“”"]/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+/**
+ * Ordered catalog lookup phrases for a PF2 equipment or creature name.
+ * Exact phrase first. Later phrases are rewrites that still name the same
+ * compendium document: a source reprint, a scroll rank, a precious-material
+ * base that is not a generic category, an elite or weak adjustment, or a
+ * dragon age moved into parentheses.
+ */
+export function catalogLookupNames(name, kind = "equipment") {
+  const keys = [];
+  const add = (value) => {
+    const next = phrase(value);
+    if (next && !keys.includes(next)) keys.push(next);
+  };
+  add(name);
+  const trailing = String(name ?? "").match(/\s*\(([^)]*)\)\s*$/);
+  let stem = String(name ?? "");
+  if (trailing) {
+    const inner = phrase(trailing[1]);
+    if (!USAGE_PAREN.has(inner) && !/^level \d+$/.test(inner)) {
+      stem = stem.replace(/\s*\([^)]*\)\s*$/, "").trim();
+      add(stem);
+    }
+  }
+  if (kind === "equipment") {
+    const scroll = phrase(stem).match(/^(\d+(?:st|nd|rd|th)) (?:rank|level) scroll$/);
+    if (scroll) add(`scroll of ${scroll[1]}-rank spell`);
+    const parsed = parseComposedName(stem);
+    const base = phrase(parsed.base);
+    if (parsed.composed && base && !GENERIC_ITEM_BASE.has(base)) add(parsed.base);
+  }
+  if (kind === "npc") {
+    const elite = phrase(stem).match(/^(?:elite|weak) (.+)$/);
+    const body = elite ? elite[1] : phrase(stem);
+    if (elite) add(body);
+    const dragon = body.match(new RegExp(`^(${DRAGON_AGES}) (.+ dragon)(?: (spellcaster))?$`));
+    if (dragon) {
+      const age = dragon[1];
+      const dragonBody = dragon[2];
+      if (dragon[3]) add(`${dragonBody} (${age}, spellcaster)`);
+      add(`${dragonBody} (${age})`);
+    }
+  }
+  return keys;
 }
 
 // ---------------------------------------------------------------------------------------------
