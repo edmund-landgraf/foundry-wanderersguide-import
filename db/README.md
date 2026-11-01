@@ -6,18 +6,18 @@ It does not replace the raw WG export and it does not replace Foundry/PF2e's rul
 
 ## Database
 
-The current development database is PostgreSQL on VPS-UNWH:
+The development database is PostgreSQL:
 
 ```text
 database: wgi_rules
 schema:   public
 ```
 
-The database is separate from the proposal-manager database. PostgreSQL is containerized in `my-postgres` and is bound to localhost on the host. The Foundry module must not connect directly to PostgreSQL; a future read-only service/API should expose selected snapshots or plans.
+The database is separate from other application databases and is only reachable locally on its host. The Foundry module must not connect directly to PostgreSQL; a future read-only service/API should expose selected snapshots or plans.
 
 ## Source and projections
 
-`test_pc_fixtures` stores the complete sanitized WG v4 JSON export as immutable `jsonb`. The eight current fixtures are PCs 63, 64, 66, 71, 72, 74, 76, and 78.
+`test_pc_fixtures` stores the complete sanitized WG v4 JSON export as immutable `jsonb`. The original eight fixtures are PCs 63, 64, 66, 71, 72, 74, 76, and 78; current table row counts are listed in the top-level README.
 
 `test_pc_summary` is a convenience view over the raw snapshot. It exposes the WG ID, name, class, ancestry, level, and export version.
 
@@ -132,7 +132,7 @@ facts such as matched counts, unresolved choices, warnings, and parity results.
 That file is git-ignored and never committed. Generate it locally (migration 033 must be applied; take a `pg_dump` backup first), or restore it from the latest snapshot row:
 
 ```
-docker exec my-postgres psql -U appuser -d wgi_rules -Atc "select payload from match_catalog_snapshots where pf2e_version = '8.6.1' order by created_at desc limit 1" > data/match-catalog.json
+psql -d wgi_rules -Atc "select payload from match_catalog_snapshots where pf2e_version = '8.6.1' order by created_at desc limit 1" > data/match-catalog.json
 ```
 
 The Foundry module fetches `modules/<module-id>/data/match-catalog.json` at runtime (scripts/match-catalog.js). For an installed module, copy the file into the module folder's `data/`. Without it, imports still run on exact names only and every alias-dependent miss is reported unresolved ("match catalog not loaded").
