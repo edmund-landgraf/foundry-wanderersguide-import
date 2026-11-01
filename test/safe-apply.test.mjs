@@ -17,7 +17,7 @@ test("managedTree: module items plus everything granted from them, nothing else"
   ];
   assert.deepEqual([...managedTree(items)].sort(), ["cls", "feat", "loc", "sub", "viaParent"]);
 });
-import { applyKeyAbilityData, coverFeatureGaps, explicitGrants, sameThing, duplicateItemDiagnostics, focusResourcePatch, domainPromptWithoutDeity, emptyChoicePrompt, deityPromptChoice, allChoiceHints, uniqueChoice, dependencyOrder, dependsOnActor, reconcileRuntimeGrants, exactSlugGrant, grantFixedChoice } from "../scripts/importer.js";
+import { applyKeyAbilityData, coverFeatureGaps, explicitGrants, sameThing, duplicateItemDiagnostics, focusResourcePatch, domainPromptWithoutDeity, emptyChoicePrompt, deityPromptChoice, allChoiceHints, uniqueChoice, dependencyOrder, dependsOnActor, ruleDependsOnActor, stampGrantPreselect, reconcileRuntimeGrants, exactSlugGrant, grantFixedChoice } from "../scripts/importer.js";
 test("dedupe: only explicit grants from this run's items, same compendium source", () => {
   const it = (id, type, name, src, extra = {}) => ({ id, type, name, _stats: { compendiumSource: src }, flags: extra.flags ?? {}, system: extra.system ?? {} });
   const items = [
@@ -92,6 +92,20 @@ test("any empty choice prompt is closed, including ones that are not domain prom
   assert.equal(emptyChoicePrompt({ title: "Cultural Adaptability", choices: [] }), true);
   assert.equal(emptyChoicePrompt({ title: "Doctrine", choices: [{ label: "Cloistered Cleric" }] }), false);
   assert.equal(domainPromptWithoutDeity({ title: "Cultural Adaptability", choices: [] }), false);
+});
+
+test("a fixed instinct answer is copied onto the selection grant and an actor-dependent choice is left empty", () => {
+  const rules = [
+    { key: "ChoiceSet", flag: "instinct", selection: "Compendium.pf2e.classfeatures.Item.GiantInstinct", choices: { filter: ["item:tag:barbarian-instinct"] } },
+    { key: "GrantItem", uuid: "{item|flags.system.rulesSelections.instinct}" },
+    { key: "ChoiceSet", flag: "weapon", selection: "longsword", choices: { ownedItems: true } },
+    { key: "GrantItem", uuid: "{item|flags.system.rulesSelections.weapon}" },
+  ];
+  stampGrantPreselect(rules);
+  assert.equal(rules[1].preselectChoices.instinct, "Compendium.pf2e.classfeatures.Item.GiantInstinct");
+  assert.equal(rules[3].preselectChoices, undefined);
+  assert.equal(ruleDependsOnActor(rules[0]), false);
+  assert.equal(ruleDependsOnActor(rules[2]), true);
 });
 
 test("dependency order puts static GrantItem parents first", () => {

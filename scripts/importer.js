@@ -280,6 +280,8 @@ async function prefillChoices(data, ctx, notes, sourceName = null, sourceWgId = 
   const owners = [...new Set([sourceName, data.name].filter(Boolean))];
   for (const rule of rules) {
     if (rule?.key === "ChoiceSet" && rule.selection == null) {
+      // Actor-dependent options are built at prepare time. An early answer can grant a child the predicate would reject.
+      if (ruleDependsOnActor(rule)) continue;
       const flag = rule.flag ?? defaultFlag(data.name);
       let hit = null;
       let owner = data.name;
@@ -292,10 +294,10 @@ async function prefillChoices(data, ctx, notes, sourceName = null, sourceWgId = 
       if (hit.via === "WG selection") ctx.markUsed(owner);
       foundry.utils.setProperty(data, `flags.pf2e.rulesSelections.${flag}`, hit.value);
       notes.push(`choice ${data.name}: ${hit.label} (pre-filled from ${hit.via})`);
-    } else if (rule?.key === "GrantItem" && typeof rule.uuid === "string" && rule.uuid.startsWith("Compendium.")) {
+    } else if (rule?.key === "GrantItem" && typeof rule.uuid === "string" && rule.uuid.startsWith("Compendium.") && !ruleDependsOnActor(rule)) {
       const granted = await fromUuid(rule.uuid).catch(() => null);
       for (const gr of granted?.system?.rules ?? []) {
-        if (gr?.key !== "ChoiceSet" || gr.selection != null) continue;
+        if (gr?.key !== "ChoiceSet" || gr.selection != null || ruleDependsOnActor(gr)) continue;
         const flag = gr.flag ?? defaultFlag(granted.name);
         if (rule.preselectChoices?.[flag] != null) continue;
         const hit = await resolveChoiceSet(gr, granted.name, ctx, { sourceUuid: rule.uuid, flag, ownerWgId: sourceWgId });
@@ -306,6 +308,7 @@ async function prefillChoices(data, ctx, notes, sourceName = null, sourceWgId = 
       }
     }
   }
+  stampGrantPreselect(rules);
 }
 async function itemDataFor(entry, folderId, ctx, notes) {
   let data;
@@ -571,20 +574,41 @@ export function dependencyOrder(entries) {
   return out;
 }
 
+/** True when this rule's legal options are only known once the actor exists. */
+export function ruleDependsOnActor(rule) {
+  if (!["ChoiceSet", "GrantItem"].includes(rule?.key)) return false;
+  if (Array.isArray(rule.predicate) && rule.predicate.length) return true;
+  if (rule.key !== "ChoiceSet") return false;
+  const choices = rule.choices;
+  if (typeof choices === "string") return true;
+  if (choices && typeof choices === "object" && !Array.isArray(choices)) {
+    if (choices.ownedItems || choices.attacks || choices.unarmedAttacks) return true;
+    return Array.isArray(choices.filter) && choices.filter.some((x) => typeof x === "string" && !/^(item|parent):/.test(x));
+  }
+  return false;
+}
+
 /** True when PF2e needs prior actor state to evaluate this item's rules. */
 export function dependsOnActor(entry) {
-  return (entry.data?.system?.rules ?? []).some((rule) => {
-    if (!["ChoiceSet", "GrantItem"].includes(rule?.key)) return false;
-    if (Array.isArray(rule.predicate) && rule.predicate.length) return true;
-    if (rule.key !== "ChoiceSet") return false;
-    const choices = rule.choices;
-    if (typeof choices === "string") return true;
-    if (choices && typeof choices === "object" && !Array.isArray(choices)) {
-      if (choices.ownedItems || choices.attacks || choices.unarmedAttacks) return true;
-      return Array.isArray(choices.filter) && choices.filter.some((x) => typeof x === "string" && !/^(item|parent):/.test(x));
-    }
-    return false;
-  });
+  return (entry.data?.system?.rules ?? []).some(ruleDependsOnActor);
+}
+
+const SELECTION_GRANT = /^\{item\|flags\.(?:system|pf2e)\.rulesSelections\.([^}]+)\}$/;
+
+/** Copy a fixed ChoiceSet answer onto the GrantItem that reads that flag, so PF2e grants the child without a prompt. */
+export function stampGrantPreselect(rules) {
+  if (!Array.isArray(rules)) return;
+  const selected = new Map();
+  for (const rule of rules) {
+    if (rule?.key !== "ChoiceSet" || rule.selection == null || ruleDependsOnActor(rule) || !rule.flag) continue;
+    selected.set(rule.flag, rule.selection);
+  }
+  for (const rule of rules) {
+    if (rule?.key !== "GrantItem" || ruleDependsOnActor(rule)) continue;
+    const flag = String(rule.uuid ?? "").match(SELECTION_GRANT)?.[1];
+    if (!flag || !selected.has(flag) || rule.preselectChoices?.[flag] != null) continue;
+    rule.preselectChoices = { ...(rule.preselectChoices ?? {}), [flag]: selected.get(flag) };
+  }
 }
 
 /**
@@ -1091,5 +1115,110 @@ export async function importCharacter(exp, { host, matchCatalog = null, onStep =
     whisper: [game.user.id],
     content: `<h3>WG import: ${esc(plan.name)}</h3><p>${matched.length - misses.length} matched, ${misses.length} created as homebrew or missed.</p>${misses.length ? `<ul>${misses.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${notes.length ? `<p>Choices:</p><ul>${notes.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${p.ctx.unresolved.length ? `<p>Unresolved choices:</p><ul>${p.ctx.unresolved.map((u) => `<li>${esc(u.owner)}${u.flag ? ` [${esc(u.flag)}]` : ""}: ${esc(u.reason)}</li>`).join("")}</ul>` : ""}${p.warnings.length ? `<p><strong>Warnings:</strong></p><ul>${p.warnings.map((w) => `<li>${esc(w)}</li>`).join("")}</ul>` : ""}${duplicateHtml}${formulasHtml(matched, plan)}${customItemsHtml(customReports(matched))}${parityResult ? parityHtml(plan.name, parityResult) : ""}${coverageHtml(p.coverage)}`,
   });
-  return { actor, customItems: customReports(matched), misses, notes, warnings: p.warnings, unresolved: p.ctx.unresolved, coverage: p.coverage, matched: matched.length - misses.length, parity: parityResult };
+  const digest = buildImportDigest(p, { parity: parityResult, duplicates: duplicateDiagnostics });
+  await attachImportDigest(actor, digest);
+  return { actor, customItems: customReports(matched), misses, notes, warnings: p.warnings, unresolved: p.ctx.unresolved, coverage: p.coverage, matched: matched.length - misses.length, parity: parityResult, digest };
+}
+
+const DIGEST_START = "<!-- wgi-import-digest -->";
+const DIGEST_END = "<!-- /wgi-import-digest -->";
+const DIGEST_CAP = 12;
+
+function digestLine(u) {
+  return `${u.owner}${u.flag ? ` [${u.flag}]` : ""}: ${u.reason}`;
+}
+
+/** Four buckets for the actor note: clean results, things to verify, follow-up work, and open gaps. */
+export function buildImportDigest(p, { parity = null, duplicates = [] } = {}) {
+  const perfect = [];
+  const check = [];
+  const todo = [];
+  const unresolved = [];
+  const entries = p.matched ?? [];
+  const applied = entries.filter((e) => e.match && !e.unresolved && !e.error && e.kind !== "formula");
+  if (applied.length) perfect.push(`${applied.length} compendium entries applied.`);
+  const choices = (p.notes ?? []).filter((n) => /^choice /.test(n));
+  if (choices.length) perfect.push(`${choices.length} choices filled from Wanderer's Guide.`);
+  for (const e of entries.filter((e) => e.coveredBy)) perfect.push(`${e.name} is included in ${e.coveredBy}.`);
+  const formulas = entries.filter((e) => e.kind === "formula" && e.match);
+  if (formulas.length) perfect.push(`${formulas.length} formulas added to the crafting list.`);
+  for (const r of customReports(entries)) {
+    const rough = (r.notes?.length ?? 0) > 0 || (r.traits?.unresolved?.length ?? 0) > 0 || (r.ops ?? []).some((o) => o.status && o.status !== "covered");
+    if (rough) check.push(`Custom item ${r.name} needs a look at its rules.`);
+    else perfect.push(`Custom item ${r.name} imported.`);
+  }
+
+  for (const n of p.notes ?? []) if (/^HP:/.test(n)) check.push(n);
+  for (const w of p.warnings ?? []) check.push(w);
+  for (const d of duplicates) if (!d.expectedGrantPair) check.push(`Unexpected duplicate: ${d.key}.`);
+  if (parity && !parity.ok) {
+    for (const r of parity.failed ?? []) check.push(`Parity ${r.check}: Wanderer's Guide has ${formatDigestValue(r.wg)}; Foundry has ${formatDigestValue(r.foundry)}.`);
+  }
+  const leftovers = (p.coverage?.rows ?? []).filter((r) => r.status === "leftover-preserved");
+  if (leftovers.length) check.push(`${leftovers.length} source values were stored on the actor and not applied as rules.`);
+
+  for (const e of entries) if (e.kind === "formula" && !e.match) todo.push(`Add the formula ${e.name} on the crafting tab.`);
+  const asks = (p.ctx?.unresolved ?? []).filter((u) => /will ask|no options|left unresolved|no explicit/i.test(u.reason ?? ""));
+  if (asks.length) todo.push(`Finish ${asks.length} choice${asks.length === 1 ? "" : "s"} that Wanderer's Guide did not answer.`);
+
+  const seen = new Set();
+  for (const u of p.ctx?.unresolved ?? []) {
+    const line = digestLine(u);
+    if (seen.has(line)) continue;
+    seen.add(line);
+    unresolved.push(line);
+  }
+  for (const e of entries) {
+    if (!e.unresolved || e.kind === "formula") continue;
+    const line = `${e.kind}: ${e.name}: ${e.unresolved}`;
+    if (seen.has(line)) continue;
+    seen.add(line);
+    unresolved.push(line);
+  }
+  const dropped = (p.coverage?.rows ?? []).filter((r) => r.status === "dropped");
+  if (dropped.length) unresolved.push(`${dropped.length} source paths were dropped and not imported.`);
+
+  const fill = (list, empty) => (list.length ? list : [empty]);
+  return {
+    perfect: fill(perfect, "Nothing applied cleanly."),
+    check: fill(check, "Nothing flagged for review."),
+    todo: fill(todo, "No follow-up actions."),
+    unresolved: fill(unresolved, "Nothing left unresolved."),
+  };
+}
+
+function formatDigestValue(v) {
+  if (v == null || typeof v === "number" || typeof v === "string") return String(v);
+  try { return JSON.stringify(v); } catch { return String(v); }
+}
+
+export function digestHtml(digest) {
+  const section = (title, items) => {
+    const shown = items.slice(0, DIGEST_CAP);
+    const more = items.length - shown.length;
+    return `<h3>${esc(title)}</h3><ul>${shown.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>${more > 0 ? `<p>And ${more} more.</p>` : ""}`;
+  };
+  return `<h2>Wanderer's Guide import</h2>${section("Went perfectly", digest.perfect)}${section("Check these", digest.check)}${section("Still to do", digest.todo)}${section("Unresolved", digest.unresolved)}`;
+}
+
+/** Keep any biography the player already wrote; replace only this import's block. */
+export function mergeDigestNotes(existing, html) {
+  const block = `${DIGEST_START}${html}${DIGEST_END}`;
+  const text = typeof existing === "string" ? existing : String(existing?.value ?? "");
+  const re = new RegExp(`${DIGEST_START}[\\s\\S]*?${DIGEST_END}`);
+  if (re.test(text)) return text.replace(re, block);
+  const trimmed = text.trim();
+  return trimmed ? `${trimmed}\n${block}` : block;
+}
+
+async function attachImportDigest(actor, digest) {
+  if (!actor) return;
+  const html = digestHtml(digest);
+  const current = actor.system?.details?.biography?.campaignNotes ?? "";
+  const next = mergeDigestNotes(current, html);
+  const patch = { "system.details.biography.campaignNotes": next };
+  await actor.update(patch);
+  const stored = { ...digest, at: new Date().toISOString() };
+  if (typeof actor.setFlag === "function") await actor.setFlag(MODULE_ID, "importDigest", stored);
+  else await actor.update({ [`flags.${MODULE_ID}.importDigest`]: stored });
 }

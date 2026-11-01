@@ -2,7 +2,7 @@
   "id": "foundry-wanderersguide-import",
   "title": "Wanderer's Guide Import",
   "description": "Import Pathfinder 2e characters from Wanderer's Guide (WGUI) into the current world using a Wanderer's Guide API key.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "authors": [{ "name": "Edmund Landgraf" }],
   "compatibility": { "minimum": "12", "verified": "14" },
   "relationships": {
