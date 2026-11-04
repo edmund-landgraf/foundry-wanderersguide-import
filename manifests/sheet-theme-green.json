@@ -4,6 +4,5 @@
   "description": "Recolors the PF2e character sheet from crimson to dark green.",
   "version": "1.0.0",
   "url": "https://github.com/edmund-landgraf/foundry-wanderersguide-import",
-  "manifest": "https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/main/manifests/sheet-theme-green.json",
-  "download": "https://github.com/edmund-landgraf/foundry-wanderersguide-import/archive/refs/heads/main.zip"
+  "manifest": "https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/main/manifests/sheet-theme-green.json"
 }

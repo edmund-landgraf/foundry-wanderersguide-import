@@ -4,6 +4,5 @@
   "description": "Search a PF2 creature site and import creatures, especially custom creatures, as Pathfinder 2e NPC actors.",
   "version": "0.1.0",
   "url": "https://github.com/edmund-landgraf/foundry-wanderersguide-import",
-  "manifest": "https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/main/manifests/foundry-pf2-import.json",
-  "download": "https://github.com/edmund-landgraf/foundry-wanderersguide-import/archive/refs/heads/main.zip"
+  "manifest": "https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/main/manifests/foundry-pf2-import.json"
 }
