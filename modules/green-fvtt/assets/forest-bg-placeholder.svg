@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e6b3d"/><stop offset="0.6" stop-color="#163a20"/><stop offset="1" stop-color="#0a1c0f"/></linearGradient></defs>
+  <rect width="1920" height="1080" fill="url(#g)"/>
+  <g fill="#0e2614" opacity="0.8"><polygon points="200,1080 320,640 440,1080"/><polygon points="520,1080 680,520 840,1080"/><polygon points="1100,1080 1260,580 1420,1080"/><polygon points="1500,1080 1640,680 1780,1080"/></g>
+  <text x="960" y="540" font-family="serif" font-size="72" fill="#b9d8a8" text-anchor="middle">forest placeholder</text>
+  <text x="960" y="610" font-family="sans-serif" font-size="28" fill="#b9d8a8" text-anchor="middle">drop assets/forest-bg.webp to replace</text>
+</svg>
