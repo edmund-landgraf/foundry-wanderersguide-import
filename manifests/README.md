@@ -1,8 +1,8 @@
 # Hosted update manifests
 
-Each manifest here is the module.json of a module's latest release, with a `download` link to that release's `module.zip` in this repo. Foundry uses them to install and update: amba-bridge, foundry-pf2-import, green-fvtt and sheet-theme-green.
+Each manifest here is the module.json of a module's latest release, with a `download` link to that release's `module.zip` in this repo. Foundry uses them to install and update: amba-bridge, foundry-pf2-import, green-fvtt, sheet-theme-green, blue-fvtt and sheet-theme-dark-blue.
 
-Sources for green-fvtt and sheet-theme-green live under `modules/` in this repo; the others live in their own (private) repos.
+Sources for green-fvtt, sheet-theme-green, blue-fvtt and sheet-theme-dark-blue live under `modules/` in this repo; the others live in their own (private) repos.
 
 ## Releasing a module (`tools/release-module.ps1`)
 
@@ -28,3 +28,11 @@ The module's own `module.json` (in its source repo) must already carry those `ma
 ```
 
 Only runtime files go in the zip by default (`module.json`, `LICENSE*`, `scripts/`, `styles/`, `lang/`, `templates/`, `packs/`, `assets/`, `icons/`, `images/`); docs, tests and fixtures stay out. Override with `-Include`. Publish order: publish the release first, then merge the updated hosted manifest, so the `download` link exists before Foundry sees it.
+
+### Sheet themes (CSS at the module root)
+
+`sheet-theme-green` and `sheet-theme-dark-blue` keep their stylesheet at the module root, which the default `-Include` list does not cover. Release them from inside a PowerShell session (array arguments do not pass through `powershell -File`):
+
+```powershell
+& .\tools\release-module.ps1 -SourceDir modules\sheet-theme-dark-blue -ModuleId sheet-theme-dark-blue -Include 'module.json','*.css'
+```
