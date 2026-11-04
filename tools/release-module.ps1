@@ -141,8 +141,8 @@ if (-not $Publish) {
   return
 }
 
-& gh release view $tag -R $HostRepo *> $null
-if ($LASTEXITCODE -eq 0) { throw "Release $tag already exists on $HostRepo; bump the version instead of overwriting." }
+$ErrorActionPreference = 'Continue'; & gh release view $tag -R $HostRepo 2>&1 | Out-Null; $exists = ($LASTEXITCODE -eq 0); $ErrorActionPreference = 'Stop'
+if ($exists) { throw "Release $tag already exists on $HostRepo; bump the version instead of overwriting." }
 & gh release create $tag $zipPath (Join-Path $outRoot 'module.json') -R $HostRepo --title "$($mj.title) $($mj.version)" --notes "Foundry module $ModuleId $($mj.version). Manifest: $expManifest"
 if ($LASTEXITCODE -ne 0) { throw 'gh release create failed.' }
 [IO.File]::WriteAllText($hostedTarget, $hosted, $utf8)
