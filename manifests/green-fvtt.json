@@ -1,8 +1,24 @@
 {
   "id": "green-fvtt",
   "title": "Green FVTT",
-  "description": "Replaces Foundry's default red look with a green forest background and a green d20 pause icon.",
+  "description": "Replaces Foundry's default red look with a green forest background and a green d20 pause icon. Optional dark-green PF2e sheet theme.",
   "version": "0.1.0",
+  "authors": [
+    {
+      "name": "Edmund Landgraf"
+    }
+  ],
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14"
+  },
+  "esmodules": [
+    "scripts/green-fvtt.js"
+  ],
+  "styles": [
+    "styles/green-fvtt.css"
+  ],
   "url": "https://github.com/edmund-landgraf/foundry-wanderersguide-import",
-  "manifest": "https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/main/manifests/green-fvtt.json"
+  "manifest": "https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/main/manifests/green-fvtt.json",
+  "download": "https://github.com/edmund-landgraf/foundry-wanderersguide-import/releases/download/green-fvtt-v0.1.0/module.zip"
 }

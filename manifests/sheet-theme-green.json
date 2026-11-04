@@ -3,6 +3,27 @@
   "title": "Sheet Theme: Dark Green",
   "description": "Recolors the PF2e character sheet from crimson to dark green.",
   "version": "1.0.0",
+  "authors": [
+    {
+      "name": "Edmund Landgraf"
+    }
+  ],
+  "compatibility": {
+    "minimum": "13",
+    "verified": "14"
+  },
+  "relationships": {
+    "systems": [
+      {
+        "id": "pf2e",
+        "type": "system"
+      }
+    ]
+  },
+  "styles": [
+    "green.css"
+  ],
   "url": "https://github.com/edmund-landgraf/foundry-wanderersguide-import",
-  "manifest": "https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/main/manifests/sheet-theme-green.json"
+  "manifest": "https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/main/manifests/sheet-theme-green.json",
+  "download": "https://github.com/edmund-landgraf/foundry-wanderersguide-import/releases/download/sheet-theme-green-v1.0.0/module.zip"
 }
