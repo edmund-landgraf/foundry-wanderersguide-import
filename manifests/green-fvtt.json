@@ -4,6 +4,5 @@
   "description": "Replaces Foundry's default red look with a green forest background and a green d20 pause icon.",
   "version": "0.1.0",
   "url": "https://github.com/edmund-landgraf/foundry-wanderersguide-import",
-  "manifest": "https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/main/manifests/green-fvtt.json",
-  "download": "https://github.com/edmund-landgraf/foundry-wanderersguide-import/archive/refs/heads/main.zip"
+  "manifest": "https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/main/manifests/green-fvtt.json"
 }
