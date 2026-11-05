@@ -128,6 +128,15 @@ The database can decide that an action is eligible for review; Foundry remains t
 - `038_pf2e_catalog_match_fields.sql`: extra match columns on `pf2e_catalog_entries`.
 - `039_apply_order.sql`: mirror of the live apply order.
 - `040_match_catalog_snapshot_aliases_check.sql`: requires `payload.aliases` to be a JSON array before the row-count check (folded from the removed 035).
+- `041_pf2e_catalog_item_kind_check.sql`: re-asserts the catalog `item_kind` check, including the kinds 023 used to allow. Does not create a second catalog.
+- `042_reseed_class_keywords_8_6_1.sql`: re-points class keywords at the 8.6.1 catalog.
+- `043_wg_rename_aliases.sql`: pattern-derived rename aliases whose targets exist in the catalog.
+- `044_semantic_proposed_and_alias_audit.sql`: semantic aliases stay proposed; missing 8.6.1 targets are retired.
+- `045_pf2e_grant_rules_8_6_1.sql`: PF2e GrantItem rules from 8.6.1.
+- `046_wg_catalog_matches_unresolved.sql`: rebuilds ability-block catalog matches, including explicit unresolved rows.
+- `047_drop_unused_pf2e_uuid_columns.sql`: drops unused `pf2e_uuid` columns.
+- `048_wg_name_normalized_proposals.sql`: name-normalized match proposals and source-book scope.
+- `049_wg_all_tables_catalog_matches.sql`: catalog matches for the other WG content tables.
 
 ## Rename and plan functions
 
