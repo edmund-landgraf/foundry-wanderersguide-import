@@ -3,7 +3,8 @@ import { MODULE_ID, HOMEBREW_FOLDER } from "./constants.js";
 import { customItemData, customItemsHtml } from "./custom-items.js";
 import { mergeFormulas, assignContainers, formulasHtml } from "./formulas.js";
 import { auditImportCoverage, leftoverValues, CLASS_SUPPORT_NOTE } from "./coverage.js";
-import { buildPlan, matchEntries, missReport, sluggify, resolveImageUrl, FALLBACK_IMG, wgChoiceHints, matchChoice, choiceNameKeys, defaultFlag, spellcastingPlan, spellSlotWarnings, preparedSlotUpdates, entryKeyFor, diffPlan, parityCheck, WG_CANONICAL_ALIASES } from "./mapping.js";
+import { unwrapCatalog, CATALOG_NOT_LOADED } from "./match-catalog.js";
+import { buildPlan, matchEntries, missReport, sluggify, resolveImageUrl, FALLBACK_IMG, wgChoiceHints, matchChoice, choiceNameKeys, defaultFlag, spellcastingPlan, spellSlotWarnings, preparedSlotUpdates, entryKeyFor, diffPlan, parityCheck, normalizeMatchCatalog } from "./mapping.js";
 
 const PACK_TYPES = new Set(["ancestry", "heritage", "background", "class", "feat", "spell", "weapon", "armor", "shield", "equipment", "consumable", "treasure", "backpack", "kit"]);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -616,10 +617,9 @@ export function stampGrantPreselect(rules) {
  * current run, using only the reviewed canonical aliases. No name similarity
  * or first-candidate fallback is allowed.
  */
-export function runtimeGrantMatch(entry, grants) {
-  const aliases = WG_CANONICAL_ALIASES
-    .filter(([kind, source]) => kind === entry.kind && sluggify(source) === entry.slug)
-    .map(([, , target]) => sluggify(target));
+export function runtimeGrantMatch(entry, grants, catalog = null) {
+  const cat = normalizeMatchCatalog(catalog);
+  const aliases = [...(cat.aliases.get(`${entry.packType ?? entry.kind}:${entry.slug}`) ?? []), ...(cat.aliases.get(`*:${entry.slug}`) ?? [])].map((a) => a.target);
   if (!aliases.length) return null;
   const hits = grants.filter(({ item }) => aliases.includes(sluggify(item.name)));
   return hits.length === 1 ? hits[0] : null;
@@ -653,10 +653,10 @@ function selectionMatchesHint(value, hint) {
   return false;
 }
 
-export function reconcileRuntimeGrants(entries, grants, unresolved = null) {
+export function reconcileRuntimeGrants(entries, grants, unresolved = null, catalog = null) {
   for (const e of entries) {
     if (e.custom || e.coveredBy || !e.unresolved || e.match) continue;
-    const hit = runtimeGrantMatch(e, grants) ?? exactSlugGrant(e, grants);
+    const hit = runtimeGrantMatch(e, grants, catalog) ?? exactSlugGrant(e, grants);
     if (!hit) continue;
     delete e.unresolved;
     e.coveredBy = hit.item.name;
@@ -761,7 +761,8 @@ function forcedFields(plan, host, actor, existing) {
 export async function planImport(exp, { host, matchCatalog = null }) {
   const plan = buildPlan(exp);
   const index = await compendiumIndex();
-  const matched = matchEntries(plan.entries, index, { catalog: matchCatalog });
+  const catalogInfo = unwrapCatalog(matchCatalog);
+  const matched = matchEntries(plan.entries, index, { catalog: catalogInfo.catalog });
   for (const entry of matched) if (entry.kind === "class") entry.keyAbility = plan.keyAbility;
   coverFeatureGaps(matched, findActor(plan, host) ?? null, index);
   const misses = missReport(matched);
@@ -796,7 +797,7 @@ export async function planImport(exp, { host, matchCatalog = null }) {
     // are handled separately by custom-items.js; everything else remains
     // visible as unresolved for explicit review.
     if (!e.match && !e.custom) {
-      e.unresolved = "no unambiguous PF2e compendium match; left unresolved (no homebrew copy created)";
+      e.unresolved = `no unambiguous PF2e compendium match; left unresolved (no homebrew copy created)${catalogInfo.status === "loaded" ? "" : `; ${CATALOG_NOT_LOADED}`}`;
       ctx.unresolved.push({ owner: `${e.kind}: ${e.name}`, flag: null, reason: e.unresolved });
       continue;
     }
@@ -810,11 +811,11 @@ export async function planImport(exp, { host, matchCatalog = null }) {
     const feat = matched.find((x) => x.kind === "feat" && x.wgContentId === o.raw?.data?.abilityBlockId && x.data);
     if (feat) feat.data.flags[MODULE_ID] = { ...feat.data.flags[MODULE_ID], givenByCustomItem: { wgItemId: e.wgContentId, name: e.name } };
   }
-  const warnings = [...spellSlotWarnings(exp, matched), ...assignContainers(matched, () => foundry.utils.randomID())];
+  const warnings = [...catalogInfo.warnings, ...spellSlotWarnings(exp, matched), ...assignContainers(matched, () => foundry.utils.randomID())];
   const diff = diffPlan(plan, summarizeActor(actor));
   const homebrew = matched.filter((e) => !e.match && !e.custom && e.data);
   const coverage = auditImportCoverage(exp, { ...plan, entries: matched }, { applied: false, grantedSlugs: grantedSlugsOf(actor), choiceUsed: ctx.used, slug: sluggify });
-  return { coverage, exp, plan, host, index, ctx, matched, misses, notes, problems, warnings, actor, entryData, diff, homebrew, valid: problems.length === 0 };
+  return { coverage, catalog: { status: catalogInfo.status, header: catalogInfo.header }, matchCatalog: normalizeMatchCatalog(catalogInfo.catalog), exp, plan, host, index, ctx, matched, misses, notes, problems, warnings, actor, entryData, diff, homebrew, valid: problems.length === 0 };
 }
 
 function customReports(matched) {
@@ -930,7 +931,7 @@ async function applyImport(p, { onStep, parity, failAfter }) {
       // Items with GrantItem rules go first so their grants exist before the rest are checked
       // (e.g. Web Weaver grants Specialty Crafting, which WG also lists as a feat).
       const grants = (e) => (e.data.system?.rules ?? []).some((r) => r?.key === "GrantItem");
-      reconcileRuntimeGrants(matched, explicitGrants(actor.items, old), p.ctx.unresolved);
+      reconcileRuntimeGrants(matched, explicitGrants(actor.items, old), p.ctx.unresolved, p.matchCatalog);
       const todo = dependencyOrder(matched.filter((x) => x.kind === kind && x.data && !x.coveredBy));
       for (const pass of [todo.filter(grants), todo.filter((e) => !grants(e))]) {
         const batch = [];
@@ -942,7 +943,7 @@ async function applyImport(p, { onStep, parity, failAfter }) {
           const entries = batchEntries.splice(0);
           const made = await createItems(docs, kind === "equipment" ? { keepId: true } : {});
           made.forEach((doc, i) => { if (entries[i]) entries[i].itemId = doc.id; });
-          reconcileRuntimeGrants(matched, explicitGrants(actor.items, old), p.ctx.unresolved);
+          reconcileRuntimeGrants(matched, explicitGrants(actor.items, old), p.ctx.unresolved, p.matchCatalog);
         };
         for (const e of pass) {
           // Dedupe only against items PF2e explicitly granted from something
