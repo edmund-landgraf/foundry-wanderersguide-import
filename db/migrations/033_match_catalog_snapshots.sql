@@ -1,8 +1,8 @@
 -- 033: Versioned match-catalog snapshots. db/tools/export-match-catalog.mjs inserts one row per export
 -- and writes the same payload to a git-ignored file (data/match-catalog.json) that the module loads.
 -- The snapshot is NOT committed to the repo (decision 2026-10-28).
--- Numbering: 033 sits above the 024-032 range used by codex/seed-rule-registry and #84
--- (db/wgi-rules-keyword-fixes, up to 031). Re-check for collisions before merging either branch.
+-- Numbering: this is the snapshot table. The duplicate 035 on codex/seed-rule-registry
+-- was removed; its stricter aliases-array check is 040. db/wgi-rules-keyword-fixes follows at 041-049.
 BEGIN;
 
 CREATE TABLE IF NOT EXISTS match_catalog_snapshots (

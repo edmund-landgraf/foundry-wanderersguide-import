@@ -104,6 +104,30 @@ The database can decide that an action is eligible for review; Foundry remains t
 - `007_create_import_log_summary.sql`: best-log summaries and external-file references.
 - `008_create_import_gap_rollup.sql`: best-log gaps, unresolved choices, and warnings by character and feature.
 - `009_class_rename_and_plan_batches.sql`: class-scoped renames, grant provenance, and dependency batches.
+- `010_seed_registry_lookup_rows.sql`: class identity lookups, shared selection policies, proposed spell-source rows, and narrow registry coverage cases.
+- `011_add_lightslayer_oath_mapping.sql`: maps WG Lightslayer Oath to PF2e Oath of the Slayer.
+- `012_create_pf2e_class_keywords.sql`: canonical PF2e class keyword catalog.
+- `013_create_wg_source_terms.sql`: provenance-preserving snapshot of Wanderer's Guide keyword rows.
+- `014_create_wg_pf2e_keyword_matches.sql`: evidence-backed matches over the WG keyword snapshot.
+- `015_add_ranger_animal_mappings.sql`: Ranger animal features mapped to separate PF2e items.
+- `016_normalize_wg_rule_projection.sql`: indexed projection over `wg_keyword_snapshot`.
+- `017_class_feature_mappings.sql`: class-feature mappings that are not exact names.
+- `018_feat_mappings.sql`: exact WG to PF2e feat mappings.
+- `020_other_pf2e_mappings.sql`: other exact WG to PF2e mappings from the local snapshot and packs.
+- `021_create_pf2e_spell_keywords.sql`: PF2e spell domain copied from the local packs.
+- `022_match_wg_spells.sql`: exact WG spell matches against that spell domain.
+- `023_mapping_domain_inventory.sql`: mapping work queue by source volume.
+- `024_create_wg_source_entity_snapshot.sql`: preserves non-keyword WG entities and their native relationship inventory for offline matching.
+- `025_seed_exact_wg_class_sources.sql`: records exact WG class IDs against the 29 PF2e class identities; unmatched WG class rows remain unresolved.
+- `026_create_pf2e_catalog_registry.sql`: `pf2e_catalog_entries`, `wg_pf2e_catalog_matches`, and related indexes.
+- `027_seed_pf2e_catalog_8_6_1.sql`: PF2e 8.6.1 catalog rows. This is the catalog later migrations extend; they do not create a second one.
+- `028_build_wg_pf2e_catalog_matches.sql`: exact-name and active-alias resolution, plus the `wg_pf2e_unresolved` view.
+- `033_match_catalog_snapshots.sql`: versioned match-catalog snapshots consumed by the Foundry module.
+- `036_seed_pf2e_bestiary_headers.sql`: PF2e 8.6.1 NPC compendium headers.
+- `037_seed_pf2e_pack_headers.sql`: PF2e 8.6.1 pack headers.
+- `038_pf2e_catalog_match_fields.sql`: extra match columns on `pf2e_catalog_entries`.
+- `039_apply_order.sql`: mirror of the live apply order.
+- `040_match_catalog_snapshot_aliases_check.sql`: requires `payload.aliases` to be a JSON array before the row-count check (folded from the removed 035).
 
 ## Rename and plan functions
 
