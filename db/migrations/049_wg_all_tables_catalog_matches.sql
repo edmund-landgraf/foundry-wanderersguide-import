@@ -1,12 +1,12 @@
--- 031: Match the other WG content tables against the full PF2e 8.6.1 catalog, and propose
--- WG-only rows as out of scope ("no PF2e item"). Run after 023 (all packs), 028 and 030.
--- Rules are the 028/030 rules, applied per WG table with a fixed catalog kind (no cross-kind fallback):
+-- 049: Match the other WG content tables against the full PF2e 8.6.1 catalog, and propose
+-- WG-only rows as out of scope ("no PF2e item"). Run after 027 (all packs), 046 and 048.
+-- Rules are the 046/048 rules, applied per WG table with a fixed catalog kind (no cross-kind fallback):
 --   spell -> spell, item -> equipment, class -> class, ancestry -> ancestry, background -> background,
 --   versatile_heritage -> heritage.
 --   exact (case-insensitive name): 1 candidate => 'active', >1 => 'ambiguous' (no pick), 0 => 'unresolved'.
---   archetype -> its dedication feat: inherits the 028 result of the WG ability_block named by
+--   archetype -> its dedication feat: inherits the 046 result of the WG ability_block named by
 --   archetype.dedication_feat_id (no name guessing). No dedication feat row => 'unresolved'.
---   paren-strip (030 rule) for rows with no exact candidate => wg_pf2e_name_proposals only (review).
+--   paren-strip (048 rule) for rows with no exact candidate => wg_pf2e_name_proposals only (review).
 -- WG-only scope proposals are never final: wg_scope_proposals rows are status 'proposed' for a human.
 -- Derived rows are rebuilt each run (idempotent).
 BEGIN;
@@ -50,7 +50,7 @@ WHERE a.source_table = 'archetype';
 INSERT INTO wg_pf2e_name_proposals (source_table, entry_id, pf2e_name, wg_id, wg_name, rule, status, candidate_count, evidence_ref)
 SELECT c.source_table, c.entry_id, c.pf2e_name, c.wg_id, c.wg_name, 'paren-strip',
        CASE WHEN c.n = 1 THEN 'proposed' ELSE 'ambiguous' END, c.n,
-       'wg ' || c.source_table || '#' || c.wg_id || ' vs pf2e entry#' || c.entry_id || ' [031 paren-strip ' || c.kind || ']'
+       'wg ' || c.source_table || '#' || c.wg_id || ' vs pf2e entry#' || c.entry_id || ' [049 paren-strip ' || c.kind || ']'
 FROM (
   SELECT x.source_table, x.wg_id, x.wg_name, x.kind, e.entry_id, e.pf2e_name,
          count(*) OVER (PARTITION BY x.source_table, x.wg_id) AS n

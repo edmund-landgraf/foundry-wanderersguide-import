@@ -1,7 +1,7 @@
--- 030: Name-normalized WG <-> PF2e 8.6.1 match PROPOSALS and PF2e source-book scope.
+-- 048: Name-normalized WG <-> PF2e 8.6.1 match PROPOSALS and PF2e source-book scope.
 -- Nothing here creates a final association. Every row in wg_pf2e_name_proposals is
 -- 'proposed' (one candidate left) or 'ambiguous' (several left) and must go through
--- human review (see docs/design/human-matching-app.md, proposed 032_human_matching).
+-- human review (see docs/design/human-matching-app.md, proposed 050_human_matching).
 -- Rules:
 --   paren-strip     : trailing parentheticals are stripped on either side ("(Alchemist)",
 --                     "(legacy)", "(Monk)", "(Paragon)", "(Naari)", ...) and names compared.
@@ -10,10 +10,10 @@
 -- "legacy") is not among the PF2e entry's traits/tags are dropped; then the candidates with
 -- the largest overlap of WG trait names/tags with PF2e traits/tags are kept; a non-legacy
 -- PF2e entry keeps non-legacy WG rows when any exist. Anything still >1 is 'ambiguous'.
--- Scope: pf2e_catalog_entries.pf2e_source_book (filled by 023 from system.publication.title)
+-- Scope: pf2e_catalog_entries.pf2e_source_book (filled by 027 from system.publication.title)
 -- is compared with WG content_source names. Books WG lacks (absent, or present with no
 -- ability blocks) are 'out-of-scope', not 'unmatched'. override_scope lets a human fix it.
--- Derived tables are rebuilt each run (idempotent). Run after 028.
+-- Derived tables are rebuilt each run (idempotent). Run after 046.
 -- Requires WG content_source rows in wg_keyword_snapshot (source_table='content_source').
 BEGIN;
 
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS wg_pf2e_name_proposals (
   evidence_ref text,
   UNIQUE (entry_id, wg_id)
 );
--- 031 adds proposals for other WG tables; wg_id is only unique within its table.
+-- 049 adds proposals for other WG tables; wg_id is only unique within its table.
 ALTER TABLE wg_pf2e_name_proposals ADD COLUMN IF NOT EXISTS source_table text;
 UPDATE wg_pf2e_name_proposals SET source_table = 'ability_block' WHERE source_table IS NULL;
 ALTER TABLE wg_pf2e_name_proposals ALTER COLUMN source_table SET NOT NULL;
@@ -142,7 +142,7 @@ SELECT * FROM cnt;
 INSERT INTO wg_pf2e_name_proposals (source_table, entry_id, pf2e_name, wg_id, wg_name, rule, status, candidate_count, disambiguated_by, evidence_ref)
 SELECT 'ability_block', entry_id, pf2e_name, wg_id, wg_name, rule, CASE WHEN n = 1 THEN 'proposed' ELSE 'ambiguous' END, n,
   CASE WHEN n0 > n THEN concat_ws(' ', CASE WHEN mo > 0 THEN 'trait/tag overlap=' || mo END, 'narrowed ' || n0 || '->' || n) END,
-  'wg ability_block#' || wg_id || ' vs pf2e entry#' || entry_id || ' [030 ' || rule || ']'
+  'wg ability_block#' || wg_id || ' vs pf2e entry#' || entry_id || ' [048 ' || rule || ']'
 FROM _r;
 
 -- Reporting view: PF2e entries with no WG match of any kind, split by scope.

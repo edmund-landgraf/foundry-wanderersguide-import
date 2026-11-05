@@ -20,9 +20,9 @@ When there is nothing to match or review, the app does nothing and shows only:
 
 | Source | Used for |
 |---|---|
-| `wg_pf2e_catalog_matches` (migration 028): `wg_id, wg_name, wg_type, entry_id, pf2e_name, match_strategy, status, candidate_count` | Queue rows where `status IN ('ambiguous','unresolved')` (same filter as the `wg_pf2e_unresolved` view) |
+| `wg_pf2e_catalog_matches` (migration 046): `wg_id, wg_name, wg_type, entry_id, pf2e_name, match_strategy, status, candidate_count` | Queue rows where `status IN ('ambiguous','unresolved')` (same filter as the `wg_pf2e_unresolved` view) |
 | `wg_keyword_snapshot.row_data` (`source_table='ability_block'`) | WG side: name, type, level, traits, `description`, `prerequisites`, `content_source_id` |
-| `pf2e_catalog_entries` (023): `entry_id, item_kind, foundry_type, pf2e_name, pf2e_slug, compendium_collection, source_path, category, traits, level, class_id` | Candidates and search |
+| `pf2e_catalog_entries` (026): `entry_id, item_kind, foundry_type, pf2e_name, pf2e_slug, compendium_collection, source_path, category, traits, level, class_id` | Candidates and search |
 | `D:\repos\foundryvtt_pf2e\<source_path>` at tag `pf2e-8.6.1` | Description snippet (`system.description.value`, HTML stripped, first ~300 chars), read at runtime. The catalog has no description column. |
 | `compendium_match_aliases` (`status` = proposed/active/retired) | Where approved decisions are written (section 6) |
 
@@ -62,9 +62,9 @@ Rules:
 - Rejected items come back to Match showing earlier rejected picks and their reasons.
 - Suggestions never change anything outside the new tables.
 
-## 5. Data model (proposed migration `032_human_matching.sql`)
+## 5. Data model (proposed migration `050_human_matching.sql`)
 
-> Source of machine suggestions: `030_wg_name_normalized_proposals.sql` fills `wg_pf2e_name_proposals` (status `proposed`/`ambiguous`, never final) and `pf2e_unmatched_entries` (`unmatched` vs `out-of-scope` by PF2e source book). These feed the review queue; they are not associations.
+> Source of machine suggestions: `048_wg_name_normalized_proposals.sql` fills `wg_pf2e_name_proposals` (status `proposed`/`ambiguous`, never final) and `pf2e_unmatched_entries` (`unmatched` vs `out-of-scope` by PF2e source book). These feed the review queue; they are not associations.
 
 No UUIDs. Identity keys, names and slugs only. Every table records who did what and when.
 
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS match_suggestions (
 CREATE UNIQUE INDEX IF NOT EXISTS uq_open_suggestion ON match_suggestions (wg_name) WHERE state = 'suggested' AND kind = 'match';
 CREATE UNIQUE INDEX IF NOT EXISTS uq_open_m2o ON match_suggestions (wg_id, entry_id) WHERE state = 'suggested' AND kind = 'many_to_one';
 
--- Human verdicts on automated matches. Never deletes: a denied match is flagged, and 028 skips it.
+-- Human verdicts on automated matches. Never deletes: a denied match is flagged, and 046 skips it.
 CREATE TABLE IF NOT EXISTS wg_match_verifications (
   wg_id bigint NOT NULL,
   entry_id bigint NOT NULL REFERENCES pf2e_catalog_entries(entry_id),
@@ -202,7 +202,7 @@ automated match (unverified)
          └─ Reject (person B)      ──> back to the many-to-one screen
 ```
 - **Approved confirm:** the match is marked verified and leaves the screen. Nothing else changes.
-- **Approved deny:** a `denied` verification is written. Nothing is deleted. The 028 rebuild skips `(wg_id, entry_id)` pairs with a `denied` verification, so that WG row falls back to `unresolved` (or `ambiguous` if other candidates remain) and reappears in the Match queue. Any alias that produced the match stays in place; if a denied pair came from an alias, the review screen notes it so a person can retire the alias separately.
+- **Approved deny:** a `denied` verification is written. Nothing is deleted. The 046 rebuild skips `(wg_id, entry_id)` pairs with a `denied` verification, so that WG row falls back to `unresolved` (or `ambiguous` if other candidates remain) and reappears in the Match queue. Any alias that produced the match stays in place; if a denied pair came from an alias, the review screen notes it so a person can retire the alias separately.
 - The two-person trigger covers these suggestions too, because they share `match_suggestions`/`match_reviews`.
 
 **Review screen:** many-to-one suggestions show up in the same Review queue, labeled "Many-to-one: confirm" or "Many-to-one: deny", showing the WG row next to the PF2e target.
@@ -263,7 +263,7 @@ Everything happens in one transaction on **Approve**. Suggest and Reject never t
 
 1. Insert the `match_reviews` row (the trigger enforces the two-person rule).
 2. Set the suggestion's `state` to `approved` or `rejected`.
-3. If approved, for `kind='many_to_one'`: insert into `wg_match_verifications` (`confirmed` or `denied`), then rebuild 028 (which skips denied pairs). For `kind='match'`:
+3. If approved, for `kind='many_to_one'`: insert into `wg_match_verifications` (`confirmed` or `denied`), then rebuild 046 (which skips denied pairs). For `kind='match'`:
    - **match:** insert into `compendium_match_aliases`:
      - `source_name` = WG name, `target_name` = `pf2e_name`
      - `source_slug` = `wgi_slugify(wg name)`, `target_slug` = `pf2e_slug`
@@ -273,9 +273,9 @@ Everything happens in one transaction on **Approve**. Suggest and Reject never t
      - `evidence_ref` = 'PF2e 8.6.1: ' || source_path, `notes` = 'human: suggested by X, approved by Y (suggestion N)'
      - `ON CONFLICT DO NOTHING`
    - **no_equivalent:** insert into `wg_no_pf2e_equivalent`.
-4. Re-run the 028 rebuild (or a single-name version of it), so `wg_pf2e_catalog_matches` shows the alias as `alias/active`.
+4. Re-run the 046 rebuild (or a single-name version of it), so `wg_pf2e_catalog_matches` shows the alias as `alias/active`.
 
-Rejection leaves `compendium_match_aliases` and 028 untouched, and the item reappears in the queue.
+Rejection leaves `compendium_match_aliases` and 046 untouched, and the item reappears in the queue.
 
 ## 7. Auth, concurrency, keys
 
@@ -309,7 +309,7 @@ Rejection leaves `compendium_match_aliases` and 028 untouched, and the item reap
 
 - One Node script (`tools/matcher/server.mjs`) using the `pg` driver and Node's built-in `http`, serving one `index.html` with plain JS and no build step.
 - It connects to `wgi_rules` on `localhost:5432` as `appuser`, with the password read from an env var and never logged. The connection string is hard-pinned to database `wgi_rules`, and the server refuses to start if the host isn't local.
-- It never connects to the VPS or any other database. It writes only to the section 5 tables plus `compendium_match_aliases` and the 028 rebuild on approval.
+- It never connects to the VPS or any other database. It writes only to the section 5 tables plus `compendium_match_aliases` and the 046 rebuild on approval.
 - It reads PF2e description snippets from `D:\repos\foundryvtt_pf2e` (tag `pf2e-8.6.1`) by `source_path`.
 - Start it with `node tools/matcher/server.mjs` and open `http://127.0.0.1:8787`.
 
@@ -323,7 +323,7 @@ Rejection leaves `compendium_match_aliases` and 028 untouched, and the item reap
 6. Rejecting returns the item to the queue with the rejection reason shown.
 7. Two browsers can't claim the same item at once, and an abandoned claim frees itself after 10 minutes.
 8. Every target is a `pf2e_catalog_entries` row (8.6.1), and no UUID is stored anywhere.
-9. Many-to-one: each WG row gets its own suggestion; an approved deny never deletes anything, and after the 028 rebuild that row is back in the Match queue; an approved confirm removes the row from the screen; the progress counter goes up.
+9. Many-to-one: each WG row gets its own suggestion; an approved deny never deletes anything, and after the 046 rebuild that row is back in the Match queue; an approved confirm removes the row from the screen; the progress counter goes up.
 10. Every keyboard shortcut in section 7 works.
 
 ## 11. Open questions

@@ -1,6 +1,6 @@
--- 025: Pattern-derived WG -> PF2e 8.6.1 rename aliases.
+-- 043: Pattern-derived WG -> PF2e 8.6.1 rename aliases.
 -- Every alias target must exist in pf2e_catalog_entries (8.6.1); patterns that produce a
--- name 8.6.1 does not have create nothing (the WG row stays unresolved, see 028).
+-- name 8.6.1 does not have create nothing (the WG row stays unresolved, see 046).
 -- Legacy handling: "X (legacy)" is treated as "X" consistently, then the other patterns apply.
 -- Idempotent.
 BEGIN;
@@ -77,7 +77,7 @@ SELECT 'pf2e-remaster',
        CASE r.item_kind WHEN 'classfeature' THEN 'feat' ELSE r.item_kind END,
        r.wg_name, r.pf2e_name, wgi_slugify(r.wg_name), r.pf2e_slug,
        'canonical', 50, 'active', 'PF2e 8.6.1: ' || r.source_path,
-       '[025] rule ' || r.rule_id, r.class_id, 'class-rename'
+       '[043] rule ' || r.rule_id, r.class_id, 'class-rename'
 FROM _ren r
 ON CONFLICT (ruleset_id, item_kind, source_slug, target_slug, COALESCE(class_id, ''::text)) DO NOTHING;
 
@@ -85,7 +85,7 @@ ON CONFLICT (ruleset_id, item_kind, source_slug, target_slug, COALESCE(class_id,
 INSERT INTO wg_pf2e_keyword_matches (source_table, wg_id, wg_name, class_id, pf2e_keyword_id,
   match_strategy, status, evidence_ref, notes)
 SELECT DISTINCT s.source_table, s.wg_id, s.wg_name, k.class_id, k.keyword_id,
-       'alias', 'active', 'PF2e 8.6.1: ' || k.source_path, '[025] rule ' || r.rule_id
+       'alias', 'active', 'PF2e 8.6.1: ' || k.source_path, '[043] rule ' || r.rule_id
 FROM _ren r
 JOIN wg_keyword_snapshot s ON s.source_table = 'ability_block' AND s.wg_name = r.wg_name
 JOIN pf2e_class_keywords k ON lower(k.pf2e_name) = lower(r.pf2e_name) AND k.status = 'active'

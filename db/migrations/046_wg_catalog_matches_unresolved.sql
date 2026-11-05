@@ -1,24 +1,16 @@
--- 028: One resolution row per WG ability_block against the PF2e 8.6.1 catalog.
+-- 046: One resolution row per WG ability_block against the PF2e 8.6.1 catalog.
 -- Order: keyword match (class registry) > exact name > active alias > proposed alias.
 -- More than one candidate after kind preference => 'ambiguous' (no pick is made).
 -- No candidate => an explicit 'unresolved' row (never defaulted).
 -- Derived table: rebuilt on every run, so it is idempotent.
 -- ability_block rows only match feat/classfeature/action/heritage entries, plus ancestry-feature
--- entries for WG physical-feature/sense rows (031 matches the other catalog kinds per WG table).
+-- entries for WG physical-feature/sense rows (049 matches the other catalog kinds per WG table).
 BEGIN;
-CREATE TABLE IF NOT EXISTS wg_pf2e_catalog_matches (
-  match_id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  source_table text NOT NULL,
-  wg_id bigint NOT NULL,
-  wg_name text,
-  wg_type text,
-  entry_id bigint REFERENCES pf2e_catalog_entries(entry_id) ON DELETE CASCADE,
-  pf2e_name text,
-  match_strategy text NOT NULL CHECK (match_strategy IN ('keyword', 'exact', 'alias', 'unresolved')),
-  status text NOT NULL CHECK (status IN ('active', 'proposed', 'ambiguous', 'unresolved')),
-  candidate_count integer NOT NULL,
-  evidence_ref text
-);
+-- 026 already created wg_pf2e_catalog_matches and 028 created wg_pf2e_unresolved.
+-- Add the strategy check from the old 028 file once existing rows (exact/alias/unresolved) satisfy it.
+ALTER TABLE wg_pf2e_catalog_matches DROP CONSTRAINT IF EXISTS wg_pf2e_catalog_matches_match_strategy_check;
+ALTER TABLE wg_pf2e_catalog_matches ADD CONSTRAINT wg_pf2e_catalog_matches_match_strategy_check
+  CHECK (match_strategy IN ('keyword', 'exact', 'alias', 'unresolved'));
 CREATE INDEX IF NOT EXISTS idx_wg_catalog_matches_wg ON wg_pf2e_catalog_matches (source_table, wg_id);
 
 CREATE TEMP TABLE _t ON COMMIT DROP AS
@@ -75,7 +67,8 @@ SELECT 'ability_block', t.wg_id, t.wg_name, t.wg_type, t.entry_id, e.pf2e_name, 
        CASE WHEN e.source_path IS NULL THEN 'no PF2e 8.6.1 entry' ELSE 'PF2e 8.6.1: ' || e.source_path END
 FROM _t t LEFT JOIN pf2e_catalog_entries e USING (entry_id);
 
-CREATE OR REPLACE VIEW wg_pf2e_unresolved AS
+DROP VIEW IF EXISTS wg_pf2e_unresolved;
+CREATE VIEW wg_pf2e_unresolved AS
 SELECT wg_id, wg_name, wg_type, status, candidate_count
 FROM wg_pf2e_catalog_matches WHERE status IN ('unresolved', 'ambiguous');
 COMMIT;

@@ -1,4 +1,4 @@
--- 024: Re-seed pf2e_class_keywords against the PF2e 8.6.1 catalog (023).
+-- 042: Re-seed pf2e_class_keywords against the PF2e 8.6.1 catalog (027).
 -- * source_path/evidence_ref re-pointed at the 8.6.1 pack layout (packs/pf2e/...).
 -- * Names that do not exist in 8.6.1 are retired, and their WG matches are marked
 --   unresolved (never silently kept or guessed).
@@ -28,8 +28,8 @@ WHERE k2.keyword_id = k.keyword_id
 UPDATE pf2e_class_keywords k
 SET status = 'retired',
     notes = concat_ws(' ', NULLIF(k.notes, ''),
-      '[024] Not in PF2e 8.6.1 packs; retired.',
-      (SELECT 'Base name "' || min(e.pf2e_name) || '" exists in 8.6.1; WG rows resolve via catalog matching (028).'
+      '[042] Not in PF2e 8.6.1 packs; retired.',
+      (SELECT 'Base name "' || min(e.pf2e_name) || '" exists in 8.6.1; WG rows resolve via catalog matching (046).'
          FROM pf2e_catalog_entries e
         WHERE lower(e.pf2e_name) = lower(regexp_replace(k.pf2e_name, '\s*\([^)]*\)$', ''))))
 WHERE k.status <> 'retired'
@@ -40,7 +40,7 @@ WHERE k.status <> 'retired'
 -- 2b. WG matches that point at a retired keyword are no longer active.
 UPDATE wg_pf2e_keyword_matches m
 SET status = 'unresolved',
-    notes = concat_ws(' ', NULLIF(m.notes, ''), '[024] PF2e target retired (not in 8.6.1).')
+    notes = concat_ws(' ', NULLIF(m.notes, ''), '[042] PF2e target retired (not in 8.6.1).')
 FROM pf2e_class_keywords k
 WHERE k.keyword_id = m.pf2e_keyword_id AND k.status = 'retired' AND m.status <> 'unresolved';
 
@@ -50,7 +50,7 @@ INSERT INTO pf2e_class_keywords (ruleset_id, class_id, item_kind, pf2e_name, pf2
 SELECT e.ruleset_id, e.class_id,
        CASE WHEN e.compendium_collection = 'pf2e.classfeatures' THEN 'classfeature' ELSE 'feat' END,
        e.pf2e_name, e.pf2e_slug, e.compendium_collection, e.source_path, e.foundry_type,
-       'active', 'PF2e 8.6.1: ' || e.source_path, '[024] added from 8.6.1 catalog'
+       'active', 'PF2e 8.6.1: ' || e.source_path, '[042] added from 8.6.1 catalog'
 FROM pf2e_catalog_entries e
 WHERE e.class_id IS NOT NULL
   AND e.compendium_collection IN ('pf2e.classfeatures', 'pf2e.feats-srd')
@@ -62,7 +62,7 @@ INSERT INTO pf2e_class_keywords (ruleset_id, class_id, item_kind, pf2e_name, pf2
   compendium_collection, source_path, foundry_type, status, evidence_ref, notes)
 SELECT DISTINCT ON (x.class_id, e.pf2e_slug)
        e.ruleset_id, x.class_id, 'classfeature', e.pf2e_name, e.pf2e_slug, e.compendium_collection,
-       e.source_path, e.foundry_type, 'active', 'PF2e 8.6.1: ' || e.source_path, '[024] class option by path/name'
+       e.source_path, e.foundry_type, 'active', 'PF2e 8.6.1: ' || e.source_path, '[042] class option by path/name'
 FROM pf2e_catalog_entries e
 JOIN (VALUES ('sorcerer', '^Bloodline: ', NULL),
              ('magus', NULL, '/class-features/magus/'),

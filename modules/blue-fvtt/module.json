@@ -1,0 +1,24 @@
+{
+  "id": "blue-fvtt",
+  "title": "Blue FVTT",
+  "description": "Replaces Foundry's default red look with a blue watercolor water-and-sky background and a blue d20 pause icon. Optional dark-blue PF2e sheet theme.",
+  "version": "0.1.0",
+  "authors": [
+    {
+      "name": "Edmund Landgraf"
+    }
+  ],
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14"
+  },
+  "esmodules": [
+    "scripts/blue-fvtt.js"
+  ],
+  "styles": [
+    "styles/blue-fvtt.css"
+  ],
+  "url": "https://github.com/edmund-landgraf/foundry-wanderersguide-import",
+  "manifest": "https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/main/manifests/blue-fvtt.json",
+  "download": "https://github.com/edmund-landgraf/foundry-wanderersguide-import/releases/download/blue-fvtt-v0.1.0/module.zip"
+}
