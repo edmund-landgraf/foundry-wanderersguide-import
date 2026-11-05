@@ -1,6 +1,6 @@
 # Hosted update manifests
 
-Each manifest here is the module.json of a module's latest release, with a `download` link to that release's `module.zip` in this repo. Foundry uses them to install and update: amba-bridge, foundry-pf2-import, green-fvtt, sheet-theme-green, blue-fvtt and sheet-theme-dark-blue.
+Each manifest here is the module.json of a module's latest release, with a `download` link to that release's `module.zip` in this repo. Foundry uses them to install and update: amba-bridge, foundry-pf2-import, green-fvtt, sheet-theme-green, blue-fvtt, sheet-theme-dark-blue and amba-foundry-suite (a code-free bundle that requires all the others plus foundry-wanderersguide-import).
 
 Sources for green-fvtt, sheet-theme-green, blue-fvtt and sheet-theme-dark-blue live under `modules/` in this repo; the others live in their own (private) repos.
 
