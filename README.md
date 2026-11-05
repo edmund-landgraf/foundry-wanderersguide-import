@@ -5,7 +5,7 @@ Imports Pathfinder 2e player characters from Wanderer's Guide (WGUI) into the cu
 | | |
 |---|---|
 | Module id | `foundry-wanderersguide-import` |
-| Version | 0.1.0 |
+| Version | 0.1.2 |
 | Foundry | minimum 12, verified 14 (build 369) |
 | System | `pf2e`, minimum 6.0.0, verified 8.6.1 |
 | Tests | `npm test` (Node built-in test runner, 94 tests passing as of 2026-11-01) |
