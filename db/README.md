@@ -123,6 +123,7 @@ The database can decide that an action is eligible for review; Foundry remains t
 - `027_seed_pf2e_catalog_8_6_1.sql`: PF2e 8.6.1 catalog rows. This is the catalog later migrations extend; they do not create a second one.
 - `028_build_wg_pf2e_catalog_matches.sql`: exact-name and active-alias resolution, plus the `wg_pf2e_unresolved` view.
 - `033_match_catalog_snapshots.sql`: versioned match-catalog snapshots consumed by the Foundry module.
+- `034_align_match_rule_suffixes.sql`: add the hyphenated research-field semantic suffix.
 - `036_seed_pf2e_bestiary_headers.sql`: PF2e 8.6.1 NPC compendium headers.
 - `037_seed_pf2e_pack_headers.sql`: PF2e 8.6.1 pack headers.
 - `038_pf2e_catalog_match_fields.sql`: extra match columns on `pf2e_catalog_entries`.
@@ -160,7 +161,7 @@ facts such as matched counts, unresolved choices, warnings, and parity results.
 
 ## Match catalog export
 
-`node db/tools/export-match-catalog.mjs [--out data/match-catalog.json] [--wg-commit <sha>] [--no-db]` reads active rows from `compendium_match_aliases` and from `wg_pf2e_catalog_matches` (where the WG and PF2e names differ after sluggify; priority 200, so curated aliases win), builds a versioned snapshot (header: schemaVersion, pf2eVersion 8.6.1, wgContentCommit, generatedAt, rowCount, sha256; identity aliases dropped), inserts it as a row in `match_catalog_snapshots` (migration 033) and writes the same JSON to `data/match-catalog.json`.
+`node db/tools/export-match-catalog.mjs [--out data/match-catalog.json] [--wg-commit <sha>] [--no-db]` reads active rows from `compendium_match_aliases`, from `wg_pf2e_catalog_matches` (where the WG and PF2e names differ after sluggify; priority 200, so curated aliases win), and from `compendium_match_rules`. It builds a versioned snapshot (header: schemaVersion, pf2eVersion 8.6.1, wgContentCommit, generatedAt, rowCount, sha256; identity aliases dropped; active rules included and covered by the checksum), inserts it as a row in `match_catalog_snapshots` (migration 033) and writes the same JSON to `data/match-catalog.json`. Apply migration 034 before exporting so the semantic-suffix rule includes `research-field`. The importer uses a loaded catalog's type map and semantic suffixes; a file with no `rules` array keeps the previous built-in lists.
 
 That file is git-ignored and never committed. Generate it locally (migration 033 must be applied; take a `pg_dump` backup first), or restore it from the latest snapshot row:
 
