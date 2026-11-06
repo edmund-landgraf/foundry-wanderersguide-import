@@ -1,0 +1,41 @@
+/* ===== Blue FVTT ===== */
+/* Pause banner: blue band + blue caption */
+body.blue-fvtt #pause {
+  background: linear-gradient(to right, transparent 0%, rgba(14,20,38,0.75) 40%, rgba(14,20,38,0.75) 60%, transparent 100%);
+}
+body.blue-fvtt #pause figcaption { color: #a8d1d8; text-shadow: 0 0 6px #0e1426; }
+body.blue-fvtt #pause img { filter: drop-shadow(0 0 8px rgba(80,110,180,0.6)); }
+
+/* ===== Optional: dark-blue PF2e sheets (setting "Dark blue PF2e sheets") ===== */
+body.blue-fvtt-sheets, body.blue-fvtt-sheets .pf2e {
+  --color-pf-primary: #1f2a4d;
+  --color-pf-primary-dark: #161e3a;
+  --color-pf-primary-darker: #0e1426;
+  --color-pf-primary-light: #2e3d6b;
+  --color-pf-primary-lighter: #3d518a;
+  --color-pf-health-bg: #1f2a4d;
+}
+body.blue-fvtt-sheets .actor.sheet.character section.window-content .crb-style aside {
+  background-image: linear-gradient(180deg, #2e3d6b 0%, #1f2a4d 35%, #161e3a 100%) !important;
+  background-size: 100% 100% !important;
+  background-position: center !important;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(233,215,161,0.35);
+}
+body.blue-fvtt-sheets .actor.sheet.character section.window-content .crb-style {
+  background: linear-gradient(180deg, #161e3a 0%, #1f2a4d 80%, #2e3d6b 100%) repeat-x top / auto 5.625rem,
+              url("../../../systems/pf2e/assets/sheet/background.webp") no-repeat center / cover !important;
+  background-attachment: local !important;
+}
+body.blue-fvtt-sheets .actor.sheet section.window-content form.crb-style nav.sheet-navigation {
+  background: url("../../../systems/pf2e/assets/sheet/border-pattern.webp") repeat-x top,
+              url("../../../systems/pf2e/assets/sheet/border-pattern.webp") repeat-x bottom, #161e3a !important;
+}
+body.blue-fvtt-sheets .actor.sheet.character section.window-content .crb-style aside .sidebar .armor-class .ac.hp,
+body.blue-fvtt-sheets .actor.sheet.character section.window-content .crb-style aside .sidebar .armor-class .shield.hp {
+  filter: hue-rotate(220deg) saturate(0.8);
+}
+/* Hard CSS defaults (no JS needed) */
+body.blue-fvtt, body { --background-url: url("../assets/water-sky-bg.webp") !important; }
+#main-background { background-image: url("../assets/water-sky-bg.webp") !important; background-size: cover !important; background-position: center !important; }
+#pause img { content: url("../assets/d20-blue.webp") !important; }
