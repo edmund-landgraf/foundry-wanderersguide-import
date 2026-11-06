@@ -1,0 +1,67 @@
+{
+  "id": "amba-foundry-suite",
+  "title": "AMBA Foundry Suite",
+  "description": "Installs every AMBA Foundry module at once: AMBA Bridge, Foundry PF2 Import, Wanderer's Guide Import, and the green and blue themes. Contains no code of its own.",
+  "version": "0.1.0",
+  "authors": [
+    {
+      "name": "Edmund Landgraf"
+    }
+  ],
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14"
+  },
+  "relationships": {
+    "systems": [
+      {
+        "id": "pf2e",
+        "type": "system",
+        "compatibility": {
+          "minimum": "8.6.1",
+          "verified": "8.6.1"
+        }
+      }
+    ],
+    "requires": [
+      {
+        "id": "amba-bridge",
+        "type": "module",
+        "manifest": "https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/main/manifests/amba-bridge.json"
+      },
+      {
+        "id": "foundry-pf2-import",
+        "type": "module",
+        "manifest": "https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/main/manifests/foundry-pf2-import.json"
+      },
+      {
+        "id": "foundry-wanderersguide-import",
+        "type": "module",
+        "manifest": "https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/main/module.json"
+      },
+      {
+        "id": "green-fvtt",
+        "type": "module",
+        "manifest": "https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/main/manifests/green-fvtt.json"
+      },
+      {
+        "id": "sheet-theme-green",
+        "type": "module",
+        "manifest": "https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/main/manifests/sheet-theme-green.json"
+      },
+      {
+        "id": "blue-fvtt",
+        "type": "module",
+        "manifest": "https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/main/manifests/blue-fvtt.json"
+      },
+      {
+        "id": "sheet-theme-dark-blue",
+        "type": "module",
+        "manifest": "https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/main/manifests/sheet-theme-dark-blue.json"
+      }
+    ]
+  },
+  "url": "https://github.com/edmund-landgraf/foundry-wanderersguide-import",
+  "manifest": "https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/main/manifests/amba-foundry-suite.json",
+  "download": "https://github.com/edmund-landgraf/foundry-wanderersguide-import/releases/download/amba-foundry-suite-v0.1.0/module.zip"
+}

@@ -1,0 +1,41 @@
+/* ===== Green FVTT ===== */
+/* Pause banner: green band + green caption */
+body.green-fvtt #pause {
+  background: linear-gradient(to right, transparent 0%, rgba(14,38,20,0.75) 40%, rgba(14,38,20,0.75) 60%, transparent 100%);
+}
+body.green-fvtt #pause figcaption { color: #b9d8a8; text-shadow: 0 0 6px #0e2614; }
+body.green-fvtt #pause img { filter: drop-shadow(0 0 8px rgba(80,180,100,0.6)); }
+
+/* ===== Optional: dark-green PF2e sheets (setting "Dark green PF2e sheets") ===== */
+body.green-fvtt-sheets, body.green-fvtt-sheets .pf2e {
+  --color-pf-primary: #1f4d2b;
+  --color-pf-primary-dark: #163a20;
+  --color-pf-primary-darker: #0e2614;
+  --color-pf-primary-light: #2e6b3d;
+  --color-pf-primary-lighter: #3d8a50;
+  --color-pf-health-bg: #1f4d2b;
+}
+body.green-fvtt-sheets .actor.sheet.character section.window-content .crb-style aside {
+  background-image: linear-gradient(180deg, #2e6b3d 0%, #1f4d2b 35%, #163a20 100%) !important;
+  background-size: 100% 100% !important;
+  background-position: center !important;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(233,215,161,0.35);
+}
+body.green-fvtt-sheets .actor.sheet.character section.window-content .crb-style {
+  background: linear-gradient(180deg, #163a20 0%, #1f4d2b 80%, #2e6b3d 100%) repeat-x top / auto 5.625rem,
+              url("../../../systems/pf2e/assets/sheet/background.webp") no-repeat center / cover !important;
+  background-attachment: local !important;
+}
+body.green-fvtt-sheets .actor.sheet section.window-content form.crb-style nav.sheet-navigation {
+  background: url("../../../systems/pf2e/assets/sheet/border-pattern.webp") repeat-x top,
+              url("../../../systems/pf2e/assets/sheet/border-pattern.webp") repeat-x bottom, #163a20 !important;
+}
+body.green-fvtt-sheets .actor.sheet.character section.window-content .crb-style aside .sidebar .armor-class .ac.hp,
+body.green-fvtt-sheets .actor.sheet.character section.window-content .crb-style aside .sidebar .armor-class .shield.hp {
+  filter: hue-rotate(130deg) saturate(0.8);
+}
+/* Hard CSS defaults (no JS needed) */
+body.green-fvtt, body { --background-url: url("../assets/forest-bg.webp") !important; }
+#main-background { background-image: url("../assets/forest-bg.webp") !important; background-size: cover !important; background-position: center !important; }
+#pause img { content: url("../assets/d20-green.webp") !important; }
