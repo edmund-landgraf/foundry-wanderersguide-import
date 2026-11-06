@@ -26,9 +26,10 @@ export async function callFunction({ baseUrl, apiKey, fn, body, fetchImpl = glob
       await sleep((Number.isFinite(reset) && reset > 0 ? reset : 2 ** attempt * 2) * 1000);
       continue;
     }
-    let json = null;
-    try { json = await res.json(); } catch { /* non-JSON */ }
-    if (!res.ok || json?.status === "fail" || json?.status === "error") throw new WgApiError(res.status, friendlyError(res.status, json));
+    const { json, raw } = await readResponse(res);
+    if (!res.ok || json?.status === "fail" || json?.status === "error") {
+      throw new WgApiError(res.status, friendlyError(res.status, json, { fn, raw, apiKey }));
+    }
     return json;
   }
 }
@@ -40,15 +41,38 @@ const ERROR_TEXT = {
   CAMPAIGN_FORBIDDEN: "This API key has no access to that campaign.",
   CAMPAIGN_ID_INVALID: "Invalid campaign id.",
 };
-export function friendlyError(status, json) {
+/** Strip API keys, bearer tokens, and UUID-shaped secrets from untrusted server text. */
+export function redactSecrets(text, apiKey = "") {
+  let s = String(text ?? "");
+  const key = String(apiKey ?? "").trim();
+  if (key) s = s.split(key).join("[redacted]");
+  s = s.replace(/\bBearer\s+\S+/gi, "Bearer [redacted]");
+  s = s.replace(/\b[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\b/gi, "[redacted]");
+  return s.replace(/\s+/g, " ").trim();
+}
+
+async function readResponse(res) {
+  if (typeof res?.text === "function") {
+    let raw = "";
+    try { raw = await res.text(); } catch { raw = ""; }
+    if (!raw) return { json: null, raw: "" };
+    try { return { json: JSON.parse(raw), raw }; } catch { return { json: null, raw }; }
+  }
+  try { return { json: typeof res?.json === "function" ? await res.json() : null, raw: "" }; }
+  catch { return { json: null, raw: "" }; }
+}
+
+export function friendlyError(status, json, { fn = "", raw = "", apiKey = "" } = {}) {
   const code = json?.data?.code;
-  if (code && ERROR_TEXT[code]) return ERROR_TEXT[code];
-  const msg = json?.data?.message ?? json?.message ?? `HTTP ${status}`;
+  if (code && ERROR_TEXT[code]) return fn ? `${fn}: ${ERROR_TEXT[code]}` : ERROR_TEXT[code];
+  const fallback = raw ? redactSecrets(raw, apiKey).slice(0, 160) : `HTTP ${status}`;
+  const msg = json?.data?.message ?? json?.message ?? fallback;
   const label = { 401: "API key rejected", 403: "Not allowed for this API key", 404: "Function not found on this WG server (is wgui-ext deployed?)", 429: "Rate limited" }[status];
   // Upstream error text is untrusted. Do not allow a UUID-shaped API key or token to
   // leak into notifications, chat cards, or console errors.
-  const safe = String(msg).replace(/\b[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\b/gi, "[redacted]");
-  return label ? `${label} (${status}): ${safe}` : safe;
+  const safe = redactSecrets(msg, apiKey);
+  const core = label ? `${label} (${status}): ${safe}` : safe;
+  return fn ? `${fn}: ${core}` : core;
 }
 
 /** Characters the API key can read (server scopes by key, so every row is importable). */
@@ -102,11 +126,20 @@ export const FULL_EXPORT_FN = "wgui-export-character";
 export async function exportCharacter(opts, id) {
   const body = { id: Number(id), format: "json" };
   let json;
+  let slimError = null;
   try {
     json = await callFunction({ ...opts, fn: SLIM_EXPORT_FN, body });
   } catch (e) {
     if (!(e instanceof WgApiError) || !(e.status === 404 || e.status >= 500)) throw e;
-    json = await callFunction({ ...opts, fn: FULL_EXPORT_FN, body });
+    slimError = e;
+    try {
+      json = await callFunction({ ...opts, fn: FULL_EXPORT_FN, body });
+    } catch (full) {
+      if (full instanceof WgApiError) {
+        full.message = `${full.message} (slim export ${SLIM_EXPORT_FN} also failed: HTTP ${slimError.status})`;
+      }
+      throw full;
+    }
   }
   if (!json || json.version !== 4 || !json.character) throw new WgApiError(0, "Export was not a JSON v4 character.");
   // Custom items reference official traits by id; the slim file drops those names. Fetch the full file
