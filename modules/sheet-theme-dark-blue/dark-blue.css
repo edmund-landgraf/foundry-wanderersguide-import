@@ -1,0 +1,33 @@
+/* Dark blue palette for PF2e sheets */
+:root, body, .pf2e {
+  --color-pf-primary: #1f2a4d;
+  --color-pf-primary-dark: #161e3a;
+  --color-pf-primary-darker: #0e1426;
+  --color-pf-primary-light: #2e3d6b;
+  --color-pf-primary-lighter: #3d518a;
+  --color-pf-health-bg: #1f2a4d;
+}
+/* Left sidebar: replace red_sidebar images with blue gradient */
+.actor.sheet.character section.window-content .crb-style aside {
+  background-image: linear-gradient(180deg, #2e3d6b 0%, #1f2a4d 35%, #161e3a 100%) !important;
+  background-size: 100% 100% !important;
+  background-position: center !important;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(233,215,161,0.35);
+}
+/* Header band: replace red header.webp, keep parchment body */
+.actor.sheet.character section.window-content .crb-style {
+  background: linear-gradient(180deg, #161e3a 0%, #1f2a4d 80%, #2e3d6b 100%) repeat-x top / auto 5.625rem,
+              url("../../systems/pf2e/assets/sheet/background.webp") no-repeat center / cover !important;
+  background-attachment: local !important;
+}
+/* Nav bar */
+.actor.sheet section.window-content form.crb-style nav.sheet-navigation {
+  background: url("../../systems/pf2e/assets/sheet/border-pattern.webp") repeat-x top,
+              url("../../systems/pf2e/assets/sheet/border-pattern.webp") repeat-x bottom, #161e3a !important;
+}
+/* HP shield (red) tinted blue */
+.actor.sheet.character section.window-content .crb-style aside .sidebar .armor-class .ac.hp,
+.actor.sheet.character section.window-content .crb-style aside .sidebar .armor-class .shield.hp {
+  filter: hue-rotate(220deg) saturate(0.8);
+}

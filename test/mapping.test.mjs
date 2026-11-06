@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { buildPlan, matchEntries, missReport, sluggify, normalizeMatchCatalog } from "../scripts/mapping.js";
+import { buildPlan, matchEntries, missReport, sluggify, normalizeMatchCatalog, catalogLookupNames } from "../scripts/mapping.js";
 import { applyFeatSlotData, choiceContext } from "../scripts/importer.js";
 import { summarizeCharacters, callFunction, parseClientId, resolveFunctionsUrl, listCharacters, listCampaigns, getCampaign, campaignLabel, friendlyError } from "../scripts/api.js";
 
@@ -10,6 +10,78 @@ const exp = JSON.parse(readFileSync(new URL("./fixtures/sample-v4.json", import.
 test("sluggify", () => {
   assert.equal(sluggify("Sudden Charge"), "sudden-charge");
   assert.equal(sluggify("Champion's Reaction (Remastered)"), "champions-reaction");
+});
+
+test("catalog semantic suffixes replace the built-in list", () => {
+  const index = [{ type: "feat", slug: "redemption", name: "Redemption", uuid: "Compendium.pf2e.feats-srd.redemption", level: 1 }];
+  const entry = { kind: "feat", packType: "feat", name: "Redemption Cause", slug: "redemption-cause", level: 1 };
+  const [without] = matchEntries([entry], index, { catalog: { aliases: [], rules: [{ rule_kind: "semantic-suffix", payload: { suffixes: ["muse"] }, status: "active", priority: 30 }] } });
+  assert.equal(without.match, null);
+  const [withCause] = matchEntries([entry], index, { catalog: { aliases: [], rules: [{ rule_kind: "semantic-suffix", payload: { suffixes: ["cause"] }, status: "active", priority: 30 }] } });
+  assert.equal(withCause.via, "semantic-name");
+  assert.equal(withCause.canonicalSlug, "redemption");
+});
+
+test("catalog type map replaces the built-in document types", () => {
+  const index = [{ type: "action", slug: "hunt-prey", name: "Hunt Prey", uuid: "Compendium.pf2e.actions.hunt-prey" }];
+  const entry = { kind: "feat", packType: "feat", name: "Hunt Prey", slug: "hunt-prey" };
+  const [narrow] = matchEntries([entry], index, { catalog: { aliases: [], rules: [{ rule_kind: "type-map", payload: { feat: ["feat"] }, status: "active", priority: 10 }] } });
+  assert.equal(narrow.match, null);
+  const [wide] = matchEntries([entry], index, { catalog: { aliases: [], rules: [{ rule_kind: "type-map", payload: { feat: ["feat", "action"] }, status: "active", priority: 10 }] } });
+  assert.equal(wide.via, "slug");
+});
+
+test("equipment matches a PF2e ammo document unless the catalog type map drops ammo", () => {
+  const index = [{ type: "ammo", slug: "arrows", name: "Arrows", uuid: "Compendium.pf2e.equipment-srd.arrows" }];
+  const entry = { kind: "equipment", packType: "equipment", name: "Arrows", slug: "arrows" };
+  const [hit] = matchEntries([entry], index);
+  assert.equal(hit.via, "slug");
+  assert.equal(hit.match.type, "ammo");
+  const [narrow] = matchEntries([entry], index, { catalog: { aliases: [], rules: [{ rule_kind: "type-map", payload: { equipment: ["weapon"] }, status: "active", priority: 10 }] } });
+  assert.equal(narrow.match, null);
+});
+
+test("catalog lookup names keep usage parentheticals and generic materials", () => {
+  assert.deepEqual(catalogLookupNames("Axe Musket (Melee)", "equipment"), ["axe musket melee"]);
+  assert.deepEqual(catalogLookupNames("Abrikandilu (PFS)", "npc"), ["abrikandilu pfs", "abrikandilu"]);
+  assert.deepEqual(catalogLookupNames("1st-rank Scroll", "equipment"), ["1st rank scroll", "scroll of 1st rank spell"]);
+  assert.ok(catalogLookupNames("Abysium Buckler (High-Grade)", "equipment").includes("buckler"));
+  assert.ok(!catalogLookupNames("Abysium Armor (High-Grade)", "equipment").includes("armor"));
+  assert.deepEqual(catalogLookupNames("Elite Goblin Warrior", "npc"), ["elite goblin warrior", "goblin warrior"]);
+  assert.ok(catalogLookupNames("Adult Black Dragon Spellcaster", "npc").includes("black dragon adult spellcaster"));
+});
+
+test("catalog lookup matches one equipment or creature row", () => {
+  const catalog = [
+    { item_kind: "equipment", name: "Axe Musket", entry_id: 1 },
+    { item_kind: "equipment", name: "Buckler", entry_id: 2 },
+    { item_kind: "equipment", name: "Scroll of 1st-rank Spell", entry_id: 3 },
+    { item_kind: "equipment", name: "Dagger", entry_id: 4 },
+    { item_kind: "equipment", name: "Dagger", source_path: "packs/other/dagger.json", entry_id: 5 },
+    { item_kind: "npc", name: "Abrikandilu", entry_id: 6 },
+    { item_kind: "npc", name: "Goblin Warrior", entry_id: 7 },
+  ];
+  const rows = [
+    ["Axe Musket (Melee)", "equipment"],
+    ["Abysium Armor (High-Grade)", "equipment"],
+    ["Abysium Buckler (High-Grade)", "equipment"],
+    ["1st-rank Scroll", "equipment"],
+    ["Dagger", "equipment"],
+    ["Abrikandilu (PFS)", "npc"],
+    ["Elite Goblin Warrior", "npc"],
+  ].map(([name, kind]) => ({ kind, packType: kind, name, slug: sluggify(name) }));
+  const matched = matchEntries(rows, catalog);
+  const byName = Object.fromEntries(matched.map((row) => [row.name, row]));
+  assert.equal(byName["Axe Musket (Melee)"].match, null);
+  assert.equal(byName["Abysium Armor (High-Grade)"].match, null);
+  assert.equal(byName["Abysium Buckler (High-Grade)"].match.name, "Buckler");
+  assert.deepEqual(byName["Abysium Buckler (High-Grade)"].material, { type: "abysium", grade: "high" });
+  assert.equal(byName["Abysium Buckler (High-Grade)"].grade, "high");
+  assert.equal(byName["1st-rank Scroll"].match.name, "Scroll of 1st-rank Spell");
+  assert.equal(byName.Dagger.match, null);
+  assert.equal(byName.Dagger.via, "ambiguous");
+  assert.equal(byName["Abrikandilu (PFS)"].match.name, "Abrikandilu");
+  assert.equal(byName["Elite Goblin Warrior"].match.name, "Goblin Warrior");
 });
 
 test("database match catalog aliases are applied before semantic fallback", () => {
@@ -251,7 +323,9 @@ test("Champion Redemption Cause resolves to PF2e's canonical Redemption item", (
   assert.equal(match.canonicalSlug, "redemption");
 });
 
-test("WG issue aliases resolve only their evidence-backed canonical targets", () => {
+const fixtureCatalog = JSON.parse(readFileSync(new URL("./fixtures/match-catalog.min.json", import.meta.url)));
+test("WG issue aliases resolve only their evidence-backed canonical targets (from the catalog)", () => {
+  assert.ok(!matchEntries([{ kind: "feat", packType: "feat", name: "Flurry Edge", slug: "flurry-edge" }], [{ type: "feat", slug: "flurry", name: "Flurry", uuid: "U:flurry" }])[0].match, "no built-in alias without a catalog");
   const cases = [
     ["Animal Companion (Druid)", "animal-companion"],
     ["Animal Empathy (Druid)", "animal-empathy"],
@@ -266,10 +340,23 @@ test("WG issue aliases resolve only their evidence-backed canonical targets", ()
     const [hit] = matchEntries(
       [{ kind: source.includes("Telekinetic") ? "spell" : "feat", packType: source.includes("Telekinetic") ? "spell" : "feat", name: source, slug: sluggify(source) }],
       [{ type: source.includes("Telekinetic") ? "spell" : "feat", slug: target, name: target, uuid: `U:${target}` }],
+      { catalog: fixtureCatalog },
     );
     assert.equal(hit.match?.uuid, `U:${target}`, source);
     assert.equal(hit.via, "catalog-alias", source);
   }
+});
+
+test("Lightslayer Oath resolves to PF2e Oath of the Slayer", () => {
+  const catalog = { aliases: [{ item_kind: "feat", source_name: "Lightslayer Oath", target_name: "Oath of the Slayer", source_slug: "lightslayer-oath", target_slug: "oath-of-the-slayer", priority: 100, match_strategy: "canonical", status: "active" }] };
+  const [hit] = matchEntries(
+    [{ kind: "feat", packType: "feat", name: "Lightslayer Oath", slug: "lightslayer-oath", level: 2 }],
+    [{ type: "feat", slug: "oath-of-the-slayer", name: "Oath of the Slayer", level: 2, uuid: "oath-slayer" }],
+    { catalog },
+  );
+  assert.equal(hit.via, "catalog-alias");
+  assert.equal(hit.match.uuid, "oath-slayer");
+  assert.equal(hit.canonicalSlug, "oath-of-the-slayer");
 });
 
 test("semantic-name matching is confidence gated by type and level", () => {
@@ -341,6 +428,19 @@ test("wgChoiceHints keeps stable owner IDs separate when display names repeat", 
   assert.deepEqual(h.get("shared-feature"), ["First", "Second"]);
   assert.deepEqual(h.byId.get("1"), ["First"]);
   assert.deepEqual(h.byId.get("2"), ["Second"]);
+});
+
+test("choiceContext marks applied labels as consumed coverage selections", () => {
+  const exp2 = {
+    character: { operation_data: { selections: { "class-feature-1_op-a": "opt-1" } }, details: {} },
+    content: { feats_features: { classFeatures: [{
+      id: 1, name: "Domains",
+      operations: [{ id: "op-a", type: "select", data: { optionsPredefined: [{ id: "opt-1", title: "Luck" }] } }],
+    }] } },
+  };
+  const ctx = choiceContext(exp2, {}, [], null);
+  ctx.markHintUsed("Luck");
+  assert.ok(ctx.used.has("class-feature-1_op-a"));
 });
 
 test("choiceContext prefers the WG owner ID over a duplicate display name", async () => {
