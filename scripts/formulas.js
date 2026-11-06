@@ -4,8 +4,8 @@
 // (https://github.com/MrPrimate/pathmuncher), MIT License, Copyright (c) 2023 Jack Holloway.
 import { itemNameCandidates, GRADE_WORDS } from "./item-renames.js";
 
-export const FORMULA_PACK_ORDER = ["pf2e.equipment-srd", "sf2e.equipment", "pf2e-legacy-content.formulas-legacy", "pf2e-legacy-content.equipment-legacy"];
-export const FORMULA_TYPES = ["consumable", "weapon", "equipment", "armor", "shield", "backpack", "treasure", "ammo", "kit"];
+import { FORMULA_PACK_ORDER, FORMULA_TYPES } from "./item-types.js";
+export { FORMULA_PACK_ORDER, FORMULA_TYPES };
 
 const slugOf = (s) => String(s ?? "").normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/\(remastered\)/g, "").replace(/['\u2019]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 

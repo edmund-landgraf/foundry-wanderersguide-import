@@ -31,6 +31,16 @@ test("catalog type map replaces the built-in document types", () => {
   assert.equal(wide.via, "slug");
 });
 
+test("equipment matches a PF2e ammo document unless the catalog type map drops ammo", () => {
+  const index = [{ type: "ammo", slug: "arrows", name: "Arrows", uuid: "Compendium.pf2e.equipment-srd.arrows" }];
+  const entry = { kind: "equipment", packType: "equipment", name: "Arrows", slug: "arrows" };
+  const [hit] = matchEntries([entry], index);
+  assert.equal(hit.via, "slug");
+  assert.equal(hit.match.type, "ammo");
+  const [narrow] = matchEntries([entry], index, { catalog: { aliases: [], rules: [{ rule_kind: "type-map", payload: { equipment: ["weapon"] }, status: "active", priority: 10 }] } });
+  assert.equal(narrow.match, null);
+});
+
 test("catalog lookup names keep usage parentheticals and generic materials", () => {
   assert.deepEqual(catalogLookupNames("Axe Musket (Melee)", "equipment"), ["axe musket melee"]);
   assert.deepEqual(catalogLookupNames("Abrikandilu (PFS)", "npc"), ["abrikandilu pfs", "abrikandilu"]);

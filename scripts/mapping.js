@@ -1,3 +1,4 @@
+import { KIND_TYPES, typesForKind } from "./item-types.js";
 import { classifySelections } from "./selections.js";
 import { resolveFormula, extraItemIds, containerParents } from "./formulas.js";
 import { homebrewSourceIds, isCustomItem } from "./custom-items.js";
@@ -26,11 +27,6 @@ const SEMANTIC_ROLE_SUFFIXES = [
   "doctrine", "mystery", "patron", "cause", "muse", "school", "instinct",
   "ikon", "implement", "apparition", "thesis", "curriculum", "order",
 ];
-
-const DEFAULT_TYPE_MAP = {
-  equipment: ["weapon", "armor", "shield", "equipment", "consumable", "treasure", "backpack", "kit"],
-  feat: ["feat", "action"],
-};
 
 // WG -> PF2e name aliases come only from the wgi_rules match catalog (compendium_match_aliases,
 // active rows), bundled as data/match-catalog.json. There is no hard-coded alias table.
@@ -203,7 +199,7 @@ export function matchEntries(entries, index, { catalog = null } = {}) {
     const n = k + String(row.name).toLowerCase();
     (byName.get(n) ?? byName.set(n, []).get(n)).push(row);
   }
-  const typesFor = (pt) => matchCatalog.typeMap?.[pt] ?? DEFAULT_TYPE_MAP[pt] ?? [pt];
+  const typesFor = (pt) => typesForKind(pt, matchCatalog.typeMap);
   const stemsFor = (name) => semanticStems(name, matchCatalog.semanticSuffixes);
   const uniqueSlugHit = (slug, types, entry) => {
     const candidates = types.flatMap((t) => {
@@ -643,7 +639,6 @@ function itemFound(entry, items) {
     || (entry.kind === "feat" && slugs.some((s) => s.startsWith(`${i.slug}-`) || (i.slug && i.slug.startsWith(`${s}-`)))));
 }
 // WG lists some granted actions (e.g. Indomitable Act from Dauntless) as feats; PF2e grants them as actions.
-const KIND_TYPES = { ancestry: ["ancestry"], heritage: ["heritage"], background: ["background"], class: ["class"], feat: ["feat", "action"], spell: ["spell"], equipment: ["weapon", "armor", "shield", "equipment", "consumable", "treasure", "backpack", "kit"] };
 
 export function diffPlan(plan, actor) {
   plan = { ...plan, entries: plan.entries.filter((e) => e.kind !== "formula") };
