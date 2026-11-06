@@ -2,7 +2,9 @@
 
 Date: 2026-10-31 (America/Los_Angeles)
 Repository: `edmund-landgraf/foundry-wanderersguide-import`
-Scope: durable handoff for the current investigation and PR triage.
+Scope: durable handoff for the investigation and PR triage on that date.
+
+The sections below are the 2026-10-31 snapshot. They are not rewritten when later PRs merge. Later outcomes are appended at the bottom.
 
 ## Executive summary
 
@@ -72,4 +74,18 @@ Before merging the relevant implementation PRs:
 
 ## Durable next step
 
-Use this file as the handoff point. Update the “What needs to be checked” section as PRs are merged, retargeted, tested, or superseded. Keep raw API output in the PR conversation or investigation transcript; keep this file focused on decisions, evidence, and remaining verification.
+Use this file as the handoff point. Leave the 2026-10-31 sections intact and append a dated note when a listed PR is merged, retargeted, tested, or superseded. Keep raw API output in the PR conversation or investigation transcript; keep this file focused on decisions, evidence, and remaining verification.
+
+## Later status (2026-11-06)
+
+Checked against GitHub and `main` at `1ca973d39db629ca8c960656522252228c8cf8c0`. The 2026-10-31 inventory above is unchanged.
+
+Merged since the snapshot:
+
+- #79, merged 2026-11-05 (`codex/seed-rule-registry`).
+- #84, merged 2026-11-05 (`db/wgi-rules-keyword-fixes`, migrations 041–049).
+- #91, merged 2026-11-06 (`dfed5a0`).
+- #92, merged 2026-11-06 (`3f483e4`), after #91.
+- #68, merged 2026-11-06 (`1ca973d`). Its 2026-10-31 note said the local test run was still pending; the merge followed a Node suite run on the updated branch.
+
+Still open from that inventory: #88, #89, and #90 (same stack and bases), plus docs PRs #80 and #83. This note is #93.
