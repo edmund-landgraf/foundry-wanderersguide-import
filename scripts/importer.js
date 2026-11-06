@@ -98,7 +98,7 @@ async function restoreSpellcastingState(actor, state) {
 //   2. on re-import, the selection already stored on the actor for the same compendium item, if still legal.
 // Nothing is guessed from other names and the first option is never taken. Anything left open is
 // recorded as unresolved and PF2e's own prompt is shown to the user (AMBA_REUSE_PLAN section 3).
-export function choiceContext(exp, plan, index, actor) {
+export function choiceContext(exp, plan, index, actor, { semanticSuffixes = null } = {}) {
   const hints = wgChoiceHints(exp);
   const fixedNames = new Set(
     exp?.content?.raw_data_dump?.variables?.PHYSICAL_FEATURE_NAMES?.value
@@ -138,16 +138,19 @@ export function choiceContext(exp, plan, index, actor) {
   };
   const pick = (owner, labels, ownerWgId = null) => {
     const alreadyUsed = assigned.get(hintKey(owner, ownerWgId)) ?? new Set();
-    const candidate = specific(owner, ownerWgId)
-      .filter((hint) => !alreadyUsed.has(sluggify(hint)))
-      .map((hint) => ({ hint, index: matchChoice(labels, [hint]) }))
+    const available = specific(owner, ownerWgId).filter((hint) => !alreadyUsed.has(sluggify(hint)));
+    // Exact labels are considered before prefix matches, so "Halfling Luck" cannot select Halfling
+    // while "Human" is also an answer. The first still-unused exact answer is the one consumed.
+    const exact = available
+      .map((hint) => ({ hint, index: labels.findIndex((label) => sluggify(label) === sluggify(hint)) }))
       .find((x) => x.index >= 0);
-    if (!candidate) return null;
+    const candidate = exact ?? available.map((hint) => ({ hint, index: matchChoice(labels, [hint]) })).find((x) => x.index >= 0);
+    if (!candidate?.hint) return null;
     consume(owner, candidate.hint, ownerWgId);
     return candidate.index;
   };
   const beliefs = String(exp?.character?.details?.info?.beliefs ?? "").trim();
-  return { hints, fixedNames, index, uuidName, previous, used, markUsed, markHintUsed, conflicts: new Map(), unresolved: [], specific, consume, pick, assigned, beliefs };
+  return { hints, fixedNames, index, uuidName, previous, used, markUsed, markHintUsed, conflicts: new Map(), unresolved: [], specific, consume, pick, assigned, beliefs, semanticSuffixes };
 }
 
 /** Index of the single option matching the hints, or -1 when none or more than one match. */
@@ -227,7 +230,7 @@ async function resolveChoiceSet(rule, ownerName, ctx, { sourceUuid = null, flag 
     const type = c.itemType ?? "feat";
     for (const h of specific) {
       if ((ctx.assigned?.get(sluggify(ownerName)) ?? new Set()).has(sluggify(h))) continue;
-      const keys = choiceNameKeys(h);
+      const keys = choiceNameKeys(h, ctx.semanticSuffixes);
       const rows = ctx.index.filter((r) => r.type === type && keys.includes(sluggify(r.name)));
       const legal = [];
       for (const r of rows) if (await filterAccepts(c, r.uuid)) legal.push(r);
@@ -278,6 +281,8 @@ async function prefillChoices(data, ctx, notes, sourceName = null, sourceWgId = 
   const owners = [...new Set([sourceName, data.name].filter(Boolean))];
   for (const rule of rules) {
     if (rule?.key === "ChoiceSet" && rule.selection == null) {
+      // Actor-dependent options are built at prepare time. An early answer can grant a child the predicate would reject.
+      if (ruleDependsOnActor(rule)) continue;
       const flag = rule.flag ?? defaultFlag(data.name);
       let hit = null;
       let owner = data.name;
@@ -287,23 +292,24 @@ async function prefillChoices(data, ctx, notes, sourceName = null, sourceWgId = 
       }
       if (!hit) { ctx.unresolved.push({ owner: data.name, flag, reason: "no explicit WG answer matching exactly one legal option; PF2e will ask" }); continue; }
       rule.selection = hit.value;
-      if (hit.via === "WG selection") ctx.markUsed(owner);
+      if (hit.via === "WG selection") { ctx.markUsed(owner); ctx.markHintUsed?.(hit.label); }
       foundry.utils.setProperty(data, `flags.pf2e.rulesSelections.${flag}`, hit.value);
       notes.push(`choice ${data.name}: ${hit.label} (pre-filled from ${hit.via})`);
-    } else if (rule?.key === "GrantItem" && typeof rule.uuid === "string" && rule.uuid.startsWith("Compendium.")) {
+    } else if (rule?.key === "GrantItem" && typeof rule.uuid === "string" && rule.uuid.startsWith("Compendium.") && !ruleDependsOnActor(rule)) {
       const granted = await fromUuid(rule.uuid).catch(() => null);
       for (const gr of granted?.system?.rules ?? []) {
-        if (gr?.key !== "ChoiceSet" || gr.selection != null) continue;
+        if (gr?.key !== "ChoiceSet" || gr.selection != null || ruleDependsOnActor(gr)) continue;
         const flag = gr.flag ?? defaultFlag(granted.name);
         if (rule.preselectChoices?.[flag] != null) continue;
         const hit = await resolveChoiceSet(gr, granted.name, ctx, { sourceUuid: rule.uuid, flag, ownerWgId: sourceWgId });
         if (!hit) { ctx.unresolved.push({ owner: granted.name, flag, reason: `granted by ${data.name}; no explicit WG answer; PF2e will ask` }); continue; }
         rule.preselectChoices = { ...(rule.preselectChoices ?? {}), [flag]: hit.value };
-        if (hit.via === "WG selection") ctx.markUsed(granted.name);
+        if (hit.via === "WG selection") { ctx.markUsed(granted.name); ctx.markHintUsed?.(hit.label); }
         notes.push(`choice ${granted.name}: ${hit.label} (pre-filled via ${data.name}, from ${hit.via})`);
       }
     }
   }
+  stampGrantPreselect(rules);
 }
 async function itemDataFor(entry, folderId, ctx, notes) {
   let data;
@@ -377,7 +383,12 @@ export function deityPromptChoice(app, beliefs) {
 
 export function domainPromptWithoutDeity(app) {
   const title = `${app?.title ?? ""} ${app?.item?.name ?? ""}`;
-  return DOMAIN_PROMPT.test(title) && Array.isArray(app?.choices) && app.choices.length === 0;
+  return DOMAIN_PROMPT.test(title) && emptyChoicePrompt(app);
+}
+
+/** A rendered PF2e ChoiceSet with nothing to pick. Closing it is the only way the import can continue. */
+export function emptyChoicePrompt(app) {
+  return Array.isArray(app?.choices) && app.choices.length === 0;
 }
 
 /** Every explicit WG answer, used when the prompt's item name is not the selection owner. */
@@ -395,19 +406,27 @@ function watchPrompts(ctx, notes) {
       if (!Array.isArray(app.choices) || !app.rendered) continue;
       const labels = app.choices.map((c) => c.label ?? "");
       const signature = `${app.title ?? ""}|${app.item?.name ?? ""}|${labels.join("|")}`;
-      if (seen.has(signature)) continue;
-      seen.add(signature);
       const owner = app.item?.name ?? app.options?.item?.name ?? "";
-      if (domainPromptWithoutDeity(app)) {
-        if (!domainWarned) {
-          domainWarned = true;
-          const named = ctx.specific(owner)[0] ?? ctx.specific("Domain")[0] ?? ctx.specific("domains")[0] ?? null;
-          ctx.unresolved.push({ owner: owner || app.title, flag: null, reason: named ? `WG chose ${named}; no deity imported, so this prompt has no options` : "no deity imported; domain prompt has no options" });
-          ui.notifications?.warn?.(`Wanderer's Guide import: ${app.title || "domain choice"} has no options without a deity; left unresolved`);
+      if (emptyChoicePrompt(app)) {
+        if (!seen.has(signature)) {
+          seen.add(signature);
+          if (domainPromptWithoutDeity(app)) {
+            if (!domainWarned) {
+              domainWarned = true;
+              const named = ctx.specific(owner)[0] ?? ctx.specific("Domain")[0] ?? ctx.specific("domains")[0] ?? null;
+              ctx.unresolved.push({ owner: owner || app.title, flag: null, reason: named ? `WG chose ${named}; no deity imported, so this prompt has no options` : "no deity imported; domain prompt has no options" });
+              ui.notifications?.warn?.(`Wanderer's Guide import: ${app.title || "domain choice"} has no options without a deity; left unresolved`);
+            }
+          } else {
+            ctx.unresolved.push({ owner: owner || app.title, flag: null, reason: "PF2e choice prompt has no options; left unresolved" });
+            ui.notifications?.warn?.(`Wanderer's Guide import: ${app.title || owner || "choice"} has no options; left unresolved`);
+          }
         }
         app.close?.();
         continue;
       }
+      if (seen.has(signature)) continue;
+      seen.add(signature);
       const ownerWgId = app.item?.flags?.[MODULE_ID]?.wgContentId ?? null;
       const specific = ctx.specific(owner, ownerWgId);
       let i = specific.length ? ctx.pick(owner, labels, ownerWgId) : null;
@@ -418,7 +437,7 @@ function watchPrompts(ctx, notes) {
       }
       if (i == null) {
         const deity = deityPromptChoice(app, ctx.beliefs);
-        if (deity != null) { i = deity; via = "WG deity"; }
+        if (deity != null) { i = deity; via = "WG deity"; ctx.markHintUsed?.(app.choices[i].label); }
       }
       if (i == null) {
         const src = app.item?._stats?.compendiumSource ?? app.item?.sourceId ?? null;
@@ -556,20 +575,41 @@ export function dependencyOrder(entries) {
   return out;
 }
 
+/** True when this rule's legal options are only known once the actor exists. */
+export function ruleDependsOnActor(rule) {
+  if (!["ChoiceSet", "GrantItem"].includes(rule?.key)) return false;
+  if (Array.isArray(rule.predicate) && rule.predicate.length) return true;
+  if (rule.key !== "ChoiceSet") return false;
+  const choices = rule.choices;
+  if (typeof choices === "string") return true;
+  if (choices && typeof choices === "object" && !Array.isArray(choices)) {
+    if (choices.ownedItems || choices.attacks || choices.unarmedAttacks) return true;
+    return Array.isArray(choices.filter) && choices.filter.some((x) => typeof x === "string" && !/^(item|parent):/.test(x));
+  }
+  return false;
+}
+
 /** True when PF2e needs prior actor state to evaluate this item's rules. */
 export function dependsOnActor(entry) {
-  return (entry.data?.system?.rules ?? []).some((rule) => {
-    if (!["ChoiceSet", "GrantItem"].includes(rule?.key)) return false;
-    if (Array.isArray(rule.predicate) && rule.predicate.length) return true;
-    if (rule.key !== "ChoiceSet") return false;
-    const choices = rule.choices;
-    if (typeof choices === "string") return true;
-    if (choices && typeof choices === "object" && !Array.isArray(choices)) {
-      if (choices.ownedItems || choices.attacks || choices.unarmedAttacks) return true;
-      return Array.isArray(choices.filter) && choices.filter.some((x) => typeof x === "string" && !/^(item|parent):/.test(x));
-    }
-    return false;
-  });
+  return (entry.data?.system?.rules ?? []).some(ruleDependsOnActor);
+}
+
+const SELECTION_GRANT = /^\{item\|flags\.(?:system|pf2e)\.rulesSelections\.([^}]+)\}$/;
+
+/** Copy a fixed ChoiceSet answer onto the GrantItem that reads that flag, so PF2e grants the child without a prompt. */
+export function stampGrantPreselect(rules) {
+  if (!Array.isArray(rules)) return;
+  const selected = new Map();
+  for (const rule of rules) {
+    if (rule?.key !== "ChoiceSet" || rule.selection == null || ruleDependsOnActor(rule) || !rule.flag) continue;
+    selected.set(rule.flag, rule.selection);
+  }
+  for (const rule of rules) {
+    if (rule?.key !== "GrantItem" || ruleDependsOnActor(rule)) continue;
+    const flag = String(rule.uuid ?? "").match(SELECTION_GRANT)?.[1];
+    if (!flag || !selected.has(flag) || rule.preselectChoices?.[flag] != null) continue;
+    rule.preselectChoices = { ...(rule.preselectChoices ?? {}), [flag]: selected.get(flag) };
+  }
 }
 
 /**
@@ -585,10 +625,38 @@ export function runtimeGrantMatch(entry, grants, catalog = null) {
   return hits.length === 1 ? hits[0] : null;
 }
 
+/** The one feat or action PF2e already granted under this entry's exact slug, if there is exactly one. */
+export function exactSlugGrant(entry, grants) {
+  if (entry.kind !== "feat") return null;
+  const hits = grants.filter(({ item }) => {
+    if (!["feat", "action"].includes(item.type)) return false;
+    return (item.system?.slug || sluggify(item.name)) === entry.slug;
+  });
+  return hits.length === 1 ? hits[0] : null;
+}
+
+/** True when a grant selected something other than WG's answer. An empty selection did not fix the choice. */
+export function grantFixedChoice(hints, selections, itemName) {
+  if (!hints?.length || !selections?.length) return false;
+  const matched = hints.some((hint) => selections.some((value) => selectionMatchesHint(value, hint)) || sluggify(itemName).includes(sluggify(hint)));
+  return !matched;
+}
+
+function selectionMatchesHint(value, hint) {
+  const wanted = sluggify(hint);
+  if (!wanted) return false;
+  if (typeof value === "string") {
+    const got = sluggify(value);
+    return got === wanted || got === `${wanted}-dragon` || wanted === `${got}-dragon`;
+  }
+  if (value && typeof value === "object") return Object.values(value).some((part) => selectionMatchesHint(part, hint));
+  return false;
+}
+
 export function reconcileRuntimeGrants(entries, grants, unresolved = null, catalog = null) {
   for (const e of entries) {
-    if (!e.unresolved || e.match || e.custom || e.coveredBy) continue;
-    const hit = runtimeGrantMatch(e, grants, catalog);
+    if (e.custom || e.coveredBy || !e.unresolved || e.match) continue;
+    const hit = runtimeGrantMatch(e, grants, catalog) ?? exactSlugGrant(e, grants);
     if (!hit) continue;
     delete e.unresolved;
     e.coveredBy = hit.item.name;
@@ -694,12 +762,13 @@ export async function planImport(exp, { host, matchCatalog = null }) {
   const plan = buildPlan(exp);
   const index = await compendiumIndex();
   const catalogInfo = unwrapCatalog(matchCatalog);
-  const matched = matchEntries(plan.entries, index, { catalog: catalogInfo.catalog });
+  const catalog = normalizeMatchCatalog(catalogInfo.catalog);
+  const matched = matchEntries(plan.entries, index, { catalog });
   for (const entry of matched) if (entry.kind === "class") entry.keyAbility = plan.keyAbility;
   coverFeatureGaps(matched, findActor(plan, host) ?? null, index);
   const misses = missReport(matched);
   const actor = findActor(plan, host) ?? null;
-  const ctx = choiceContext(exp, plan, index, actor);
+  const ctx = choiceContext(exp, plan, index, actor, { semanticSuffixes: catalog.semanticSuffixes });
   for (const s of plan.structural ?? []) ctx.unresolved.push({ owner: `${s.kind}: ${s.name}`, flag: null, status: s.status, reason: s.reason });
   const notes = [];
   const problems = [];
@@ -864,7 +933,8 @@ async function applyImport(p, { onStep, parity, failAfter }) {
       // Items with GrantItem rules go first so their grants exist before the rest are checked
       // (e.g. Web Weaver grants Specialty Crafting, which WG also lists as a feat).
       const grants = (e) => (e.data.system?.rules ?? []).some((r) => r?.key === "GrantItem");
-      const todo = dependencyOrder(matched.filter((x) => x.kind === kind && x.data));
+      reconcileRuntimeGrants(matched, explicitGrants(actor.items, old), p.ctx.unresolved, p.matchCatalog);
+      const todo = dependencyOrder(matched.filter((x) => x.kind === kind && x.data && !x.coveredBy));
       for (const pass of [todo.filter(grants), todo.filter((e) => !grants(e))]) {
         const batch = [];
         const batchEntries = [];
@@ -881,20 +951,21 @@ async function applyImport(p, { onStep, parity, failAfter }) {
           // Dedupe only against items PF2e explicitly granted from something
           // this run created. This uses source UUIDs or exact slugs only.
           const granted = explicitGrants(actor.items, old);
-          const g = kind === "equipment" ? null : granted.find(({ item }) => sameThing(e, item));
+          const g = kind === "equipment" ? null : granted.find(({ item }) => sameThing(e, item)) ?? exactSlugGrant(e, granted);
           if (g) {
             e.outcome = "granted"; e.grantedBy = g.parent.name; e.itemId = g.item.id;
+            delete e.unresolved;
             for (const n of e.notes ?? []) { const j = notes.indexOf(n); if (j >= 0) notes.splice(j, 1); }
             const k = misses.findIndex((m) => m === `${e.kind}: ${e.name}`); if (k >= 0) misses.splice(k, 1);
             if (kind === "spell" && e.entryId && g.item.system.location?.value !== e.entryId) await g.item.update({ "system.location.value": e.entryId });
             const hints = p.ctx.specific(e.name);
             const selections = [
-              ...Object.values(g.item._source.flags?.pf2e?.rulesSelections ?? {}),
-              ...(g.item._source.system?.rules ?? []).filter((r) => r?.key === "ChoiceSet" && r.selection != null).map((r) => r.selection),
-            ].map(String);
-            if (hints.length && !hints.some((h) => selections.some((v) => sluggify(v) === sluggify(h) || sluggify(g.item.name).includes(sluggify(h))))) {
+              ...Object.values(g.item._source?.flags?.pf2e?.rulesSelections ?? g.item.flags?.pf2e?.rulesSelections ?? {}),
+              ...(g.item._source?.system?.rules ?? g.item.system?.rules ?? []).filter((r) => r?.key === "ChoiceSet" && r.selection != null).map((r) => r.selection),
+            ];
+            if (grantFixedChoice(hints, selections, g.item.name)) {
               p.ctx.unresolved.push({ owner: g.item.name, flag: null, reason: `WG answer ${hints.join(", ")} differs from PF2e's grant via ${g.parent.name}; kept PF2e's rule` });
-              for (const key of p.ctx.hints.keys?.get(sluggify(e.name)) ?? []) p.ctx.conflicts.set(key, `WG answer ${hints.join(", ")} for ${e.name}; PF2e's ${g.parent.name} grant fixes it (${selections.join(", ") || "no selection"}); kept PF2e's rule`);
+              for (const key of p.ctx.hints.keys?.get(sluggify(e.name)) ?? []) p.ctx.conflicts.set(key, `WG answer ${hints.join(", ")} for ${e.name}; PF2e's ${g.parent.name} grant fixes it (${selections.map(String).join(", ")}); kept PF2e's rule`);
             }
             continue;
           }
@@ -1047,5 +1118,110 @@ export async function importCharacter(exp, { host, matchCatalog = null, onStep =
     whisper: [game.user.id],
     content: `<h3>WG import: ${esc(plan.name)}</h3><p>${matched.length - misses.length} matched, ${misses.length} created as homebrew or missed.</p>${misses.length ? `<ul>${misses.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${notes.length ? `<p>Choices:</p><ul>${notes.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : ""}${p.ctx.unresolved.length ? `<p>Unresolved choices:</p><ul>${p.ctx.unresolved.map((u) => `<li>${esc(u.owner)}${u.flag ? ` [${esc(u.flag)}]` : ""}: ${esc(u.reason)}</li>`).join("")}</ul>` : ""}${p.warnings.length ? `<p><strong>Warnings:</strong></p><ul>${p.warnings.map((w) => `<li>${esc(w)}</li>`).join("")}</ul>` : ""}${duplicateHtml}${formulasHtml(matched, plan)}${customItemsHtml(customReports(matched))}${parityResult ? parityHtml(plan.name, parityResult) : ""}${coverageHtml(p.coverage)}`,
   });
-  return { actor, customItems: customReports(matched), misses, notes, warnings: p.warnings, unresolved: p.ctx.unresolved, coverage: p.coverage, matched: matched.length - misses.length, parity: parityResult };
+  const digest = buildImportDigest(p, { parity: parityResult, duplicates: duplicateDiagnostics });
+  await attachImportDigest(actor, digest);
+  return { actor, customItems: customReports(matched), misses, notes, warnings: p.warnings, unresolved: p.ctx.unresolved, coverage: p.coverage, matched: matched.length - misses.length, parity: parityResult, digest };
+}
+
+const DIGEST_START = "<!-- wgi-import-digest -->";
+const DIGEST_END = "<!-- /wgi-import-digest -->";
+const DIGEST_CAP = 12;
+
+function digestLine(u) {
+  return `${u.owner}${u.flag ? ` [${u.flag}]` : ""}: ${u.reason}`;
+}
+
+/** Four buckets for the actor note: clean results, things to verify, follow-up work, and open gaps. */
+export function buildImportDigest(p, { parity = null, duplicates = [] } = {}) {
+  const perfect = [];
+  const check = [];
+  const todo = [];
+  const unresolved = [];
+  const entries = p.matched ?? [];
+  const applied = entries.filter((e) => e.match && !e.unresolved && !e.error && e.kind !== "formula");
+  if (applied.length) perfect.push(`${applied.length} compendium entries applied.`);
+  const choices = (p.notes ?? []).filter((n) => /^choice /.test(n));
+  if (choices.length) perfect.push(`${choices.length} choices filled from Wanderer's Guide.`);
+  for (const e of entries.filter((e) => e.coveredBy)) perfect.push(`${e.name} is included in ${e.coveredBy}.`);
+  const formulas = entries.filter((e) => e.kind === "formula" && e.match);
+  if (formulas.length) perfect.push(`${formulas.length} formulas added to the crafting list.`);
+  for (const r of customReports(entries)) {
+    const rough = (r.notes?.length ?? 0) > 0 || (r.traits?.unresolved?.length ?? 0) > 0 || (r.ops ?? []).some((o) => o.status && o.status !== "covered");
+    if (rough) check.push(`Custom item ${r.name} needs a look at its rules.`);
+    else perfect.push(`Custom item ${r.name} imported.`);
+  }
+
+  for (const n of p.notes ?? []) if (/^HP:/.test(n)) check.push(n);
+  for (const w of p.warnings ?? []) check.push(w);
+  for (const d of duplicates) if (!d.expectedGrantPair) check.push(`Unexpected duplicate: ${d.key}.`);
+  if (parity && !parity.ok) {
+    for (const r of parity.failed ?? []) check.push(`Parity ${r.check}: Wanderer's Guide has ${formatDigestValue(r.wg)}; Foundry has ${formatDigestValue(r.foundry)}.`);
+  }
+  const leftovers = (p.coverage?.rows ?? []).filter((r) => r.status === "leftover-preserved");
+  if (leftovers.length) check.push(`${leftovers.length} source values were stored on the actor and not applied as rules.`);
+
+  for (const e of entries) if (e.kind === "formula" && !e.match) todo.push(`Add the formula ${e.name} on the crafting tab.`);
+  const asks = (p.ctx?.unresolved ?? []).filter((u) => /will ask|no options|left unresolved|no explicit/i.test(u.reason ?? ""));
+  if (asks.length) todo.push(`Finish ${asks.length} choice${asks.length === 1 ? "" : "s"} that Wanderer's Guide did not answer.`);
+
+  const seen = new Set();
+  for (const u of p.ctx?.unresolved ?? []) {
+    const line = digestLine(u);
+    if (seen.has(line)) continue;
+    seen.add(line);
+    unresolved.push(line);
+  }
+  for (const e of entries) {
+    if (!e.unresolved || e.kind === "formula") continue;
+    const line = `${e.kind}: ${e.name}: ${e.unresolved}`;
+    if (seen.has(line)) continue;
+    seen.add(line);
+    unresolved.push(line);
+  }
+  const dropped = (p.coverage?.rows ?? []).filter((r) => r.status === "dropped");
+  if (dropped.length) unresolved.push(`${dropped.length} source paths were dropped and not imported.`);
+
+  const fill = (list, empty) => (list.length ? list : [empty]);
+  return {
+    perfect: fill(perfect, "Nothing applied cleanly."),
+    check: fill(check, "Nothing flagged for review."),
+    todo: fill(todo, "No follow-up actions."),
+    unresolved: fill(unresolved, "Nothing left unresolved."),
+  };
+}
+
+function formatDigestValue(v) {
+  if (v == null || typeof v === "number" || typeof v === "string") return String(v);
+  try { return JSON.stringify(v); } catch { return String(v); }
+}
+
+export function digestHtml(digest) {
+  const section = (title, items) => {
+    const shown = items.slice(0, DIGEST_CAP);
+    const more = items.length - shown.length;
+    return `<h3>${esc(title)}</h3><ul>${shown.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>${more > 0 ? `<p>And ${more} more.</p>` : ""}`;
+  };
+  return `<h2>Wanderer's Guide import</h2>${section("Went perfectly", digest.perfect)}${section("Check these", digest.check)}${section("Still to do", digest.todo)}${section("Unresolved", digest.unresolved)}`;
+}
+
+/** Keep any biography the player already wrote; replace only this import's block. */
+export function mergeDigestNotes(existing, html) {
+  const block = `${DIGEST_START}${html}${DIGEST_END}`;
+  const text = typeof existing === "string" ? existing : String(existing?.value ?? "");
+  const re = new RegExp(`${DIGEST_START}[\\s\\S]*?${DIGEST_END}`);
+  if (re.test(text)) return text.replace(re, block);
+  const trimmed = text.trim();
+  return trimmed ? `${trimmed}\n${block}` : block;
+}
+
+async function attachImportDigest(actor, digest) {
+  if (!actor) return;
+  const html = digestHtml(digest);
+  const current = actor.system?.details?.biography?.campaignNotes ?? "";
+  const next = mergeDigestNotes(current, html);
+  const patch = { "system.details.biography.campaignNotes": next };
+  await actor.update(patch);
+  const stored = { ...digest, at: new Date().toISOString() };
+  if (typeof actor.setFlag === "function") await actor.setFlag(MODULE_ID, "importDigest", stored);
+  else await actor.update({ [`flags.${MODULE_ID}.importDigest`]: stored });
 }

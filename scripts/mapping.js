@@ -30,6 +30,8 @@ const SEMANTIC_ROLE_SUFFIXES = [
 
 // WG -> PF2e name aliases come only from the wgi_rules match catalog (compendium_match_aliases,
 // active rows), bundled as data/match-catalog.json. There is no hard-coded alias table.
+// Evidence-backed names such as Lightslayer Oath -> Oath of the Slayer are seeded in the
+// database (011) and exported into that catalog; they are not a second alias list here.
 
 const ATTR_KEYS = { STR: "str", DEX: "dex", CON: "con", INT: "int", WIS: "wis", CHA: "cha" };
 
@@ -150,13 +152,19 @@ export function buildPlan(exp) {
 
 /** Match entries against a compendium index: slug first, then an unambiguous name (or name+level). */
 /** Sluggified semantic stems: "Bomber Research Field" -> ["bomber"]. */
-export function semanticStems(name) {
+export function semanticStems(name, suffixes = SEMANTIC_ROLE_SUFFIXES) {
   const raw = String(name ?? "").trim();
   const lower = raw.toLowerCase();
-  return SEMANTIC_ROLE_SUFFIXES.filter((suffix) => lower.endsWith(` ${suffix}`)).map((suffix) => raw.slice(0, -(suffix.length + 1)).trim()).filter(Boolean).map(sluggify);
+  return suffixes.filter((suffix) => lower.endsWith(` ${suffix}`)).map((suffix) => raw.slice(0, -(suffix.length + 1)).trim()).filter(Boolean).map(sluggify);
 }
 /** Names a WG choice answer may carry in PF2e: the full slug plus semantic stems. */
-export const choiceNameKeys = (h) => [sluggify(h), ...semanticStems(h)];
+export const choiceNameKeys = (h, suffixes) => [sluggify(h), ...semanticStems(h, suffixes)];
+
+function activeRules(catalog) {
+  return (catalog?.rules ?? []).filter((r) => r && (!r.status || r.status === "active"))
+    .slice()
+    .sort((a, b) => Number(a.priority ?? 100) - Number(b.priority ?? 100));
+}
 
 /** Normalize the Postgres-exported match registry into a small pure runtime catalog. */
 export function normalizeMatchCatalog(catalog = null) {
@@ -174,8 +182,13 @@ export function normalizeMatchCatalog(catalog = null) {
     aliases.set(key, list);
   }
   for (const list of aliases.values()) list.sort((a, b) => a.priority - b.priority);
-  const typeMap = catalog?.typeMap ?? catalog?.type_map ?? null;
-  return { aliases, typeMap };
+  let typeMap = catalog?.typeMap ?? catalog?.type_map ?? null;
+  let semanticSuffixes = null;
+  for (const rule of activeRules(catalog)) {
+    if (rule.rule_kind === "type-map" && rule.payload && typeof rule.payload === "object") typeMap = rule.payload;
+    if (rule.rule_kind === "semantic-suffix" && Array.isArray(rule.payload?.suffixes)) semanticSuffixes = rule.payload.suffixes.map((s) => String(s).toLowerCase());
+  }
+  return { aliases, typeMap, semanticSuffixes: semanticSuffixes ?? SEMANTIC_ROLE_SUFFIXES };
 }
 export function matchEntries(entries, index, { catalog = null } = {}) {
   const matchCatalog = normalizeMatchCatalog(catalog);
@@ -190,15 +203,7 @@ export function matchEntries(entries, index, { catalog = null } = {}) {
     (byName.get(n) ?? byName.set(n, []).get(n)).push(row);
   }
   const typesFor = (pt) => typesForKind(pt, matchCatalog.typeMap);
-  const semanticStems = (name) => {
-    const raw = String(name ?? "").trim();
-    const lower = raw.toLowerCase();
-    return SEMANTIC_ROLE_SUFFIXES
-      .filter((suffix) => lower.endsWith(` ${suffix}`))
-      .map((suffix) => raw.slice(0, -(suffix.length + 1)).trim())
-      .filter(Boolean)
-      .map(sluggify);
-  };
+  const stemsFor = (name) => semanticStems(name, matchCatalog.semanticSuffixes);
   const uniqueSlugHit = (slug, types, entry) => {
     const candidates = types.flatMap((t) => {
       return bySlugAll.get(`${t}:${slug}`) ?? [];
@@ -210,6 +215,29 @@ export function matchEntries(entries, index, { catalog = null } = {}) {
       if (atLevel.length === 1) return atLevel[0];
     }
     return null;
+  };
+  const kindOf = (row) => {
+    if (row.item_kind === "equipment" || row.item_kind === "npc") return row.item_kind;
+    if (row.item_kind) return null;
+    if (typesFor("equipment").includes(row.type)) return "equipment";
+    if (row.type === "npc") return "npc";
+    return null;
+  };
+  const catalogPhraseMaps = new Map();
+  const catalogPhrases = (kind) => {
+    if (catalogPhraseMaps.has(kind)) return catalogPhraseMaps.get(kind);
+    const map = new Map();
+    index.forEach((row, i) => {
+      if (kindOf(row) !== kind) return;
+      const key = phrase(row.name ?? row.pf2e_name);
+      if (!key) return;
+      const id = String(row.uuid ?? row.entry_id ?? row.source_path ?? `row:${i}`);
+      const list = map.get(key) ?? new Map();
+      if (!list.has(id)) list.set(id, row);
+      map.set(key, list);
+    });
+    catalogPhraseMaps.set(kind, map);
+    return map;
   };
   return entries.map((e) => {
     if (e.kind === "formula") return resolveFormula(e, index);
@@ -230,9 +258,30 @@ export function matchEntries(entries, index, { catalog = null } = {}) {
       const hit = uniqueSlugHit(alias.target, typesFor(e.packType), e);
       if (hit) return { ...e, match: hit, via: "catalog-alias", canonicalSlug: alias.target, matchEvidence: alias.evidence };
     }
-    for (const stem of semanticStems(e.name)) {
+    for (const stem of stemsFor(e.name)) {
       const hit = uniqueSlugHit(stem, typesFor(e.packType), e);
       if (hit) return { ...e, match: hit, via: "semantic-name", canonicalSlug: stem };
+    }
+    const catalogKind = e.packType === "npc" || e.kind === "npc" ? "npc"
+      : e.packType === "equipment" || e.kind === "equipment" ? "equipment" : null;
+    if (catalogKind) {
+      const phrases = catalogLookupNames(e.name, catalogKind);
+      const parsed = catalogKind === "equipment" ? parseComposedName(e.name) : null;
+      const map = catalogPhrases(catalogKind);
+      for (const key of phrases) {
+        const hits = [...(map.get(key)?.values() ?? [])];
+        if (hits.length > 1) return { ...e, match: null, via: "ambiguous", candidates: hits.map((r) => r.uuid ?? r.entry_id ?? r.source_path) };
+        if (hits.length === 1) {
+          const stripped = parsed?.material && phrase(parsed.base) === key;
+          return {
+            ...e,
+            match: hits[0],
+            via: key === phrases[0] ? "name" : "catalog-lookup",
+            ...(stripped ? { material: parsed.material, grade: parsed.material.grade } : {}),
+          };
+        }
+      }
+      return { ...e, match: null, via: "miss" };
     }
     for (const t of typesFor(e.packType)) {
       const list = byName.get(`${t}:${e.name.toLowerCase()}`);
@@ -379,19 +428,31 @@ export function wgChoiceHints(exp) {
   };
   Object.defineProperty(out, "byId", { value: new Map(), enumerable: false });
   for (const o of owners) visit(o, o.operations);
+  // Adopted Ancestry stores the chosen ancestry as a trait id (all_traits meta_data.ancestry_trait).
+  // The select operation lives on the granted feat and is often absent from the export. Attach the
+  // trait name to the single feat whose id is a token of the key. Zero or several feat ids stay unnamed.
+  const ancestryTraits = new Map((exp?.content?.all_traits ?? []).filter((t) => t?.meta_data?.ancestry_trait && t.name).map((t) => [String(t.id), t.name]));
+  for (const [key, value] of Object.entries(sel)) {
+    const traitName = ancestryTraits.get(String(value));
+    if (!traitName) continue;
+    const tokens = new Set(key.split(/[_-]/));
+    const featOwners = [...byId.values()].filter((f) => tokens.has(String(f.id)));
+    if (featOwners.length === 1) push(featOwners[0], traitName, key);
+  }
   // Explicit picks the visitor cannot name itself (e.g. an ABILITY_BLOCK option that gives Plant Empathy),
   // named from the option's own giveAbilityBlock id (scripts/selections.js).
   for (const [k, x] of classifySelections(exp)) if (x.answer) push(x.answer.owner, x.answer.name, k);
   return out;
 }
 
-/** Index of the first label matching a hint name (exact slug, or "Polymath" vs "Polymath Muse"). */
+/** Index of the first label matching a hint name (exact slug, a single " Dragon" suffix, or "Polymath" vs "Polymath Muse"). */
 export function matchChoice(labels, hintNames) {
   const hints = hintNames.map((n) => sluggify(n)).filter(Boolean);
   for (const h of hints) {
     for (const [i, label] of labels.entries()) {
       const l = sluggify(label);
-      if (l && (h === l || h.startsWith(`${l}-`) || h.endsWith(`-${l}`) || l.endsWith(`-${h}`))) return i;
+      // "Diabolic" and "Diabolic Dragon" are the same PF2e dragon option. The extra word must be exactly Dragon.
+      if (l && (h === l || l === `${h}-dragon` || h === `${l}-dragon` || h.startsWith(`${l}-`) || h.endsWith(`-${l}`) || l.endsWith(`-${h}`))) return i;
     }
   }
   return -1;
@@ -442,6 +503,66 @@ export function parseComposedName(name, meta = {}) {
   if (mm && typeof mm === "object" && (mm.type || mm.name)) material = { type: sluggify(mm.type ?? mm.name), grade: GRADES[String(mm.grade ?? "standard").toLowerCase()] ?? "standard" };
   const composed = rest !== String(name ?? "").trim();
   return { base: rest.trim(), runes, material, composed };
+}
+
+/** Parentheticals that select a different use or size, not a source reprint. */
+const USAGE_PAREN = new Set(["melee", "ranged", "light", "heavy", "tiny", "small", "medium", "large", "huge", "gargantuan"]);
+/** Bases too broad to count as the same catalog item after a material is stripped. */
+const GENERIC_ITEM_BASE = new Set(["armor", "weapon", "shield", "object", "item", "tool", "tools"]);
+const DRAGON_AGES = "wyrmling|young|adult|ancient|old";
+
+function phrase(name) {
+  return String(name ?? "")
+    .normalize("NFKD")
+    .toLowerCase()
+    .replace(/['’“”"]/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+/**
+ * Ordered catalog lookup phrases for a PF2 equipment or creature name.
+ * Exact phrase first. Later phrases are rewrites that still name the same
+ * compendium document: a source reprint, a scroll rank, a precious-material
+ * base that is not a generic category, an elite or weak adjustment, or a
+ * dragon age moved into parentheses.
+ */
+export function catalogLookupNames(name, kind = "equipment") {
+  const keys = [];
+  const add = (value) => {
+    const next = phrase(value);
+    if (next && !keys.includes(next)) keys.push(next);
+  };
+  add(name);
+  const trailing = String(name ?? "").match(/\s*\(([^)]*)\)\s*$/);
+  let stem = String(name ?? "");
+  if (trailing) {
+    const inner = phrase(trailing[1]);
+    if (!USAGE_PAREN.has(inner) && !/^level \d+$/.test(inner)) {
+      stem = stem.replace(/\s*\([^)]*\)\s*$/, "").trim();
+      add(stem);
+    }
+  }
+  if (kind === "equipment") {
+    const scroll = phrase(stem).match(/^(\d+(?:st|nd|rd|th)) (?:rank|level) scroll$/);
+    if (scroll) add(`scroll of ${scroll[1]}-rank spell`);
+    const parsed = parseComposedName(stem);
+    const base = phrase(parsed.base);
+    if (parsed.composed && base && !GENERIC_ITEM_BASE.has(base)) add(parsed.base);
+  }
+  if (kind === "npc") {
+    const elite = phrase(stem).match(/^(?:elite|weak) (.+)$/);
+    const body = elite ? elite[1] : phrase(stem);
+    if (elite) add(body);
+    const dragon = body.match(new RegExp(`^(${DRAGON_AGES}) (.+ dragon)(?: (spellcaster))?$`));
+    if (dragon) {
+      const age = dragon[1];
+      const dragonBody = dragon[2];
+      if (dragon[3]) add(`${dragonBody} (${age}, spellcaster)`);
+      add(`${dragonBody} (${age})`);
+    }
+  }
+  return keys;
 }
 
 // ---------------------------------------------------------------------------------------------

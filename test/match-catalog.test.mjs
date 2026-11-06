@@ -23,10 +23,35 @@ test("generated snapshot (if present) is valid, built for PF2e 8.6.1, active row
   assert.ok(bundled.aliases.every((a) => a.status === "active"));
 });
 
-test("PF2e version mismatch loads but warns", () => {
+test("PF2e version mismatch does not apply the catalog", () => {
   const r = checkCatalog(fixture, "8.7.0");
-  assert.equal(r.status, "loaded");
+  assert.equal(r.status, "stale");
+  assert.equal(r.catalog, null);
   assert.match(r.warnings.join(" "), /built for PF2e 8\.6\.1; this world runs PF2e 8\.7\.0/);
+  assert.match(r.warnings.join(" "), new RegExp(CATALOG_NOT_LOADED));
+  const index = [{ type: "feat", slug: "flurry", name: "Flurry", uuid: "Compendium.pf2e.feats-srd.flurry" }];
+  const [m] = matchEntries([{ kind: "feat", packType: "feat", name: "Flurry Edge", slug: "flurry-edge" }], index, { catalog: r.catalog });
+  assert.equal(m.match, null);
+});
+
+test("loader leaves a mismatched catalog unloaded and exact names still match", async () => {
+  resetMatchCatalogCache();
+  const loaded = await loadMatchCatalog({
+    fetchImpl: async () => ({ ok: true, json: async () => fixture }),
+    systemVersion: "9.0.0",
+  });
+  assert.equal(loaded.status, "stale");
+  assert.equal(loaded.catalog, null);
+  assert.match(loaded.warnings.join(" "), new RegExp(CATALOG_NOT_LOADED));
+  const index = [{ type: "feat", slug: "flurry", name: "Flurry", uuid: "Compendium.pf2e.feats-srd.flurry" }];
+  const [alias, exact] = matchEntries([
+    { kind: "feat", packType: "feat", name: "Flurry Edge", slug: "flurry-edge" },
+    { kind: "feat", packType: "feat", name: "Flurry", slug: "flurry" },
+  ], index, { catalog: loaded.catalog });
+  assert.equal(alias.match, null);
+  assert.equal(exact.match.slug, "flurry");
+  assert.equal(exact.via, "slug");
+  resetMatchCatalogCache();
 });
 
 test("missing or invalid catalog is not loaded and says so", () => {
