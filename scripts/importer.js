@@ -769,6 +769,7 @@ export async function planImport(exp, { host, matchCatalog = null }) {
   const misses = missReport(matched);
   const actor = findActor(plan, host) ?? null;
   const ctx = choiceContext(exp, plan, index, actor, { semanticSuffixes: catalog.semanticSuffixes });
+  for (const s of plan.structural ?? []) ctx.unresolved.push({ owner: `${s.kind}: ${s.name}`, flag: null, status: s.status, reason: s.reason });
   const notes = [];
   const problems = [];
   // Spellcasting entries get their ids now so spells can point at them.
