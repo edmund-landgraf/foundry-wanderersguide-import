@@ -2,6 +2,7 @@ import { MODULE_ID } from "./constants.js";
 import { applyCampaignArt, campaignArtUrl } from "./campaign.js";
 import { listCharacters, listCampaigns, getCampaign, campaignLabel, exportCharacter, resolveFunctionsUrl } from "./api.js";
 import { importCharacter, previewImport, diffHtml, reviewHtml } from "./importer.js";
+import { loadMatchCatalog } from "./match-catalog.js";
 
 function opts() {
   return { baseUrl: resolveFunctionsUrl(game.settings.get(MODULE_ID, "wgServer"), game.settings.get(MODULE_ID, "functionsUrl")), apiKey: game.settings.get(MODULE_ID, "apiKey") };
@@ -42,7 +43,7 @@ async function runImport(ids, host, { dryRun = false, parity = false, review = t
     try {
       ui.notifications.info(`Wanderer's Guide: importing ${id}...`);
       const exp = await exportCharacter(opts(), id);
-      const res = await importCharacter(exp, { host, parity, confirm: review ? confirmPlan : null, failAfter });
+      const res = await importCharacter(exp, { host, matchCatalog: await loadMatchCatalog(), parity, confirm: review ? confirmPlan : null, failAfter });
       if (res.cancelled) {
         ui.notifications.info(`Wanderer's Guide: import of ${res.plan.name} cancelled; nothing changed.`);
         await ChatMessage.create({ whisper: [game.user.id], content: `<h3>WG import cancelled: ${esc(res.plan.name)}</h3><p>Nothing was written.</p>` }).catch(() => {});
@@ -70,7 +71,7 @@ async function runPreview(ids, host) {
   for (const id of ids) {
     try {
       const exp = await exportCharacter(opts(), id);
-      const { review } = await previewImport(exp, { host });
+      const { review } = await previewImport(exp, { host, matchCatalog: await loadMatchCatalog() });
       parts.push(review);
     } catch (e) {
       parts.push(`<h3>WG ${id}</h3><p>${esc(e.message)}</p>`);
