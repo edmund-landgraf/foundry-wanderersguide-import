@@ -6,18 +6,18 @@ It does not replace the raw WG export and it does not replace Foundry/PF2e's rul
 
 ## Database
 
-The current development database is PostgreSQL on VPS-UNWH:
+The development database is PostgreSQL:
 
 ```text
 database: wgi_rules
 schema:   public
 ```
 
-The database is separate from the proposal-manager database. PostgreSQL is containerized in `my-postgres` and is bound to localhost on the host. The Foundry module must not connect directly to PostgreSQL; a future read-only service/API should expose selected snapshots or plans.
+The database is separate from other application databases and is only reachable locally on its host. The Foundry module must not connect directly to PostgreSQL; a future read-only service/API should expose selected snapshots or plans.
 
 ## Source and projections
 
-`test_pc_fixtures` stores the complete sanitized WG v4 JSON export as immutable `jsonb`. The eight current fixtures are PCs 63, 64, 66, 71, 72, 74, 76, and 78.
+`test_pc_fixtures` stores the complete sanitized WG v4 JSON export as immutable `jsonb`. The original eight fixtures are PCs 63, 64, 66, 71, 72, 74, 76, and 78; current table row counts are listed in the top-level README.
 
 `test_pc_summary` is a convenience view over the raw snapshot. It exposes the WG ID, name, class, ancestry, level, and export version.
 
@@ -104,7 +104,40 @@ The database can decide that an action is eligible for review; Foundry remains t
 - `007_create_import_log_summary.sql`: best-log summaries and external-file references.
 - `008_create_import_gap_rollup.sql`: best-log gaps, unresolved choices, and warnings by character and feature.
 - `009_class_rename_and_plan_batches.sql`: class-scoped renames, grant provenance, and dependency batches.
+- `010_seed_registry_lookup_rows.sql`: class identity lookups, shared selection policies, proposed spell-source rows, and narrow registry coverage cases.
+- `011_add_lightslayer_oath_mapping.sql`: maps WG Lightslayer Oath to PF2e Oath of the Slayer.
+- `012_create_pf2e_class_keywords.sql`: canonical PF2e class keyword catalog.
+- `013_create_wg_source_terms.sql`: provenance-preserving snapshot of Wanderer's Guide keyword rows.
+- `014_create_wg_pf2e_keyword_matches.sql`: evidence-backed matches over the WG keyword snapshot.
+- `015_add_ranger_animal_mappings.sql`: Ranger animal features mapped to separate PF2e items.
+- `016_normalize_wg_rule_projection.sql`: indexed projection over `wg_keyword_snapshot`.
+- `017_class_feature_mappings.sql`: class-feature mappings that are not exact names.
+- `018_feat_mappings.sql`: exact WG to PF2e feat mappings.
+- `020_other_pf2e_mappings.sql`: other exact WG to PF2e mappings from the local snapshot and packs.
+- `021_create_pf2e_spell_keywords.sql`: PF2e spell domain copied from the local packs.
+- `022_match_wg_spells.sql`: exact WG spell matches against that spell domain.
+- `023_mapping_domain_inventory.sql`: mapping work queue by source volume.
+- `024_create_wg_source_entity_snapshot.sql`: preserves non-keyword WG entities and their native relationship inventory for offline matching.
+- `025_seed_exact_wg_class_sources.sql`: records exact WG class IDs against the 29 PF2e class identities; unmatched WG class rows remain unresolved.
+- `026_create_pf2e_catalog_registry.sql`: `pf2e_catalog_entries`, `wg_pf2e_catalog_matches`, and related indexes.
+- `027_seed_pf2e_catalog_8_6_1.sql`: PF2e 8.6.1 catalog rows. This is the catalog later migrations extend; they do not create a second one.
+- `028_build_wg_pf2e_catalog_matches.sql`: exact-name and active-alias resolution, plus the `wg_pf2e_unresolved` view.
+- `033_match_catalog_snapshots.sql`: versioned match-catalog snapshots consumed by the Foundry module.
 - `034_align_match_rule_suffixes.sql`: add the hyphenated research-field semantic suffix.
+- `036_seed_pf2e_bestiary_headers.sql`: PF2e 8.6.1 NPC compendium headers.
+- `037_seed_pf2e_pack_headers.sql`: PF2e 8.6.1 pack headers.
+- `038_pf2e_catalog_match_fields.sql`: extra match columns on `pf2e_catalog_entries`.
+- `039_apply_order.sql`: mirror of the live apply order.
+- `040_match_catalog_snapshot_aliases_check.sql`: requires `payload.aliases` to be a JSON array before the row-count check (folded from the removed 035).
+- `041_pf2e_catalog_item_kind_check.sql`: re-asserts the catalog `item_kind` check, including the kinds 023 used to allow. Does not create a second catalog.
+- `042_reseed_class_keywords_8_6_1.sql`: re-points class keywords at the 8.6.1 catalog.
+- `043_wg_rename_aliases.sql`: pattern-derived rename aliases whose targets exist in the catalog.
+- `044_semantic_proposed_and_alias_audit.sql`: semantic aliases stay proposed; missing 8.6.1 targets are retired.
+- `045_pf2e_grant_rules_8_6_1.sql`: PF2e GrantItem rules from 8.6.1.
+- `046_wg_catalog_matches_unresolved.sql`: rebuilds ability-block catalog matches, including explicit unresolved rows.
+- `047_drop_unused_pf2e_uuid_columns.sql`: drops unused `pf2e_uuid` columns.
+- `048_wg_name_normalized_proposals.sql`: name-normalized match proposals and source-book scope.
+- `049_wg_all_tables_catalog_matches.sql`: catalog matches for the other WG content tables.
 
 ## Rename and plan functions
 
@@ -133,7 +166,7 @@ facts such as matched counts, unresolved choices, warnings, and parity results.
 That file is git-ignored and never committed. Generate it locally (migration 033 must be applied; take a `pg_dump` backup first), or restore it from the latest snapshot row:
 
 ```
-docker exec my-postgres psql -U appuser -d wgi_rules -Atc "select payload from match_catalog_snapshots where pf2e_version = '8.6.1' order by created_at desc limit 1" > data/match-catalog.json
+psql -d wgi_rules -Atc "select payload from match_catalog_snapshots where pf2e_version = '8.6.1' order by created_at desc limit 1" > data/match-catalog.json
 ```
 
 The Foundry module fetches `modules/<module-id>/data/match-catalog.json` at runtime (scripts/match-catalog.js). For an installed module, copy the file into the module folder's `data/`. Without it, imports still run on exact names only and every alias-dependent miss is reported unresolved ("match catalog not loaded").

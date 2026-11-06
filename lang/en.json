@@ -5,8 +5,8 @@
   "WGI.Settings.AuthUrl.Name": "Auth URL",
   "WGI.Settings.AuthUrl.Hint": "Optional. Click Copy next to Auth URL in Wanderer's Guide and paste the whole URL here.",
   "WGI.Settings.WgServer.Name": "WG server",
-  "WGI.Settings.WgServer.Hint": "Production uses wgui.wandersguide.site. Pick Custom to use the URL below.",
-  "WGI.Settings.WgServer.Production": "Production (wgui.wandersguide.site)",
+  "WGI.Settings.WgServer.Hint": "Production uses amba.wandersguide.site. Pick Custom to use the URL below.",
+  "WGI.Settings.WgServer.Production": "Production (amba.wandersguide.site)",
   "WGI.Settings.WgServer.Custom": "Custom",
   "WGI.Settings.FunctionsUrl.Name": "Custom server URL",
   "WGI.Settings.FunctionsUrl.Hint": "Only used when WG server is Custom. Base URL of the Wanderer's Guide edge functions. Local dev: http://127.0.0.1:8000/functions/v1"
