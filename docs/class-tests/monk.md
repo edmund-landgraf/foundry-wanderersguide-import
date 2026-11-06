@@ -21,7 +21,7 @@ Status: **partial**. Import, reload, re-import, changed Path to Perfection and l
 | Qi spell | PASS: Qi Rush in Monk Focus Spells (divine). An extra empty "Monk Spells" spontaneous entry is also created (cosmetic) |
 | Adopted Ancestry | **FAIL**: WG's Human (trait 1436) is not mapped; the prompt is left unanswered ([#77](https://github.com/edmund-landgraf/foundry-wanderersguide-import/issues/77)) |
 | Empty prompt | **FAIL**: Cultural Adaptability then opens a prompt with 0 choices that the importer never closes, so `importCharacter` hangs until it is dismissed ([#77](https://github.com/edmund-landgraf/foundry-wanderersguide-import/issues/77)). The test driver closed it |
-| Key attribute ledger | Cosmetic: Dex is applied but listed as unresolved ([#67](https://github.com/edmund-landgraf/foundry-wanderersguide-import/issues/67)) |
+| Key attribute ledger | Cosmetic: Dex is applied but listed as unresolved ([#67](https://github.com/edmund-landgraf/foundry-wanderersguide-import/issues/67)). That was the 2026-10-28 result. #67 was closed later, on 2026-11-06, by the coverage-ledger fix |
 | Reload | PASS: same HP/AC/items, no duplicates |
 | Re-import (r2) | PASS: one actor, 30 items, no duplicates |
 | Changed choice (r3, Will to Fortitude) | PASS: Path to Perfection (Fortitude) |
