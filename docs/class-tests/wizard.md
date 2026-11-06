@@ -31,12 +31,12 @@ Int +4, Dex +3, Con +3, Wis +2, Cha +1, Str -1. HP 53, AC 20, class DC +11. Key 
 
 | # | Problem | Expected | Actual | Layer | State |
 |---|---|---|---|---|---|
-| W1 | Experimental Spellshaping sub-picks | Reach Spell and Widen Spell | Widen Spell only; "kept PF2e's rule" | importer | new issue (draft) |
-| W2 | Cantrip Expansion (Wizard) | matched to Cantrip Expansion | unresolved, not defaulted | importer | new issue (draft) |
-| W3 | Drain Bonded Item | matched | missed | importer | new issue (draft) |
-| W4 | Heightened prepared spell | one Force Barrage, prepared at rank 3 | two items; report says "unexpected duplicate" | importer | new issue (draft) |
-| W5 | Changed school bonus feat | Counterspell on Unified Magical Theory | school gets Widen Spell (stale); Counterspell unresolved; Experimental Spellshaping prompt empty | importer | new issue (draft) |
-| W6 | Scholar Assurance | as WG | WG Society/Occultism vs PF2e Arcana, kept PF2e | importer | known (#22) |
+| W1 | Experimental Spellshaping sub-picks | Reach Spell and Widen Spell | Widen Spell only; "kept PF2e's rule" | importer | filed as [#81](https://github.com/edmund-landgraf/foundry-wanderersguide-import/issues/81) |
+| W2 | Cantrip Expansion (Wizard) | matched to Cantrip Expansion | unresolved, not defaulted | importer | filed as [#81](https://github.com/edmund-landgraf/foundry-wanderersguide-import/issues/81) |
+| W3 | Drain Bonded Item | matched | missed | importer | filed as [#81](https://github.com/edmund-landgraf/foundry-wanderersguide-import/issues/81) |
+| W4 | Heightened prepared spell | one Force Barrage, prepared at rank 3 | two items; report says "unexpected duplicate" | importer | filed as [#81](https://github.com/edmund-landgraf/foundry-wanderersguide-import/issues/81) |
+| W5 | Changed school bonus feat | Counterspell on Unified Magical Theory | school gets Widen Spell (stale); Counterspell unresolved; Experimental Spellshaping prompt empty | importer | filed as [#81](https://github.com/edmund-landgraf/foundry-wanderersguide-import/issues/81) |
+| W6 | Scholar Assurance | as WG | WG Society/Occultism vs PF2e Arcana, kept PF2e | importer | known ([#22](https://github.com/edmund-landgraf/foundry-wanderersguide-import/issues/22)) |
 
 ## Files
 
