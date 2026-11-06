@@ -1,7 +1,7 @@
 ﻿import test from "node:test";
 import assert from "node:assert/strict";
 import { wgChoiceHints, rawVariableName, selectionKeyFor, selectedKeyAttribute, matchChoice } from "../scripts/mapping.js";
-import { configChoices, choiceLabel, uniqueChoice, applyKeyAbilityData } from "../scripts/importer.js";
+import { configChoices, choiceLabel, uniqueChoice, applyKeyAbilityData, choiceContext } from "../scripts/importer.js";
 
 // Fixtures follow WG content defs read in the pretest (block ids / op shapes); no WG characters exist for these classes.
 const feat = (id, name, ops) => ({ id, name, type: "class-feature", operations: ops });
@@ -43,6 +43,8 @@ test("Barbarian dragon: WG option id -> WG option title -> PF2e PF2E.Dragon.* la
   const pf = ["Adamantine", "Barrage", "Diabolic", "Empyreal"].map((n) => ({ label: `PF2E.Dragon.${n}`, value: { dragonType: n.toLowerCase() } }));
   const labels = pf.map((o) => choiceLabel(o.label, o.value));
   assert.equal(pf[uniqueChoice(labels, hints)].value.dragonType, "diabolic");
+  assert.equal(matchChoice(["Adamantine Dragon", "Diabolic Dragon", "Empyreal Dragon"], hints), 1);
+  assert.equal(matchChoice(["Diabolic", "Diabolic Dragon"], ["Diabolic"]), 0);
 });
 
 test("Path to Perfection: shared WG option ids still route each save to its own feature", () => {
@@ -60,6 +62,28 @@ test("Path to Perfection: shared WG option ids still route each save to its own 
   // PF2e 8.6.1 pathToPerfection values; unlocalized labels fall back to the value.
   const pf = ["fortitude", "reflex", "will"].map((v) => ({ value: v, label: choiceLabel(`PF2E.Saves${v}`, v) }));
   assert.equal(pf[matchChoice(pf.map((o) => o.label), h.byId.get("31266"))].value, "fortitude");
+});
+
+test("ancestry trait id maps to that trait's name on the one owning feat", () => {
+  const cultural = feat(20031, "Cultural Adaptability", []);
+  const e = exp([cultural], {
+    "ancestry-section-491735390724817_9f26290c-a2db-4c45-9b34-5053e60c106d-1_20031_d624594a-2cdc-4d45-82f3-c5a90a341c61_e45b21ec-7ce6-4a0e-8c09-63072f2bc9e7": "1436",
+  });
+  e.content.all_traits = [{ id: 1436, name: "Human", meta_data: { ancestry_trait: true } }, { id: 9, name: "Common", meta_data: {} }];
+  const hints = wgChoiceHints(e);
+  assert.deepEqual(hints.byId.get("20031"), ["Human"]);
+  assert.equal(matchChoice(["Dwarf", "Elf", "Halfling", "Human"], hints.byId.get("20031")), 3);
+  const both = exp([feat(20031, "Cultural Adaptability", [selectOp("feat-op", { optionsPredefined: [{ id: "20205", title: "Halfling Luck" }] })]), feat(20205, "Halfling Luck", [])], {
+    "ancestry-section-1_20031_feat-op": "20205",
+    "ancestry-section-1_20031_trait-op": "1436",
+  });
+  both.content.all_traits = e.content.all_traits;
+  const ctx = choiceContext(both, {}, [], null);
+  const ancestries = ["Dwarf", "Elf", "Halfling", "Human"];
+  assert.equal(ancestries[ctx.pick("Adopted Ancestry", ancestries, 20031)], "Human");
+  const ambiguous = exp([cultural, feat(20205, "Halfling Luck", [])], { "x_20031_20205_op": "1436" });
+  ambiguous.content.all_traits = e.content.all_traits;
+  assert.equal(wgChoiceHints(ambiguous).get("cultural-adaptability"), undefined);
 });
 
 test("selection hygiene: exact key only; stray <key>_<oldValue> history entries are ignored", () => {
