@@ -29,9 +29,9 @@ Str +4, Dex +3, Con +3, Wis +3, Int 0, Cha -1. HP 65, AC 20, class DC +11 (Str).
 
 | # | Problem | Expected | Actual | Layer | State |
 |---|---|---|---|---|---|
-| R1 | Class item key attribute | str (r1) / int (r3) | dex both times; ledger "WG chose Strength; not consumed" | importer | new issue (draft); related #53 |
-| R2 | WG "X Racket" feat | matched/folded into the answered prompt | "Ruffian Racket" / "Mastermind Racket" unresolved | importer | new issue (draft); pattern of #50 |
-| R3 | Dwarf Clan Weapon prompt | Clan Dagger from WG | unanswered, closed by harness | importer | known (#22) |
+| R1 | Class item key attribute | str (r1) / int (r3) | dex both times; ledger "WG chose Strength; not consumed" | importer | filed as [#82](https://github.com/edmund-landgraf/foundry-wanderersguide-import/issues/82); related [#53](https://github.com/edmund-landgraf/foundry-wanderersguide-import/issues/53) |
+| R2 | WG "X Racket" feat | matched/folded into the answered prompt | "Ruffian Racket" / "Mastermind Racket" unresolved | importer | filed as [#82](https://github.com/edmund-landgraf/foundry-wanderersguide-import/issues/82); pattern of [#50](https://github.com/edmund-landgraf/foundry-wanderersguide-import/issues/50) |
+| R3 | Dwarf Clan Weapon prompt | Clan Dagger from WG | unanswered, closed by harness | importer | known ([#22](https://github.com/edmund-landgraf/foundry-wanderersguide-import/issues/22)) |
 
 ## Files
 
