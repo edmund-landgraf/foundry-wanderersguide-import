@@ -99,8 +99,26 @@ async function restoreSpellcastingState(actor, state) {
 //   2. on re-import, the selection already stored on the actor for the same compendium item, if still legal.
 // Nothing is guessed from other names and the first option is never taken. Anything left open is
 // recorded as unresolved and PF2e's own prompt is shown to the user (AMBA_REUSE_PLAN section 3).
-export function choiceContext(exp, plan, index, actor, { semanticSuffixes = null } = {}) {
+export function choiceContext(exp, plan, index, actor, { semanticSuffixes = null, catalog = null } = {}) {
   const hints = wgChoiceHints(exp);
+  // Runtime grants have PF2e names and may lack the source WG content ID.
+  // Route them through reviewed catalog aliases, never unrelated global hints.
+  const ownerAliases = new Map();
+  for (const [source, aliases] of normalizeMatchCatalog(catalog).aliases) {
+    const owner = source.slice(source.indexOf(":") + 1);
+    if (!hints.has(owner)) continue;
+    for (const alias of aliases) {
+      const owners = ownerAliases.get(alias.target) ?? new Set();
+      owners.add(owner);
+      ownerAliases.set(alias.target, owners);
+    }
+  }
+  const ownerKey = (owner) => {
+    const slug = sluggify(owner);
+    if (hints.has(slug)) return slug;
+    const aliases = ownerAliases.get(slug);
+    return aliases?.size === 1 ? [...aliases][0] : slug;
+  };
   const fixedNames = new Set(
     exp?.content?.raw_data_dump?.variables?.PHYSICAL_FEATURE_NAMES?.value
       ?.map((name) => sluggify(name))
@@ -128,10 +146,10 @@ export function choiceContext(exp, plan, index, actor, { semanticSuffixes = null
   const resolvedChoices = new Map();
   const hintKey = (owner, ownerWgId) => ownerWgId != null && hints.byId?.has(String(ownerWgId))
     ? `id:${ownerWgId}`
-    : `name:${sluggify(owner)}`;
+    : `name:${ownerKey(owner)}`;
   const specific = (owner, ownerWgId = null) => ownerWgId != null && hints.byId?.has(String(ownerWgId))
     ? hints.byId.get(String(ownerWgId))
-    : hints.get(sluggify(owner)) ?? [];
+    : hints.get(ownerKey(owner)) ?? [];
   const available = (owner, ownerWgId = null) => specific(owner, ownerWgId).filter((hint) => !assigned.get(hintKey(owner, ownerWgId))?.has(sluggify(hint)));
   const consume = (owner, hint, ownerWgId = null) => {
     const key = hintKey(owner, ownerWgId);
@@ -139,7 +157,7 @@ export function choiceContext(exp, plan, index, actor, { semanticSuffixes = null
     set.add(sluggify(hint));
     assigned.set(key, set);
     for (const source of hints.sources ?? []) {
-      const owns = ownerWgId != null && hints.byId.has(String(ownerWgId)) ? source.ownerId === String(ownerWgId) : source.owner === sluggify(owner);
+      const owns = ownerWgId != null && hints.byId.has(String(ownerWgId)) ? source.ownerId === String(ownerWgId) : source.owner === ownerKey(owner);
       if (owns && sluggify(source.name) === sluggify(hint)) used.add(source.key);
     }
   };
@@ -151,7 +169,13 @@ export function choiceContext(exp, plan, index, actor, { semanticSuffixes = null
     const exact = available
       .map((hint) => ({ hint, index: labels.findIndex((label) => sluggify(label) === sluggify(hint)) }))
       .find((x) => x.index >= 0);
-    const candidate = exact ?? available.map((hint) => ({ hint, index: matchChoice(labels, [hint]) })).find((x) => x.index >= 0);
+    // Runtime options have already been filtered by PF2e. A parenthesized
+    // variant is safe only when exactly one offered option has the base name.
+    const variant = available.map((hint) => {
+      const hits = labels.map((label, index) => sluggify(label.replace(/ \([^()]+\)$/, "")) === sluggify(hint) ? index : -1).filter((index) => index >= 0);
+      return { hint, index: hits.length === 1 ? hits[0] : -1 };
+    }).find((x) => x.index >= 0);
+    const candidate = exact ?? variant ?? available.map((hint) => ({ hint, index: matchChoice(labels, [hint]) })).find((x) => x.index >= 0);
     if (!candidate?.hint) return null;
     consume(owner, candidate.hint, ownerWgId);
     return candidate.index;
@@ -460,7 +484,18 @@ function watchPrompts(ctx, notes) {
         const hits = app.choices.map((c, k) => (prev.some((v) => JSON.stringify(v) === JSON.stringify(c.value)) ? k : -1)).filter((k) => k >= 0);
         if (hits.length === 1) { i = hits[0]; via = "existing Foundry selection"; }
       }
-      if (i >= 0 && via === "WG selection") { ctx.unresolved = ctx.unresolved.filter((u) => u.owner !== owner); }
+      if (i >= 0 && via === "WG selection") {
+        const choice = app.choices[i];
+        if (typeof choice.value === "string" && choice.value.startsWith("Compendium.")) {
+          for (const hint of specific) {
+            const keys = choiceNameKeys(hint, ctx.semanticSuffixes ?? undefined);
+            if (!keys.includes(sluggify(choice.label)) && !keys.includes(sluggify(choice.label.replace(/ \([^()]+\)$/, "")))) continue;
+            const chosen = ctx.resolvedChoices.get(sluggify(hint)) ?? new Set();
+            chosen.add(choice.value);
+            ctx.resolvedChoices.set(sluggify(hint), chosen);
+          }
+        }
+        ctx.unresolved = ctx.unresolved.filter((u) => u.owner !== owner); }
       if (i >= 0) { notes.push(`choice ${app.title}: ${app.choices[i].label} (prompt answered from ${via})`); app.selection = app.choices[i]; app.close(); continue; }
       const rec = { owner: owner || app.title, flag: null, reason: "PF2e prompt shown to the user (no explicit WG answer)" };
       ctx.unresolved.push(rec);
@@ -661,7 +696,7 @@ function selectionMatchesHint(value, hint) {
   const wanted = sluggify(hint);
   if (!wanted) return false;
   if (typeof value === "string") {
-    const got = sluggify(value);
+    const got = sluggify(value.replace(/ \([^()]+\)$/, ""));
     return got === wanted || got === `${wanted}-dragon` || wanted === `${got}-dragon`;
   }
   if (value && typeof value === "object") return Object.values(value).some((part) => selectionMatchesHint(part, hint));
@@ -785,7 +820,7 @@ export async function planImport(exp, { host, matchCatalog = null }) {
   coverFeatureGaps(matched, findActor(plan, host) ?? null, index);
   const misses = missReport(matched);
   const actor = findActor(plan, host) ?? null;
-  const ctx = choiceContext(exp, plan, index, actor, { semanticSuffixes: catalog.semanticSuffixes });
+  const ctx = choiceContext(exp, plan, index, actor, { semanticSuffixes: catalog.semanticSuffixes, catalog });
   for (const s of plan.structural ?? []) ctx.unresolved.push({ owner: `${s.kind}: ${s.name}`, flag: null, status: s.status, reason: s.reason });
   const notes = [];
   const problems = [];

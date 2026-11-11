@@ -3,6 +3,11 @@ import assert from "node:assert/strict";
 import { choiceContext, resolveChoiceSet } from "../scripts/importer.js";
 import { wgChoiceHints, selectedKeyAttributeAnswers } from "../scripts/mapping.js";
 import { auditImportCoverage } from "../scripts/coverage.js";
+import { grantFixedChoice } from "../scripts/importer.js";
+
+test("a granted Counterspell prepared variant is not a conflicting answer", () => {
+  assert.equal(grantFixedChoice(["Counterspell"], ["Counterspell (Prepared)"], "School of Unified Magical Theory"), false);
+});
 
 // Minimal operation shapes from the PC 110/111 class-test scenarios. These
 // are focused regressions, separate from the eight existing golden PCs.
@@ -99,4 +104,40 @@ test("installed catalog aliases and direct action matching cover issue 81/82 nam
   assert.deepEqual(matched.map(e => e.match?.name), ["Ruffian", "Mastermind", "Cantrip Expansion", "Drain Bonded Item"]);
   assert.deepEqual(matched.map(e => e.via), ["catalog-alias", "catalog-alias", "catalog-alias", "slug"]);
   resetMatchCatalogCache();
+});
+
+
+test("real PC 111 key selection belongs to Mastermind Racket, not the base class", async () => {
+  const { readFileSync } = await import("node:fs");
+  const { buildPlan } = await import("../scripts/mapping.js");
+  const e = JSON.parse(readFileSync(new URL("./fixtures/rogue-key-selection.json", import.meta.url)));
+  const answers = selectedKeyAttributeAnswers(e);
+  assert.equal(answers.length, 1);
+  assert.equal(answers[0].attribute, "ATTRIBUTE_INT");
+  assert.equal(buildPlan(e).keyAbility, "int");
+  const result = auditImportCoverage(e, { entries: [] }, { applied: true, keyAbilityUsed: new Set([answers[0].key]) });
+  assert.equal(result.rows.find(r => r.path.endsWith(answers[0].key)).status, "mapped");
+});
+
+
+test("runtime school prompt picks the unique offered Counterspell variant", () => {
+  const ctx = choiceContext(exp(), {}, index, null);
+  const labels = ["Reach Spell", "Widen Spell", "Counterspell (Prepared)"];
+  assert.equal(ctx.pick(school.name, labels, 20), 2);
+  assert.equal(ctx.pick(school.name, labels, 20), null);
+  const ambiguous = choiceContext(exp(), {}, index, null);
+  assert.equal(ambiguous.pick(school.name, ["Counterspell (Prepared)", "Counterspell (Spontaneous)"], 20), null);
+  assert.deepEqual([...ctx.used], ["class-feature-20_school-op"]);
+});
+
+
+test("runtime canonical owners use reviewed aliases without global answer borrowing", async () => {
+  const { readFileSync } = await import("node:fs");
+  const e = JSON.parse(readFileSync(new URL("./fixtures/rogue-key-selection.json", import.meta.url)));
+  const catalog = JSON.parse(readFileSync(new URL("./fixtures/rogue-wizard-catalog.json", import.meta.url)));
+  const ctx = choiceContext(e, {}, [], null, { catalog });
+  assert.deepEqual(ctx.specific("Mastermind"), ["Intelligence"]);
+  assert.equal(ctx.pick("Mastermind", ["Dexterity", "Intelligence"]), 1);
+  assert.equal(ctx.used.size, 1);
+  assert.deepEqual(ctx.specific("Unrelated feature"), []);
 });

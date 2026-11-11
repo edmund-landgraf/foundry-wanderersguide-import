@@ -356,22 +356,23 @@ export function selectedKeyAttributeAnswers(exp) {
   const sel = exp?.character?.operation_data?.selections ?? {};
   const keys = Object.keys(sel);
   const found = [];
-  const visit = (ops, depth = 0) => {
+  const visit = (ops, depth = 0, ownerId = null) => {
     if (!Array.isArray(ops) || depth > 6) return;
     for (const op of ops) {
       if (!op || typeof op !== "object") continue;
       if (op.type === "select" && op.id) {
-        const key = selectionKeyFor(keys, op.id);
+        const key = selectionKeyFor(keys, op.id, ownerId);
         const pre = key ? (op.data?.optionsPredefined ?? []).find((o) => String(o.id) === String(sel[key])) : null;
         for (const o of pre?.operations ?? []) {
           const a = o?.type === "setValue" && o.data?.variable === "CLASS_DC" ? o.data?.value?.attribute : null;
           if (a) found.push({ key, attribute: String(a) });
         }
       }
-      if (op.type === "conditional") { visit(op.data?.trueOperations, depth + 1); visit(op.data?.falseOperations, depth + 1); }
+      if (op.type === "conditional") { visit(op.data?.trueOperations, depth + 1, ownerId); visit(op.data?.falseOperations, depth + 1, ownerId); }
     }
   };
   visit(exp?.character?.details?.class?.operations);
+  for (const feature of Object.values(exp?.content?.feats_features ?? {}).flat()) visit(feature.operations, 0, feature.id);
   return found;
 }
 

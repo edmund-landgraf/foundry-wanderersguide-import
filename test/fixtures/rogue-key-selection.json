@@ -1,0 +1,91 @@
+{
+  "character": {
+    "details": {},
+    "operation_data": {
+      "selections": {
+        "class-feature-21294_1f2d84fa-02b5-4a82-b177-3012b747f2e9_34056_68b7226a-983a-40c8-95a5-52c47f3b2ed9": "0afc16ad-44ac-4cd3-956b-e74e061d20ff"
+      }
+    }
+  },
+  "content": {
+    "feats_features": {
+      "otherFeats": [
+        {
+          "id": 34056,
+          "name": "Mastermind Racket",
+          "operations": [
+            {
+              "id": "68b7226a-983a-40c8-95a5-52c47f3b2ed9",
+              "type": "select",
+              "data": {
+                "title": "Select an Attribute",
+                "modeType": "PREDEFINED",
+                "optionType": "CUSTOM",
+                "optionsPredefined": [
+                  {
+                    "id": "e54a9272-9634-4b0b-a717-e1aa720146d1",
+                    "type": "CUSTOM",
+                    "title": "Dexterity",
+                    "description": "You select Dexterity as your key attribute.",
+                    "operations": [
+                      {
+                        "id": "7a3d9d50-412f-432e-a169-9cdbd0808a41",
+                        "type": "adjValue",
+                        "data": {
+                          "variable": "ATTRIBUTE_DEX",
+                          "value": {
+                            "value": 1
+                          }
+                        }
+                      },
+                      {
+                        "id": "ebbf6e7a-d97f-48f7-bdcf-bafbda1a4202",
+                        "type": "setValue",
+                        "data": {
+                          "variable": "CLASS_DC",
+                          "value": {
+                            "value": "T",
+                            "attribute": "ATTRIBUTE_DEX"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "id": "0afc16ad-44ac-4cd3-956b-e74e061d20ff",
+                    "type": "CUSTOM",
+                    "title": "Intelligence",
+                    "description": "You select Intelligence as your key attribute.",
+                    "operations": [
+                      {
+                        "id": "546e3d12-e6a2-4db0-987f-692062c56d70",
+                        "type": "adjValue",
+                        "data": {
+                          "variable": "ATTRIBUTE_INT",
+                          "value": {
+                            "value": 1
+                          }
+                        }
+                      },
+                      {
+                        "id": "badf453f-98ec-41ec-80d8-49a81c2d4f4b",
+                        "type": "setValue",
+                        "data": {
+                          "variable": "CLASS_DC",
+                          "value": {
+                            "value": "T",
+                            "attribute": "ATTRIBUTE_INT"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
