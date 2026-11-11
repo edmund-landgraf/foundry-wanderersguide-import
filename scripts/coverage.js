@@ -24,7 +24,7 @@ const EXPANDED_CONTENT = ["focus_spells", "innate_spells", "inventory_flat"];
  * @param opts.grantedSlugs   slugs of items PF2e granted on the actor (for WG class/physical features)
  * @param opts.choiceUsed     Set of selection keys whose answer the import used
  */
-export function auditImportCoverage(exp, plan, { applied = false, grantedSlugs = new Set(), choiceUsed = new Set(), choiceConflicts = new Map(), slug = (s) => s } = {}) {
+export function auditImportCoverage(exp, plan, { applied = false, grantedSlugs = new Set(), choiceUsed = new Set(), keyAbilityUsed = new Set(), choiceConflicts = new Map(), slug = (s) => s } = {}) {
   const rows = [];
   const add = (path, status, reason) => rows.push({ path, status, reason });
   const ch = exp?.character ?? {};
@@ -73,6 +73,7 @@ export function auditImportCoverage(exp, plan, { applied = false, grantedSlugs =
           const val = String(sv);
           // a conflict means PF2e overrode the WG answer after it was used, so it wins over choiceUsed
           if (choiceConflicts.has(sk)) add(sp, "unresolved", `exception pf2e-fixed-choice: ${choiceConflicts.get(sk)}`);
+          else if (keyAbilityUsed.has(sk)) add(sp, "mapped", "applied class key attribute from WG selection");
           else if (choiceUsed.has(sk)) add(sp, "mapped", "answered a PF2e ChoiceSet");
           else if (planIds.has(val)) add(sp, "included", `chose WG item ${val}, imported as its own entry`);
           else if (val.startsWith("ATTRIBUTE_")) add(sp, "included", "attribute boosts: final modifiers forced from content.attributes");

@@ -352,10 +352,10 @@ export function selectionKeyFor(keys, opId, ownerId = null) {
 }
 
 /** Key attribute from the class's selected WG option (setValue CLASS_DC.attribute), when exactly one is selected. */
-export function selectedKeyAttribute(exp) {
+export function selectedKeyAttributeAnswers(exp) {
   const sel = exp?.character?.operation_data?.selections ?? {};
   const keys = Object.keys(sel);
-  const found = new Set();
+  const found = [];
   const visit = (ops, depth = 0) => {
     if (!Array.isArray(ops) || depth > 6) return;
     for (const op of ops) {
@@ -365,14 +365,19 @@ export function selectedKeyAttribute(exp) {
         const pre = key ? (op.data?.optionsPredefined ?? []).find((o) => String(o.id) === String(sel[key])) : null;
         for (const o of pre?.operations ?? []) {
           const a = o?.type === "setValue" && o.data?.variable === "CLASS_DC" ? o.data?.value?.attribute : null;
-          if (a) found.add(String(a));
+          if (a) found.push({ key, attribute: String(a) });
         }
       }
       if (op.type === "conditional") { visit(op.data?.trueOperations, depth + 1); visit(op.data?.falseOperations, depth + 1); }
     }
   };
   visit(exp?.character?.details?.class?.operations);
-  return found.size === 1 ? [...found][0] : null;
+  return found;
+}
+
+export function selectedKeyAttribute(exp) {
+  const attributes = new Set(selectedKeyAttributeAnswers(exp).map((x) => x.attribute));
+  return attributes.size === 1 ? [...attributes][0] : null;
 }
 
 export function wgChoiceHints(exp) {
@@ -386,10 +391,12 @@ export function wgChoiceHints(exp) {
   const out = new Map();
   // Non-enumerable: owner slug -> selection keys, so the coverage ledger can tell which answers were used.
   Object.defineProperty(out, "keys", { value: new Map(), enumerable: false });
+  Object.defineProperty(out, "sources", { value: [], enumerable: false });
   const push = (owner, name, key, ownerId = null) => {
     const ownerName = typeof owner === "object" ? owner?.name : owner;
     const id = ownerId ?? (typeof owner === "object" ? owner?.id : null);
     const k = sluggify(ownerName);
+    if (key) out.sources.push({ owner: k, ownerId: id == null ? null : String(id), name, key });
     if (key) (out.keys.get(k) ?? out.keys.set(k, []).get(k)).push(key);
     const list = out.get(k) ?? out.set(k, []).get(k);
     if (!list.includes(name)) list.push(name);
@@ -403,25 +410,35 @@ export function wgChoiceHints(exp) {
     for (const op of ops) {
       if (!op || typeof op !== "object") continue;
       if (op.type === "select" && op.id) {
-        const key = selectionKeyFor(keys, op.id, typeof owner === "object" ? owner?.id : null);
-        const v = key ? sel[key] : null;
-        if (v != null) {
-          // WGUI has emitted both the predefined option id and the nested
-          // operation id over time. Treat either representation as the same
-          // selected option so background/class skill choices are not lost.
-          const pre = (op.data?.optionsPredefined ?? []).find((o) => String(o.id) === String(v) || String(o.operation?.id) === String(v));
-          const operation = pre?.operation ?? null;
-          const variable = operation?.type === "adjValue" ? operation.data?.variable : null;
-          const variableName = variable
-            ? String(variable).replace(/^SKILL_|^ATTRIBUTE_/, "").toLowerCase().replace(/(^|_)([a-z])/g, (_, p, c) => `${p ? " " : ""}${c.toUpperCase()}`)
-            : null;
-          // FILTERED ADJ_VALUE selects (e.g. Skilled Human "Select a Skill") have no
-          // predefined options; WG stores the raw variable (SKILL_STEALTH) as the answer.
-          const rawSkill = !pre ? rawVariableName(v) : null;
-          const name = pre?.title ?? byId.get(String(v))?.name ?? variableName ?? rawSkill;
-          if (name) push(owner, name, key);
-          if (pre?.operations) visit(owner, pre.operations, depth + 1);
-          if (pre?.operation) visit(owner, [pre.operation], depth + 1);
+        const ownerId = typeof owner === "object" ? owner?.id : null;
+        const exact = selectionKeyFor(keys, op.id, ownerId);
+        const repeated = keys.filter((key) => {
+          const suffix = key.slice(key.lastIndexOf("_") + 1);
+          return suffix.startsWith(op.id + "-") && /^\d+$/.test(suffix.slice(op.id.length + 1));
+        }).filter((key, _, all) => {
+          const scopes = new Set(all.map((k) => k.slice(0, k.lastIndexOf("_"))));
+          return scopes.size === 1 || (ownerId != null && key.split(/[_-]/).includes(String(ownerId)));
+        }).sort((a, b) => Number(a.slice(a.lastIndexOf("-") + 1)) - Number(b.slice(b.lastIndexOf("-") + 1)));
+        for (const key of exact ? [exact] : repeated) {
+          const v = sel[key];
+          if (v != null) {
+            // WGUI has emitted both the predefined option id and the nested
+            // operation id over time. Treat either representation as the same
+            // selected option so background/class skill choices are not lost.
+            const pre = (op.data?.optionsPredefined ?? []).find((o) => String(o.id) === String(v) || String(o.operation?.id) === String(v));
+            const operation = pre?.operation ?? null;
+            const variable = operation?.type === "adjValue" ? operation.data?.variable : null;
+            const variableName = variable
+              ? String(variable).replace(/^SKILL_|^ATTRIBUTE_/, "").toLowerCase().replace(/(^|_)([a-z])/g, (_, p, c) => `${p ? " " : ""}${c.toUpperCase()}`)
+              : null;
+            // FILTERED ADJ_VALUE selects (e.g. Skilled Human "Select a Skill") have no
+            // predefined options; WG stores the raw variable (SKILL_STEALTH) as the answer.
+            const rawSkill = !pre ? rawVariableName(v) : null;
+            const name = pre?.title ?? byId.get(String(v))?.name ?? variableName ?? rawSkill;
+            if (name) push(owner, name, key);
+            if (pre?.operations) visit(owner, pre.operations, depth + 1);
+            if (pre?.operation) visit(owner, [pre.operation], depth + 1);
+          }
         }
       }
       if (op.type === "conditional") { visit(owner, op.data?.trueOperations, depth + 1); visit(owner, op.data?.falseOperations, depth + 1); }
