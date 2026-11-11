@@ -441,7 +441,15 @@ export function allChoiceHints(hints) {
   return names;
 }
 
-function watchPrompts(ctx, notes) {
+/**
+ * A usable index into a prompt's choices, or null. ctx.pick returns null when WG has answers
+ * for the owner but none fits; in JS `null >= 0` is true, so callers must not compare directly.
+ */
+export function validChoiceIndex(i, choices) {
+  return Number.isInteger(i) && i >= 0 && i < (choices?.length ?? 0) ? i : null;
+}
+
+export function watchPrompts(ctx, notes) {
   const seen = new Set();
   let domainWarned = false;
   const tick = () => {
@@ -484,7 +492,8 @@ function watchPrompts(ctx, notes) {
         const hits = app.choices.map((c, k) => (prev.some((v) => JSON.stringify(v) === JSON.stringify(c.value)) ? k : -1)).filter((k) => k >= 0);
         if (hits.length === 1) { i = hits[0]; via = "existing Foundry selection"; }
       }
-      if (i >= 0 && via === "WG selection") {
+      i = validChoiceIndex(i, app.choices);
+      if (i != null && via === "WG selection") {
         const choice = app.choices[i];
         if (typeof choice.value === "string" && choice.value.startsWith("Compendium.")) {
           for (const hint of specific) {
@@ -496,7 +505,7 @@ function watchPrompts(ctx, notes) {
           }
         }
         ctx.unresolved = ctx.unresolved.filter((u) => u.owner !== owner); }
-      if (i >= 0) { notes.push(`choice ${app.title}: ${app.choices[i].label} (prompt answered from ${via})`); app.selection = app.choices[i]; app.close(); continue; }
+      if (i != null) { notes.push(`choice ${app.title}: ${app.choices[i].label} (prompt answered from ${via})`); app.selection = app.choices[i]; app.close(); continue; }
       const rec = { owner: owner || app.title, flag: null, reason: "PF2e prompt shown to the user (no explicit WG answer)" };
       ctx.unresolved.push(rec);
       ui.notifications?.warn?.(`Wanderer's Guide import needs your choice: ${app.title}`);
@@ -696,6 +705,8 @@ function selectionMatchesHint(value, hint) {
   const wanted = sluggify(hint);
   if (!wanted) return false;
   if (typeof value === "string") {
+    const skillPath = /^system\.skills\.([a-z-]+)(?:\.rank)?$/.exec(value);
+    if (skillPath) return skillPath[1] === wanted;
     const got = sluggify(value.replace(/ \([^()]+\)$/, ""));
     return got === wanted || got === `${wanted}-dragon` || wanted === `${got}-dragon`;
   }
@@ -953,6 +964,12 @@ async function applyImport(p, { onStep, parity, failAfter }) {
     return out;
   };
   const stopPrompts = watchPrompts(p.ctx, notes);
+  // Re-import creates replacements before removing the old managed items (so a failure can roll
+  // back), and PF2e warns "X may only be taken once" for each feat in that window. Those warnings
+  // are about the old copy that is deleted below, so hide only those, only during this import.
+  const replacedTree = existing ? managedTree(actor.items) : new Set();
+  const replacedNames = new Set(actor ? actor.items.filter((i) => replacedTree.has(i.id)).map((i) => i.name) : []);
+  const restoreWarnings = existing ? suppressWarnings(globalThis.ui?.notifications, takenOnceFilter(globalThis.game?.i18n, replacedNames, actor.name)) : () => {};
   try {
     // Homebrew world items: only now that the plan is confirmed.
     if (p.homebrew.length) {
@@ -1103,7 +1120,7 @@ async function applyImport(p, { onStep, parity, failAfter }) {
     const rb = await rollback({ actor, snapshot, createdActor, createdWorld, createdFolder });
     err.rollback = rb;
     throw err;
-  } finally { stopPrompts(); }
+  } finally { stopPrompts(); restoreWarnings(); }
   const parityResult = parity ? parityCheck(plan, summarizeActor(actor)) : null;
   p.coverage = auditImportCoverage(exp, { ...plan, entries: matched }, { applied: true, grantedSlugs: grantedSlugsOf(actor), choiceUsed: p.ctx.used, keyAbilityUsed: p.ctx.keyAbilityUsed, choiceConflicts: p.ctx.conflicts, slug: sluggify });
   return { actor, parity: parityResult, existing };
@@ -1122,6 +1139,37 @@ function hpEffect(wgMaxHp, computed, delta) {
     },
     flags: { [MODULE_ID]: { kind: "hp-adjust", wgContentId: null, computed, wgMaxHp, sourcePath: "content.max_hp" } },
   };
+}
+
+const TAKEN_ONCE_KEY = "PF2E.Item.Feat.Warning.TakenMoreThanOnce";
+const TAKEN_ONCE_FALLBACK = "{item} may only be taken once, but {actor} has selected it an additional time.";
+
+/**
+ * Predicate for PF2e's "{item} may only be taken once" warning about one of `names` on `actorName`.
+ * Built from PF2e's localized template so other languages work; any other message returns false.
+ */
+export function takenOnceFilter(i18n, names, actorName) {
+  if (!names?.size) return () => false;
+  const raw = i18n?.has?.(TAKEN_ONCE_KEY) ? i18n.localize(TAKEN_ONCE_KEY) : TAKEN_ONCE_FALLBACK;
+  const template = typeof raw === "string" && raw.includes("{item}") ? raw : TAKEN_ONCE_FALLBACK;
+  const esc = (t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const pattern = new RegExp("^" + template.split(/(\{item\}|\{actor\})/).map((part) => part === "{item}" ? "(.+?)" : part === "{actor}" ? esc(String(actorName ?? "")) : esc(part)).join("") + "$");
+  return (message) => {
+    const m = pattern.exec(String(message ?? "").trim());
+    return !!m && names.has(m[1]);
+  };
+}
+
+/** Wrap notifications.warn so messages matching `drop` are skipped. Returns a restore function. */
+export function suppressWarnings(notifications, drop) {
+  if (!notifications || typeof notifications.warn !== "function") return () => {};
+  const original = notifications.warn;
+  const hadOwn = Object.prototype.hasOwnProperty.call(notifications, "warn");
+  notifications.warn = function (message, ...rest) {
+    if (drop(message)) return null;
+    return original.call(this, message, ...rest);
+  };
+  return () => { if (hadOwn) notifications.warn = original; else delete notifications.warn; };
 }
 
 function closeChoicePrompts() {
