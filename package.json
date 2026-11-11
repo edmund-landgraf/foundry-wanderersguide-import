@@ -3,5 +3,8 @@
   "version": "0.1.2",
   "private": true,
   "type": "module",
-  "scripts": { "test": "node --test test/mapping.test.mjs test/golden.test.mjs test/safe-apply.test.mjs test/selections.test.mjs test/spells.test.mjs test/formulas.test.mjs test/custom-items.test.mjs", "golden:update": "node test/golden/update.mjs" }
+  "scripts": {
+    "test": "node --test test/wizard-selections.test.mjs test/match-catalog.test.mjs test/rogue-key-ability.test.mjs test/mapping.test.mjs test/golden.test.mjs test/safe-apply.test.mjs test/selections.test.mjs test/spells.test.mjs test/formulas.test.mjs test/custom-items.test.mjs",
+    "golden:update": "node test/golden/update.mjs"
+  }
 }

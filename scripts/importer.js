@@ -6,7 +6,7 @@ import { customItemData, customItemsHtml } from "./custom-items.js";
 import { mergeFormulas, assignContainers, formulasHtml } from "./formulas.js";
 import { auditImportCoverage, leftoverValues, CLASS_SUPPORT_NOTE } from "./coverage.js";
 import { unwrapCatalog, CATALOG_NOT_LOADED } from "./match-catalog.js";
-import { buildPlan, matchEntries, missReport, sluggify, resolveImageUrl, FALLBACK_IMG, wgChoiceHints, matchChoice, choiceNameKeys, defaultFlag, spellcastingPlan, spellSlotWarnings, preparedSlotUpdates, entryKeyFor, diffPlan, parityCheck, normalizeMatchCatalog } from "./mapping.js";
+import { buildPlan, matchEntries, missReport, sluggify, resolveImageUrl, FALLBACK_IMG, wgChoiceHints, matchChoice, choiceNameKeys, defaultFlag, spellcastingPlan, spellSlotWarnings, preparedSlotUpdates, entryKeyFor, diffPlan, parityCheck, normalizeMatchCatalog, selectedKeyAttributeAnswers } from "./mapping.js";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
@@ -99,8 +99,26 @@ async function restoreSpellcastingState(actor, state) {
 //   2. on re-import, the selection already stored on the actor for the same compendium item, if still legal.
 // Nothing is guessed from other names and the first option is never taken. Anything left open is
 // recorded as unresolved and PF2e's own prompt is shown to the user (AMBA_REUSE_PLAN section 3).
-export function choiceContext(exp, plan, index, actor, { semanticSuffixes = null } = {}) {
+export function choiceContext(exp, plan, index, actor, { semanticSuffixes = null, catalog = null } = {}) {
   const hints = wgChoiceHints(exp);
+  // Runtime grants have PF2e names and may lack the source WG content ID.
+  // Route them through reviewed catalog aliases, never unrelated global hints.
+  const ownerAliases = new Map();
+  for (const [source, aliases] of normalizeMatchCatalog(catalog).aliases) {
+    const owner = source.slice(source.indexOf(":") + 1);
+    if (!hints.has(owner)) continue;
+    for (const alias of aliases) {
+      const owners = ownerAliases.get(alias.target) ?? new Set();
+      owners.add(owner);
+      ownerAliases.set(alias.target, owners);
+    }
+  }
+  const ownerKey = (owner) => {
+    const slug = sluggify(owner);
+    if (hints.has(slug)) return slug;
+    const aliases = ownerAliases.get(slug);
+    return aliases?.size === 1 ? [...aliases][0] : slug;
+  };
   const fixedNames = new Set(
     exp?.content?.raw_data_dump?.variables?.PHYSICAL_FEATURE_NAMES?.value
       ?.map((name) => sluggify(name))
@@ -125,17 +143,23 @@ export function choiceContext(exp, plan, index, actor, { semanticSuffixes = null
     }
   };
   const assigned = new Map();
+  const resolvedChoices = new Map();
   const hintKey = (owner, ownerWgId) => ownerWgId != null && hints.byId?.has(String(ownerWgId))
     ? `id:${ownerWgId}`
-    : `name:${sluggify(owner)}`;
+    : `name:${ownerKey(owner)}`;
   const specific = (owner, ownerWgId = null) => ownerWgId != null && hints.byId?.has(String(ownerWgId))
     ? hints.byId.get(String(ownerWgId))
-    : hints.get(sluggify(owner)) ?? [];
+    : hints.get(ownerKey(owner)) ?? [];
+  const available = (owner, ownerWgId = null) => specific(owner, ownerWgId).filter((hint) => !assigned.get(hintKey(owner, ownerWgId))?.has(sluggify(hint)));
   const consume = (owner, hint, ownerWgId = null) => {
     const key = hintKey(owner, ownerWgId);
     const set = assigned.get(key) ?? new Set();
     set.add(sluggify(hint));
     assigned.set(key, set);
+    for (const source of hints.sources ?? []) {
+      const owns = ownerWgId != null && hints.byId.has(String(ownerWgId)) ? source.ownerId === String(ownerWgId) : source.owner === ownerKey(owner);
+      if (owns && sluggify(source.name) === sluggify(hint)) used.add(source.key);
+    }
   };
   const pick = (owner, labels, ownerWgId = null) => {
     const alreadyUsed = assigned.get(hintKey(owner, ownerWgId)) ?? new Set();
@@ -145,13 +169,19 @@ export function choiceContext(exp, plan, index, actor, { semanticSuffixes = null
     const exact = available
       .map((hint) => ({ hint, index: labels.findIndex((label) => sluggify(label) === sluggify(hint)) }))
       .find((x) => x.index >= 0);
-    const candidate = exact ?? available.map((hint) => ({ hint, index: matchChoice(labels, [hint]) })).find((x) => x.index >= 0);
+    // Runtime options have already been filtered by PF2e. A parenthesized
+    // variant is safe only when exactly one offered option has the base name.
+    const variant = available.map((hint) => {
+      const hits = labels.map((label, index) => sluggify(label.replace(/ \([^()]+\)$/, "")) === sluggify(hint) ? index : -1).filter((index) => index >= 0);
+      return { hint, index: hits.length === 1 ? hits[0] : -1 };
+    }).find((x) => x.index >= 0);
+    const candidate = exact ?? variant ?? available.map((hint) => ({ hint, index: matchChoice(labels, [hint]) })).find((x) => x.index >= 0);
     if (!candidate?.hint) return null;
     consume(owner, candidate.hint, ownerWgId);
     return candidate.index;
   };
   const beliefs = String(exp?.character?.details?.info?.beliefs ?? "").trim();
-  return { hints, fixedNames, index, uuidName, previous, used, markUsed, markHintUsed, conflicts: new Map(), unresolved: [], specific, consume, pick, assigned, beliefs, semanticSuffixes };
+  return { hints, fixedNames, index, uuidName, previous, used, markUsed, markHintUsed, conflicts: new Map(), unresolved: [], specific, available, consume, pick, assigned, beliefs, semanticSuffixes, resolvedChoices, keyAbilityUsed: new Set() };
 }
 
 /** Index of the single option matching the hints, or -1 when none or more than one match. */
@@ -199,7 +229,7 @@ export function choiceLabel(label, value) {
   return String(text).split(".").pop();
 }
 
-async function resolveChoiceSet(rule, ownerName, ctx, { sourceUuid = null, flag = null, ownerWgId = null } = {}) {
+export async function resolveChoiceSet(rule, ownerName, ctx, { sourceUuid = null, flag = null, ownerWgId = null } = {}) {
   const specific = ctx.specific(ownerName, ownerWgId);
   const prev = sourceUuid && flag ? ctx.previous.get(sourceUuid)?.[flag] : undefined;
   const c = configChoices(rule.choices);
@@ -220,8 +250,8 @@ async function resolveChoiceSet(rule, ownerName, ctx, { sourceUuid = null, flag 
     // fallback for arbitrary first options or ambiguous labels.
     const fixedLabel = uniqueFixedChoice(opts.map((option) => option.label), ctx.fixedNames);
     const fixed = fixedLabel ? opts.find((option) => option.label === fixedLabel) : null;
-    if (fixed) return { value: fixed.value, label: fixed.label, via: "WG fixed grant" };
-    if (prev !== undefined) {
+    if (!specific.length && fixed) return { value: fixed.value, label: fixed.label, via: "WG fixed grant" };
+    if (!specific.length && prev !== undefined) {
       const o = opts.find((x) => JSON.stringify(x.value) === JSON.stringify(prev));
       if (o) return { value: o.value, label: o.label, via: "existing Foundry selection (still legal)" };
     }
@@ -229,18 +259,20 @@ async function resolveChoiceSet(rule, ownerName, ctx, { sourceUuid = null, flag 
   }
   if (c && typeof c === "object" && Array.isArray(c.filter)) {
     const type = c.itemType ?? "feat";
-    for (const h of specific) {
-      if ((ctx.assigned?.get(sluggify(ownerName)) ?? new Set()).has(sluggify(h))) continue;
-      const keys = choiceNameKeys(h, ctx.semanticSuffixes);
-      const rows = ctx.index.filter((r) => r.type === type && keys.includes(sluggify(r.name)));
+    for (const h of ctx.available(ownerName, ownerWgId)) {
+      const keys = choiceNameKeys(h, ctx.semanticSuffixes ?? undefined);
+      const rows = ctx.index.filter((r) => r.type === type && (keys.includes(sluggify(r.name)) || keys.includes(sluggify(r.name.replace(/ \([^()]+\)$/, "")))));
       const legal = [];
       for (const r of rows) if (await filterAccepts(c, r.uuid)) legal.push(r);
       if (legal.length === 1) {
-        ctx.consume(ownerName, h);
+        ctx.consume(ownerName, h, ownerWgId);
+        const chosen = ctx.resolvedChoices.get(sluggify(h)) ?? new Set();
+        chosen.add(legal[0].uuid);
+        ctx.resolvedChoices.set(sluggify(h), chosen);
         return { value: legal[0].uuid, label: legal[0].name, via: "WG selection" };
       }
     }
-    if (typeof prev === "string" && await filterAccepts(c, prev)) return { value: prev, label: ctx.uuidName.get(prev) ?? prev, via: "existing Foundry selection (still legal)" };
+    if (!specific.length && typeof prev === "string" && await filterAccepts(c, prev)) return { value: prev, label: ctx.uuidName.get(prev) ?? prev, via: "existing Foundry selection (still legal)" };
   }
   return null;
 }
@@ -254,6 +286,17 @@ export function applyKeyAbilityData(entry, data) {
   if (Array.isArray(legal) && legal.length && !legal.includes(entry.keyAbility)) return data;
   data.system.keyAbility = { ...data.system.keyAbility, selected: entry.keyAbility };
   return data;
+}
+
+/** Select only after PF2e has prepared the current class and its racket subfeatures. */
+export async function reconcileClassKeyAbility(actor, keyAbility) {
+  if (!["str", "dex", "con", "int", "wis", "cha"].includes(keyAbility)) return false;
+  const cls = actor.items.find((item) => item.type === "class" && item.flags?.[MODULE_ID]?.kind === "class");
+  if (!cls || !actor.system?.build?.attributes?.keyOptions?.includes(keyAbility)) return false;
+  if (cls.system.keyAbility.selected !== keyAbility) {
+    await actor.updateEmbeddedDocuments("Item", [{ _id: cls.id, "system.keyAbility.selected": keyAbility }], { render: false });
+  }
+  return true;
 }
 
 export function applyFeatSlotData(entry, data) {
@@ -286,14 +329,14 @@ async function prefillChoices(data, ctx, notes, sourceName = null, sourceWgId = 
       if (ruleDependsOnActor(rule)) continue;
       const flag = rule.flag ?? defaultFlag(data.name);
       let hit = null;
-      let owner = data.name;
       for (const [candidateIndex, candidate] of owners.entries()) {
         hit = await resolveChoiceSet(rule, candidate, ctx, { sourceUuid: src, flag, ownerWgId: candidateIndex === 0 ? sourceWgId : null });
-        if (hit) { owner = candidate; break; }
+        if (hit) break;
+        if (ctx.specific(candidate, candidateIndex === 0 ? sourceWgId : null).length) break;
       }
       if (!hit) { ctx.unresolved.push({ owner: data.name, flag, reason: "no explicit WG answer matching exactly one legal option; PF2e will ask" }); continue; }
       rule.selection = hit.value;
-      if (hit.via === "WG selection") { ctx.markUsed(owner); ctx.markHintUsed?.(hit.label); }
+
       foundry.utils.setProperty(data, `flags.pf2e.rulesSelections.${flag}`, hit.value);
       notes.push(`choice ${data.name}: ${hit.label} (pre-filled from ${hit.via})`);
     } else if (rule?.key === "GrantItem" && typeof rule.uuid === "string" && rule.uuid.startsWith("Compendium.") && !ruleDependsOnActor(rule)) {
@@ -305,7 +348,7 @@ async function prefillChoices(data, ctx, notes, sourceName = null, sourceWgId = 
         const hit = await resolveChoiceSet(gr, granted.name, ctx, { sourceUuid: rule.uuid, flag, ownerWgId: sourceWgId });
         if (!hit) { ctx.unresolved.push({ owner: granted.name, flag, reason: `granted by ${data.name}; no explicit WG answer; PF2e will ask` }); continue; }
         rule.preselectChoices = { ...(rule.preselectChoices ?? {}), [flag]: hit.value };
-        if (hit.via === "WG selection") { ctx.markUsed(granted.name); ctx.markHintUsed?.(hit.label); }
+
         notes.push(`choice ${granted.name}: ${hit.label} (pre-filled via ${data.name}, from ${hit.via})`);
       }
     }
@@ -432,20 +475,27 @@ function watchPrompts(ctx, notes) {
       let i = specific.length ? ctx.pick(owner, labels, ownerWgId) : null;
       let via = "WG selection";
       if (i == null) {
-        const global = uniqueChoice(labels, allChoiceHints(ctx.hints));
-        if (global >= 0) i = global;
-      }
-      if (i == null) {
         const deity = deityPromptChoice(app, ctx.beliefs);
         if (deity != null) { i = deity; via = "WG deity"; ctx.markHintUsed?.(app.choices[i].label); }
       }
-      if (i == null) {
+      if (i == null && !specific.length) {
         const src = app.item?._stats?.compendiumSource ?? app.item?.sourceId ?? null;
         const prev = Object.values(ctx.previous.get(src) ?? {});
         const hits = app.choices.map((c, k) => (prev.some((v) => JSON.stringify(v) === JSON.stringify(c.value)) ? k : -1)).filter((k) => k >= 0);
         if (hits.length === 1) { i = hits[0]; via = "existing Foundry selection"; }
       }
-      if (i >= 0 && via === "WG selection") { ctx.markUsed(owner); ctx.markHintUsed?.(app.choices[i].label); ctx.unresolved = ctx.unresolved.filter((u) => u.owner !== owner); }
+      if (i >= 0 && via === "WG selection") {
+        const choice = app.choices[i];
+        if (typeof choice.value === "string" && choice.value.startsWith("Compendium.")) {
+          for (const hint of specific) {
+            const keys = choiceNameKeys(hint, ctx.semanticSuffixes ?? undefined);
+            if (!keys.includes(sluggify(choice.label)) && !keys.includes(sluggify(choice.label.replace(/ \([^()]+\)$/, "")))) continue;
+            const chosen = ctx.resolvedChoices.get(sluggify(hint)) ?? new Set();
+            chosen.add(choice.value);
+            ctx.resolvedChoices.set(sluggify(hint), chosen);
+          }
+        }
+        ctx.unresolved = ctx.unresolved.filter((u) => u.owner !== owner); }
       if (i >= 0) { notes.push(`choice ${app.title}: ${app.choices[i].label} (prompt answered from ${via})`); app.selection = app.choices[i]; app.close(); continue; }
       const rec = { owner: owner || app.title, flag: null, reason: "PF2e prompt shown to the user (no explicit WG answer)" };
       ctx.unresolved.push(rec);
@@ -646,17 +696,19 @@ function selectionMatchesHint(value, hint) {
   const wanted = sluggify(hint);
   if (!wanted) return false;
   if (typeof value === "string") {
-    const got = sluggify(value);
+    const got = sluggify(value.replace(/ \([^()]+\)$/, ""));
     return got === wanted || got === `${wanted}-dragon` || wanted === `${got}-dragon`;
   }
   if (value && typeof value === "object") return Object.values(value).some((part) => selectionMatchesHint(part, hint));
   return false;
 }
 
-export function reconcileRuntimeGrants(entries, grants, unresolved = null, catalog = null) {
+export function reconcileRuntimeGrants(entries, grants, unresolved = null, catalog = null, resolvedChoices = new Map()) {
   for (const e of entries) {
     if (e.custom || e.coveredBy || !e.unresolved || e.match) continue;
-    const hit = runtimeGrantMatch(e, grants, catalog) ?? exactSlugGrant(e, grants);
+    const chosen = resolvedChoices.get(e.slug);
+    const evidenced = chosen?.size === 1 ? grants.filter(({ item }) => chosen.has(item._stats?.compendiumSource ?? item.flags?.core?.sourceId)) : [];
+    const hit = runtimeGrantMatch(e, grants, catalog) ?? exactSlugGrant(e, grants) ?? (evidenced.length === 1 ? evidenced[0] : null);
     if (!hit) continue;
     delete e.unresolved;
     e.coveredBy = hit.item.name;
@@ -768,7 +820,7 @@ export async function planImport(exp, { host, matchCatalog = null }) {
   coverFeatureGaps(matched, findActor(plan, host) ?? null, index);
   const misses = missReport(matched);
   const actor = findActor(plan, host) ?? null;
-  const ctx = choiceContext(exp, plan, index, actor, { semanticSuffixes: catalog.semanticSuffixes });
+  const ctx = choiceContext(exp, plan, index, actor, { semanticSuffixes: catalog.semanticSuffixes, catalog });
   for (const s of plan.structural ?? []) ctx.unresolved.push({ owner: `${s.kind}: ${s.name}`, flag: null, status: s.status, reason: s.reason });
   const notes = [];
   const problems = [];
@@ -934,7 +986,7 @@ async function applyImport(p, { onStep, parity, failAfter }) {
       // Items with GrantItem rules go first so their grants exist before the rest are checked
       // (e.g. Web Weaver grants Specialty Crafting, which WG also lists as a feat).
       const grants = (e) => (e.data.system?.rules ?? []).some((r) => r?.key === "GrantItem");
-      reconcileRuntimeGrants(matched, explicitGrants(actor.items, old), p.ctx.unresolved, p.matchCatalog);
+      reconcileRuntimeGrants(matched, explicitGrants(actor.items, old), p.ctx.unresolved, p.matchCatalog, p.ctx.resolvedChoices);
       const todo = dependencyOrder(matched.filter((x) => x.kind === kind && x.data && !x.coveredBy));
       for (const pass of [todo.filter(grants), todo.filter((e) => !grants(e))]) {
         const batch = [];
@@ -946,7 +998,7 @@ async function applyImport(p, { onStep, parity, failAfter }) {
           const entries = batchEntries.splice(0);
           const made = await createItems(docs, kind === "equipment" ? { keepId: true } : {});
           made.forEach((doc, i) => { if (entries[i]) entries[i].itemId = doc.id; });
-          reconcileRuntimeGrants(matched, explicitGrants(actor.items, old), p.ctx.unresolved, p.matchCatalog);
+          reconcileRuntimeGrants(matched, explicitGrants(actor.items, old), p.ctx.unresolved, p.matchCatalog, p.ctx.resolvedChoices);
         };
         for (const e of pass) {
           // Dedupe only against items PF2e explicitly granted from something
@@ -964,7 +1016,8 @@ async function applyImport(p, { onStep, parity, failAfter }) {
               ...Object.values(g.item._source?.flags?.pf2e?.rulesSelections ?? g.item.flags?.pf2e?.rulesSelections ?? {}),
               ...(g.item._source?.system?.rules ?? g.item.system?.rules ?? []).filter((r) => r?.key === "ChoiceSet" && r.selection != null).map((r) => r.selection),
             ];
-            if (grantFixedChoice(hints, selections, g.item.name)) {
+            const selectionNames = selections.map((value) => p.ctx.uuidName.get(value) ?? value);
+            if (grantFixedChoice(hints, selectionNames, g.item.name)) {
               p.ctx.unresolved.push({ owner: g.item.name, flag: null, reason: `WG answer ${hints.join(", ")} differs from PF2e's grant via ${g.parent.name}; kept PF2e's rule` });
               for (const key of p.ctx.hints.keys?.get(sluggify(e.name)) ?? []) p.ctx.conflicts.set(key, `WG answer ${hints.join(", ")} for ${e.name}; PF2e's ${g.parent.name} grant fixes it (${selections.map(String).join(", ")}); kept PF2e's rule`);
             }
@@ -1009,6 +1062,12 @@ async function applyImport(p, { onStep, parity, failAfter }) {
     const stale = [...old].filter((id) => actor.items.has(id));
     if (stale.length) await actor.deleteEmbeddedDocuments("Item", stale);
     step("old removed");
+    // Old racket options must be gone before validating the new WG selection.
+    if (await reconcileClassKeyAbility(actor, plan.keyAbility)) {
+      for (const answer of selectedKeyAttributeAnswers(exp)) {
+        if (answer.attribute === "ATTRIBUTE_" + plan.keyAbility.toUpperCase()) p.ctx.keyAbilityUsed.add(answer.key);
+      }
+    }
 
     if (plan.maxHp != null) {
       // HP adjustment (PLAN 7.2): WG's max HP wins; a flagged effect carries the difference.
@@ -1046,7 +1105,7 @@ async function applyImport(p, { onStep, parity, failAfter }) {
     throw err;
   } finally { stopPrompts(); }
   const parityResult = parity ? parityCheck(plan, summarizeActor(actor)) : null;
-  p.coverage = auditImportCoverage(exp, { ...plan, entries: matched }, { applied: true, grantedSlugs: grantedSlugsOf(actor), choiceUsed: p.ctx.used, choiceConflicts: p.ctx.conflicts, slug: sluggify });
+  p.coverage = auditImportCoverage(exp, { ...plan, entries: matched }, { applied: true, grantedSlugs: grantedSlugsOf(actor), choiceUsed: p.ctx.used, keyAbilityUsed: p.ctx.keyAbilityUsed, choiceConflicts: p.ctx.conflicts, slug: sluggify });
   return { actor, parity: parityResult, existing };
 }
 
@@ -1111,6 +1170,9 @@ export async function importCharacter(exp, { host, matchCatalog = null, onStep =
   }
   const { actor, parity: parityResult } = await applyImport(p, { onStep: step, parity, failAfter });
   const { plan, matched, misses, notes } = p;
+  // Runtime grants can resolve an entry that was a miss in the preview.
+  const covered = new Set(matched.filter((e) => e.coveredBy).map((e) => `${e.kind}: ${e.name}`));
+  for (let i = misses.length - 1; i >= 0; i--) if (covered.has(misses[i])) misses.splice(i, 1);
   const duplicateDiagnostics = duplicateItemDiagnostics(actor.items);
   const duplicateHtml = duplicateDiagnostics.length
     ? `<p>Duplicate-name diagnostics:</p><ul>${duplicateDiagnostics.map((d) => `<li>${esc(d.key)}: ${d.expectedGrantPair ? "expected PF2e grant relationship" : "unexpected duplicate; review provenance"}</li>`).join("")}</ul>`
