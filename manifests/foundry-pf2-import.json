@@ -2,7 +2,7 @@
   "id": "foundry-pf2-import",
   "title": "Foundry PF2 Import",
   "description": "Search a PF2 creature site and import creatures, especially custom creatures, as Pathfinder 2e NPC actors.",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "authors": [{ "name": "Edmund Landgraf" }],
   "compatibility": { "minimum": "14.361", "verified": "14.369", "maximum": "14" },
   "relationships": {
@@ -20,5 +20,5 @@
   "languages": [{ "lang": "en", "name": "English", "path": "lang/en.json" }],
   "url": "https://github.com/edmund-landgraf/foundry-pf2-import",
   "manifest": "https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/main/manifests/foundry-pf2-import.json",
-  "download": "https://github.com/edmund-landgraf/foundry-wanderersguide-import/releases/download/foundry-pf2-import-v0.1.2/module.zip"
+  "download": "https://github.com/edmund-landgraf/foundry-wanderersguide-import/releases/download/foundry-pf2-import-v0.1.3/module.zip"
 }
