@@ -595,3 +595,22 @@ test("exportCharacter uses the slim export and falls back to the full one only w
     assert.ok(r.out instanceof Error, String(status));
   }
 });
+
+test("a body-less HTTP 500 names the function and keeps a redacted snippet", async () => {
+  const { exportCharacter, friendlyError } = await import("../scripts/api.js");
+  const secret = "11111111-2222-3333-4444-555555555555";
+  assert.equal(friendlyError(500, null, { fn: "wgui-export-character" }), "wgui-export-character: HTTP 500");
+  assert.equal(friendlyError(500, null, { fn: "wgui-export-character", raw: `worker down Bearer ${secret}` }), "wgui-export-character: worker down Bearer [redacted]");
+  assert.doesNotMatch(friendlyError(500, null, { fn: "wgui-export-character", raw: `Bearer ${secret} exploded`, apiKey: secret }), new RegExp(secret));
+  const fetchImpl = async (url) => ({
+    status: 500,
+    ok: false,
+    headers: { get: () => null },
+    text: async () => url.endsWith("-slim") ? "slim worker down" : `full worker Bearer ${secret}`,
+  });
+  const err = await exportCharacter({ baseUrl: "http://h", apiKey: KEY, fetchImpl, maxRetries: 0 }, 64).catch((e) => e);
+  assert.match(err.message, /wgui-export-character:/);
+  assert.match(err.message, /HTTP 500|full worker/);
+  assert.match(err.message, /wgui-export-character-slim also failed: HTTP 500/);
+  assert.doesNotMatch(err.message, new RegExp(secret));
+});
