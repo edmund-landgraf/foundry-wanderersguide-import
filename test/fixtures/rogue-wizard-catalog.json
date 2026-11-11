@@ -1,0 +1,68 @@
+{
+  "header": {
+    "schemaVersion": 1,
+    "pf2eVersion": "8.6.1",
+    "rowCount": 3
+  },
+  "aliases": [
+    {
+      "item_kind": "feat",
+      "source_name": "Cantrip Expansion (Wizard)",
+      "target_name": "Cantrip Expansion",
+      "source_slug": "cantrip-expansion-wizard",
+      "target_slug": "cantrip-expansion",
+      "priority": 50,
+      "match_strategy": "canonical",
+      "evidence_ref": "PF2e 8.6.1: packs/pf2e/feats/class/shared-class-feats/level-2/cantrip-expansion.json",
+      "status": "active"
+    },
+    {
+      "item_kind": "feat",
+      "source_name": "Mastermind Racket",
+      "target_name": "Mastermind",
+      "source_slug": "mastermind-racket",
+      "target_slug": "mastermind",
+      "priority": 50,
+      "match_strategy": "canonical",
+      "evidence_ref": "PF2e 8.6.1: packs/pf2e/class-features/mastermind.json",
+      "status": "active"
+    },
+    {
+      "item_kind": "feat",
+      "source_name": "Ruffian Racket",
+      "target_name": "Ruffian",
+      "source_slug": "ruffian-racket",
+      "target_slug": "ruffian",
+      "priority": 50,
+      "match_strategy": "canonical",
+      "evidence_ref": "PF2e 8.6.1: packs/pf2e/class-features/ruffian.json",
+      "status": "active"
+    }
+  ],
+  "index": [
+    {
+      "name": "Ruffian",
+      "type": "feat",
+      "slug": "ruffian",
+      "uuid": "Compendium.pf2e.classfeatures.Item.3KPZ7svIO6kmmEKH"
+    },
+    {
+      "name": "Mastermind",
+      "type": "feat",
+      "slug": "mastermind",
+      "uuid": "Compendium.pf2e.classfeatures.Item.RyOkmu0W9svavuAB"
+    },
+    {
+      "name": "Cantrip Expansion",
+      "type": "feat",
+      "slug": "cantrip-expansion",
+      "uuid": "Compendium.pf2e.feats-srd.Item.A7ofsoPva0UtjqrX"
+    },
+    {
+      "name": "Drain Bonded Item",
+      "type": "action",
+      "slug": "drain-bonded-item",
+      "uuid": "Compendium.pf2e.actionspf2e.Item.v82XtjAVN4ffgVVR"
+    }
+  ]
+}
