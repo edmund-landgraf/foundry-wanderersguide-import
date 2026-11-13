@@ -77,19 +77,22 @@ export function buildPlan(exp) {
     add("spell", "spell", s.name, { wgContentId: s.id, rank: s.rank, castingSource: spellListSource(s.casting_source), focus: focusIds.has(s.id) && !(ct.spells?.all ?? []).some((x) => x.id === s.id), sourcePath });
   }
   // Prepared casters: WG keeps the day's preparation in content.spell_slots (spell_id plus the spell
-  // record), not in content.spells.all. Each prepared slot becomes a spell on its source's entry.
+  // record), not in content.spells.all. Attach each slot to the existing book item for that source
+  // and spell, including when the slot rank is higher (a heightened preparation). Creating a second
+  // item for the higher rank is what #81 W4 reported as an unexpected duplicate.
   const preparedBy = new Map();
   (ct.spell_slots ?? []).forEach((sl, i) => {
     if (sl?.spell_id == null || !sl.spell?.name) return;
     const source = spellListSource(sl.source);
-    const key = `${source}:${sl.spell_id}:${sl.rank}`;
-    let e = preparedBy.get(key) ?? entries.find((x) => x.kind === "spell" && !x.innate && !x.focus && x.wgContentId === sl.spell_id && x.rank === sl.rank && x.castingSource === source);
+    const key = `${source}:${sl.spell_id}`;
+    let e = preparedBy.get(key) ?? entries.find((x) => x.kind === "spell" && !x.innate && !x.focus && x.wgContentId === sl.spell_id && x.castingSource === source);
     if (!e) {
-      add("spell", "spell", sl.spell.name, { wgContentId: sl.spell_id, rank: sl.rank, castingSource: source, focus: false, sourcePath: `content.spell_slots[${i}]` });
+      add("spell", "spell", sl.spell.name, { wgContentId: sl.spell_id, rank: sl.spell.rank ?? sl.rank, castingSource: source, focus: false, sourcePath: `content.spell_slots[${i}]` });
       e = entries[entries.length - 1];
     }
     preparedBy.set(key, e);
     e.prepared = (e.prepared ?? 0) + 1;
+    (e.preparedRanks ??= []).push(sl.rank);
   });
   (ct.innate_spells ?? []).forEach((s, i) => add("spell", "spell", s.spell?.name, { wgContentId: s.spell?.id, rank: s.rank, innate: true, tradition: String(s.tradition ?? "").toLowerCase() || null, uses: s.casts_max ?? null, sourcePath: `content.innate_spells[${i}]` }));
   const extraIds = extraItemIds(exp);
@@ -642,8 +645,8 @@ export function preparedSlotUpdates(entries) {
     if (e.kind !== "spell" || !e.prepared || !e.entryId || !e.itemId) continue;
     const slots = byEntry.get(e.entryId) ?? {};
     byEntry.set(e.entryId, slots);
-    const list = (slots[Number(e.rank ?? 0)] ??= []);
-    for (let n = 0; n < e.prepared; n++) list.push({ id: e.itemId, expended: false });
+    const ranks = e.preparedRanks?.length ? e.preparedRanks : Array.from({ length: e.prepared }, () => Number(e.rank ?? 0));
+    for (const rank of ranks) (slots[Number(rank ?? 0)] ??= []).push({ id: e.itemId, expended: false });
   }
   return [...byEntry].map(([_id, slots]) => ({ _id, ...Object.fromEntries(Object.entries(slots).map(([r, list]) => [`system.slots.slot${r}.prepared`, list])) }));
 }
