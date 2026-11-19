@@ -33,6 +33,27 @@ For development, link the repo into `<Foundry Data>/modules/foundry-wanderersgui
 
 Manifest URLs follow the pattern `https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/main/manifests/<file>.json`.
 
+## Foundry → Wanderer's Guide (read-only connector, experimental)
+
+This is a separate direction from the existing **WGUI → Foundry** character import. The new **Import from Foundry** dialog lives in Wander's Guide's character upload menu. It uses a small relay to read one Foundry character. **This module does not write any Wanderer's Guide character**, and no existing WGUI → Foundry import behavior is changed.
+
+### Local setup
+
+1. In the **WandersGuideUI** repository run `npm run foundry-relay`. The relay listens at `http://127.0.0.1:8787`; it is not an endpoint inside the Foundry application.
+2. Open your PF2e world in Foundry as a **GM**, with this module enabled. Under **Configure Settings → Wanderer's Guide Import**, set **Foundry → WGUI connection code** to a random 16–128 character secret; do **not** use the Wanderer's Guide API Key, which is for the opposite direction. The new code and relay URL are **client-scope** settings, local to that GM's browser. Default relay URL: `http://127.0.0.1:8787`. Saving settings (or reloading the world) starts the read connector. Leaving the code blank disables it.
+3. In WGUI, use **Import from Foundry**, enter the exact Foundry browser **origin**, e.g. `http://localhost:30000`, and the same connection code. Select one character, review, and import in WGUI.
+
+Only an open GM client dials the relay. It connects outward, waits for requests, and responds with summaries of `character` actors or one selected actor's source. It never starts an HTTP listener or reads an NPC. It strips biography, notes, descriptions, arbitrary module flags and other marked private fields before sending the actor source; `flags.pf2e.rulesSelections` is retained. The shared secret is never included in URL query parameters or logged. A configured remote relay must use HTTPS; non-loopback HTTP relay URLs are rejected.
+
+### Limitations and testing
+
+- The *current WGUI converter* writes name and level and preserves most other fields as leftovers. Feats, spells and gear are **not** populated as working WGUI builder selections yet. This connector only supplies a safe read source.
+- The WGUI relay currently accepts only **alphanumeric world IDs (1–32 characters)**. Hyphenated Foundry world IDs need a separate WGUI relay-contract change; the module reports this limitation instead of misidentifying a world.
+- Local HTTP Foundry/WGUI development is the documented relay path. Hosted HTTPS WGUI requires a reachable HTTPS relay and browser CORS/private-network validation. This PR does not deploy that infrastructure.
+- Run `npm test` to exercise read-client protocol, read permissions and scrub tests. The full browser-to-live-Foundry flow still requires a manual integration test in a running world.
+
+The matching WGUI architecture is documented in [WandersGuideUI/docs/foundry-to-wgui.md](https://github.com/edmund-landgraf/WandersGuideUI/blob/main/docs/foundry-to-wgui.md) and [WandersGuideUI/docs/foundry-read-relay.md](https://github.com/edmund-landgraf/WandersGuideUI/blob/main/docs/foundry-read-relay.md).
+
 ## Settings
 
 Foundry → Configure Settings → Wanderer's Guide Import. All settings are **client** settings, stored only in your browser.
