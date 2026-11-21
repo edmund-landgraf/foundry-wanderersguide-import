@@ -75,12 +75,14 @@ export function listFoundryCharacters(gameRef) {
       const embedded = actor.items?.contents ?? [];
       const itemName = (kind) => embedded.find((item) => item.type === kind)?.name ?? null;
       const rawLevel = actor.system?.details?.level?.value;
+      const folderId = ACTOR_ID.test(String(actor.folder?.id ?? "")) ? String(actor.folder.id) : null;
       return {
         id: actor.id,
         name: String(actor.name ?? ""),
         level: typeof rawLevel === "number" && Number.isFinite(rawLevel) ? rawLevel : null,
         ancestry: itemName("ancestry"),
         className: itemName("class"),
+        ...(folderId ? { folderId, folderName: typeof actor.folder?.name === "string" ? actor.folder.name : "" } : {}),
       };
     });
 }

@@ -16,6 +16,7 @@ const config = {
 function fixture({ isGM = true } = {}) {
   const actor = {
     id: "ACTOR123", type: "character", name: "Kota",
+    folder: { id: "PARTY1", name: "The Party" },
     system: { details: { level: { value: 3 } } },
     items: { contents: [
       { type: "class", name: "Rogue" },
@@ -68,6 +69,7 @@ test("connection credentials validate before any relay call", () => {
 test("GM sees only PC summaries, never NPCs or secret notes", () => {
   assert.deepEqual(listFoundryCharacters(fixture()), [{
     id: "ACTOR123", name: "Kota", level: 3, ancestry: "Human", className: "Rogue",
+    folderId: "PARTY1", folderName: "The Party",
   }]);
   assert.deepEqual(listFoundryCharacters(fixture({ isGM: false })), []);
 });
