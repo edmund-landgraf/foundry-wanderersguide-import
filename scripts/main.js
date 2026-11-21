@@ -1,7 +1,53 @@
 import { MODULE_ID, DEFAULT_FUNCTIONS_URL } from "./constants.js";
 import { openImportDialog } from "./dialog.js";
+import { DEFAULT_RELAY_URL, runFoundryReadRelay, validateReadConfig } from "./foundry-read-relay.js";
+
+let foundryReadController = null;
+
+function startFoundryReadRelay() {
+  foundryReadController?.abort();
+  foundryReadController = null;
+  if (!game.user?.isGM || !game.world?.id) return;
+  const code = game.settings.get(MODULE_ID, "readRelayCode");
+  if (!String(code ?? "").trim()) return; // Explicit opt-in: disabled until a code is set.
+  const config = {
+    code,
+    relayUrl: game.settings.get(MODULE_ID, "readRelayUrl"),
+    worldId: game.world.id,
+    origin: globalThis.location?.origin ?? "",
+  };
+  try {
+    validateReadConfig(config);
+  } catch (error) {
+    ui.notifications?.warn("WGUI Foundry read relay: " + error.message);
+    return;
+  }
+  const controller = new AbortController();
+  foundryReadController = controller;
+  void runFoundryReadRelay({
+    gameRef: game,
+    config,
+    signal: controller.signal,
+    onState: (state) => {
+      if (state === "connected") console.info(MODULE_ID + " | read relay connected");
+      // Do not log fetch errors: their text may include credentials.
+    },
+  }).catch(() => {
+    if (!controller.signal.aborted) ui.notifications?.warn("WGUI Foundry read relay stopped. Check relay settings.");
+  });
+}
 
 Hooks.once("init", () => {
+  game.settings.register(MODULE_ID, "readRelayCode", {
+    name: "Foundry → WGUI connection code",
+    hint: "GM only. 16–128 character shared secret. The WGUI Import from Foundry dialog uses this code. Stored in this browser only.",
+    scope: "client", config: true, type: String, default: "",
+  });
+  game.settings.register(MODULE_ID, "readRelayUrl", {
+    name: "Foundry → WGUI relay URL",
+    hint: "Local relay defaults to http://127.0.0.1:8787. Use an HTTPS origin for a remote relay.",
+    scope: "client", config: true, type: String, default: DEFAULT_RELAY_URL,
+  });
   game.settings.register(MODULE_ID, "apiKey", {
     name: "WGI.Settings.ApiKey.Name", hint: "WGI.Settings.ApiKey.Hint",
     scope: "client", config: true, type: String, default: "",
@@ -29,6 +75,11 @@ Hooks.on("renderSettingsConfig", (_app, html) => {
   const root = html[0] ?? html;
   const input = root.querySelector(`input[name="${MODULE_ID}.apiKey"]`);
   if (input) input.type = "password";
+  const readCodeInput = root.querySelector('input[name="' + MODULE_ID + '.readRelayCode"]');
+  if (readCodeInput) {
+    readCodeInput.type = "password";
+    readCodeInput.autocomplete = "off";
+  }
 });
 
 Hooks.on("renderActorDirectory", (_app, html) => {
@@ -54,4 +105,8 @@ Hooks.once("ready", async () => {
     await game.settings.set(MODULE_ID, "wgServer", "custom");
   }
   console.log(`${MODULE_ID} | ready (server: ${game.settings.get(MODULE_ID, "wgServer")})`);
+  startFoundryReadRelay();
 });
+
+// Client-scoped settings can be edited without restarting the Foundry world.
+Hooks.on("closeSettingsConfig", () => startFoundryReadRelay());
