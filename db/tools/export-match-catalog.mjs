@@ -8,7 +8,7 @@
 // writes the same JSON to a git-ignored file (default data/match-catalog.json) that the module loads.
 //
 // Usage:
-//   node db/tools/export-match-catalog.mjs [--out data/match-catalog.json] [--wg-commit <sha>] [--no-db]
+//   node db/tools/export-match-catalog.mjs [--out data/match-catalog.json] [--wg-commit <sha>] [--pf2e-version <ver>] [--no-db]
 // Env: WGI_PSQL (default: docker exec -i my-postgres psql -U appuser -d wgi_rules), WG_REPO (for the commit).
 import { execSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -105,6 +105,7 @@ const SQL_RULES = "select coalesce(json_agg(t), '[]') from (select item_kind, ru
 function main(argv) {
   const arg = (n) => { const i = argv.indexOf(n); return i >= 0 ? argv[i + 1] : null; };
   const out = arg("--out") ?? "data/match-catalog.json";
+  const pf2eVersion = arg("--pf2e-version") ?? PF2E_VERSION;
   const psql = process.env.WGI_PSQL ?? "docker exec -i my-postgres psql -U appuser -d wgi_rules";
   let wgContentCommit = arg("--wg-commit");
   if (!wgContentCommit && process.env.WG_REPO) {
@@ -112,7 +113,7 @@ function main(argv) {
     wgContentCommit = execSync(`git -c safe.directory=${repo.replace(/\\/g, "/")} -C "${repo}" rev-parse HEAD`).toString().trim();
   }
   const q = (sql) => JSON.parse(execSync(`${psql} -Atc "${sql}"`, { maxBuffer: 256 << 20 }).toString());
-  const cat = buildCatalog([...q(SQL_ALIASES), ...catalogMatchAliases(q(SQL_MATCHES))], { wgContentCommit, rules: q(SQL_RULES) });
+  const cat = buildCatalog([...q(SQL_ALIASES), ...catalogMatchAliases(q(SQL_MATCHES))], { wgContentCommit, pf2eVersion, rules: q(SQL_RULES) });
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, JSON.stringify(cat) + "\n");
   console.log(`wrote ${out}: ${cat.header.rowCount} aliases, ${cat.rules.length} rules, sha256 ${cat.header.sha256}`);
