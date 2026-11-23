@@ -12,13 +12,16 @@
 // Env: WGI_PSQL (default: docker exec -i my-postgres psql -U appuser -d wgi_rules), WG_REPO (for the commit).
 import { execSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { sluggify } from "../../scripts/mapping.js";
 
 export const SCHEMA_VERSION = 1;
-export const PF2E_VERSION = "8.6.1";
+// Alias rows are only applied when the world's PF2e version equals this stamp (scripts/match-catalog.js).
+// Keep it identical to module.json relationships.systems[pf2e].compatibility.verified.
+const moduleManifest = JSON.parse(readFileSync(new URL("../../module.json", import.meta.url), "utf8"));
+export const PF2E_VERSION = moduleManifest.relationships.systems.find((s) => s.id === "pf2e").compatibility.verified;
 // WG "action" rows are matched on the feat pack type (typesFor("feat") = feat + action).
 const KIND_TO_PACK = { action: "feat" };
 // pf2e_catalog_entries.item_kind -> the importer's pack kind. Kinds the importer never matches are skipped.

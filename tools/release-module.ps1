@@ -82,6 +82,10 @@ if ($ModuleId -eq 'foundry-wanderersguide-import') {
   if (-not (Test-Path $catalogPath)) { throw "Release requires $catalogRel. Generate it before packaging." }
   $catalog = [IO.File]::ReadAllText($catalogPath) | ConvertFrom-Json
   if ($catalog.header.schemaVersion -ne 1 -or -not $catalog.aliases) { throw "$catalogRel is missing a schemaVersion 1 header or aliases." }
+  $verified = @($mj.relationships.systems | Where-Object { $_.id -eq 'pf2e' } | ForEach-Object { $_.compatibility.verified }) | Select-Object -First 1
+  if ($catalog.header.pf2eVersion -ne $verified) {
+    throw "$catalogRel is stamped for PF2e $($catalog.header.pf2eVersion), but module.json marks PF2e $verified verified. Re-export the catalog before packaging."
+  }
   $files = @($files + $catalogRel) | Sort-Object -Unique
 }
 
