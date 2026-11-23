@@ -131,12 +131,39 @@ function delay(ms, signal) {
 
 // This loop is outbound only: a GM browser connects, waits for commands, and
 // returns a single character list or source. Never opens an HTTP route in Foundry.
+export function jsonUtf8ByteLength(value) {
+  return new TextEncoder().encode(JSON.stringify(value)).byteLength;
+}
+
+/** One browser owner for the relay. A second GM tab waits instead of replacing the session. */
+export function createRelayLease({ storage, key, ownerId, ttlMs = 15000, now = () => Date.now() }) {
+  const read = () => {
+    try { return JSON.parse(storage.getItem(key) || "null"); }
+    catch { return null; }
+  };
+  return {
+    tryAcquire() {
+      const cur = read();
+      if (cur && cur.ownerId !== ownerId && Number(cur.expiresAt) > now()) return false;
+      storage.setItem(key, JSON.stringify({ ownerId, expiresAt: now() + ttlMs }));
+      return read()?.ownerId === ownerId;
+    },
+    release() {
+      if (read()?.ownerId === ownerId) storage.removeItem(key);
+    },
+  };
+}
+
 export async function runFoundryReadRelay({
   gameRef, config, fetchImpl = fetch, signal, onState = () => {},
-  backoffMs = 2000,
+  backoffMs = 2000, lease = null, leaseWaitMs = 250,
 }) {
   if (!gameRef?.user?.isGM) return;
   const settings = validateReadConfig(config);
+  if (lease) {
+    while (!signal?.aborted && !lease.tryAcquire()) await delay(leaseWaitMs, signal);
+    if (signal?.aborted) return;
+  }
   let session = null;
   let lastState = "";
   const state = (value) => {
@@ -171,14 +198,15 @@ export async function runFoundryReadRelay({
         if (actor) reply.actor = actor;
         else reply.status = 403;
       }
-      // A large actor cannot fit the relay's 1.5MB request limit.
-      if (JSON.stringify(reply).length > 1400000) {
+      // A large actor cannot fit the relay's 1.5MB request limit. Count UTF-8 bytes, not UTF-16 code units.
+      if (jsonUtf8ByteLength(reply) > 1400000) {
         reply.ok = false;
         delete reply.actor;
         delete reply.characters;
         reply.status = 502;
       }
       await post(fetchImpl, settings.relayUrl, "/foundry-relay/v1/respond", reply, session, signal);
+      if (lease && !lease.tryAcquire()) { session = null; state("disconnected"); await delay(leaseWaitMs, signal); }
     } catch (error) {
       if (signal?.aborted || error?.name === "AbortError") break;
       // Do not log errors/requests: a failed fetch may contain a secret URL
@@ -188,4 +216,5 @@ export async function runFoundryReadRelay({
       await delay(backoffMs, signal);
     }
   }
+  lease?.release();
 }

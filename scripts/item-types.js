@@ -5,7 +5,7 @@
 // A match catalog may override any kind's list with `typeMap` (normalizeMatchCatalog).
 export const KIND_TYPES = Object.freeze({
   ancestry: ["ancestry"], heritage: ["heritage"], background: ["background"], class: ["class"],
-  feat: ["feat", "action"], spell: ["spell"],
+  feat: ["feat", "action"], spell: ["spell"], deity: ["deity"], lore: ["lore"],
   equipment: ["weapon", "armor", "shield", "equipment", "consumable", "treasure", "backpack", "kit", "ammo"], // ammo: 216 pf2e 8.6.1 equipment-pack items (e.g. Arrows) have type "ammo"
 });
 /** Every Item type the compendium index keeps. */

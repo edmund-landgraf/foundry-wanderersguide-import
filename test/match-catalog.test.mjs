@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
+import { PF2E_VERSION } from "../db/tools/export-match-catalog.mjs";
 import { checkCatalog, loadMatchCatalog, resetMatchCatalogCache, unwrapCatalog, CATALOG_NOT_LOADED } from "../scripts/match-catalog.js";
 import { matchEntries } from "../scripts/mapping.js";
 
@@ -8,6 +9,7 @@ const fixture = JSON.parse(readFileSync(new URL("./fixtures/match-catalog.min.js
 // data/match-catalog.json is generated locally (git-ignored); check it only when present.
 const bundledUrl = new URL("../data/match-catalog.json", import.meta.url);
 const bundled = existsSync(bundledUrl) ? JSON.parse(readFileSync(bundledUrl)) : null;
+const manifest = JSON.parse(readFileSync(new URL("../module.json", import.meta.url)));
 
 test("fixture loads on the matching PF2e version without warnings", () => {
   const r = checkCatalog(fixture, "8.6.1");
@@ -16,10 +18,11 @@ test("fixture loads on the matching PF2e version without warnings", () => {
   assert.equal(r.catalog.aliases.length, fixture.header.rowCount);
 });
 
-test("generated snapshot (if present) is valid, built for its header PF2e version, active rows only", { skip: bundled ? false : "data/match-catalog.json not generated" }, () => {
-  const r = checkCatalog(bundled, bundled.header.pf2eVersion);
+test("generated snapshot (if present) loads on the PF2e version module.json marks verified", { skip: bundled ? false : "data/match-catalog.json not generated" }, () => {
+  const r = checkCatalog(bundled, PF2E_VERSION);
   assert.equal(r.status, "loaded");
-  assert.match(bundled.header.pf2eVersion, /^\d+\.\d+\.\d+$/);
+  assert.equal(bundled.header.pf2eVersion, PF2E_VERSION);
+  assert.equal(checkCatalog(bundled, "8.6.1").status, PF2E_VERSION === "8.6.1" ? "loaded" : "stale");
   assert.ok(bundled.aliases.every((a) => a.status === "active"));
 });
 
@@ -89,4 +92,8 @@ test("loader: 404 -> missing; fetch error -> missing; ok -> loaded; cached", asy
 test("unwrapCatalog accepts raw catalogs (back-compat) and nothing", () => {
   assert.equal(unwrapCatalog(null).status, "missing");
   assert.equal(unwrapCatalog({ aliases: [] }).status, "loaded");
+});
+test("manifest minimum matches the only bundled PF2e catalog version", () => {
+  const minimum = manifest.relationships.systems.find((system) => system.id === "pf2e")?.compatibility?.minimum;
+  assert.equal(minimum, PF2E_VERSION);
 });

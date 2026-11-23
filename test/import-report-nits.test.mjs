@@ -1,6 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { grantFixedChoice, validChoiceIndex, watchPrompts, takenOnceFilter, suppressWarnings } from "../scripts/importer.js";
+import { grantFixedChoice, validChoiceIndex, watchPrompts, promptHintOwner, takenOnceFilter, suppressWarnings } from "../scripts/importer.js";
+import { needsTraitCatalog } from "../scripts/custom-items.js";
+import { MODULE_ID } from "../scripts/constants.js";
 
 // PC 111 live test (2026-11-11): Mastermind's skill ChoiceSet stores a data path, and WG's answer list
 // for the racket also carries the key attribute. The report listed this as a conflict although
@@ -81,4 +83,32 @@ test("suppressWarnings drops matching warnings, passes others, and restores", ()
   n.warn("drop me");
   assert.deepEqual(seen, ["keep me", "drop me"]);
   assert.doesNotThrow(() => suppressWarnings(undefined, () => true)());
+});
+
+
+test("slim exports request the full trait catalog for ancestry-section trait answers", () => {
+  const slim = {
+    slim: true,
+    content: { all_traits: [], inventory_flat: [] },
+    character: { operation_data: { selections: { "ancestry-section-20031_op": 1436 } } },
+  };
+  assert.equal(needsTraitCatalog(slim), true);
+  slim.content.all_traits = [{ id: 1436, name: "Human", meta_data: { ancestry_trait: true } }];
+  assert.equal(needsTraitCatalog(slim), false);
+});
+
+test("runtime-granted prompts use the imported parent feature's WG hints", () => {
+  const parent = { id: "parent", name: "Cultural Adaptability", flags: { [MODULE_ID]: { wgContentId: 20031 } } };
+  const item = {
+    name: "Adopted Ancestry",
+    flags: { pf2e: { grantedBy: { id: "parent" } } },
+    actor: { items: [parent] },
+  };
+  const ctx = {
+    specific: (name, id) => name === "Cultural Adaptability" && id === 20031 ? ["Human"] : [],
+  };
+  const resolved = promptHintOwner({ item }, ctx);
+  assert.deepEqual(resolved.specific, ["Human"]);
+  assert.equal(resolved.hintOwner, "Cultural Adaptability");
+  assert.equal(resolved.hintOwnerWgId, 20031);
 });

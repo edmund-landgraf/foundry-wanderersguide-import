@@ -182,7 +182,7 @@ test("exportCharacter fetches the full file when slim official selections are un
     const json = url.endsWith("-slim") ? slim : full;
     return { status: 200, ok: true, headers: { get: () => null }, json: async () => json, text: async () => JSON.stringify(json) };
   };
-  const out = await exportCharacter({ baseUrl: "http://h", apiKey: KEY, fetchImpl, maxRetries: 0 }, 109);
+  const out = await exportCharacter({ baseUrl: "https://example.test", apiKey: KEY, fetchImpl, maxRetries: 0 }, 109);
   assert.deepEqual(urls, ["wgui-export-character-slim", "wgui-export-character"]);
   assert.deepEqual(out.content.all_traits, officialTraits);
   assert.ok(wgChoiceHints(out).byId.get("20031").includes("Human"));

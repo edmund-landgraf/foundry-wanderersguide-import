@@ -33,15 +33,19 @@ export function unnamedOfficialSelectionIds(exp) {
   return out;
 }
 
-/** True when the export has custom items whose trait ids are missing from content.all_traits
- * (the slim export drops official traits), so the full export is needed to name them.
- * Also true when official selection ids (ancestry traits, etc.) are unnamed. */
+/** True when a slim export omits names needed to resolve custom-item traits or official
+ * selection ids (for example Adopted Ancestry / Cultural Adaptability trait answers). */
 export function needsTraitCatalog(exp) {
   const ct = exp?.content ?? {};
   const hb = homebrewSourceIds(ct);
-  const known = new Set((ct.all_traits ?? []).map((t) => t?.id));
-  if ((ct.inventory_flat ?? []).some((inv) => { const it = inv?.item ?? inv; return isCustomItem(it, hb) && (it.traits ?? []).some((id) => !known.has(id)); })) return true;
-  return unnamedOfficialSelectionIds(exp).length > 0;
+  const known = new Set((ct.all_traits ?? []).flatMap((t) => [t?.id, t?.id == null ? null : String(t.id)]).filter((x) => x != null));
+  const customNeedsCatalog = (ct.inventory_flat ?? []).some((inv) => {
+    const it = inv?.item ?? inv;
+    return isCustomItem(it, hb) && (it.traits ?? []).some((id) => !known.has(id) && !known.has(String(id)));
+  });
+  // Ancestry-section trait ids and any other official selection ids that are still unnamed.
+  // Feat/spell ids already present in the slim export do not trigger a full fetch.
+  return customNeedsCatalog || unnamedOfficialSelectionIds(exp).length > 0;
 }
 
 /** True when an inventory_flat row is a WG custom item (its content source is homebrew). */
@@ -64,7 +68,17 @@ export function selectorFor(variable) {
   if (OTHER[v]) return OTHER[v];
   const m = v.match(/^SKILL_([A-Z]+)$/);
   if (m && SKILLS.has(m[1].toLowerCase())) return m[1].toLowerCase();
-  return null; // includes SKILL_LORE_*: PF2e lore selectors depend on the actor's lore item slug
+  return null;
+}
+
+/** Lore selector only when this import is already creating that lore item. No rank is written here. */
+export function loreSelector(variable, loreSlugs) {
+  const m = String(variable ?? "").match(/^SKILL_LORE_([A-Z0-9]+(?:_[A-Z0-9]+)*)$/);
+  if (!m) return null;
+  const words = m[1].toLowerCase().split("_").filter((word) => /[a-z0-9]/.test(word));
+  if (!words.length) return null;
+  const selector = `${words.join("-")}-lore`;
+  return loreSlugs?.has?.(selector) ? selector : null;
 }
 
 const BONUS_TYPES = new Set(["item", "status", "circumstance"]);
@@ -88,7 +102,7 @@ function translateOne(op, ctx) {
   const label = ctx.itemName ?? "Wanderer's Guide item";
   switch (op?.type) {
     case "addBonusToValue": {
-      const selector = selectorFor(d.variable);
+      const selector = loreSelector(d.variable, ctx.loreSlugs) ?? selectorFor(d.variable);
       const value = Number(d.value);
       if (!selector || !Number.isFinite(value) || typeof d.value === "string" && !/^[+-]?\d+$/.test(d.value.trim())) return unresolved(op, `no PF2e selector or numeric value for ${d.variable} = ${JSON.stringify(d.value)}`);
       const type = BONUS_TYPES.has(String(d.type ?? "").toLowerCase()) ? String(d.type).toLowerCase() : "untyped";

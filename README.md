@@ -5,9 +5,9 @@ Imports Pathfinder 2e player characters from Wanderer's Guide (WGUI) into the cu
 | | |
 |---|---|
 | Module id | `foundry-wanderersguide-import` |
-| Version | 0.1.2 |
-| Foundry | minimum 12, verified 14 (build 369) |
-| System | `pf2e`, minimum 6.0.0, verified 8.6.1 |
+| Version | 0.1.3 |
+| Foundry | minimum 12, verified 14 (build 370) |
+| System | `pf2e`, minimum 8.7.1, verified 8.7.1 |
 | Tests | `npm test` (Node built-in test runner, 94 tests passing as of 2026-11-01) |
 
 ## Install
@@ -85,7 +85,7 @@ Actors sidebar → **Import from Wanderer's Guide** → tick characters → **Im
 
 **Implemented (experimental):** character list, one-at-a-time JSON v4 export with 429 backoff, actor create/update by flags, compendium matching (slug, match-catalog aliases, then an unambiguous name or name+level) for ancestry, heritage, background, class, feats, spells and equipment; ChoiceSet hints; dependency-ordered GrantItem/ChoiceSet evaluation; runtime-grant reconciliation; rune/material parsing; spellcasting entries; WG custom items in a "Wanderer's Guide Homebrew" folder; optional dry-run diff and parity reporting; campaign selection and optional campaign art; level, languages, attributes and HP reconciliation.
 
-**Match catalog:** alias matching comes from a generated `data/match-catalog.json` (git-ignored, built from the rules database; see [db/README.md](db/README.md#match-catalog-export)). Without it, imports still run on exact names only and alias-dependent misses are reported as unresolved ("match catalog not loaded").
+**Match catalog:** alias matching comes from a generated `data/match-catalog.json` (git-ignored, built from the rules database; see [db/README.md](db/README.md#match-catalog-export)). The file is stamped with the PF2e version in `module.json` (`verified`, currently 8.7.1) and loads only when the world runs that exact version. Minimum 6.0.0 still imports: without a matching catalog, imports run on exact names only and alias-dependent misses are reported as unresolved ("match catalog not loaded").
 
 **Known limitations:** no Foundry-world integration test suite; parity covers a subset of the PF2e sheet; skills, saves, AC, perception, currency and several derived/proficiency fields are not yet forced from WG; campaign visibility can exceed exportability when WG has not granted the API client access to a PC. Class status: [docs/CLASS_COVERAGE.md](docs/CLASS_COVERAGE.md).
 

@@ -159,9 +159,17 @@ best row for its import run and log kind, while retaining the previous row as
 an auditable superseded reference. `pc_import_log_highlights` stores concise
 facts such as matched counts, unresolved choices, warnings, and parity results.
 
+## PF2e catalog sync
+
+`node db/tools/sync-pf2e-catalog.mjs <foundryvtt_pf2e> [--apply]` reads the checked-out PF2e packs and compares them with `pf2e_catalog_entries` in `wgi_rules`. A run without `--apply` writes `db/reports/pf2e-<version>-catalog-sync.json` and does not change the database.
+
+Rows match on `source_path`. A Foundry document id is used as a move only when that id is unique in both the packs and the catalog. Content changes update the catalog row and stamp `pf2e_version`. New paths are inserted. Paths missing from the new packs stay in the catalog, because `wg_pf2e_catalog_matches.entry_id` is deleted with the catalog row. NPC headers in `pf2e_bestiary_headers` are updated from the same pass. Grant rules, keyword tables, aliases, and `data/match-catalog.json` are left for review after the report.
+
+Check out the `pf2e-<version>` tag in the Foundry repo first. The script talks to the `my-postgres` container as `appuser` on database `wgi_rules`.
+
 ## Match catalog export
 
-`node db/tools/export-match-catalog.mjs [--out data/match-catalog.json] [--wg-commit <sha>] [--no-db]` reads active rows from `compendium_match_aliases`, from `wg_pf2e_catalog_matches` (where the WG and PF2e names differ after sluggify; priority 200, so curated aliases win), and from `compendium_match_rules`. It builds a versioned snapshot (header: schemaVersion, pf2eVersion 8.6.1, wgContentCommit, generatedAt, rowCount, sha256; identity aliases dropped; active rules included and covered by the checksum), inserts it as a row in `match_catalog_snapshots` (migration 033) and writes the same JSON to `data/match-catalog.json`. Apply migration 034 before exporting so the semantic-suffix rule includes `research-field`. The importer uses a loaded catalog's type map and semantic suffixes; a file with no `rules` array keeps the previous built-in lists.
+`node db/tools/export-match-catalog.mjs [--out data/match-catalog.json] [--wg-commit <sha>] [--no-db]` reads active rows from `compendium_match_aliases`, from `wg_pf2e_catalog_matches` (where the WG and PF2e names differ after sluggify; priority 200, so curated aliases win), and from `compendium_match_rules`. It builds a versioned snapshot (header: schemaVersion, pf2eVersion taken from `module.json` verified PF2e, wgContentCommit, generatedAt, rowCount, sha256; identity aliases dropped; active rules included and covered by the checksum), inserts it as a row in `match_catalog_snapshots` (migration 033) and writes the same JSON to `data/match-catalog.json`. Apply migration 034 before exporting so the semantic-suffix rule includes `research-field`. The importer uses a loaded catalog's type map and semantic suffixes; a file with no `rules` array keeps the previous built-in lists.
 
 That file is git-ignored and never committed. Generate it locally (migration 033 must be applied; take a `pg_dump` backup first), or restore it from the latest snapshot row:
 

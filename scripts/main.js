@@ -1,6 +1,7 @@
 import { MODULE_ID, DEFAULT_FUNCTIONS_URL } from "./constants.js";
-import { openImportDialog } from "./dialog.js";
-import { DEFAULT_RELAY_URL, runFoundryReadRelay, validateReadConfig } from "./foundry-read-relay.js";
+import { importLinkedCharacter, mountSheetImportButton, openImportDialog, sheetImportTarget } from "./dialog.js";
+import { DEFAULT_RELAY_URL, createRelayLease, runFoundryReadRelay, validateReadConfig } from "./foundry-read-relay.js";
+import { assertSecureFunctionsUrl } from "./api.js";
 
 let foundryReadController = null;
 
@@ -24,10 +25,17 @@ function startFoundryReadRelay() {
   }
   const controller = new AbortController();
   foundryReadController = controller;
+  const ownerId = globalThis.crypto?.randomUUID?.() ?? `tab-${Date.now()}-${Math.random()}`;
+  const lease = globalThis.localStorage ? createRelayLease({
+    storage: globalThis.localStorage,
+    key: `${MODULE_ID}.readRelayLeader`,
+    ownerId,
+  }) : null;
   void runFoundryReadRelay({
     gameRef: game,
     config,
     signal: controller.signal,
+    lease,
     onState: (state) => {
       if (state === "connected") console.info(MODULE_ID + " | read relay connected");
       // Do not log fetch errors: their text may include credentials.
@@ -68,6 +76,11 @@ Hooks.once("init", () => {
   game.settings.register(MODULE_ID, "functionsUrl", {
     name: "WGI.Settings.FunctionsUrl.Name", hint: "WGI.Settings.FunctionsUrl.Hint",
     scope: "client", config: true, type: String, default: DEFAULT_FUNCTIONS_URL,
+    onChange: (value) => {
+      if (game.settings.get(MODULE_ID, "wgServer") !== "custom") return;
+      try { assertSecureFunctionsUrl(value); }
+      catch (error) { ui.notifications?.error(error.message); }
+    },
   });
 });
 
@@ -81,6 +94,21 @@ Hooks.on("renderSettingsConfig", (_app, html) => {
     readCodeInput.autocomplete = "off";
   }
 });
+
+function onCharacterSheet(app, html) {
+  const actor = app?.actor ?? app?.document;
+  const target = sheetImportTarget(actor, game.user);
+  if (!target) return;
+  const root = html?.[0] ?? html;
+  mountSheetImportButton(root, {
+    label: game.i18n.localize("WGI.Button"),
+    onClick: () => { void importLinkedCharacter(target.wgId); },
+  });
+}
+
+for (const hook of ["renderActorSheet", "renderCharacterSheetPF2e"]) {
+  Hooks.on(hook, onCharacterSheet);
+}
 
 Hooks.on("renderActorDirectory", (_app, html) => {
   const root = html[0] ?? html;
