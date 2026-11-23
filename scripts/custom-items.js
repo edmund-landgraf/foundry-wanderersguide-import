@@ -11,8 +11,30 @@ export function homebrewSourceIds(content) {
   return ids;
 }
 
-/** True when a slim export omits names needed to resolve either custom-item traits
- * or official ancestry-trait answers (for example Adopted Ancestry). */
+/** Numeric official selection values that are not named in the export's own lists
+ * (feats, spells, or all_traits). Slim exports drop official all_traits, so ancestry
+ * trait answers such as Human (1436) stay unnamed until the full file is fetched. */
+export function unnamedOfficialSelectionIds(exp) {
+  const ct = exp?.content ?? {};
+  const named = new Set();
+  const add = (id) => { if (id != null && id !== "") named.add(String(id)); };
+  for (const t of ct.all_traits ?? []) add(t?.id);
+  for (const f of Object.values(ct.feats_features ?? {}).flat()) add(f?.id);
+  for (const list of [ct.focus_spells, ct.innate_spells, ct.spells?.all, ct.all_spells]) {
+    for (const s of list ?? []) add(s?.id);
+  }
+  const out = [];
+  for (const [key, value] of Object.entries(exp?.character?.operation_data?.selections ?? {})) {
+    if (value == null) continue;
+    const raw = String(value);
+    if (/^(SKILL_|ATTRIBUTE_|WEAPON_GROUP_)/.test(raw) || !/^\d+$/.test(raw)) continue;
+    if (!named.has(raw)) out.push({ key, id: Number(raw) });
+  }
+  return out;
+}
+
+/** True when a slim export omits names needed to resolve custom-item traits or official
+ * selection ids (for example Adopted Ancestry / Cultural Adaptability trait answers). */
 export function needsTraitCatalog(exp) {
   const ct = exp?.content ?? {};
   const hb = homebrewSourceIds(ct);
@@ -21,13 +43,9 @@ export function needsTraitCatalog(exp) {
     const it = inv?.item ?? inv;
     return isCustomItem(it, hb) && (it.traits ?? []).some((id) => !known.has(id) && !known.has(String(id)));
   });
-  // WG stores Adopted Ancestry/Cultural Adaptability answers as numeric trait ids on
-  // ancestry-section selection keys. The slim export drops all_traits, so fetching the
-  // full export is the only safe way to turn that id into a ChoiceSet label.
-  const ancestryNeedsCatalog = Object.entries(exp?.character?.operation_data?.selections ?? {}).some(([key, value]) =>
-    /^ancestry-section-/.test(key) && /^\d+$/.test(String(value)) && !known.has(value) && !known.has(String(value))
-  );
-  return customNeedsCatalog || ancestryNeedsCatalog;
+  // Ancestry-section trait ids and any other official selection ids that are still unnamed.
+  // Feat/spell ids already present in the slim export do not trigger a full fetch.
+  return customNeedsCatalog || unnamedOfficialSelectionIds(exp).length > 0;
 }
 
 /** True when an inventory_flat row is a WG custom item (its content source is homebrew). */

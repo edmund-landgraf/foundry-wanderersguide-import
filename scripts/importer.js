@@ -117,25 +117,34 @@ async function restoreSpellcastingState(actor, state) {
 //   2. on re-import, the selection already stored on the actor for the same compendium item, if still legal.
 // Nothing is guessed from other names and the first option is never taken. Anything left open is
 // recorded as unresolved and PF2e's own prompt is shown to the user (AMBA_REUSE_PLAN section 3).
+// WG heading -> PF2e item that answers the same choice (same list as coverFeatureGaps).
+const FEATURE_OWNER_ALIASES = Object.freeze([["domains", "domain-initiate"]]);
+
 export function choiceContext(exp, plan, index, actor, { semanticSuffixes = null, catalog = null } = {}) {
   const hints = wgChoiceHints(exp);
   // Runtime grants have PF2e names and may lack the source WG content ID.
   // Route them through reviewed catalog aliases, never unrelated global hints.
   const ownerAliases = new Map();
+  const addOwnerAlias = (source, target) => {
+    if (!hints.has(source)) return;
+    const owners = ownerAliases.get(target) ?? new Set();
+    owners.add(source);
+    ownerAliases.set(target, owners);
+  };
   for (const [source, aliases] of normalizeMatchCatalog(catalog).aliases) {
     const owner = source.slice(source.indexOf(":") + 1);
-    if (!hints.has(owner)) continue;
-    for (const alias of aliases) {
-      const owners = ownerAliases.get(alias.target) ?? new Set();
-      owners.add(owner);
-      ownerAliases.set(alias.target, owners);
-    }
+    for (const alias of aliases) addOwnerAlias(owner, alias.target);
   }
+  for (const [source, target] of FEATURE_OWNER_ALIASES) addOwnerAlias(source, target);
   const ownerKey = (owner) => {
     const slug = sluggify(owner);
     if (hints.has(slug)) return slug;
     const aliases = ownerAliases.get(slug);
-    return aliases?.size === 1 ? [...aliases][0] : slug;
+    if (aliases?.size === 1) return [...aliases][0];
+    // "Deity (Cleric)" is the PF2e item; WG stores the same answers under "Deity".
+    const bare = sluggify(String(owner ?? "").replace(/ \([^()]+\)$/, ""));
+    if (bare && bare !== slug && hints.has(bare)) return bare;
+    return slug;
   };
   const fixedNames = new Set(
     exp?.content?.raw_data_dump?.variables?.PHYSICAL_FEATURE_NAMES?.value
@@ -199,7 +208,7 @@ export function choiceContext(exp, plan, index, actor, { semanticSuffixes = null
     return candidate.index;
   };
   const beliefs = String(exp?.character?.details?.info?.beliefs ?? "").trim();
-  return { hints, fixedNames, index, uuidName, previous, used, markUsed, markHintUsed, conflicts: new Map(), unresolved: [], specific, available, consume, pick, assigned, beliefs, semanticSuffixes, resolvedChoices, keyAbilityUsed: new Set() };
+  return { hints, fixedNames, index, uuidName, previous, used, markUsed, markHintUsed, conflicts: new Map(), unresolved: [], specific, available, consume, pick, assigned, beliefs, semanticSuffixes, resolvedChoices, keyAbilityUsed: new Set(), actor };
 }
 
 /** Index of the single option matching the hints, or -1 when none or more than one match. */
@@ -331,7 +340,7 @@ export function applyFeatSlotData(entry, data) {
   return data;
 }
 
-async function prefillChoices(data, ctx, notes, sourceName = null, sourceWgId = null) {
+export async function prefillChoices(data, ctx, notes, sourceName = null, sourceWgId = null) {
   const rules = data.system?.rules;
   if (!Array.isArray(rules)) return;
   const src = data._stats?.compendiumSource ?? data.flags?.core?.sourceId ?? null;
@@ -344,13 +353,21 @@ async function prefillChoices(data, ctx, notes, sourceName = null, sourceWgId = 
   for (const rule of rules) {
     if (rule?.key === "ChoiceSet" && rule.selection == null) {
       // Actor-dependent options are built at prepare time. An early answer can grant a child the predicate would reject.
-      if (ruleDependsOnActor(rule)) continue;
+      // Deity document ChoiceSets are an exception: WG's beliefs name the deity, and a standalone
+      // deity item imported first can make PF2e's {not:"deity"} predicate skip the prompt entirely.
+      if (ruleDependsOnActor(rule) && !isDeityItemChoiceSet(rule)) continue;
       const flag = rule.flag ?? defaultFlag(data.name);
       let hit = null;
-      for (const [candidateIndex, candidate] of owners.entries()) {
-        hit = await resolveChoiceSet(rule, candidate, ctx, { sourceUuid: src, flag, ownerWgId: candidateIndex === 0 ? sourceWgId : null });
-        if (hit) break;
-        if (ctx.specific(candidate, candidateIndex === 0 ? sourceWgId : null).length) break;
+      if (isDeityItemChoiceSet(rule)) {
+        const row = deityIndexChoice(ctx.index, ctx.beliefs);
+        if (row) hit = { value: row.uuid, label: row.name, via: "WG deity" };
+      }
+      if (!hit && !isDeityItemChoiceSet(rule)) {
+        for (const [candidateIndex, candidate] of owners.entries()) {
+          hit = await resolveChoiceSet(rule, candidate, ctx, { sourceUuid: src, flag, ownerWgId: candidateIndex === 0 ? sourceWgId : null });
+          if (hit) break;
+          if (ctx.specific(candidate, candidateIndex === 0 ? sourceWgId : null).length) break;
+        }
       }
       if (!hit) { ctx.unresolved.push({ owner: data.name, flag, reason: "no explicit WG answer matching exactly one legal option; PF2e will ask" }); continue; }
       rule.selection = hit.value;
@@ -434,8 +451,27 @@ async function itemDataFor(entry, folderId, ctx, notes) {
 // waiting. The watcher stays up for the whole import: class prompts open only after ancestry,
 // heritage, and background.
 
+/** True when this ChoiceSet selects a deity document, not sanctification or another Deity (Cleric) prompt. */
+export function isDeityItemChoiceSet(rule) {
+  const choices = rule?.choices;
+  if (choices && typeof choices === "object" && !Array.isArray(choices) && String(choices.itemType ?? "") === "deity") return true;
+  const prompt = String(rule?.prompt ?? "");
+  return /Prompt\.Deity\b/i.test(prompt) && !/sanctification/i.test(prompt);
+}
+
+/** The unique compendium deity whose name is the character's beliefs, or null when none or more than one match. */
+export function deityIndexChoice(index, beliefs) {
+  const name = String(beliefs ?? "").trim();
+  const rows = (index ?? []).filter((row) => row?.type === "deity" && row.uuid);
+  if (!name || !rows.length) return null;
+  const i = uniqueChoice(rows.map((row) => row.name ?? ""), [name]);
+  return i >= 0 ? rows[i] : null;
+}
+
 /** Index of the deity whose name is the character's beliefs, when that prompt has exactly one match. */
 export function deityPromptChoice(app, beliefs) {
+  // "Sanctification" prompts live on the Deity (Cleric) item; their title + item name also contain "Deity".
+  if (/sanctification/i.test(String(app?.title ?? ""))) return null;
   const title = `${app?.title ?? ""} ${app?.item?.name ?? ""}`;
   if (!DEITY_PROMPT.test(title) || !String(beliefs ?? "").trim() || !Array.isArray(app?.choices) || !app.choices.length) return null;
   const i = uniqueChoice(app.choices.map((c) => c.label ?? ""), [String(beliefs).trim()]);
@@ -459,6 +495,26 @@ export function allChoiceHints(hints) {
   return names;
 }
 
+/** The item that granted `item`, when that relationship is recorded on the actor. */
+export function grantOrigin(item, actor) {
+  const list = actor?.items ?? actor;
+  if (!item || !list) return null;
+  const find = (pred) => (typeof list.find === "function" ? list.find(pred) : [...list].find(pred)) ?? null;
+  const parentId = item.flags?.pf2e?.grantedBy?.id ?? (typeof item.system?.location === "string" ? item.system.location : null);
+  if (parentId) {
+    const hit = find((i) => i.id === parentId);
+    if (hit) return hit;
+  }
+  return find((p) => Object.values(p.flags?.pf2e?.itemGrants ?? {}).some((v) => v?.id === item.id));
+}
+
+/** Index of the one label whose slug equals a hint, or null when none or more than one match. */
+export function exactUniqueHintIndex(labels, hintNames) {
+  const hints = new Set((hintNames ?? []).map((n) => sluggify(n)).filter(Boolean));
+  const hits = (labels ?? []).map((label, i) => (hints.has(sluggify(label)) ? i : -1)).filter((i) => i >= 0);
+  return hits.length === 1 ? hits[0] : null;
+}
+
 /**
  * A usable index into a prompt's choices, or null. ctx.pick returns null when WG has answers
  * for the owner but none fits; in JS `null >= 0` is true, so callers must not compare directly.
@@ -477,10 +533,9 @@ export function promptHintOwner(app, ctx) {
   const direct = ctx.specific?.(owner, ownerWgId) ?? [];
   if (direct.length) return { owner, ownerWgId, specific: direct };
 
-  const parentId = item?.flags?.pf2e?.grantedBy?.id ?? null;
-  const items = item?.actor?.items;
-  const parent = parentId == null ? null
-    : items?.get?.(parentId) ?? [...(items ?? [])].find((candidate) => candidate?.id === parentId);
+  // item.actor is set at Foundry runtime; ctx.actor covers unit tests and imports
+  // where the prompt item is a plain object. grantOrigin also checks location and itemGrants.
+  const parent = grantOrigin(item, item?.actor) ?? grantOrigin(item, ctx?.actor);
   const parentName = parent?.name ?? "";
   const parentWgId = parent?.flags?.[MODULE_ID]?.wgContentId ?? null;
   const parentHints = parentName ? (ctx.specific?.(parentName, parentWgId) ?? []) : [];
@@ -521,11 +576,16 @@ export function watchPrompts(ctx, notes) {
       const specific = hintOwner.specific;
       const pickOwner = hintOwner.hintOwner ?? owner;
       const pickOwnerWgId = hintOwner.hintOwnerWgId ?? hintOwner.ownerWgId;
-      let i = specific.length ? ctx.pick(pickOwner, labels, pickOwnerWgId) : null;
+      let i = null;
       let via = "WG selection";
-      if (i == null) {
-        const deity = deityPromptChoice(app, ctx.beliefs);
-        if (deity != null) { i = deity; via = "WG deity"; ctx.markHintUsed?.(app.choices[i].label); }
+      // Beliefs are the source of truth for the deity document ChoiceSet. Do not let a
+      // "Holy" sanctification hint (filed under WG's Deity feature) fill this prompt.
+      const deity = deityPromptChoice(app, ctx.beliefs);
+      if (deity != null) { i = deity; via = "WG deity"; ctx.markHintUsed?.(app.choices[i].label); }
+      if (i == null) i = specific.length ? ctx.pick(pickOwner, labels, pickOwnerWgId) : null;
+      // Granted items (Adopted Ancestry) often have no wgContentId; parent hints are in promptHintOwner.
+      if (i == null && hintOwner.ownerWgId == null) {
+        i = exactUniqueHintIndex(labels, allChoiceHints(ctx.hints));
       }
       if (i == null && !specific.length) {
         const src = app.item?._stats?.compendiumSource ?? app.item?.sourceId ?? null;
