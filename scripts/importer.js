@@ -496,6 +496,58 @@ export function deityPromptChoice(app, beliefs) {
   return i >= 0 ? i : null;
 }
 
+
+/** The ChoiceSet flag that selects a deity document on this item, or null. */
+export function deitySelectionFlag(item) {
+  const rules = item?._source?.system?.rules ?? item?.system?.rules ?? [];
+  const rule = rules.find((r) => r?.key === "ChoiceSet" && isDeityItemChoiceSet(r));
+  return rule ? (rule.flag ?? defaultFlag(item?.name)) : null;
+}
+
+/** The unique deity item on the actor whose name is the character's beliefs, or null. */
+export function deityItemOnActor(actor, beliefs) {
+  const name = String(beliefs ?? "").trim();
+  const rows = [...(actor?.items ?? [])].filter((item) => item?.type === "deity");
+  if (!name || !rows.length) return null;
+  const i = uniqueChoice(rows.map((item) => item.name ?? ""), [name]);
+  return i >= 0 ? rows[i] : null;
+}
+
+/**
+ * Compendium UUID of the unique deity named in WG beliefs. Prefer the deity item already
+ * imported onto the actor so the flag matches that document; otherwise the pack index.
+ */
+export function resolvedDeityUuid(actor, beliefs, index) {
+  const item = deityItemOnActor(actor, beliefs);
+  const fromItem = item?._stats?.compendiumSource ?? item?.flags?.core?.sourceId ?? item?.sourceId ?? null;
+  if (typeof fromItem === "string" && fromItem.startsWith("Compendium.")) return fromItem;
+  return deityIndexChoice(index, beliefs)?.uuid ?? null;
+}
+
+/**
+ * Write Deity (Cleric)'s rulesSelections.deity after PF2e has granted the feature.
+ * prefillChoices never runs on that granted item (only planned ancestry/heritage/
+ * background/class/feat documents), and the standalone deity is created first, so
+ * the {not:"deity"} ChoiceSet skips the prompt and leaves the flag null (#143).
+ */
+export async function reconcileDeitySelection(actor, beliefs, index) {
+  const uuid = resolvedDeityUuid(actor, beliefs, index);
+  if (!actor || !uuid) return false;
+  const updates = [];
+  for (const item of actor.items ?? []) {
+    const flag = deitySelectionFlag(item);
+    if (!flag) continue;
+    const current = item._source?.flags?.pf2e?.rulesSelections?.[flag]
+      ?? item.flags?.pf2e?.rulesSelections?.[flag]
+      ?? null;
+    if (current === uuid || (current != null && current !== "")) continue;
+    updates.push({ _id: item.id, [`flags.pf2e.rulesSelections.${flag}`]: uuid });
+  }
+  if (!updates.length) return false;
+  await actor.updateEmbeddedDocuments("Item", updates, { render: false });
+  return true;
+}
+
 export function domainPromptWithoutDeity(app) {
   const title = `${app?.title ?? ""} ${app?.item?.name ?? ""}`;
   return DOMAIN_PROMPT.test(title) && emptyChoicePrompt(app);
@@ -1222,6 +1274,14 @@ async function applyImport(p, { onStep, parity, failAfter }) {
       for (const answer of selectedKeyAttributeAnswers(exp)) {
         if (answer.attribute === "ATTRIBUTE_" + plan.keyAbility.toUpperCase()) p.ctx.keyAbilityUsed.add(answer.key);
       }
+    }
+    // Deity (Cleric) is granted by the class, after the standalone deity item, so
+    // prefill never ran on it and the {not:"deity"} prompt never opened (#143).
+    if (await reconcileDeitySelection(actor, p.ctx.beliefs, p.ctx.index)) {
+      const row = deityIndexChoice(p.ctx.index, p.ctx.beliefs);
+      const hit = deityItemOnActor(actor, p.ctx.beliefs);
+      const label = hit?.name ?? row?.name ?? p.ctx.beliefs;
+      notes.push(`choice Deity (Cleric): ${label} (reconciled from WG deity)`);
     }
 
     if (plan.maxHp != null) {
