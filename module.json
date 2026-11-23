@@ -4,9 +4,9 @@
   "description": "Import Pathfinder 2e characters from Wanderer's Guide (WGUI) into the current world using a Wanderer's Guide API key.",
   "version": "0.1.2",
   "authors": [{ "name": "Edmund Landgraf" }],
-  "compatibility": { "minimum": "12", "verified": "14" },
+  "compatibility": { "minimum": "12", "verified": "14.370" },
   "relationships": {
-    "systems": [{ "id": "pf2e", "type": "system", "compatibility": { "minimum": "6.0.0", "verified": "8.6.1" } }]
+    "systems": [{ "id": "pf2e", "type": "system", "compatibility": { "minimum": "6.0.0", "verified": "8.7.1" } }]
   },
   "esmodules": ["scripts/main.js"],
   "languages": [{ "lang": "en", "name": "English", "path": "lang/en.json" }],

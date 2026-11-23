@@ -51,7 +51,11 @@ export function captureRuntimeState(actor) {
     const source = getFlag(item, "wgSource") ?? item.name;
     slots[source] = Object.fromEntries(Object.entries(item.system?.slots ?? {}).map(([rank, value]) => [rank, {
       ...(value ?? {}),
-      prepared: Array.isArray(value?.prepared) ? [...value.prepared] : value?.prepared,
+      prepared: Array.isArray(value?.prepared) ? value.prepared.map((p) => {
+        if (!p || typeof p !== "object") return p;
+        const doc = items.find((i) => i.id === p.id);
+        return { ...p, expended: !!p.expended, slug: doc?.system?.slug ?? p.slug ?? null, name: doc?.name ?? p.name ?? null };
+      }) : value?.prepared,
     }]));
   }
   return {
@@ -82,13 +86,27 @@ export function focusResourcePatch(plan, runtime, existing) {
   };
 }
 
+/** Keep spent slot counts when WG capacity changes. Prepared membership comes from the new entry, not the old list. */
+export function mergedSpellSlots(fresh, saved) {
+  const out = {};
+  for (const [rank, value] of Object.entries(fresh ?? {})) {
+    const old = saved?.[rank] ?? {};
+    const max = Number(value?.max ?? 0);
+    const oldMax = Number(old.max ?? max);
+    const oldValue = Number(old.value ?? oldMax);
+    const spent = Math.max(0, oldMax - oldValue);
+    out[rank] = { ...(value ?? {}), max, value: Math.max(0, Math.min(max, max - spent)) };
+  }
+  return out;
+}
+
 async function restoreSpellcastingState(actor, state) {
   if (!state || !Object.keys(state).length) return;
   for (const item of [...(actor.items ?? [])]) {
     const source = item.getFlag?.(MODULE_ID, "wgSource") ?? item.flags?.[MODULE_ID]?.wgSource ?? item.name;
     const saved = state[source];
     if (!saved || item.type !== "spellcastingEntry") continue;
-    await item.update({ "system.slots": saved });
+    await item.update({ "system.slots": mergedSpellSlots(item.system?.slots, saved) });
   }
 }
 
@@ -747,19 +765,19 @@ export function duplicateItemDiagnostics(items) {
     group.push(item);
   }
   return [...groups].filter(([, group]) => group.length > 1).map(([key, group]) => {
-    const groupIds = new Set(group.map((i) => i.id));
     const grantPairs = group.filter((i) => {
-      const parentId = i.flags?.pf2e?.grantedBy?.id ?? i.system?.location;
-      // The parent is often a differently named class feature (Animist's
-      // Tangle Vine is one example), so it need not be in this duplicate-name
-      // group. Require an actual actor item relationship to avoid hiding
-      // unrelated same-name items.
-      return typeof parentId === "string" && byId.has(parentId) && (groupIds.has(i.id) || i.flags?.pf2e?.grantedBy?.id === parentId);
+      const parentId = i.flags?.pf2e?.grantedBy?.id;
+      return typeof parentId === "string" && byId.has(parentId);
     });
+    const accounted = new Set();
+    for (const item of grantPairs) {
+      accounted.add(item.id);
+      accounted.add(item.flags.pf2e.grantedBy.id);
+    }
     return {
       key,
       items: group.map((i) => ({ id: i.id, name: i.name, type: i.type, source: i._stats?.compendiumSource ?? i.flags?.core?.sourceId ?? null, grantedBy: i.flags?.pf2e?.grantedBy?.id ?? null })),
-      expectedGrantPair: grantPairs.length > 0,
+      expectedGrantPair: grantPairs.length > 0 && group.every((i) => accounted.has(i.id)),
     };
   });
 }
@@ -794,18 +812,19 @@ export function sameThing(entry, item) {
 }
 export class InjectedFailure extends Error {}
 
-function forcedFields(plan, host, actor, existing) {
+export function forcedFields(plan, host, actor, existing) {
   const keepImg = actor?.img && !/mystery-man|default-icons/.test(actor.img) ? actor.img : null;
   const img = resolveImageUrl(plan.imageUrl, host) ?? keepImg ?? FALLBACK_IMG;
   const forced = {
     name: plan.name,
     img,
+    "prototypeToken.name": plan.name,
     "prototypeToken.texture.src": img,
     "system.details.level.value": plan.level,
     // PF2e silently drops language slugs it does not know (e.g. WG's "pahtra"), so those go into the
     // free-text languages field instead of being lost.
-    "system.details.languages.value": plan.languages.filter((l) => l in (CONFIG.PF2E?.languages ?? {})),
-    "system.details.languages.details": plan.languages.filter((l) => !(l in (CONFIG.PF2E?.languages ?? {}))).map((l) => l.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())).join(", "),
+    "system.details.languages.value": plan.languages.filter((l) => l in (globalThis.CONFIG?.PF2E?.languages ?? {})),
+    "system.details.languages.details": plan.languages.filter((l) => !(l in (globalThis.CONFIG?.PF2E?.languages ?? {}))).map((l) => l.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())).join(", "),
     // Forced values from WG (PLAN 7.2). Attributes are set as manual modifiers.
     "system.build.attributes.manual": true,
     ...Object.fromEntries(Object.entries(plan.attributes).map(([k, v]) => [`system.abilities.${k}.mod`, v])),
@@ -862,6 +881,10 @@ export async function planImport(exp, { host, matchCatalog = null }) {
     // target is never guessed into a world item. WG custom inventory items
     // are handled separately by custom-items.js; everything else remains
     // visible as unresolved for explicit review.
+    if (e.kind === "lore" && !e.match) {
+      e.data = { name: e.name, type: "lore", system: {}, flags: { [MODULE_ID]: { kind: "lore", wgVariable: e.variable ?? null } } };
+      continue;
+    }
     if (!e.match && !e.custom) {
       e.unresolved = `no unambiguous PF2e compendium match; left unresolved (no homebrew copy created)${catalogInfo.status === "loaded" ? "" : `; ${CATALOG_NOT_LOADED}`}`;
       ctx.unresolved.push({ owner: `${e.kind}: ${e.name}`, flag: null, reason: e.unresolved });
@@ -911,6 +934,7 @@ export function customLookups(exp, matched, cfg = globalThis.CONFIG?.PF2E) {
       return null;
     },
     languagesCovered: (ct.languages ?? []).length > 0,
+    loreSlugs: new Set(matched.filter((e) => e.kind === "lore" && e.slug).map((e) => e.slug)),
   };
 }
 
@@ -994,11 +1018,10 @@ async function applyImport(p, { onStep, parity, failAfter }) {
     await actor.update(forcedFields(plan, host, actor, existing));
     step("forced");
     // Create inventory before class features so PF2e ChoiceSets can see owned ikon items.
-    const order = ["ancestry", "heritage", "background", "equipment", "class", "feat", "spell"];
+    const order = ["ancestry", "heritage", "background", "deity", "lore", "equipment", "class", "feat", "spell"];
     for (const kind of order) {
       if (kind === "spell" && entryData.length) {
         await createItems(entryData, { keepId: true });
-        await restoreSpellcastingState(actor, runtime?.spellcasting);
       }
       // Items with GrantItem rules go first so their grants exist before the rest are checked
       // (e.g. Web Weaver grants Specialty Crafting, which WG also lists as a feat).
@@ -1056,8 +1079,9 @@ async function applyImport(p, { onStep, parity, failAfter }) {
       step(`created ${kind}`);
     }
     // Prepared casters: fill each entry's slots with the spells WG prepared in them.
-    const prepared = preparedSlotUpdates(matched);
+    const prepared = preparedSlotUpdates(matched, runtime?.spellcasting);
     if (prepared.length) await actor.updateEmbeddedDocuments("Item", prepared, { render: false });
+    await restoreSpellcastingState(actor, runtime?.spellcasting);
     step("prepared slots");
     // Formulas: one write of the merged, UUID-deduped list. diff:false so the array is replaced as sent.
     const formulaEntries = matched.filter((e) => e.kind === "formula" && e.match);

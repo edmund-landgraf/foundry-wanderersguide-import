@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   validateRelayUrl, validateReadConfig, listFoundryCharacters,
-  readFoundryCharacter, runFoundryReadRelay,
+  readFoundryCharacter, runFoundryReadRelay, jsonUtf8ByteLength, createRelayLease,
 } from "../scripts/foundry-read-relay.js";
 
 const CODE = "random-test-code-0123456789";
@@ -142,6 +142,32 @@ test("actor read refuses unknown IDs without exposing other actors", async () =>
   assert.equal(responseBody.ok, false);
   assert.equal(responseBody.actor, undefined);
   assert.equal(responseBody.status, 403);
+});
+
+test("relay size uses UTF-8 bytes and a second tab does not take the lease", async () => {
+  const wide = "あ".repeat(500000);
+  assert.ok(wide.length < 1400000);
+  assert.ok(jsonUtf8ByteLength(wide) > 1400000);
+  const store = new Map();
+  const storage = { getItem: (k) => store.get(k) ?? null, setItem: (k, v) => store.set(k, v), removeItem: (k) => store.delete(k) };
+  const now = () => 1_000;
+  const first = createRelayLease({ storage, key: "relay", ownerId: "tab-a", ttlMs: 60_000, now });
+  const second = createRelayLease({ storage, key: "relay", ownerId: "tab-b", ttlMs: 60_000, now });
+  assert.equal(first.tryAcquire(), true);
+  assert.equal(second.tryAcquire(), false);
+  let called = false;
+  const controller = new AbortController();
+  const waiting = runFoundryReadRelay({
+    gameRef: fixture(), config, signal: controller.signal, leaseWaitMs: 15,
+    lease: second,
+    fetchImpl: async () => { called = true; return { ok: true, json: async () => ({}) }; },
+  });
+  await new Promise((r) => setTimeout(r, 40));
+  assert.equal(called, false);
+  controller.abort();
+  await waiting;
+  first.release();
+  assert.equal(second.tryAcquire(), true);
 });
 
 test("non-GM clients do not contact the relay", async () => {

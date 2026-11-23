@@ -59,6 +59,9 @@ export function buildPlan(exp) {
   (ff.heritages ?? []).forEach((h, i) => add("heritage", "heritage", h.name, { wgContentId: h.id, sourcePath: `content.feats_features.heritages[${i}]` }));
   add("background", "background", ch.details?.background?.name, { wgContentId: ch.details?.background?.id, sourcePath: "character.details.background" });
   add("class", "class", ch.details?.class?.name, { wgContentId: ch.details?.class?.id, sourcePath: "character.details.class" });
+  const deityName = exportedDeityName(exp);
+  if (deityName) add("deity", "deity", deityName, { sourcePath: "character.details.info.beliefs" });
+  for (const lore of lorePlanEntries(exp)) add("lore", "lore", lore.name, { variable: lore.variable, sourcePath: lore.sourcePath });
   for (const group of ["ancestryFeats", "classFeats", "generalAndSkillFeats", "otherFeats"]) {
     (ff[group] ?? []).forEach((f, i) => structuralAt("feat", f.name, `content.feats_features.${group}[${i}]`) || add("feat", "feat", f.name, {
       wgContentId: f.id,
@@ -71,10 +74,12 @@ export function buildPlan(exp) {
   const focusIds = new Set((ct.focus_spells ?? []).map((s) => s.id));
   const spellList = [...(ct.spells?.all ?? []).map((s, i) => [s, `content.spells.all[${i}]`]), ...(ct.focus_spells ?? []).map((s, i) => [s, `content.focus_spells[${i}]`])];
   for (const [s, sourcePath] of spellList) {
-    const key = `${s.id}:${s.rank}`;
+    const castingSource = spellListSource(s.casting_source);
+    const focus = focusIds.has(s.id) && !(ct.spells?.all ?? []).some((x) => x.id === s.id && spellListSource(x.casting_source) === castingSource);
+    const key = `${castingSource}:${s.id}:${s.rank}:${focus ? "focus" : "spell"}`;
     if (seenSpells.has(key)) continue;
     seenSpells.add(key);
-    add("spell", "spell", s.name, { wgContentId: s.id, rank: s.rank, castingSource: spellListSource(s.casting_source), focus: focusIds.has(s.id) && !(ct.spells?.all ?? []).some((x) => x.id === s.id), sourcePath });
+    add("spell", "spell", s.name, { wgContentId: s.id, rank: s.rank, castingSource, focus, sourcePath });
   }
   // Prepared casters: WG keeps the day's preparation in content.spell_slots (spell_id plus the spell
   // record), not in content.spells.all. Attach each slot to the existing book item for that source
@@ -196,29 +201,49 @@ export function normalizeMatchCatalog(catalog = null) {
 }
 export function matchEntries(entries, index, { catalog = null } = {}) {
   const matchCatalog = normalizeMatchCatalog(catalog);
-  const bySlug = new Map();
   const bySlugAll = new Map();
   const byName = new Map();
   for (const row of index) {
     const k = `${row.type}:`;
-    if (row.slug && !bySlug.has(k + row.slug)) bySlug.set(k + row.slug, row);
     if (row.slug) (bySlugAll.get(k + row.slug) ?? bySlugAll.set(k + row.slug, []).get(k + row.slug)).push(row);
     const n = k + String(row.name).toLowerCase();
     (byName.get(n) ?? byName.set(n, []).get(n)).push(row);
   }
   const typesFor = (pt) => typesForKind(pt, matchCatalog.typeMap);
   const stemsFor = (name) => semanticStems(name, matchCatalog.semanticSuffixes);
+  const slugCandidates = (slug, types) => {
+    const candidates = types.flatMap((t) => bySlugAll.get(`${t}:${slug}`) ?? []);
+    return [...new Map(candidates.map((r) => [r.uuid, r])).values()];
+  };
   const uniqueSlugHit = (slug, types, entry) => {
-    const candidates = types.flatMap((t) => {
-      return bySlugAll.get(`${t}:${slug}`) ?? [];
-    });
-    const unique = [...new Map(candidates.map((r) => [r.uuid, r])).values()];
+    const unique = slugCandidates(slug, types);
     if (unique.length === 1) return unique[0];
     if (entry.level != null) {
       const atLevel = unique.filter((r) => r.level === entry.level);
       if (atLevel.length === 1) return atLevel[0];
     }
     return null;
+  };
+  const PACK_RANK = ["classfeatures", "feats-srd", "ancestries", "heritages", "backgrounds", "classes", "spells-srd", "equipment-srd", "actionspf2e"];
+  const packName = (uuid) => String(uuid ?? "").match(/^Compendium\.[^.]+\.([^.]+)\.Item\./)?.[1] ?? "";
+  const preferPack = (rows) => {
+    const ranked = rows.map((row) => ({ row, rank: PACK_RANK.indexOf(packName(row.uuid)) })).filter((x) => x.rank >= 0);
+    if (!ranked.length) return rows;
+    const best = Math.min(...ranked.map((x) => x.rank));
+    return ranked.filter((x) => x.rank === best).map((x) => x.row);
+  };
+  const exactSlug = (slug, types, entry) => {
+    let unique = slugCandidates(slug, types);
+    if (unique.length === 1) return { hit: unique[0] };
+    if (entry.level != null) {
+      const atLevel = unique.filter((r) => r.level === entry.level);
+      if (atLevel.length === 1) return { hit: atLevel[0] };
+      if (atLevel.length > 1) unique = atLevel;
+    }
+    const preferred = preferPack(unique);
+    if (preferred.length === 1) return { hit: preferred[0] };
+    if (unique.length > 1) return { ambiguous: preferred.length > 1 ? preferred : unique };
+    return {};
   };
   const kindOf = (row) => {
     if (row.item_kind === "equipment" || row.item_kind === "npc") return row.item_kind;
@@ -246,13 +271,13 @@ export function matchEntries(entries, index, { catalog = null } = {}) {
   return entries.map((e) => {
     if (e.kind === "formula") return resolveFormula(e, index);
     if (e.custom) return { ...e, match: null, via: "custom" };
-    for (const t of typesFor(e.packType)) {
-      const hit = bySlug.get(`${t}:${e.slug}`);
-      if (hit) return { ...e, match: hit, via: "slug" };
-    }
-    if (e.baseSlug) for (const t of typesFor(e.packType)) {
-      const hit = bySlug.get(`${t}:${e.baseSlug}`);
-      if (hit) return { ...e, match: hit, via: "base+runes" };
+    const exact = exactSlug(e.slug, typesFor(e.packType), e);
+    if (exact.ambiguous) return { ...e, match: null, via: "ambiguous", candidates: exact.ambiguous.map((r) => r.uuid) };
+    if (exact.hit) return { ...e, match: exact.hit, via: "slug" };
+    if (e.baseSlug) {
+      const base = exactSlug(e.baseSlug, typesFor(e.packType), e);
+      if (base.ambiguous) return { ...e, match: null, via: "ambiguous", candidates: base.ambiguous.map((r) => r.uuid) };
+      if (base.hit) return { ...e, match: base.hit, via: "base+runes" };
     }
     const aliases = [
       ...(matchCatalog.aliases.get(`${e.packType}:${e.slug}`) ?? []),
@@ -334,6 +359,38 @@ export function resolveImageUrl(raw, functionsUrl) {
  * options): SKILL_STEALTH -> "Stealth", WEAPON_GROUP_SWORD -> "Sword". Lore skills and
  * other variables are not named (no PF2e option can be matched safely).
  */
+/** Beliefs text is the exported deity when it names one. The placeholder string "undefined" is not a deity. */
+export function exportedDeityName(exp) {
+  const named = exp?.character?.details?.deity?.name ?? exp?.character?.details?.info?.deity;
+  const beliefs = exp?.character?.details?.info?.beliefs;
+  const raw = String(named || beliefs || "").trim();
+  if (!raw || raw.toLowerCase() === "undefined") return null;
+  return raw;
+}
+
+/** "SKILL_LORE_SAILING" -> "Sailing Lore". Blank placeholders such as SKILL_LORE____ are not names. */
+export function loreSkillName(variable) {
+  const m = String(variable ?? "").match(/^SKILL_LORE_([A-Z0-9]+(?:_[A-Z0-9]+)*)$/);
+  if (!m) return null;
+  const words = m[1].toLowerCase().split("_").filter((word) => /[a-z0-9]/.test(word));
+  if (!words.length) return null;
+  return `${words.map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")} Lore`;
+}
+
+/** Trained lore skills from the export. Rank stays derived; only the item is planned. */
+export function lorePlanEntries(exp) {
+  const vars = exp?.content?.raw_data_dump?.variables ?? {};
+  const out = [];
+  for (const [key, value] of Object.entries(vars)) {
+    const name = loreSkillName(key);
+    if (!name) continue;
+    const prof = Number(value?.parts?.profValue ?? 0);
+    if (!(prof > 0)) continue;
+    out.push({ name, variable: key, sourcePath: `content.raw_data_dump.variables.${key}` });
+  }
+  return out;
+}
+
 export function rawVariableName(v) {
   const m = String(v ?? "").match(/^(?:SKILL|WEAPON_GROUP)_([A-Z]+(?:_[A-Z]+)*)$/);
   if (!m || /^LORE(_|$)/.test(m[1])) return null;
@@ -639,14 +696,18 @@ export function spellSlotWarnings(exp, entries) {
   return out;
 }
 /** Item updates that put prepared spells into their entry's slots. Entries need entryId and itemId. */
-export function preparedSlotUpdates(entries) {
+export function preparedSlotUpdates(entries, priorBySource = null) {
   const byEntry = new Map();
   for (const e of entries) {
     if (e.kind !== "spell" || !e.prepared || !e.entryId || !e.itemId) continue;
     const slots = byEntry.get(e.entryId) ?? {};
     byEntry.set(e.entryId, slots);
     const ranks = e.preparedRanks?.length ? e.preparedRanks : Array.from({ length: e.prepared }, () => Number(e.rank ?? 0));
-    for (const rank of ranks) (slots[Number(rank ?? 0)] ??= []).push({ id: e.itemId, expended: false });
+    for (const rank of ranks) {
+      const prior = priorBySource?.[entryKeyFor(e)]?.[`slot${Number(rank ?? 0)}`]?.prepared ?? [];
+      const expended = prior.some((p) => p?.expended && ((p.slug && p.slug === e.slug) || (p.name && p.name === e.name) || (p.id && p.id === e.itemId)));
+      (slots[Number(rank ?? 0)] ??= []).push({ id: e.itemId, expended });
+    }
   }
   return [...byEntry].map(([_id, slots]) => ({ _id, ...Object.fromEntries(Object.entries(slots).map(([r, list]) => [`system.slots.slot${r}.prepared`, list])) }));
 }

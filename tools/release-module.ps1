@@ -25,7 +25,7 @@ param(
   [Parameter(Mandatory)] [string] $ModuleId,
   [string] $HostRepo = 'edmund-landgraf/foundry-wanderersguide-import',
   [string] $OutDir = 'D:\temp\module-releases',
-  [string[]] $Include = @('module.json', 'LICENSE*', 'scripts/', 'styles/', 'lang/', 'templates/', 'packs/', 'assets/', 'icons/', 'images/'),
+  [string[]] $Include = @('module.json', 'LICENSE*', 'scripts/', 'styles/', 'lang/', 'templates/', 'packs/', 'assets/', 'icons/', 'images/', 'data/match-catalog.json'),
   [switch] $Publish
 )
 $ErrorActionPreference = 'Stop'
@@ -75,6 +75,20 @@ $files = $files | Where-Object {
   $Include | Where-Object { if ($_.EndsWith('/')) { $f.StartsWith($_) } else { $f -like $_ } }
 } | Sort-Object -Unique
 
+# The match catalog is generated and gitignored. Alias matching is disabled without it.
+$catalogRel = 'data/match-catalog.json'
+if ($ModuleId -eq 'foundry-wanderersguide-import') {
+  $catalogPath = Join-Path $SourceDir $catalogRel
+  if (-not (Test-Path $catalogPath)) { throw "Release requires $catalogRel. Generate it before packaging." }
+  $catalog = [IO.File]::ReadAllText($catalogPath) | ConvertFrom-Json
+  if ($catalog.header.schemaVersion -ne 1 -or -not $catalog.aliases) { throw "$catalogRel is missing a schemaVersion 1 header or aliases." }
+  $verified = @($mj.relationships.systems | Where-Object { $_.id -eq 'pf2e' } | ForEach-Object { $_.compatibility.verified }) | Select-Object -First 1
+  if ($catalog.header.pf2eVersion -ne $verified) {
+    throw "$catalogRel is stamped for PF2e $($catalog.header.pf2eVersion), but module.json marks PF2e $verified verified. Re-export the catalog before packaging."
+  }
+  $files = @($files + $catalogRel) | Sort-Object -Unique
+}
+
 # --- public-release hygiene scan (the host repo is public) ---
 $block = '(?i)\bvps-[a-z0-9]+|\bssh\s+[a-z0-9.-]+|\b(?!127\.0\.0\.1\b|0\.0\.0\.0\b)\d{1,3}(\.\d{1,3}){3}\b|postgres(ql)?://|-----BEGIN [A-Z ]*PRIVATE KEY|\bgh[pousr]_[A-Za-z0-9]{20,}|\bsk-[A-Za-z0-9]{20,}|Bearer\s+[A-Za-z0-9._-]{20,}'
 $warn = '(?i)unwhelm'
@@ -115,6 +129,9 @@ try {
   $needed = @($zmj.esmodules) + @($zmj.scripts) + @($zmj.styles) + @($zmj.languages | ForEach-Object path) | Where-Object { $_ }
   $missing = $needed | Where-Object { $names -notcontains $_ }
   if ($missing) { throw "Files referenced by module.json are missing from the zip: $($missing -join ', ')" }
+  if ($ModuleId -eq 'foundry-wanderersguide-import' -and $names -notcontains 'data/match-catalog.json') {
+    throw 'data/match-catalog.json is missing from the zip, so alias matching would be disabled.'
+  }
   $entryCount = $z.Entries.Count
 } finally { $z.Dispose() }
 $hash = (Get-FileHash $zipPath -Algorithm SHA256).Hash.ToLower()
