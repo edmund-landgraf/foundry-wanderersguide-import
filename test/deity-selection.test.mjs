@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  APPLY_KIND_ORDER,
   isDeityItemChoiceSet,
   deitySelectionFlag,
   deityItemOnActor,
@@ -120,4 +121,12 @@ test("#143 is a no-op without beliefs, a matching deity, or a deity ChoiceSet", 
   assert.equal(writes.length, 0);
   assert.equal(noDeity.writes.length, 0);
   assert.equal(noFeat.writes.length, 0);
+});
+
+test("#143 creates the standalone deity after the class so the ChoiceSet can run", () => {
+  const classAt = APPLY_KIND_ORDER.indexOf("class");
+  const deityAt = APPLY_KIND_ORDER.indexOf("deity");
+  const equipmentAt = APPLY_KIND_ORDER.indexOf("equipment");
+  assert.ok(classAt >= 0 && deityAt > classAt, "deity must follow class");
+  assert.ok(equipmentAt >= 0 && equipmentAt < classAt, "equipment still precedes class for ikons");
 });

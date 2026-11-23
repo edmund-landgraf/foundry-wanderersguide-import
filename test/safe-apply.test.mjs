@@ -17,7 +17,7 @@ test("managedTree: module items plus everything granted from them, nothing else"
   ];
   assert.deepEqual([...managedTree(items)].sort(), ["cls", "feat", "loc", "sub", "viaParent"]);
 });
-import { applyKeyAbilityData, coverFeatureGaps, explicitGrants, sameThing, duplicateItemDiagnostics, focusResourcePatch, domainPromptWithoutDeity, emptyChoicePrompt, deityPromptChoice, allChoiceHints, uniqueChoice, dependencyOrder, dependsOnActor, ruleDependsOnActor, stampGrantPreselect, reconcileRuntimeGrants, exactSlugGrant, grantFixedChoice, forcedFields } from "../scripts/importer.js";
+import { APPLY_KIND_ORDER, applyKeyAbilityData, coverFeatureGaps, explicitGrants, sameThing, duplicateItemDiagnostics, focusResourcePatch, domainPromptWithoutDeity, emptyChoicePrompt, deityPromptChoice, allChoiceHints, uniqueChoice, dependencyOrder, dependsOnActor, ruleDependsOnActor, stampGrantPreselect, reconcileRuntimeGrants, exactSlugGrant, grantFixedChoice, forcedFields } from "../scripts/importer.js";
 test("dedupe: only explicit grants from this run's items, same compendium source", () => {
   const it = (id, type, name, src, extra = {}) => ({ id, type, name, _stats: { compendiumSource: src }, flags: extra.flags ?? {}, system: extra.system ?? {} });
   const items = [
@@ -161,8 +161,11 @@ test("import sets the prototype token name with the actor name", () => {
 });
 
 test("Exemplar inventory is scheduled before class grants", () => {
-  const source = rf(new URL("../scripts/importer.js", import.meta.url), "utf8");
-  assert.match(source, /const order = \["ancestry", "heritage", "background", "deity", "lore", "equipment", "class", "feat", "spell"\]/);
+  const classAt = APPLY_KIND_ORDER.indexOf("class");
+  const equipmentAt = APPLY_KIND_ORDER.indexOf("equipment");
+  const deityAt = APPLY_KIND_ORDER.indexOf("deity");
+  assert.ok(equipmentAt >= 0 && equipmentAt < classAt, "equipment still precedes class so ikon ChoiceSets can see gear");
+  assert.ok(deityAt > classAt, "deity follows class so Deity (Cleric) can record its ChoiceSet (#143)");
 });
 
 test("WG key ability populates the PF2e class-item selection", () => {

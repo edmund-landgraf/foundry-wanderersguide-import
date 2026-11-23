@@ -41,6 +41,11 @@ function homebrewItemData(entry, folderId) {
 
 // Runtime state that must survive an idempotent re-import. Keep this separate from the
 // PF2e document mutation code so the preservation rules can be tested without Foundry.
+/** Item kinds are created in this order. Deity comes after class so Deity (Cleric)'s
+ *  {not:"deity"} ChoiceSet can run and record the selection before a standalone deity
+ *  item exists (#143). Equipment still precedes class so ikon ChoiceSets can see gear. */
+export const APPLY_KIND_ORDER = Object.freeze(["ancestry", "heritage", "background", "lore", "equipment", "class", "deity", "feat", "spell"]);
+
 export function captureRuntimeState(actor) {
   if (!actor) return null;
   const items = [...(actor.items ?? [])];
@@ -1184,8 +1189,8 @@ async function applyImport(p, { onStep, parity, failAfter }) {
     await actor.update(forcedFields(plan, host, actor, existing));
     step("forced");
     // Create inventory before class features so PF2e ChoiceSets can see owned ikon items.
-    const order = ["ancestry", "heritage", "background", "deity", "lore", "equipment", "class", "feat", "spell"];
-    for (const kind of order) {
+    // Deity is after class: see APPLY_KIND_ORDER (#143).
+    for (const kind of APPLY_KIND_ORDER) {
       if (kind === "spell" && entryData.length) {
         await createItems(entryData, { keepId: true });
       }
