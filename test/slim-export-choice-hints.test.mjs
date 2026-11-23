@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { domainNameForSpell, namedSpells, wgChoiceHints } from "../scripts/mapping.js";
 import { DOMAIN_BY_SPELL_SLUG } from "../scripts/domain-spells.js";
 import { needsTraitCatalog, unnamedOfficialSelectionIds } from "../scripts/custom-items.js";
-import { choiceContext, watchPrompts, grantOrigin, exactUniqueHintIndex, allChoiceHints } from "../scripts/importer.js";
+import { choiceContext, watchPrompts, grantOrigin, exactUniqueHintIndex, allChoiceHints, prefillChoices, isDeityItemChoiceSet, deityIndexChoice, deityPromptChoice, ruleDependsOnActor } from "../scripts/importer.js";
 import { MODULE_ID } from "../scripts/constants.js";
 
 // Faithful slim-shaped fixtures reconstructed from the Nov 22 #64 / #77 issue comments.
@@ -131,6 +131,90 @@ test("#64 Holy sanctification under Deity answers the Deity (Cleric) prompt", as
   assert.equal(app.closed, true);
   assert.deepEqual(ctx.unresolved, []);
   assert.match(notes.join("\n"), /Holy/);
+});
+
+test("#64 Deity (Cleric) prefills Desna from beliefs and still answers Holy, not Holy as the deity", async () => {
+  // Live bug on b264577: main adds Desna as a deity item first, PF2e's {not:"deity"} predicate
+  // then skips the deity prompt, and prefill used to skip the actor-dependent ChoiceSet, leaving
+  // sel.deity null. Sanctification still opened and was answered Holy from the WG Deity hint.
+  const desna = "Compendium.pf2e.deities.Item.Desna";
+  const sarenrae = "Compendium.pf2e.deities.Item.Sarenrae";
+  const index = [
+    { type: "deity", name: "Desna", uuid: desna },
+    { type: "deity", name: "Sarenrae", uuid: sarenrae },
+  ];
+  const deityRule = {
+    key: "ChoiceSet",
+    flag: "deity",
+    prompt: "PF2E.SpecificRule.Prompt.Deity",
+    predicate: [{ not: "deity" }],
+    choices: { itemType: "deity", filter: [{ or: ["item:category:deity", "item:category:pantheon"] }] },
+    selection: null,
+  };
+  const sanctRule = {
+    key: "ChoiceSet",
+    slug: "sanctification",
+    prompt: "PF2E.SpecificRule.Prompt.Sanctification",
+    predicate: [{ nor: ["sanctification:holy", "sanctification:unholy"] }],
+    choices: [{ label: "Holy", value: "holy" }, { label: "Unholy", value: "unholy" }],
+    selection: null,
+  };
+  assert.equal(isDeityItemChoiceSet(deityRule), true);
+  assert.equal(isDeityItemChoiceSet(sanctRule), false);
+  assert.equal(ruleDependsOnActor(deityRule), true);
+  assert.equal(deityIndexChoice(index, "Desna").uuid, desna);
+  assert.equal(deityPromptChoice({ title: "Sanctification", item: { name: "Deity (Cleric)" }, choices: [{ label: "Desna" }] }, "Desna"), null);
+
+  const exp = slim103();
+  const ctx = choiceContext(exp, {}, index, null);
+  assert.deepEqual(ctx.specific("Deity (Cleric)"), ["Holy"]);
+  const data = { name: "Deity (Cleric)", system: { rules: [deityRule, sanctRule] }, flags: {} };
+  const notes = [];
+  const prevFoundry = globalThis.foundry;
+  globalThis.foundry = {
+    ...(prevFoundry ?? {}),
+    utils: {
+      ...(prevFoundry?.utils ?? {}),
+      setProperty(obj, path, value) {
+        const parts = String(path).split(".");
+        let cur = obj;
+        for (const part of parts.slice(0, -1)) cur = cur[part] ??= {};
+        cur[parts.at(-1)] = value;
+      },
+    },
+  };
+  try {
+    await prefillChoices(data, ctx, notes, "Deity");
+  } finally {
+    globalThis.foundry = prevFoundry;
+  }
+  assert.equal(deityRule.selection, desna, "deity ChoiceSet must be Desna, not left null and not set to Holy");
+  assert.equal(data.flags.pf2e.rulesSelections.deity, desna);
+  assert.match(notes.join("\n"), /Desna \(pre-filled from WG deity\)/);
+  assert.equal(sanctRule.selection, null, "sanctification stays for the runtime prompt");
+
+  const app = {
+    rendered: true,
+    title: "Deity (Cleric)",
+    item: { name: "Deity (Cleric)", ...flags(null) },
+    choices: [{ label: "Desna", value: desna }, { label: "Sarenrae", value: sarenrae }],
+    close() { this.closed = true; },
+  };
+  const promptNotes = await runPrompts(choiceContext(exp, {}, index, null), app);
+  assert.equal(app.selection?.label, "Desna");
+  assert.equal(app.selection?.value, desna);
+  assert.match(promptNotes.join("\n"), /Desna \(prompt answered from WG deity\)/);
+
+  const sanctApp = {
+    rendered: true,
+    title: "Sanctification",
+    item: { name: "Deity (Cleric)", ...flags(null) },
+    choices: [{ label: "Holy", value: "holy" }, { label: "Unholy", value: "unholy" }],
+    close() { this.closed = true; },
+  };
+  const sanctNotes = await runPrompts(choiceContext(exp, {}, index, null), sanctApp);
+  assert.equal(sanctApp.selection?.value, "holy");
+  assert.match(sanctNotes.join("\n"), /Holy/);
 });
 
 test("#77 slim export without all_traits needs a catalog fetch to name Human", () => {
