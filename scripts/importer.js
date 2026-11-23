@@ -315,11 +315,29 @@ export function applyKeyAbilityData(entry, data) {
   return data;
 }
 
-/** Select only after PF2e has prepared the current class and its racket subfeatures. */
+/**
+ * Attributes PF2e will accept as the class key: the prepared actor list, the class
+ * item's own value list, and keyOptions on embedded subfeatures. Psychic leaves
+ * class.keyAbility.value empty and gets "cha" from Emotional Acceptance; Class
+ * prepareActorData can also reset keyOptions to that empty list after subfeatures
+ * have already contributed (#53, same subfeature path as Rogue rackets in #82).
+ */
+export function legalKeyOptions(actor) {
+  const opts = [];
+  const add = (list) => { if (Array.isArray(list)) for (const value of list) if (value) opts.push(value); };
+  add(actor?.system?.build?.attributes?.keyOptions);
+  for (const item of actor?.items ?? []) {
+    if (item.type === "class") add(item.system?.keyAbility?.value);
+    add(item.system?.subfeatures?.keyOptions);
+  }
+  return [...new Set(opts)];
+}
+
+/** Select only after PF2e has prepared the current class and its racket / mind subfeatures. */
 export async function reconcileClassKeyAbility(actor, keyAbility) {
   if (!["str", "dex", "con", "int", "wis", "cha"].includes(keyAbility)) return false;
   const cls = actor.items.find((item) => item.type === "class" && item.flags?.[MODULE_ID]?.kind === "class");
-  if (!cls || !actor.system?.build?.attributes?.keyOptions?.includes(keyAbility)) return false;
+  if (!cls || !legalKeyOptions(actor).includes(keyAbility)) return false;
   if (cls.system.keyAbility.selected !== keyAbility) {
     await actor.updateEmbeddedDocuments("Item", [{ _id: cls.id, "system.keyAbility.selected": keyAbility }], { render: false });
   }
@@ -488,6 +506,17 @@ export function emptyChoicePrompt(app) {
   return Array.isArray(app?.choices) && app.choices.length === 0;
 }
 
+/**
+ * Empty prompt for a still-unanswered ChoiceSet whose predicate is not met, such as
+ * The Distant Grasp dedicationCantrip (only for Psychic Dedication, #53). Closing it
+ * is required so the import can continue, but it is not an unresolved WG choice.
+ */
+export function inactiveChoicePrompt(app) {
+  if (!emptyChoicePrompt(app)) return false;
+  const rules = app.item?._source?.system?.rules ?? app.item?.system?.rules ?? [];
+  return rules.some((rule) => rule?.key === "ChoiceSet" && rule.selection == null && Array.isArray(rule.predicate) && rule.predicate.length);
+}
+
 /** Every explicit WG answer, used when the prompt's item name is not the selection owner. */
 export function allChoiceHints(hints) {
   const names = [];
@@ -555,7 +584,9 @@ export function watchPrompts(ctx, notes) {
       if (emptyChoicePrompt(app)) {
         if (!seen.has(signature)) {
           seen.add(signature);
-          if (domainPromptWithoutDeity(app)) {
+          if (inactiveChoicePrompt(app)) {
+            // Predicate-gated ChoiceSet with no options (e.g. dedicationCantrip on a full Psychic).
+          } else if (domainPromptWithoutDeity(app)) {
             if (!domainWarned) {
               domainWarned = true;
               const named = ctx.specific(owner)[0] ?? ctx.specific("Domain")[0] ?? ctx.specific("domains")[0] ?? null;
