@@ -627,6 +627,16 @@ export function watchPrompts(ctx, notes) {
       if (i == null && hintOwner.ownerWgId == null) {
         i = exactUniqueHintIndex(labels, allChoiceHints(ctx.hints));
       }
+      // Fresh imports may not yet have ctx.actor, and Fire Gate impulse prompts store their
+      // answers on Kinetic Gate. Consume one unique unused hint from any remaining owner.
+      if (i == null) {
+        // hints.keys is a non-enumerable Map of selection keys, not Map.prototype.keys.
+        for (const [slug] of ctx.hints ?? []) {
+          if (!ctx.available?.(slug)?.length) continue;
+          const idx = ctx.pick(slug, labels);
+          if (idx != null) { i = idx; break; }
+        }
+      }
       if (i == null && !specific.length) {
         const src = app.item?._stats?.compendiumSource ?? app.item?.sourceId ?? null;
         const prev = Object.values(ctx.previous.get(src) ?? {});
@@ -1160,6 +1170,8 @@ async function applyImport(p, { onStep, parity, failAfter }) {
     if (!actor) {
       actor = createdActor = await Actor.create({ name: plan.name, type: "character", ownership: { default: 0, [game.user.id]: 3 }, flags: { [MODULE_ID]: { wgId: plan.wgId, host } } });
     }
+    // Fresh imports plan with a null actor; grant-child prompts (Fire Gate impulses, #52) need it.
+    p.ctx.actor = actor;
     // Old managed items stay until every replacement exists.
     const old = existing ? managedTree(actor.items) : new Set();
     step("actor");

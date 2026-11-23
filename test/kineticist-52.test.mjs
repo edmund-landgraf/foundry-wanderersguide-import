@@ -223,3 +223,28 @@ test("#52 impulse prompts consume Flying Flame then Scorching Column from Kineti
   assert.match(notes1.join("\n") + notes2.join("\n"), /Flying Flame/);
   assert.match(notes2.join("\n"), /Scorching Column/);
 });
+
+test("#52 impulse prompts are answered from Kinetic Gate even when ctx.actor is unset (fresh import)", async () => {
+  const ctx = choiceContext(pc99(), {}, [], null);
+  assert.equal(ctx.actor, null);
+  const mk = () => ({
+    rendered: true,
+    title: "Select an Impulse",
+    item: { name: "Fire Gate", flags: { pf2e: { grantedBy: { id: "kg" } } } },
+    choices: [
+      { label: "Burning Jet", value: "Compendium.pf2e.feats-srd.Item.Jet" },
+      { label: "Flying Flame", value: FLYING_UUID },
+      { label: "Scorching Column", value: COLUMN_UUID },
+      { label: "Eternal Torch", value: "Compendium.pf2e.feats-srd.Item.Torch" },
+    ],
+    close() { this.closed = true; },
+  });
+  const first = mk();
+  const notes1 = await runPrompt(ctx, first, 400);
+  assert.equal(first.selection?.label, "Flying Flame", "must not leave the impulse for the user when hints are on Kinetic Gate");
+  const second = mk();
+  const notes2 = await runPrompt(ctx, second, 400);
+  assert.equal(second.selection?.label, "Scorching Column");
+  assert.match(notes1.join("\n") + notes2.join("\n"), /Flying Flame/);
+  assert.match(notes2.join("\n"), /Scorching Column/);
+});
