@@ -1,8 +1,17 @@
 import { MODULE_ID } from "./constants.js";
 import { applyCampaignArt, campaignArtUrl } from "./campaign.js";
-import { listCharacters, listCampaigns, getCampaign, campaignLabel, exportCharacter, resolveFunctionsUrl } from "./api.js";
+import { listCharacters, listCampaigns, getCampaign, campaignLabel, exportCharacter, parseLocalExport, resolveFunctionsUrl } from "./api.js";
 import { importCharacter, previewImport, diffHtml, reviewHtml } from "./importer.js";
 import { loadMatchCatalog } from "./match-catalog.js";
+
+/** Monotonic campaign loads. A slower response for an earlier selection is ignored. */
+export function campaignRequestToken() {
+  let latest = 0;
+  return {
+    start(id) { latest += 1; return { id: String(id), token: latest }; },
+    isCurrent(req, selectedId) { return !!req && req.token === latest && String(selectedId ?? "") === req.id; },
+  };
+}
 
 function opts() {
   return { baseUrl: resolveFunctionsUrl(game.settings.get(MODULE_ID, "wgServer"), game.settings.get(MODULE_ID, "functionsUrl")), apiKey: game.settings.get(MODULE_ID, "apiKey") };
@@ -66,6 +75,12 @@ async function runImport(ids, host, { dryRun = false, parity = false, review = t
 }
 
 // Dry run (PLAN 8): fetch each export, diff it against the world, write nothing. Shown in a dialog and whispered to chat.
+async function runPreviewExport(exp, host) {
+  const { review } = await previewImport(exp, { host, matchCatalog: await loadMatchCatalog() });
+  const content = `<p><em>Preview only. Nothing was imported or changed.</em></p>${review}`;
+  await ChatMessage.create({ whisper: [game.user.id], content });
+}
+
 async function runPreview(ids, host) {
   const parts = [];
   for (const id of ids) {
@@ -98,13 +113,50 @@ const artThumb = (src, focusY, { w = 160, h = 60 } = {}) => src
   ? `<img class="wgi-campaign-thumb" src="${esc(src)}" alt="" style="width:${w}px;height:${h}px;object-fit:cover;object-position:50% ${Number.isFinite(focusY) ? focusY : 50}%;border:1px solid #0006;border-radius:3px;vertical-align:middle">`
   : `<span class="wgi-campaign-thumb wgi-no-art" style="display:inline-block;width:${w}px;height:${h}px;line-height:${h}px;text-align:center;border:1px dashed #0006;border-radius:3px;font-size:11px;opacity:.7;vertical-align:middle">no art in WG</span>`;
 
+/** Re-import the WG character already linked on this actor. An unlinked sheet uses the sidebar dialog. */
+export async function importLinkedCharacter(wgId) {
+  if (wgId == null || wgId === "") return openImportDialog();
+  return runImport([wgId], opts().baseUrl, { review: true });
+}
+
+export function sheetImportTarget(actor, user) {
+  if (!actor || actor.type !== "character") return null;
+  if (typeof actor.canUserModify === "function" && !actor.canUserModify(user, "update")) return null;
+  const wgId = actor.getFlag?.(MODULE_ID, "wgId") ?? actor.flags?.[MODULE_ID]?.wgId ?? null;
+  return { wgId };
+}
+
+export function mountSheetImportButton(root, { label, onClick }) {
+  if (!root?.querySelector || root.querySelector(".wgi-sheet-import")) return false;
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "wgi-sheet-import";
+  btn.innerHTML = `<i class="fas fa-file-import"></i> ${label}`;
+  btn.addEventListener("click", (event) => { event.preventDefault(); onClick(); });
+  const title = root.querySelector(".window-title");
+  if (title) title.after(btn);
+  else (root.querySelector(".window-header") ?? root).prepend(btn);
+  return true;
+}
+
+async function importParsedExport(exp, host, { parity = false, review = true } = {}) {
+  const res = await importCharacter(exp, { host, matchCatalog: await loadMatchCatalog(), parity, confirm: review ? confirmPlan : null, failAfter: CONFIG.wgiTest?.failAfter ?? null });
+  if (res.cancelled) {
+    ui.notifications.info(`Wanderer's Guide: import of ${res.plan.name} cancelled; nothing changed.`);
+    return null;
+  }
+  ui.notifications.info(`Imported ${res.actor.name}.`);
+  return res.actor;
+}
+
 export async function openImportDialog() {
-  let rows;
+  let rows = [];
+  let listError = "";
   try {
     rows = await listCharacters(opts());
   } catch (e) {
+    listError = e.message;
     ui.notifications.error(`Wanderer's Guide: ${e.message}`);
-    return;
   }
   // Campaign names are a nice-to-have; a failure here should not block the import list.
   const names = new Map();
@@ -113,8 +165,8 @@ export async function openImportDialog() {
   const body = `<nav class="wgi-tabs tabs" style="display:flex;gap:.5rem;margin-bottom:.5rem">
   <a class="wgi-tab active" data-wgi-tab="account">Import PCs from one account</a>
   <a class="wgi-tab" data-wgi-tab="campaign">Import PCs from one campaign</a></nav>
-<section class="wgi-pane" data-wgi-pane="account">${charTable(rows, host, { tab: "account", names })}
-<p class="notes">Characters granted to this API key.</p></section>
+<section class="wgi-pane" data-wgi-pane="account">${listError ? `<p>${esc(listError)}</p>` : ""}${charTable(rows, host, { tab: "account", names })}
+<p class="notes">Characters granted to this API key. A JSON v4 file below can be imported when the list is unavailable.</p></section>
 <section class="wgi-pane" data-wgi-pane="campaign" style="display:none">
   <label>Campaign <select name="wgi-campaign"><option value="">Loading campaigns...</option></select></label>
   <div class="wgi-campaign-cards" style="display:flex;flex-wrap:wrap;gap:.5rem;margin:.4rem 0"></div>
@@ -128,7 +180,9 @@ export async function openImportDialog() {
 <fieldset class="wgi-options" style="margin-top:.5rem"><legend>Optional</legend>
   <label style="display:block"><input type="checkbox" name="wgi-dryrun"> Preview changes only (dry-run diff, nothing is written)</label>
   <label style="display:block"><input type="checkbox" name="wgi-parity"> Check parity against the export after importing</label>
-  <label style="display:block"><input type="checkbox" name="wgi-review" checked> Review each plan before anything is written (Cancel changes nothing)</label></fieldset>`;
+  <label style="display:block"><input type="checkbox" name="wgi-review" checked> Review each plan before anything is written (Cancel changes nothing)</label>
+  <label style="display:block">JSON v4 file <input type="file" name="wgi-file" accept="application/json,.json"></label>
+  <p class="notes">Optional. The file must be the same JSON v4 export the API returns. Older .guidechar files are not read.</p></fieldset>`;
 
   let currentCampaign = null;
   const onRender = (root, app) => {
@@ -157,21 +211,27 @@ export async function openImportDialog() {
       refit();
       cards.querySelectorAll(".wgi-campaign-card").forEach((a) => a.addEventListener("click", () => { sel.value = a.dataset.campaignId; sel.dispatchEvent(new Event("change")); }));
     }).catch((e) => { sel.innerHTML = `<option value="">${esc(e.message)}</option>`; });
+    const campaignLoads = campaignRequestToken();
     sel.addEventListener("change", async () => {
       out.innerHTML = "";
       art.innerHTML = "";
       currentCampaign = null;
       if (!sel.value) return;
+      const requested = campaignLoads.start(sel.value);
       out.innerHTML = "<p>Loading...</p>";
       try {
-        const res = await getCampaign(opts(), sel.value);
+        const res = await getCampaign(opts(), requested.id);
+        if (!campaignLoads.isCurrent(requested, sel.value)) return;
         currentCampaign = res.campaign;
         art.innerHTML = `${artThumb(campaignArtUrl(res.campaign, host), res.campaign?.imageFocusY, { w: 400, h: 90 })}`;
         out.innerHTML = charTable(res.characters, host, { checked: true, tab: "campaign", names });
         art.querySelector("img")?.addEventListener("load", refit);
         refit();
       }
-      catch (e) { out.innerHTML = `<p>${esc(e.message)}</p>`; }
+      catch (e) {
+        if (!campaignLoads.isCurrent(requested, sel.value)) return;
+        out.innerHTML = `<p>${esc(e.message)}</p>`;
+      }
     });
   };
 
@@ -192,6 +252,16 @@ export async function openImportDialog() {
           const root = button.form ?? button.closest(".application");
           const f = flagsFrom(root);
           const pane = [...root.querySelectorAll(".wgi-pane")].find((s) => s.style.display !== "none");
+          const file = root.querySelector('input[name="wgi-file"]')?.files?.[0];
+          if (file) {
+            try {
+              const exp = parseLocalExport(await file.text());
+              if (f.dryRun) await runPreviewExport(exp, host);
+              else await importParsedExport(exp, host, f);
+            } catch (e) {
+              ui.notifications.error(`Wanderer's Guide file: ${e.message}`);
+            }
+          }
           const actors = await runImport(selected(root), host, f);
           // Campaign art only on a real import from the campaign tab.
           if (!f.dryRun && pane?.dataset.wgiPane === "campaign" && currentCampaign && (f.art.journal || f.art.scene || f.art.folder)) await applyCampaignArt(currentCampaign, host, f.art, actors);

@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { buildPlan, matchEntries, missReport, sluggify, normalizeMatchCatalog, catalogLookupNames } from "../scripts/mapping.js";
 import { applyFeatSlotData, choiceContext } from "../scripts/importer.js";
-import { summarizeCharacters, callFunction, parseClientId, resolveFunctionsUrl, listCharacters, listCampaigns, getCampaign, campaignLabel, friendlyError } from "../scripts/api.js";
+import { summarizeCharacters, callFunction, parseClientId, resolveFunctionsUrl, listCharacters, listCampaigns, getCampaign, campaignLabel, friendlyError, retryDelayMs, assertSecureFunctionsUrl, parseLocalExport } from "../scripts/api.js";
 
 const exp = JSON.parse(readFileSync(new URL("./fixtures/sample-v4.json", import.meta.url)));
 
@@ -225,7 +225,7 @@ test("callFunction retries 429 and never puts key in errors", async () => {
   const fetchImpl = async () => (++n === 1
     ? { status: 429, ok: false, headers: { get: () => "0.01" }, json: async () => ({}) }
     : { status: 403, ok: false, headers: { get: () => null }, json: async () => ({ status: "fail", data: { message: "nope" } }) });
-  await assert.rejects(callFunction({ baseUrl: "http://x", apiKey: key, fn: "f", fetchImpl }), (e) => e.status === 403 && !e.message.includes(key));
+  await assert.rejects(callFunction({ baseUrl: "https://example.test", apiKey: key, fn: "f", fetchImpl }), (e) => e.status === 403 && !e.message.includes(key));
   assert.equal(n, 2);
 });
 
@@ -260,10 +260,11 @@ test("parseClientId reads client_id from WG Auth URL or bare id", () => {
   assert.equal(parseClientId(""), "");
   assert.equal(parseClientId("http://localhost:5194/oauth/access?user_id=28"), "");
 });
-test("resolveFunctionsUrl picks prod or custom", () => {
+test("resolveFunctionsUrl picks prod or loopback custom and rejects remote HTTP", () => {
   assert.equal(resolveFunctionsUrl("production", "http://x"), "https://amba.wandersguide.site/functions/v1");
-  assert.equal(resolveFunctionsUrl("custom", "http://10.0.0.5:8000/functions/v1/"), "http://10.0.0.5:8000/functions/v1");
+  assert.throws(() => resolveFunctionsUrl("custom", "http://10.0.0.5:8000/functions/v1/"), /HTTPS/);
   assert.equal(resolveFunctionsUrl("custom", ""), "http://127.0.0.1:8000/functions/v1");
+  assert.equal(assertSecureFunctionsUrl("https://example.test/functions/v1"), "https://example.test/functions/v1");
 });
 const KEY = "11111111-2222-3333-4444-555555555555";
 const ok = (data) => ({ status: 200, ok: true, headers: { get: () => null }, json: async () => ({ status: "success", data }) });
@@ -271,8 +272,8 @@ const ok = (data) => ({ status: 200, ok: true, headers: { get: () => null }, jso
 test("listCharacters posts {} to wgui-ext-list-key-characters with bearer key", async () => {
   let seen;
   const fetchImpl = async (url, init) => { seen = { url, init }; return ok([{ id: 3, name: "C", level: 1, class: "Rogue", ancestry: "Elf", campaign_id: null }]); };
-  const rows = await listCharacters({ baseUrl: "http://h/functions/v1", apiKey: KEY, fetchImpl });
-  assert.equal(seen.url, "http://h/functions/v1/wgui-ext-list-key-characters");
+  const rows = await listCharacters({ baseUrl: "https://example.test/functions/v1", apiKey: KEY, fetchImpl });
+  assert.equal(seen.url, "https://example.test/functions/v1/wgui-ext-list-key-characters");
   assert.equal(seen.init.method, "POST");
   assert.equal(seen.init.headers.Authorization, `Bearer ${KEY}`);
   assert.equal(seen.init.body, "{}");
@@ -283,9 +284,9 @@ test("campaigns: list names and fetch one", async () => {
   const bodies = [];
   const fetchImpl = async (_u, init) => { const b = JSON.parse(init.body); bodies.push(b);
     return b.campaign_id ? ok({ campaign: { id: 5, name: "Abomination Vaults" }, characters: [{ id: 9, name: "Z", level: 3 }] }) : ok({ campaigns: [{ id: 5, name: "Abomination Vaults", character_ids: [9] }] }); };
-  const list = await listCampaigns({ baseUrl: "http://h", apiKey: KEY, fetchImpl });
+  const list = await listCampaigns({ baseUrl: "https://example.test", apiKey: KEY, fetchImpl });
   assert.deepEqual(list, [{ id: 5, name: "Abomination Vaults", imageUrl: null, imageFocusY: null, characterIds: [9], owned: false }]);
-  const one = await getCampaign({ baseUrl: "http://h", apiKey: KEY, fetchImpl }, "5");
+  const one = await getCampaign({ baseUrl: "https://example.test", apiKey: KEY, fetchImpl }, "5");
   assert.equal(one.campaign.name, "Abomination Vaults");
   assert.equal(one.characters[0].id, 9);
   assert.deepEqual(bodies, [{}, { campaign_id: 5 }]);
@@ -297,9 +298,66 @@ test("campaigns: list names and fetch one", async () => {
 test("wgui-ext fail codes become friendly messages without the key", async () => {
   for (const [status, code, want] of [[401, "INVALID_API_KEY", /rejected the API key/], [401, "AUTH_REQUIRED", /No API key/], [403, "CAMPAIGN_FORBIDDEN", /no access to that campaign/], [400, "CAMPAIGN_ID_INVALID", /Invalid campaign id/]]) {
     const fetchImpl = async () => ({ status, ok: false, headers: { get: () => null }, json: async () => ({ status: "fail", data: { message: "raw", code } }) });
-    await assert.rejects(listCampaigns({ baseUrl: "http://h", apiKey: KEY, fetchImpl }), (e) => e.status === status && want.test(e.message) && !e.message.includes(KEY));
+    await assert.rejects(listCampaigns({ baseUrl: "https://example.test", apiKey: KEY, fetchImpl }), (e) => e.status === status && want.test(e.message) && !e.message.includes(KEY));
   }
   assert.match(friendlyError(404, null), /not found/);
+});
+
+test("exact slug matches stay unresolved when two compendium items share the slug", () => {
+  const entries = [{ kind: "feat", packType: "feat", name: "Twin", slug: "twin" }];
+  const index = [
+    { type: "feat", slug: "twin", name: "Twin", uuid: "U1" },
+    { type: "feat", slug: "twin", name: "Twin", uuid: "U2" },
+  ];
+  const m = matchEntries(entries, index)[0];
+  assert.equal(m.match, null);
+  assert.equal(m.via, "ambiguous");
+  assert.deepEqual(m.candidates, ["U1", "U2"]);
+  const unique = matchEntries(entries, [index[0]])[0];
+  assert.equal(unique.via, "slug");
+  assert.equal(unique.match.uuid, "U1");
+  const shield = matchEntries(entries, [
+    { type: "feat", slug: "twin", name: "Twin", uuid: "Compendium.pf2e.feats-srd.Item.feat" },
+    { type: "feat", slug: "twin", name: "Twin", uuid: "Compendium.pf2e.classfeatures.Item.feature" },
+  ])[0];
+  assert.equal(shield.via, "slug");
+  assert.equal(shield.match.uuid, "Compendium.pf2e.classfeatures.Item.feature");
+});
+
+test("a named beliefs string becomes a deity entry and a trained lore becomes an item", () => {
+  const named = buildPlan({ character: { name: "Liesl", details: { info: { beliefs: "Desna" } } }, content: { raw_data_dump: { variables: { SKILL_LORE_SAILING: { parts: { profValue: 2 } }, SKILL_LORE____: { parts: { profValue: 0 } } } } } });
+  assert.equal(named.entries.find((e) => e.kind === "deity")?.name, "Desna");
+  assert.equal(named.entries.find((e) => e.kind === "lore")?.name, "Sailing Lore");
+  const blank = buildPlan({ character: { name: "A", details: { info: { beliefs: "undefined" } } }, content: {} });
+  assert.equal(blank.entries.some((e) => e.kind === "deity"), false);
+});
+
+test("the same spell from two casting sources stays two plan entries", () => {
+  const spell = { id: 9, rank: 1, name: "Force Barrage" };
+  const exp = { character: { name: "Dual", level: 1 }, content: { spells: { all: [
+    { ...spell, casting_source: "WIZARD" },
+    { ...spell, casting_source: "CLERIC" },
+  ] } } };
+  const spells = buildPlan(exp).entries.filter((e) => e.kind === "spell");
+  assert.equal(spells.length, 2);
+  assert.deepEqual(spells.map((e) => e.castingSource).sort(), ["CLERIC", "WIZARD"]);
+});
+
+test("HTTP 200 empty or HTML is a protocol error, not an empty list", async () => {
+  const html = async () => ({ ok: true, status: 200, headers: { get: () => null }, text: async () => "<html>gateway response</html>" });
+  const empty = async () => ({ ok: true, status: 200, headers: { get: () => null }, text: async () => "" });
+  await assert.rejects(listCharacters({ baseUrl: "https://example.test/functions/v1", apiKey: KEY, fetchImpl: html }), /non-JSON/);
+  await assert.rejects(listCampaigns({ baseUrl: "https://example.test/functions/v1", apiKey: KEY, fetchImpl: empty }), /non-JSON/);
+  const missing = async () => ({ ok: true, status: 200, headers: { get: () => null }, text: async () => JSON.stringify({ status: "success" }) });
+  await assert.rejects(listCharacters({ baseUrl: "https://example.test/functions/v1", apiKey: KEY, fetchImpl: missing }), /character list/);
+});
+
+test("rate-limit reset epoch waits until that time, not epoch seconds", () => {
+  const now = 1_700_000_000_000;
+  const headers = { get: (name) => name === "x-ratelimit-reset" ? String(Math.floor(now / 1000) + 5) : null };
+  assert.equal(retryDelayMs(headers, 0, now), 5000);
+  const retry = { get: (name) => name === "retry-after" ? "2" : null };
+  assert.equal(retryDelayMs(retry, 0, now), 2000);
 });
 
 test("name match confidence gate: ambiguous names are unresolved, never list[0]", () => {
@@ -530,6 +588,22 @@ test("re-import preserves live HP without exceeding the new maximum", async () =
   assert.equal(preservedCurrentHp(undefined, 15, false), 15, "fresh imports initialize current HP to WG max");
 });
 
+test("re-import keeps new slot capacity and expended preparations", async () => {
+  const { mergedSpellSlots } = await import("../scripts/importer.js");
+  const { preparedSlotUpdates } = await import("../scripts/mapping.js");
+  const fresh = { slot1: { max: 3, value: 3, prepared: [] }, slot2: { max: 2, value: 2, prepared: [] } };
+  const saved = { slot1: { max: 2, value: 1, prepared: [{ id: "old", expended: true, slug: "force-barrage", name: "Force Barrage" }] } };
+  const merged = mergedSpellSlots(fresh, saved);
+  assert.equal(merged.slot1.max, 3);
+  assert.equal(merged.slot1.value, 2);
+  assert.equal(merged.slot2.max, 2);
+  const entries = [{ kind: "spell", slug: "force-barrage", name: "Force Barrage", prepared: 1, preparedRanks: [1], entryId: "entry", itemId: "new", castingSource: "WIZARD" }];
+  const [upd] = preparedSlotUpdates(entries, { "src:WIZARD": saved });
+  assert.deepEqual(upd["system.slots.slot1.prepared"], [{ id: "new", expended: true }]);
+  const dropped = preparedSlotUpdates([], { "src:WIZARD": saved });
+  assert.equal(dropped.length, 0);
+});
+
 test("captureRuntimeState records HP, temporary HP, and spell slot usage", async () => {
   const { captureRuntimeState } = await import("../scripts/importer.js");
   const item = {
@@ -564,7 +638,12 @@ test("API summaries tolerate empty or malformed list payloads", async () => {
 test("exportCharacter rejects non-v4 exports", async () => {
   const { exportCharacter } = await import("../scripts/api.js");
   const fetchImpl = async () => ({ status: 200, ok: true, headers: { get: () => null }, json: async () => ({ version: 3, character: {} }) });
-  await assert.rejects(exportCharacter({ baseUrl: "http://h", apiKey: KEY, fetchImpl }, 7), /JSON v4 character/);
+  await assert.rejects(exportCharacter({ baseUrl: "https://example.test", apiKey: KEY, fetchImpl }, 7), /JSON v4 character \(version 3\)/);
+  const missing = async () => ({ status: 200, ok: true, headers: { get: () => null }, json: async () => ({ character: { id: 7 } }) });
+  await assert.rejects(exportCharacter({ baseUrl: "https://example.test", apiKey: KEY, fetchImpl: missing }, 7), /version missing/);
+  assert.equal(parseLocalExport(JSON.stringify({ version: 4, character: { id: 1 } })).character.id, 1);
+  assert.throws(() => parseLocalExport(JSON.stringify({ version: 5, character: {} })), /version 5/);
+  assert.throws(() => parseLocalExport("{"), /version missing/);
 });
 
 test("exportCharacter uses the slim export and falls back to the full one only when slim is missing", async () => {
@@ -578,7 +657,7 @@ test("exportCharacter uses the slim export and falls back to the full one only w
       if (url.endsWith("-slim")) return slimStatus === 200 ? reply(200, { ...v4, slim: { version: 1 } }) : reply(slimStatus, slimStatus === 500 ? null : { status: "fail", data: { message: "no" } });
       return reply(200, v4);
     };
-    const out = await exportCharacter({ baseUrl: "http://h", apiKey: KEY, fetchImpl, maxRetries: 0 }, 7).catch((e) => e);
+    const out = await exportCharacter({ baseUrl: "https://example.test", apiKey: KEY, fetchImpl, maxRetries: 0 }, 7).catch((e) => e);
     return { urls, out };
   };
   let r = await run(200);
@@ -608,7 +687,7 @@ test("a body-less HTTP 500 names the function and keeps a redacted snippet", asy
     headers: { get: () => null },
     text: async () => url.endsWith("-slim") ? "slim worker down" : `full worker Bearer ${secret}`,
   });
-  const err = await exportCharacter({ baseUrl: "http://h", apiKey: KEY, fetchImpl, maxRetries: 0 }, 64).catch((e) => e);
+  const err = await exportCharacter({ baseUrl: "https://example.test", apiKey: KEY, fetchImpl, maxRetries: 0 }, 64).catch((e) => e);
   assert.match(err.message, /wgui-export-character:/);
   assert.match(err.message, /HTTP 500|full worker/);
   assert.match(err.message, /wgui-export-character-slim also failed: HTTP 500/);

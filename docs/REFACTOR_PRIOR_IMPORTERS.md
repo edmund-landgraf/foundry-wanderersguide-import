@@ -1,6 +1,6 @@
 # Refactor notes from the earlier Foundry importers
 
-Status: still candidate work. Reviewed again 2026-11-22 against `main`. None of the six items below have been implemented. Work since the 2026-11-06 draft (Foundry-to-WGUI read relay, prepared-spell duplicates, Rogue and Wizard selections, import-report fixes) does not close any of them.
+Status: second pass 2026-11-22. Suggested-order items 1–6 are in: prototype token name, the rejected-version message, the character-sheet button, deity compendium match, lore items, and a local JSON v4 file. Live Foundry testing has not been run.
 
 One partial is already in the API path and should not be redone: `scripts/api.js` throws `Export was not a JSON v4 character` when `json.version !== 4` or `character` is missing, before planning. That gate covers the network export only. There is still no local-file source, and a future file path must use the same check. `scripts/coverage.js` still labels a present `version` field as mapped ("export format check (v4)") even though the API has already rejected every other number.
 

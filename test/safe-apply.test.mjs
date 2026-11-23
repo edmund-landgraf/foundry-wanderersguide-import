@@ -17,7 +17,7 @@ test("managedTree: module items plus everything granted from them, nothing else"
   ];
   assert.deepEqual([...managedTree(items)].sort(), ["cls", "feat", "loc", "sub", "viaParent"]);
 });
-import { applyKeyAbilityData, coverFeatureGaps, explicitGrants, sameThing, duplicateItemDiagnostics, focusResourcePatch, domainPromptWithoutDeity, emptyChoicePrompt, deityPromptChoice, allChoiceHints, uniqueChoice, dependencyOrder, dependsOnActor, ruleDependsOnActor, stampGrantPreselect, reconcileRuntimeGrants, exactSlugGrant, grantFixedChoice } from "../scripts/importer.js";
+import { applyKeyAbilityData, coverFeatureGaps, explicitGrants, sameThing, duplicateItemDiagnostics, focusResourcePatch, domainPromptWithoutDeity, emptyChoicePrompt, deityPromptChoice, allChoiceHints, uniqueChoice, dependencyOrder, dependsOnActor, ruleDependsOnActor, stampGrantPreselect, reconcileRuntimeGrants, exactSlugGrant, grantFixedChoice, forcedFields } from "../scripts/importer.js";
 test("dedupe: only explicit grants from this run's items, same compendium source", () => {
   const it = (id, type, name, src, extra = {}) => ({ id, type, name, _stats: { compendiumSource: src }, flags: extra.flags ?? {}, system: extra.system ?? {} });
   const items = [
@@ -136,12 +136,33 @@ test("duplicate diagnostics distinguish a PF2e grant pair from an unexplained du
     { id: "tangle-vine-direct", type: "feat", name: "Tangle Vine", system: {}, flags: {} },
     { id: "tangle-vine-action", type: "feat", name: "Tangle Vine", system: {}, flags: { pf2e: { grantedBy: { id: "animist-feature" } } } },
   ];
-  assert.equal(duplicateItemDiagnostics(differentlyNamedGrant)[0].expectedGrantPair, true);
+  assert.equal(duplicateItemDiagnostics(differentlyNamedGrant)[0].expectedGrantPair, false);
+  const bothGranted = [
+    differentlyNamedGrant[0],
+    differentlyNamedGrant[2],
+    { ...differentlyNamedGrant[2], id: "tangle-vine-action-2" },
+  ];
+  assert.equal(duplicateItemDiagnostics(bothGranted)[0].expectedGrantPair, true);
+  const spells = [1, 2, 3].map((n) => ({ id: `spell-${n}`, type: "spell", name: "Force Barrage", system: { slug: "force-barrage", location: "entry" }, flags: {} }));
+  assert.equal(duplicateItemDiagnostics(spells)[0].expectedGrantPair, false);
+  const oneGrant = [
+    { id: "entry", type: "spellcastingEntry", name: "Wizard", system: {}, flags: {} },
+    { id: "s1", type: "spell", name: "Force Barrage", system: { slug: "force-barrage" }, flags: { pf2e: { grantedBy: { id: "entry" } } } },
+    { id: "s2", type: "spell", name: "Force Barrage", system: { slug: "force-barrage", location: "entry" }, flags: {} },
+    { id: "s3", type: "spell", name: "Force Barrage", system: { slug: "force-barrage", location: "entry" }, flags: {} },
+  ];
+  assert.equal(duplicateItemDiagnostics(oneGrant)[0].expectedGrantPair, false);
+});
+
+test("import sets the prototype token name with the actor name", () => {
+  const fields = forcedFields({ name: "Kota", imageUrl: null, level: 2, languages: [], attributes: {}, coins: {}, heroPoints: 0 }, "https://example.test", null, false);
+  assert.equal(fields.name, "Kota");
+  assert.equal(fields["prototypeToken.name"], "Kota");
 });
 
 test("Exemplar inventory is scheduled before class grants", () => {
   const source = rf(new URL("../scripts/importer.js", import.meta.url), "utf8");
-  assert.match(source, /const order = \["ancestry", "heritage", "background", "equipment", "class", "feat", "spell"\]/);
+  assert.match(source, /const order = \["ancestry", "heritage", "background", "deity", "lore", "equipment", "class", "feat", "spell"\]/);
 });
 
 test("WG key ability populates the PF2e class-item selection", () => {

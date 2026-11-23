@@ -47,22 +47,49 @@ async function upsertJournal(campaign, src, host) {
   return { doc, action: "created" };
 }
 
+function levelId(level) {
+  return level?.id ?? level?._id ?? null;
+}
+function levelTagged(level) {
+  return level?.getFlag?.(MODULE_ID, "art") === true || level?.flags?.[MODULE_ID]?.art === true;
+}
+
+/** The level this module created. Never the first level after a GM reorder. */
+export function selectCampaignArtLevel(scene) {
+  const levels = scene?.levels?.contents ?? (Array.isArray(scene?.levels) ? scene.levels : []);
+  const tagged = levels.find(levelTagged);
+  if (tagged) return tagged;
+  if (scene?.initialLevel) {
+    const initial = levels.find((level) => levelId(level) === scene.initialLevel);
+    if (initial) return initial;
+  }
+  return levels.length === 1 ? levels[0] : null;
+}
+
 async function upsertScene(campaign, src, host) {
   const name = campaign.name || `Campaign #${campaign.id}`;
   const existing = game.scenes.find((s) => mine(s, campaign.id, host));
   if (existing) {
-    const lvl = existing.levels?.contents?.[0];
+    const lvl = selectCampaignArtLevel(existing);
     const cur = lvl ? lvl.background?.src : existing.background?.src;
     if (cur === src) return { doc: existing, action: "unchanged" };
-    if (lvl) await lvl.update({ "background.src": src }); else await existing.update({ "background.src": src });
-    return { doc: existing, action: "updated" };
+    if (lvl) {
+      await lvl.update({ "background.src": src, [`flags.${MODULE_ID}.art`]: true });
+      return { doc: existing, action: "updated" };
+    }
+    const levelCount = existing.levels?.contents?.length ?? (Array.isArray(existing.levels) ? existing.levels.length : 0);
+    if (!levelCount) {
+      await existing.update({ "background.src": src });
+      return { doc: existing, action: "updated" };
+    }
+    return { doc: existing, action: "unchanged" };
   }
   const size = (await imageSize(src)) ?? { width: 4000, height: 3000 };
   const data = { name, width: size.width, height: size.height, padding: 0, navigation: false, active: false, flags: flags(campaign.id, host) };
   // Foundry v14 keeps backgrounds on scene levels; older versions on scene.background.
   if (Scene.schema.fields.levels) {
     const id = foundry.utils.randomID();
-    Object.assign(data, { levels: [{ _id: id, name, background: { src } }], initialLevel: id });
+    Object.assign(data, { levels: [{ _id: id, name, background: { src }, flags: { [MODULE_ID]: { art: true } } }], initialLevel: id });
   } else data.background = { src };
   // Never activated: creating the scene does not move anyone off the current one.
   return { doc: await Scene.create(data), action: "created" };

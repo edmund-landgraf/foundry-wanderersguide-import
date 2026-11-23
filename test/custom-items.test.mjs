@@ -72,6 +72,10 @@ test("unmappable operations are unresolved with the raw op, never guessed", () =
   assert.deepEqual(data.system.rules, [{ key: "ActiveEffectLike", mode: "upgrade", path: "system.skills.stealth.rank", value: 1 }]);
   assert.equal(data.flags["foundry-wanderersguide-import"].wgUnresolvedOps.length, 4);
   assert.equal(translateOp({ type: "addBonusToValue", data: { variable: "SKILL_LORE_SAILING", value: 1, type: "item" } }).status, "unresolved");
+  const mapped = translateOp({ type: "addBonusToValue", data: { variable: "SKILL_LORE_SAILING", value: 1, type: "item" } }, { loreSlugs: new Set(["sailing-lore"]) });
+  assert.equal(mapped.status, "mapped");
+  assert.equal(mapped.rule.selector, "sailing-lore");
+  assert.equal(mapped.rule.key, "FlatModifier");
   assert.equal(translateOp({ type: "addBonusToValue", data: { variable: "AC_BONUS", value: 1, type: "circumstance", text: "vs ranged" } }).status, "unresolved");
   assert.equal(translateOp({ type: "giveAbilityBlock", data: { type: "feat", abilityBlockId: 1 } }).status, "unresolved");
 });

@@ -40,7 +40,17 @@ export function selectorFor(variable) {
   if (OTHER[v]) return OTHER[v];
   const m = v.match(/^SKILL_([A-Z]+)$/);
   if (m && SKILLS.has(m[1].toLowerCase())) return m[1].toLowerCase();
-  return null; // includes SKILL_LORE_*: PF2e lore selectors depend on the actor's lore item slug
+  return null;
+}
+
+/** Lore selector only when this import is already creating that lore item. No rank is written here. */
+export function loreSelector(variable, loreSlugs) {
+  const m = String(variable ?? "").match(/^SKILL_LORE_([A-Z0-9]+(?:_[A-Z0-9]+)*)$/);
+  if (!m) return null;
+  const words = m[1].toLowerCase().split("_").filter((word) => /[a-z0-9]/.test(word));
+  if (!words.length) return null;
+  const selector = `${words.join("-")}-lore`;
+  return loreSlugs?.has?.(selector) ? selector : null;
 }
 
 const BONUS_TYPES = new Set(["item", "status", "circumstance"]);
@@ -64,7 +74,7 @@ function translateOne(op, ctx) {
   const label = ctx.itemName ?? "Wanderer's Guide item";
   switch (op?.type) {
     case "addBonusToValue": {
-      const selector = selectorFor(d.variable);
+      const selector = loreSelector(d.variable, ctx.loreSlugs) ?? selectorFor(d.variable);
       const value = Number(d.value);
       if (!selector || !Number.isFinite(value) || typeof d.value === "string" && !/^[+-]?\d+$/.test(d.value.trim())) return unresolved(op, `no PF2e selector or numeric value for ${d.variable} = ${JSON.stringify(d.value)}`);
       const type = BONUS_TYPES.has(String(d.type ?? "").toLowerCase()) ? String(d.type).toLowerCase() : "untyped";
