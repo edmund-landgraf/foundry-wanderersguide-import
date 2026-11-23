@@ -156,6 +156,12 @@ export function choiceContext(exp, plan, index, actor, { semanticSuffixes = null
       ?.map((name) => sluggify(name))
       .filter(Boolean) ?? []
   );
+  // Ancestry feats such as Clan Pistol are not in PHYSICAL_FEATURE_NAMES but uniquely name a Clan Weapon option (#22).
+  const featNames = [];
+  for (const [bucket, list] of Object.entries(exp?.content?.feats_features ?? {})) {
+    if (bucket === "physicalFeatures") continue;
+    for (const f of list ?? []) if (f?.name) featNames.push(f.name);
+  }
   const uuidName = new Map(index.map((r) => [r.uuid, r.name]));
   const previous = new Map();
   for (const i of actor?.items ?? []) {
@@ -213,7 +219,7 @@ export function choiceContext(exp, plan, index, actor, { semanticSuffixes = null
     return candidate.index;
   };
   const beliefs = String(exp?.character?.details?.info?.beliefs ?? "").trim();
-  return { hints, fixedNames, index, uuidName, previous, used, markUsed, markHintUsed, conflicts: new Map(), unresolved: [], specific, available, consume, pick, assigned, beliefs, semanticSuffixes, resolvedChoices, keyAbilityUsed: new Set(), actor };
+  return { hints, fixedNames, featNames, index, uuidName, previous, used, markUsed, markHintUsed, conflicts: new Map(), unresolved: [], specific, available, consume, pick, assigned, beliefs, semanticSuffixes, resolvedChoices, keyAbilityUsed: new Set(), actor };
 }
 
 /** Index of the single option matching the hints, or -1 when none or more than one match. */
@@ -225,6 +231,17 @@ export function uniqueChoice(labels, hintNames) {
   // Also reject when a second label matches the same hint (e.g. two "Fire" options).
   const others = labels.filter((l, k) => k !== i && matchChoice([l], hintNames) === 0);
   return others.length ? -1 : i;
+}
+
+/** Index of the one label that a WG feat uniquely names, including a trailing parenthetical (Clan Pistol → Clan Pistol (Ancestry Feat)). */
+export function uniqueFeatOption(labels, featNames) {
+  const slugs = new Set((featNames ?? []).map((n) => sluggify(n)).filter(Boolean));
+  const hits = (labels ?? []).map((label, i) => {
+    const slug = sluggify(label);
+    const bare = sluggify(String(label).replace(/ \([^()]+\)$/, ""));
+    return slugs.has(slug) || (bare && bare !== slug && slugs.has(bare)) ? i : -1;
+  }).filter((i) => i >= 0);
+  return hits.length === 1 ? hits[0] : null;
 }
 
 /** Return the sole PF2e label that exactly matches a WG-computed fixed grant. */
@@ -674,6 +691,20 @@ export function watchPrompts(ctx, notes) {
       // Granted items (Adopted Ancestry) often have no wgContentId; parent hints are in promptHintOwner.
       if (i == null && hintOwner.ownerWgId == null) {
         i = exactUniqueHintIndex(labels, allChoiceHints(ctx.hints));
+      }
+      // Runtime Clan Weapon is granted by ancestry and is not a planned ChoiceSet, so
+      // resolveChoiceSet never sees it. Prefer an explicit WG feat (Clan Pistol), then a
+      // unique PHYSICAL_FEATURE_NAMES grant (Clan Dagger) (#22).
+      if (i == null) {
+        const featIdx = uniqueFeatOption(labels, ctx.featNames);
+        if (featIdx != null) { i = featIdx; via = "WG feat"; }
+      }
+      if (i == null) {
+        const fixedLabel = uniqueFixedChoice(labels, ctx.fixedNames);
+        if (fixedLabel) {
+          const idx = labels.findIndex((label) => label === fixedLabel);
+          if (idx >= 0) { i = idx; via = "WG fixed grant"; }
+        }
       }
       if (i == null && !specific.length) {
         const src = app.item?._stats?.compendiumSource ?? app.item?.sourceId ?? null;
