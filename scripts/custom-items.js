@@ -25,7 +25,7 @@ export function needsTraitCatalog(exp) {
   // ancestry-section selection keys. The slim export drops all_traits, so fetching the
   // full export is the only safe way to turn that id into a ChoiceSet label.
   const ancestryNeedsCatalog = Object.entries(exp?.character?.operation_data?.selections ?? {}).some(([key, value]) =>
-    /^ancestry-section-/.test(key) && /^\\d+$/.test(String(value)) && !known.has(value) && !known.has(String(value))
+    /^ancestry-section-/.test(key) && /^\d+$/.test(String(value)) && !known.has(value) && !known.has(String(value))
   );
   return customNeedsCatalog || ancestryNeedsCatalog;
 }
