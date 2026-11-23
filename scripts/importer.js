@@ -467,6 +467,27 @@ export function validChoiceIndex(i, choices) {
   return Number.isInteger(i) && i >= 0 && i < (choices?.length ?? 0) ? i : null;
 }
 
+/** Resolve the WG owner for a runtime-granted prompt.
+ * PF2e grants such as Adopted Ancestry are separate items without a WG content id,
+ * but their parent item is the imported WG feature that owns the answer. */
+export function promptHintOwner(app, ctx) {
+  const item = app?.item;
+  const owner = item?.name ?? app?.options?.item?.name ?? "";
+  const ownerWgId = item?.flags?.[MODULE_ID]?.wgContentId ?? null;
+  const direct = ctx.specific?.(owner, ownerWgId) ?? [];
+  if (direct.length) return { owner, ownerWgId, specific: direct };
+
+  const parentId = item?.flags?.pf2e?.grantedBy?.id ?? null;
+  const items = item?.actor?.items;
+  const parent = parentId == null ? null
+    : items?.get?.(parentId) ?? [...(items ?? [])].find((candidate) => candidate?.id === parentId);
+  const parentName = parent?.name ?? "";
+  const parentWgId = parent?.flags?.[MODULE_ID]?.wgContentId ?? null;
+  const parentHints = parentName ? (ctx.specific?.(parentName, parentWgId) ?? []) : [];
+  if (parentHints.length) return { owner, ownerWgId, specific: parentHints, hintOwner: parentName, hintOwnerWgId: parentWgId };
+  return { owner, ownerWgId, specific: direct };
+}
+
 export function watchPrompts(ctx, notes) {
   const seen = new Set();
   let domainWarned = false;
@@ -496,9 +517,11 @@ export function watchPrompts(ctx, notes) {
       }
       if (seen.has(signature)) continue;
       seen.add(signature);
-      const ownerWgId = app.item?.flags?.[MODULE_ID]?.wgContentId ?? null;
-      const specific = ctx.specific(owner, ownerWgId);
-      let i = specific.length ? ctx.pick(owner, labels, ownerWgId) : null;
+      const hintOwner = promptHintOwner(app, ctx);
+      const specific = hintOwner.specific;
+      const pickOwner = hintOwner.hintOwner ?? owner;
+      const pickOwnerWgId = hintOwner.hintOwnerWgId ?? hintOwner.ownerWgId;
+      let i = specific.length ? ctx.pick(pickOwner, labels, pickOwnerWgId) : null;
       let via = "WG selection";
       if (i == null) {
         const deity = deityPromptChoice(app, ctx.beliefs);
