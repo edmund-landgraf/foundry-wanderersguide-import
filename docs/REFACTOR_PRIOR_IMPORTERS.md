@@ -1,6 +1,10 @@
 # Refactor notes from the earlier Foundry importers
 
-Status: candidate work, not scheduled. Nothing here is a claim that the current importer should copy those modules. The comparison is the reason a change is worth considering, and the last section is the only part proposed as a refactor.
+Status: still candidate work. Reviewed again 2026-11-22 against `main`. None of the six items below have been implemented. Work since the 2026-11-06 draft (Foundry-to-WGUI read relay, prepared-spell duplicates, Rogue and Wizard selections, import-report fixes) does not close any of them.
+
+One partial is already in the API path and should not be redone: `scripts/api.js` throws `Export was not a JSON v4 character` when `json.version !== 4` or `character` is missing, before planning. That gate covers the network export only. There is still no local-file source, and a future file path must use the same check. `scripts/coverage.js` still labels a present `version` field as mapped ("export format check (v4)") even though the API has already rejected every other number.
+
+The actor create and update set `name` and `prototypeToken.texture.src` (`scripts/importer.js`). They do not set `prototypeToken.name`. Lore is still dropped (`SKILL_LORE_*` in `scripts/custom-items.js`). Deity handling is still the beliefs-string ChoiceSet (`deityPromptChoice`). There is no sheet-header button and no file input.
 
 Compared modules, read 2026-11-06:
 
@@ -8,7 +12,7 @@ Compared modules, read 2026-11-06:
 |---|---|---|---|
 | Repo | `foundry-wanderersguide-import` 0.1.2 | [wanderers-guide/foundry-vtt-import](https://github.com/wanderers-guide/foundry-vtt-import) 0.1.0 | [zarmstrong/foundry-pathbuilder2e-import](https://github.com/zarmstrong/foundry-pathbuilder2e-import) 0.10.2 |
 | Source | Wanderer's Guide JSON v4, fetched with an API key | A downloaded `.guidechar` file | Pathbuilder JSON, fetched by a 6-digit code |
-| Foundry / PF2e | Foundry 12–14 (verified 14 build 369), PF2e 6.0.0–8.6.1 | Foundry 0.8.8–0.8.9 | Foundry 10 only, PF2e 4.1.2. README says unsupported on v11+. Last release January 2023; README note August 2023 |
+| Foundry / PF2e | Foundry 12–14 (verified 14 build 370), PF2e 6.0.0–8.7.1 | Foundry 0.8.8–0.8.9 | Foundry 10 only, PF2e 4.1.2. README says unsupported on v11+. Last release January 2023; README note August 2023 |
 | Last activity | Current | Last commit 16 Jan 2023 (`Update module.json`) | Last code 29 Jan 2023 |
 | Entry | Actors sidebar, multi-select | Title bar of an actor the user can edit | Title bar of a character sheet |
 
@@ -48,6 +52,8 @@ Each item is a gap they closed and we have not. None of them requires their stac
 
 ### 1. Lore as its own item
 
+Open as of 2026-11-22. `translateOp` still returns unresolved for `SKILL_LORE_*`, and `rawVariableName("SKILL_LORE_SAILING")` is null.
+
 `src/converter/skills.ts` (`addLoreSkills`) builds one lore item per entry in `proficiencies.lore`, strips the word "lore" from the name, and splits the list into create versus update by matching an existing item of type `lore` with the same name.
 
 We drop `SKILL_LORE_*` in `scripts/custom-items.js`. The comment there is the reason: a PF2e lore selector needs the actor's lore item slug, so the proficiency cannot be written until the item exists.
@@ -56,11 +62,15 @@ Refactor shape: create or update the lore item first, then resolve any selector 
 
 ### 2. A local JSON v4 file as a second source
 
+Open as of 2026-11-22. Import is API-only (`scripts/dialog.js` has no file input).
+
 `src/index.ts` reads a `.guidechar` with `FileReader` and never calls Wanderer's Guide. That is the path that still works when the API key, the campaign grant, or the server is what failed.
 
 Refactor shape: keep the API as the primary path. Add an optional file input that accepts the same JSON v4 the export function returns, and run it through the existing planner. The file is a source, not a second mapper. Reject anything that does not parse as a v4 export (see the version check below). Do not document the old `.guidechar` layout as supported. That file is the 0.8-era export.
 
 ### 3. Refuse an unmapped export version
+
+Partly done on the API path only. `fetchCharacterExport` in `scripts/api.js` rejects anything whose `version` is not exactly 4. The planner never sees a v3 or v5 file from the server. Still open: the same refusal for a local file (item 2), and a message that names the version that was rejected instead of the generic "not a JSON v4 character." Do not add a second check in the planner for the API path.
 
 `src/parser/helpers.ts` defines `UnsupportedVersionError`. The dialog shows that error and stops. A partial import of an unknown shape becomes a pile of unresolved rows that look like match failures.
 
@@ -68,17 +78,23 @@ Refactor shape: if the export version is missing or newer than the versions the 
 
 ### 4. A sheet-header button for the actor's owner
 
+Open as of 2026-11-22. The only entry remains the Actors sidebar.
+
 `renderActorSheet` in `src/index.ts` inserts "Import from Wanderer's Guide" after the window title, and only when the actor is a character and `actor.canUserModify(user, "update")` is true. Our entry point is the Actors sidebar. A player who cannot see that sidebar cannot start an import of their own character.
 
 Refactor shape: add the same button on the character sheet, gated the same way. It imports that one actor (update if `wgId` matches, otherwise the existing create path). Leave multi-select on the sidebar.
 
 ### 5. Prototype token name
 
+Open as of 2026-11-22. Apply sets the prototype token texture from campaign art and leaves `prototypeToken.name` alone. Rollback already restores the whole `prototypeToken`, so a name write belongs in the same update as `name`. Placed scene tokens stay out of scope.
+
 `toCharacterUpdateMap` in `src/converter/core.ts` sets `token.name` in the same update as the actor name. The table shows the token name. An actor rename that leaves the prototype token stale is a visible miss.
 
 Refactor shape: when the import sets the actor name, set the prototype token name to the same string. Do not rename a token the user has already placed on a scene unless we already have a rule for that. Check the current apply path before adding a second write.
 
 ### 6. Deity as a compendium item
+
+Open as of 2026-11-22. `deityPromptChoice` still matches the beliefs string against ChoiceSet labels. No deity item is created or linked.
 
 Pathbuilder wrote the deity onto the actor. We use the beliefs string only to answer a domain ChoiceSet (`deityPromptChoice` in `scripts/importer.js`). When the export has no deity, Domain Initiate / Domain Focus is left unresolved and a warning is shown. That warning is correct. The missing step is the case where the export does name a deity.
 
@@ -100,13 +116,13 @@ Keep the current rule: do not force skills, saves, AC, perception, or class DC f
 - Pathbuilder stored potency runes as integers after a bug where they arrived as strings. Worth a fixture if a rune is ever imported as the wrong type. Not a subsystem to port.
 - Senses and alignment were written as actor fields. Senses are in the derived set in `scripts/coverage.js` (`senses` is listed next to AC and speeds). Ancestry features grant them on current PF2e. Forcing the field would repeat the proficiency mistake.
 
-## Suggested order, if this is picked up
+## Suggested order, from the 2026-11-22 review
 
-1. Export-version refusal. Small, and it keeps a bad file from looking like a match failure.
-2. Prototype token name. One field, easy to verify on a fresh actor.
+1. Prototype token name. One field on the update that already sets `name` and `prototypeToken.texture.src`.
+2. Name the rejected version in the existing API error. The `version !== 4` throw is already there; the message does not say which version arrived.
 3. Sheet-header button. UI only, same import path.
 4. Deity compendium match. Uses the matcher we already have.
 5. Lore items, then lore selectors. The one real data-model change.
-6. Local JSON v4 file. Do this after the version check exists, so the file path and the API path share one gate.
+6. Local JSON v4 file. Call the same `version === 4` check the API uses before planning. Do not invent a second version parser.
 
 Each step should land with a golden or unit fixture. No step should start writing derived ranks.
