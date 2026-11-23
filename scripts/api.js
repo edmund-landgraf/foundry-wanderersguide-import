@@ -142,8 +142,9 @@ export async function exportCharacter(opts, id) {
     }
   }
   if (!json || json.version !== 4 || !json.character) throw new WgApiError(0, "Export was not a JSON v4 character.");
-  // Custom items reference official traits by id; the slim file drops those names. Fetch the full file
-  // only then, so homebrew traits are never guessed.
+  // Custom items and official selections (e.g. ancestry trait ids) reference catalog rows by id;
+  // the slim file drops official all_traits / all_spells names. Fetch the full file only then,
+  // so those names are never guessed.
   if (json.slim && needsTraitCatalog(json)) {
     try { const full = await callFunction({ ...opts, fn: FULL_EXPORT_FN, body }); if (full?.version === 4 && full.character) return full; } catch { /* keep the slim file; traits are reported unresolved */ }
   }

@@ -4,6 +4,7 @@ import { DIVINE_FONT_SUFFIX, INNATE_ATTRIBUTE } from "./prompt-data.js";
 import { classifySelections } from "./selections.js";
 import { resolveFormula, extraItemIds, containerParents } from "./formulas.js";
 import { homebrewSourceIds, isCustomItem } from "./custom-items.js";
+import { DOMAIN_BY_SPELL_SLUG } from "./domain-spells.js";
 // Pure mapping: WG JSON v4 export -> import plan. No Foundry globals here, so it is unit-testable in Node.
 
 export function sluggify(name) {
@@ -15,6 +16,21 @@ export function sluggify(name) {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
+}
+
+/** Unique official domain for a domain spell name, or null when unknown or ambiguous. */
+export function domainNameForSpell(name) {
+  return name ? DOMAIN_BY_SPELL_SLUG[sluggify(name)] ?? null : null;
+}
+
+/** Spell id -> name from the export's own spell lists (slim keeps focus/innate/prepared lists). */
+export function namedSpells(exp) {
+  const ct = exp?.content ?? {};
+  const out = new Map();
+  for (const list of [ct.focus_spells, ct.innate_spells, ct.spells?.all, ct.all_spells]) {
+    for (const s of list ?? []) if (s?.id != null && s.name) out.set(String(s.id), s.name);
+  }
+  return out;
 }
 
 
@@ -438,7 +454,8 @@ export function wgChoiceHints(exp) {
             // FILTERED ADJ_VALUE selects (e.g. Skilled Human "Select a Skill") have no
             // predefined options; WG stores the raw variable (SKILL_STEALTH) as the answer.
             const rawSkill = !pre ? rawVariableName(v) : null;
-            const name = pre?.title ?? byId.get(String(v))?.name ?? variableName ?? rawSkill;
+            const domain = domainNameForSpell(spells.get(String(v)));
+            const name = pre?.title ?? byId.get(String(v))?.name ?? domain ?? variableName ?? rawSkill;
             if (name) push(owner, name, key);
             if (pre?.operations) visit(owner, pre.operations, depth + 1);
             if (pre?.operation) visit(owner, [pre.operation], depth + 1);
@@ -448,18 +465,21 @@ export function wgChoiceHints(exp) {
       if (op.type === "conditional") { visit(owner, op.data?.trueOperations, depth + 1); visit(owner, op.data?.falseOperations, depth + 1); }
     }
   };
+  const spells = namedSpells(exp);
   Object.defineProperty(out, "byId", { value: new Map(), enumerable: false });
   for (const o of owners) visit(o, o.operations);
   // Adopted Ancestry stores the chosen ancestry as a trait id (all_traits meta_data.ancestry_trait).
-  // The select operation lives on the granted feat and is often absent from the export. Attach the
-  // trait name to the single feat whose id is a token of the key. Zero or several feat ids stay unnamed.
+  // Domain Initiate stores the domain as a focus spell id. Attach the trait or unique domain name
+  // to the single feat whose id is a token of the key. Zero or several feat ids stay unnamed.
   const ancestryTraits = new Map((exp?.content?.all_traits ?? []).filter((t) => t?.meta_data?.ancestry_trait && t.name).map((t) => [String(t.id), t.name]));
   for (const [key, value] of Object.entries(sel)) {
     const traitName = ancestryTraits.get(String(value));
-    if (!traitName) continue;
+    const domain = domainNameForSpell(spells.get(String(value)));
+    const hintName = traitName ?? domain;
+    if (!hintName) continue;
     const tokens = new Set(key.split(/[_-]/));
     const featOwners = [...byId.values()].filter((f) => tokens.has(String(f.id)));
-    if (featOwners.length === 1) push(featOwners[0], traitName, key);
+    if (featOwners.length === 1) push(featOwners[0], hintName, key);
   }
   // Explicit picks the visitor cannot name itself (e.g. an ABILITY_BLOCK option that gives Plant Empathy),
   // named from the option's own giveAbilityBlock id (scripts/selections.js).

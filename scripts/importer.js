@@ -99,25 +99,34 @@ async function restoreSpellcastingState(actor, state) {
 //   2. on re-import, the selection already stored on the actor for the same compendium item, if still legal.
 // Nothing is guessed from other names and the first option is never taken. Anything left open is
 // recorded as unresolved and PF2e's own prompt is shown to the user (AMBA_REUSE_PLAN section 3).
+// WG heading -> PF2e item that answers the same choice (same list as coverFeatureGaps).
+const FEATURE_OWNER_ALIASES = Object.freeze([["domains", "domain-initiate"]]);
+
 export function choiceContext(exp, plan, index, actor, { semanticSuffixes = null, catalog = null } = {}) {
   const hints = wgChoiceHints(exp);
   // Runtime grants have PF2e names and may lack the source WG content ID.
   // Route them through reviewed catalog aliases, never unrelated global hints.
   const ownerAliases = new Map();
+  const addOwnerAlias = (source, target) => {
+    if (!hints.has(source)) return;
+    const owners = ownerAliases.get(target) ?? new Set();
+    owners.add(source);
+    ownerAliases.set(target, owners);
+  };
   for (const [source, aliases] of normalizeMatchCatalog(catalog).aliases) {
     const owner = source.slice(source.indexOf(":") + 1);
-    if (!hints.has(owner)) continue;
-    for (const alias of aliases) {
-      const owners = ownerAliases.get(alias.target) ?? new Set();
-      owners.add(owner);
-      ownerAliases.set(alias.target, owners);
-    }
+    for (const alias of aliases) addOwnerAlias(owner, alias.target);
   }
+  for (const [source, target] of FEATURE_OWNER_ALIASES) addOwnerAlias(source, target);
   const ownerKey = (owner) => {
     const slug = sluggify(owner);
     if (hints.has(slug)) return slug;
     const aliases = ownerAliases.get(slug);
-    return aliases?.size === 1 ? [...aliases][0] : slug;
+    if (aliases?.size === 1) return [...aliases][0];
+    // "Deity (Cleric)" is the PF2e item; WG stores the same answers under "Deity".
+    const bare = sluggify(String(owner ?? "").replace(/ \([^()]+\)$/, ""));
+    if (bare && bare !== slug && hints.has(bare)) return bare;
+    return slug;
   };
   const fixedNames = new Set(
     exp?.content?.raw_data_dump?.variables?.PHYSICAL_FEATURE_NAMES?.value
@@ -181,7 +190,7 @@ export function choiceContext(exp, plan, index, actor, { semanticSuffixes = null
     return candidate.index;
   };
   const beliefs = String(exp?.character?.details?.info?.beliefs ?? "").trim();
-  return { hints, fixedNames, index, uuidName, previous, used, markUsed, markHintUsed, conflicts: new Map(), unresolved: [], specific, available, consume, pick, assigned, beliefs, semanticSuffixes, resolvedChoices, keyAbilityUsed: new Set() };
+  return { hints, fixedNames, index, uuidName, previous, used, markUsed, markHintUsed, conflicts: new Map(), unresolved: [], specific, available, consume, pick, assigned, beliefs, semanticSuffixes, resolvedChoices, keyAbilityUsed: new Set(), actor };
 }
 
 /** Index of the single option matching the hints, or -1 when none or more than one match. */
@@ -441,6 +450,26 @@ export function allChoiceHints(hints) {
   return names;
 }
 
+/** The item that granted `item`, when that relationship is recorded on the actor. */
+export function grantOrigin(item, actor) {
+  const list = actor?.items ?? actor;
+  if (!item || !list) return null;
+  const find = (pred) => (typeof list.find === "function" ? list.find(pred) : [...list].find(pred)) ?? null;
+  const parentId = item.flags?.pf2e?.grantedBy?.id ?? (typeof item.system?.location === "string" ? item.system.location : null);
+  if (parentId) {
+    const hit = find((i) => i.id === parentId);
+    if (hit) return hit;
+  }
+  return find((p) => Object.values(p.flags?.pf2e?.itemGrants ?? {}).some((v) => v?.id === item.id));
+}
+
+/** Index of the one label whose slug equals a hint, or null when none or more than one match. */
+export function exactUniqueHintIndex(labels, hintNames) {
+  const hints = new Set((hintNames ?? []).map((n) => sluggify(n)).filter(Boolean));
+  const hits = (labels ?? []).map((label, i) => (hints.has(sluggify(label)) ? i : -1)).filter((i) => i >= 0);
+  return hits.length === 1 ? hits[0] : null;
+}
+
 /**
  * A usable index into a prompt's choices, or null. ctx.pick returns null when WG has answers
  * for the owner but none fits; in JS `null >= 0` is true, so callers must not compare directly.
@@ -482,6 +511,15 @@ export function watchPrompts(ctx, notes) {
       const specific = ctx.specific(owner, ownerWgId);
       let i = specific.length ? ctx.pick(owner, labels, ownerWgId) : null;
       let via = "WG selection";
+      // Granted items (Adopted Ancestry) often have no wgContentId; the WG answer lives on the parent feat.
+      if (i == null && ownerWgId == null) {
+        const parent = grantOrigin(app.item, ctx.actor);
+        const parentId = parent?.flags?.[MODULE_ID]?.wgContentId ?? null;
+        if (parent && (parentId != null || parent.name) && ctx.specific(parent.name, parentId).length) {
+          i = ctx.pick(parent.name, labels, parentId);
+        }
+        if (i == null) i = exactUniqueHintIndex(labels, allChoiceHints(ctx.hints));
+      }
       if (i == null) {
         const deity = deityPromptChoice(app, ctx.beliefs);
         if (deity != null) { i = deity; via = "WG deity"; ctx.markHintUsed?.(app.choices[i].label); }

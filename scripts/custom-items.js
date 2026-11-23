@@ -11,13 +11,37 @@ export function homebrewSourceIds(content) {
   return ids;
 }
 
+/** Numeric official selection values that are not named in the export's own lists
+ * (feats, spells, or all_traits). Slim exports drop official all_traits, so ancestry
+ * trait answers such as Human (1436) stay unnamed until the full file is fetched. */
+export function unnamedOfficialSelectionIds(exp) {
+  const ct = exp?.content ?? {};
+  const named = new Set();
+  const add = (id) => { if (id != null && id !== "") named.add(String(id)); };
+  for (const t of ct.all_traits ?? []) add(t?.id);
+  for (const f of Object.values(ct.feats_features ?? {}).flat()) add(f?.id);
+  for (const list of [ct.focus_spells, ct.innate_spells, ct.spells?.all, ct.all_spells]) {
+    for (const s of list ?? []) add(s?.id);
+  }
+  const out = [];
+  for (const [key, value] of Object.entries(exp?.character?.operation_data?.selections ?? {})) {
+    if (value == null) continue;
+    const raw = String(value);
+    if (/^(SKILL_|ATTRIBUTE_|WEAPON_GROUP_)/.test(raw) || !/^\d+$/.test(raw)) continue;
+    if (!named.has(raw)) out.push({ key, id: Number(raw) });
+  }
+  return out;
+}
+
 /** True when the export has custom items whose trait ids are missing from content.all_traits
- * (the slim export drops official traits), so the full export is needed to name them. */
+ * (the slim export drops official traits), so the full export is needed to name them.
+ * Also true when official selection ids (ancestry traits, etc.) are unnamed. */
 export function needsTraitCatalog(exp) {
   const ct = exp?.content ?? {};
   const hb = homebrewSourceIds(ct);
   const known = new Set((ct.all_traits ?? []).map((t) => t?.id));
-  return (ct.inventory_flat ?? []).some((inv) => { const it = inv?.item ?? inv; return isCustomItem(it, hb) && (it.traits ?? []).some((id) => !known.has(id)); });
+  if ((ct.inventory_flat ?? []).some((inv) => { const it = inv?.item ?? inv; return isCustomItem(it, hb) && (it.traits ?? []).some((id) => !known.has(id)); })) return true;
+  return unnamedOfficialSelectionIds(exp).length > 0;
 }
 
 /** True when an inventory_flat row is a WG custom item (its content source is homebrew). */
