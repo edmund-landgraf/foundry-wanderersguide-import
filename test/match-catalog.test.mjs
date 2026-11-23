@@ -97,3 +97,15 @@ test("manifest minimum matches the only bundled PF2e catalog version", () => {
   const minimum = manifest.relationships.systems.find((system) => system.id === "pf2e")?.compatibility?.minimum;
   assert.equal(minimum, PF2E_VERSION);
 });
+
+test("public update manifest agrees with module.json on version, download, Foundry, and PF2e compatibility", () => {
+  const published = JSON.parse(readFileSync(new URL("../manifests/foundry-wanderersguide-import.json", import.meta.url)));
+  assert.equal(published.version, manifest.version);
+  assert.equal(published.download, manifest.download);
+  assert.deepEqual(published.compatibility, manifest.compatibility);
+  const publishedPf2e = published.relationships.systems.find((system) => system.id === "pf2e")?.compatibility;
+  const sourcePf2e = manifest.relationships.systems.find((system) => system.id === "pf2e")?.compatibility;
+  assert.deepEqual(publishedPf2e, sourcePf2e);
+  assert.equal(publishedPf2e?.minimum, PF2E_VERSION);
+  assert.equal(publishedPf2e?.verified, PF2E_VERSION);
+});
