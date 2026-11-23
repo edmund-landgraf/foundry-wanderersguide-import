@@ -11,13 +11,23 @@ export function homebrewSourceIds(content) {
   return ids;
 }
 
-/** True when the export has custom items whose trait ids are missing from content.all_traits
- * (the slim export drops official traits), so the full export is needed to name them. */
+/** True when a slim export omits names needed to resolve either custom-item traits
+ * or official ancestry-trait answers (for example Adopted Ancestry). */
 export function needsTraitCatalog(exp) {
   const ct = exp?.content ?? {};
   const hb = homebrewSourceIds(ct);
-  const known = new Set((ct.all_traits ?? []).map((t) => t?.id));
-  return (ct.inventory_flat ?? []).some((inv) => { const it = inv?.item ?? inv; return isCustomItem(it, hb) && (it.traits ?? []).some((id) => !known.has(id)); });
+  const known = new Set((ct.all_traits ?? []).flatMap((t) => [t?.id, t?.id == null ? null : String(t.id)]).filter((x) => x != null));
+  const customNeedsCatalog = (ct.inventory_flat ?? []).some((inv) => {
+    const it = inv?.item ?? inv;
+    return isCustomItem(it, hb) && (it.traits ?? []).some((id) => !known.has(id) && !known.has(String(id)));
+  });
+  // WG stores Adopted Ancestry/Cultural Adaptability answers as numeric trait ids on
+  // ancestry-section selection keys. The slim export drops all_traits, so fetching the
+  // full export is the only safe way to turn that id into a ChoiceSet label.
+  const ancestryNeedsCatalog = Object.entries(exp?.character?.operation_data?.selections ?? {}).some(([key, value]) =>
+    /^ancestry-section-/.test(key) && /^\\d+$/.test(String(value)) && !known.has(value) && !known.has(String(value))
+  );
+  return customNeedsCatalog || ancestryNeedsCatalog;
 }
 
 /** True when an inventory_flat row is a WG custom item (its content source is homebrew). */
