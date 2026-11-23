@@ -202,7 +202,7 @@ export function choiceContext(exp, plan, index, actor, { semanticSuffixes = null
       const hits = labels.map((label, index) => sluggify(label.replace(/ \([^()]+\)$/, "")) === sluggify(hint) ? index : -1).filter((index) => index >= 0);
       return { hint, index: hits.length === 1 ? hits[0] : -1 };
     }).find((x) => x.index >= 0);
-    const candidate = exact ?? variant ?? available.map((hint) => ({ hint, index: matchChoice(labels, [hint]) })).find((x) => x.index >= 0);
+    const candidate = exact ?? variant ?? available.map((hint) => ({ hint, index: uniqueChoice(labels, [hint]) })).find((x) => x.index >= 0);
     if (!candidate?.hint) return null;
     consume(owner, candidate.hint, ownerWgId);
     return candidate.index;
@@ -574,6 +574,7 @@ export function promptHintOwner(app, ctx) {
 
 export function watchPrompts(ctx, notes) {
   const seen = new Set();
+  const emptySince = new Map();
   let domainWarned = false;
   const tick = () => {
     for (const app of foundry.applications?.instances?.values?.() ?? []) {
@@ -582,6 +583,14 @@ export function watchPrompts(ctx, notes) {
       const signature = `${app.title ?? ""}|${app.item?.name ?? ""}|${labels.join("|")}`;
       const owner = app.item?.name ?? app.options?.item?.name ?? "";
       if (emptyChoicePrompt(app)) {
+        // Filter-based ChoiceSets (Kinetic Gate element/impulses, #52) often render
+        // empty for a tick. Closing them immediately lets PF2e default (Air Gate).
+        const hinted = (ctx.specific?.(owner)?.length || allChoiceHints(ctx.hints).length);
+        if (hinted && !inactiveChoicePrompt(app) && !domainPromptWithoutDeity(app)) {
+          const first = emptySince.get(signature) ?? Date.now();
+          emptySince.set(signature, first);
+          if (Date.now() - first < 1200) continue;
+        }
         if (!seen.has(signature)) {
           seen.add(signature);
           if (inactiveChoicePrompt(app)) {
@@ -629,8 +638,7 @@ export function watchPrompts(ctx, notes) {
         const choice = app.choices[i];
         if (typeof choice.value === "string" && choice.value.startsWith("Compendium.")) {
           for (const hint of specific) {
-            const keys = choiceNameKeys(hint, ctx.semanticSuffixes ?? undefined);
-            if (!keys.includes(sluggify(choice.label)) && !keys.includes(sluggify(choice.label.replace(/ \([^()]+\)$/, "")))) continue;
+            if (matchChoice([choice.label], [hint]) < 0) continue;
             const chosen = ctx.resolvedChoices.get(sluggify(hint)) ?? new Set();
             chosen.add(choice.value);
             ctx.resolvedChoices.set(sluggify(hint), chosen);
@@ -823,7 +831,21 @@ export function exactSlugGrant(entry, grants) {
     if (!["feat", "action"].includes(item.type)) return false;
     return (item.system?.slug || sluggify(item.name)) === entry.slug;
   });
-  return hits.length === 1 ? hits[0] : null;
+  if (hits.length === 1) return hits[0];
+  // A class feature often grants both the feat and the action it creates (Base Kinesis, #52).
+  // Two distinct feats of the same name stay ambiguous.
+  if (hits.length === 2) {
+    const feats = hits.filter(({ item }) => item.type === "feat");
+    const actions = hits.filter(({ item }) => item.type === "action");
+    if (feats.length === 1 && actions.length === 1) {
+      const feat = feats[0], action = actions[0];
+      const parentOf = (g) => g.parent?.id ?? g.parent?.name ?? g.parent ?? null;
+      const grantedBy = action.item?.flags?.pf2e?.grantedBy?.id;
+      const sameParent = parentOf(feat) && parentOf(feat) === parentOf(action);
+      if (sameParent || grantedBy === feat.item.id) return feat;
+    }
+  }
+  return null;
 }
 
 /** True when a grant selected something other than WG's answer. An empty selection did not fix the choice. */
@@ -907,10 +929,22 @@ export function coverFeatureGaps(entries, actor = null, index = []) {
   for (const entry of entries) {
     if (entry.match) continue;
     const rule = rules.find((x) => x.wg === sluggify(entry.name));
-    if (!rule) continue;
-    const source = entries.find((e) => e.match && sluggify(e.name).startsWith(rule.pf2e)) ?? [...(actor?.items ?? [])].find((i) => sluggify(i.name).startsWith(rule.pf2e)) ?? index.find((i) => sluggify(i.name).startsWith(rule.pf2e));
-    if (source) { entry.coveredBy = source.name; entry.coverageReason = "covered by PF2e " + rule.label; }
-    else if (rule.wg === "spark-transcendence") entry.unresolved = "PF2e gap: no standalone item or covering Divine Spark and Ikons feature was found";
+    if (rule) {
+      const source = entries.find((e) => e.match && sluggify(e.name).startsWith(rule.pf2e)) ?? [...(actor?.items ?? [])].find((i) => sluggify(i.name).startsWith(rule.pf2e)) ?? index.find((i) => sluggify(i.name).startsWith(rule.pf2e));
+      if (source) { entry.coveredBy = source.name; entry.coverageReason = "covered by PF2e " + rule.label; }
+      else if (rule.wg === "spark-transcendence") entry.unresolved = "PF2e gap: no standalone item or covering Divine Spark and Ikons feature was found";
+      continue;
+    }
+    // WG lists Kinetic Element (Fire) and Impulse Junction (Fire) as feats; PF2e stores those
+    // as roll options on Fire Gate, not standalone items (#52).
+    const gate = String(entry.name ?? "").match(/^(?:Kinetic Element|Impulse Junction) \((.+)\)$/i);
+    if (!gate) continue;
+    const gateName = `${gate[1]} Gate`;
+    const gateSlug = sluggify(gateName);
+    const source = entries.find((e) => e.match && sluggify(e.name) === gateSlug)
+      ?? [...(actor?.items ?? [])].find((i) => sluggify(i.name) === gateSlug)
+      ?? index.find((i) => sluggify(i.name) === gateSlug);
+    if (source) { entry.coveredBy = source.name ?? gateName; entry.coverageReason = `covered by PF2e ${gateName}`; }
   }
   return entries;
 }

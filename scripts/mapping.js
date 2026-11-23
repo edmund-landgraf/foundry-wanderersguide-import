@@ -550,8 +550,9 @@ export function matchChoice(labels, hintNames) {
   for (const h of hints) {
     for (const [i, label] of labels.entries()) {
       const l = sluggify(label);
-      // "Diabolic" and "Diabolic Dragon" are the same PF2e dragon option. The extra word must be exactly Dragon.
-      if (l && (h === l || l === `${h}-dragon` || h === `${l}-dragon` || h.startsWith(`${l}-`) || h.endsWith(`-${l}`) || l.endsWith(`-${h}`))) return i;
+      // "Diabolic" / "Diabolic Dragon", "Polymath Muse" / "Polymath", and "Fire" / "Fire Gate"
+      // (#52): the extra token may be on either side, but only as a full hyphenated suffix or prefix.
+      if (l && (h === l || l === `${h}-dragon` || h === `${l}-dragon` || h.startsWith(`${l}-`) || l.startsWith(`${h}-`) || h.endsWith(`-${l}`) || l.endsWith(`-${h}`))) return i;
     }
   }
   return -1;
