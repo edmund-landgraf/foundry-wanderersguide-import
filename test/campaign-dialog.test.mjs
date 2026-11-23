@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { selectCampaignArtLevel } from "../scripts/campaign.js";
-import { campaignRequestToken, mountSheetImportButton, sheetImportTarget } from "../scripts/dialog.js";
+import { addSheetHeaderButtons, campaignRequestToken, exportHandoffMessage, sheetImportTarget } from "../scripts/dialog.js";
 import { readFileSync } from "node:fs";
 
 test("campaign art updates the tagged or initial level, not whichever level is first", () => {
@@ -46,15 +46,16 @@ test("the sheet button is only for a character the user can update", () => {
   assert.equal(sheetImportTarget(locked, user), null);
   const linked = { type: "character", canUserModify: () => true, flags: { "foundry-wanderersguide-import": { wgId: 42 } } };
   assert.deepEqual(sheetImportTarget(linked, user), { wgId: 42 });
-  const root = {
-    nodes: [],
-    querySelector(sel) { return sel === ".window-title" ? { after: (el) => root.nodes.push(el) } : null; },
-  };
-  globalThis.document = { createElement: () => ({ type: "", className: "", innerHTML: "", addEventListener() {} }) };
-  assert.equal(mountSheetImportButton(root, { label: "Import", onClick() {} }), true);
-  assert.equal(root.nodes[0].className, "wgi-sheet-import");
-  assert.equal(mountSheetImportButton({ querySelector: () => ({ className: "wgi-sheet-import" }) }, { label: "Import", onClick() {} }), false);
-  delete globalThis.document;
+  const app = { actor: linked, user };
+  const buttons = [{ class: "configure" }, { class: "close" }];
+  assert.equal(addSheetHeaderButtons(app, buttons, { user, importLabel: "Import", exportLabel: "Export" }), true);
+  assert.deepEqual(buttons.map((button) => button.class), ["configure", "wgi-import", "wgi-export", "close"]);
+  assert.equal(addSheetHeaderButtons(app, buttons, { user }), false);
+  assert.equal(addSheetHeaderButtons({ actor: npc }, [{ class: "close" }], { user }), false);
+  const handoff = exportHandoffMessage({ status: "connected", ownsLease: true }, "Yutrexxvb");
+  assert.match(handoff, /Import from Foundry/);
+  assert.equal(/updated|exported/i.test(handoff), false);
+  assert.match(exportHandoffMessage({ status: "disabled", reason: "Set a code." }), /Set a code/);
 });
 
 test("release packaging keeps the match catalog and not the private database", () => {

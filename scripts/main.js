@@ -1,6 +1,6 @@
 import { MODULE_ID, DEFAULT_FUNCTIONS_URL } from "./constants.js";
-import { importLinkedCharacter, mountSheetImportButton, openImportDialog, sheetImportTarget } from "./dialog.js";
-import { DEFAULT_RELAY_URL, createRelayLease, runFoundryReadRelay, validateReadConfig } from "./foundry-read-relay.js";
+import { addSheetHeaderButtons, exportHandoffMessage, importLinkedCharacter, openImportDialog } from "./dialog.js";
+import { DEFAULT_RELAY_URL, createRelayLease, getFoundryReadRelayStatus, runFoundryReadRelay, setFoundryReadRelayStatus, validateReadConfig } from "./foundry-read-relay.js";
 import { assertSecureFunctionsUrl } from "./api.js";
 
 let foundryReadController = null;
@@ -8,9 +8,15 @@ let foundryReadController = null;
 function startFoundryReadRelay() {
   foundryReadController?.abort();
   foundryReadController = null;
-  if (!game.user?.isGM || !game.world?.id) return;
+  if (!game.user?.isGM || !game.world?.id) {
+    setFoundryReadRelayStatus({ type: "disabled", reason: "The Foundry read relay is GM-only." });
+    return;
+  }
   const code = game.settings.get(MODULE_ID, "readRelayCode");
-  if (!String(code ?? "").trim()) return; // Explicit opt-in: disabled until a code is set.
+  if (!String(code ?? "").trim()) {
+    setFoundryReadRelayStatus({ type: "disabled", reason: "Set a Foundry → WGUI connection code in Wanderer's Guide Import settings." });
+    return;
+  }
   const config = {
     code,
     relayUrl: game.settings.get(MODULE_ID, "readRelayUrl"),
@@ -20,9 +26,11 @@ function startFoundryReadRelay() {
   try {
     validateReadConfig(config);
   } catch (error) {
+    setFoundryReadRelayStatus({ type: "invalid", reason: error.message });
     ui.notifications?.warn("WGUI Foundry read relay: " + error.message);
     return;
   }
+  setFoundryReadRelayStatus({ type: "waiting" });
   const controller = new AbortController();
   foundryReadController = controller;
   const ownerId = globalThis.crypto?.randomUUID?.() ?? `tab-${Date.now()}-${Math.random()}`;
@@ -37,11 +45,15 @@ function startFoundryReadRelay() {
     signal: controller.signal,
     lease,
     onState: (state) => {
-      if (state === "connected") console.info(MODULE_ID + " | read relay connected");
-      // Do not log fetch errors: their text may include credentials.
+      if (state === "connected") setFoundryReadRelayStatus({ type: "connected", ownsLease: true, session: true });
+      else if (state === "waiting") setFoundryReadRelayStatus({ type: "waiting" });
+      else if (state === "disconnected") setFoundryReadRelayStatus({ type: "disconnected" });
     },
   }).catch(() => {
-    if (!controller.signal.aborted) ui.notifications?.warn("WGUI Foundry read relay stopped. Check relay settings.");
+    if (!controller.signal.aborted) {
+      setFoundryReadRelayStatus({ type: "disconnected" });
+      ui.notifications?.warn("WGUI Foundry read relay stopped. Check relay settings.");
+    }
   });
 }
 
@@ -95,19 +107,27 @@ Hooks.on("renderSettingsConfig", (_app, html) => {
   }
 });
 
-function onCharacterSheet(app, html) {
+function onExportClick(actor) {
+  const status = getFoundryReadRelayStatus();
+  const message = exportHandoffMessage(status, actor?.name);
+  if (status.status === "connected" && status.ownsLease) ui.notifications?.info(message);
+  else ui.notifications?.warn(message);
+}
+
+function onHeaderButtons(app, buttons) {
   const actor = app?.actor ?? app?.document;
-  const target = sheetImportTarget(actor, game.user);
-  if (!target) return;
-  const root = html?.[0] ?? html;
-  mountSheetImportButton(root, {
-    label: game.i18n.localize("WGI.Button"),
-    onClick: () => { void importLinkedCharacter(target.wgId); },
+  addSheetHeaderButtons(app, buttons, {
+    user: game.user,
+    importLabel: game.i18n.localize("WGI.Button"),
+    exportLabel: game.i18n.localize("WGI.ExportButton"),
+    onImport: () => { void importLinkedCharacter(actor?.getFlag?.(MODULE_ID, "wgId") ?? actor?.flags?.[MODULE_ID]?.wgId); },
+    onExport: () => onExportClick(actor),
   });
 }
 
-for (const hook of ["renderActorSheet", "renderCharacterSheetPF2e"]) {
-  Hooks.on(hook, onCharacterSheet);
+// V13+ name, and the V12 name for the same Application V1 buttons. Not Application V2.
+for (const hook of ["getApplicationV1HeaderButtons", "getApplicationHeaderButtons"]) {
+  Hooks.on(hook, onHeaderButtons);
 }
 
 Hooks.on("renderActorDirectory", (_app, html) => {

@@ -44,11 +44,47 @@ export function validateReadConfig({ code, worldId, origin, relayUrl }) {
   return { code: secret, worldId, origin: address.origin, relayUrl: validateRelayUrl(relayUrl) };
 }
 
+export const LINK_FLAG = "foundry-wanderersguide-import";
+const ACTOR_LINK_KEYS = ["wgId", "host"];
+const ITEM_LINK_KEYS = ["wgItemId", "wgInvId"];
+
+/** Origin comparison for the Wanderer's Guide functions host. Not a world id. */
+export function sameFunctionsHost(left, right) {
+  const origin = (value) => {
+    const text = String(value ?? "").trim().replace(/\/+$/, "");
+    if (!text) return null;
+    try { return new URL(text).origin; }
+    catch { return null; }
+  };
+  const a = origin(left);
+  const b = origin(right);
+  return !!a && a === b;
+}
+
+/** Present linkage keys only. Missing keys are omitted, never null. */
+export function linkageFields(flags, keys) {
+  const raw = flags?.[LINK_FLAG];
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return null;
+  const out = {};
+  for (const key of keys) {
+    if (raw[key] == null || raw[key] === "") continue;
+    out[key] = raw[key];
+  }
+  return Object.keys(out).length ? out : null;
+}
+
 // Only copy PF2e rules selections. Other flags can carry module secrets or GM data.
 function onlyRulesSelections(flags) {
   const selections = flags?.pf2e?.rulesSelections;
   if (!selections || typeof selections !== "object" || Array.isArray(selections)) return {};
   return { pf2e: { rulesSelections: cleanValue(selections) } };
+}
+
+function withLinkage(flags, keys) {
+  const next = onlyRulesSelections(flags);
+  const link = linkageFields(flags, keys);
+  if (link) next[LINK_FLAG] = link;
+  return next;
 }
 
 function cleanValue(value) {
@@ -98,7 +134,45 @@ export function readFoundryCharacter(gameRef, actorId) {
   const cleaned = cleanValue(source);
   cleaned._id = actor.id;
   cleaned.type = "character";
+  cleaned.flags = withLinkage(source.flags, ACTOR_LINK_KEYS);
+  if (Array.isArray(cleaned.items) && Array.isArray(source.items)) {
+    cleaned.items.forEach((item, index) => {
+      if (item && typeof item === "object") item.flags = withLinkage(source.items[index]?.flags, ITEM_LINK_KEYS);
+    });
+  }
   return cleaned;
+}
+
+export function initialRelayStatus() {
+  return { status: "disabled", ownsLease: false, reason: "" };
+}
+
+let relayStatus = initialRelayStatus();
+
+export function getFoundryReadRelayStatus() {
+  return { ...relayStatus };
+}
+
+/** connected requires this tab's lease and an established session. */
+export function reduceRelayStatus(current, event) {
+  const base = current ?? initialRelayStatus();
+  if (event?.type === "disabled") return { status: "disabled", ownsLease: false, reason: event.reason ?? "" };
+  if (event?.type === "invalid") return { status: "invalid", ownsLease: false, reason: event.reason ?? "" };
+  if (event?.type === "waiting") return { status: "waiting", ownsLease: false, reason: "" };
+  if (event?.type === "disconnected") return { status: "disconnected", ownsLease: false, reason: event.reason ?? "" };
+  if (event?.type === "connected" && event.ownsLease && event.session) {
+    return { status: "connected", ownsLease: true, reason: "" };
+  }
+  return { ...base };
+}
+
+export function setFoundryReadRelayStatus(event) {
+  relayStatus = reduceRelayStatus(relayStatus, event);
+  return getFoundryReadRelayStatus();
+}
+
+export function resetFoundryReadRelayStatus() {
+  relayStatus = initialRelayStatus();
 }
 
 async function post(fetchImpl, base, path, body, session, signal) {
@@ -160,15 +234,16 @@ export async function runFoundryReadRelay({
 }) {
   if (!gameRef?.user?.isGM) return;
   const settings = validateReadConfig(config);
-  if (lease) {
-    while (!signal?.aborted && !lease.tryAcquire()) await delay(leaseWaitMs, signal);
-    if (signal?.aborted) return;
-  }
   let session = null;
   let lastState = "";
   const state = (value) => {
     if (lastState !== value) { lastState = value; onState(value); }
   };
+  if (lease) {
+    if (!lease.tryAcquire()) state("waiting");
+    while (!signal?.aborted && !lease.tryAcquire()) await delay(leaseWaitMs, signal);
+    if (signal?.aborted) return;
+  }
   while (!signal?.aborted && gameRef.user?.isGM) {
     try {
       if (!session) {
@@ -178,7 +253,7 @@ export async function runFoundryReadRelay({
         if (typeof result.session !== "string" || result.session.length < 16 ||
             result.worldId !== settings.worldId) throw new Error("Invalid WGUI relay session.");
         session = result.session;
-        state("connected");
+        if (!lease || lease.tryAcquire()) state("connected");
       }
       const job = await post(fetchImpl, settings.relayUrl, "/foundry-relay/v1/wait", {}, session, signal);
       if (signal?.aborted) break;
@@ -206,7 +281,7 @@ export async function runFoundryReadRelay({
         reply.status = 502;
       }
       await post(fetchImpl, settings.relayUrl, "/foundry-relay/v1/respond", reply, session, signal);
-      if (lease && !lease.tryAcquire()) { session = null; state("disconnected"); await delay(leaseWaitMs, signal); }
+      if (lease && !lease.tryAcquire()) { session = null; state("waiting"); await delay(leaseWaitMs, signal); }
     } catch (error) {
       if (signal?.aborted || error?.name === "AbortError") break;
       // Do not log errors/requests: a failed fetch may contain a secret URL

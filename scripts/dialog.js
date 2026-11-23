@@ -126,16 +126,31 @@ export function sheetImportTarget(actor, user) {
   return { wgId };
 }
 
-export function mountSheetImportButton(root, { label, onClick }) {
-  if (!root?.querySelector || root.querySelector(".wgi-sheet-import")) return false;
-  const btn = document.createElement("button");
-  btn.type = "button";
-  btn.className = "wgi-sheet-import";
-  btn.innerHTML = `<i class="fas fa-file-import"></i> ${label}`;
-  btn.addEventListener("click", (event) => { event.preventDefault(); onClick(); });
-  const title = root.querySelector(".window-title");
-  if (title) title.after(btn);
-  else (root.querySelector(".window-header") ?? root).prepend(btn);
+/** One warning, or the handoff sentence. Never claims a Wanderer's Guide write. */
+export function exportHandoffMessage(status, actorName) {
+  const name = actorName ? `${actorName}: ` : "";
+  if (status?.status === "connected" && status.ownsLease) {
+    return `${name}open Import from Foundry in Wanderer's Guide and select the actor there.`;
+  }
+  if (status?.status === "invalid") return status.reason || "The Foundry read relay settings are not valid.";
+  if (status?.status === "waiting") return "This browser tab is waiting to own the Foundry read relay.";
+  if (status?.status === "disconnected") return "The Foundry read relay is not connected. Check the relay URL and connection code.";
+  return status?.reason || "Set a Foundry → WGUI connection code in Wanderer's Guide Import settings.";
+}
+
+/** Application V1 header buttons. Import, then Export, immediately before Close. */
+export function addSheetHeaderButtons(app, buttons, { user, importLabel = "Import from Wanderer's Guide", exportLabel = "Export to Wanderer's Guide", onImport = () => {}, onExport = () => {} } = {}) {
+  if (!Array.isArray(buttons)) return false;
+  const actor = app?.actor ?? app?.document;
+  if (!sheetImportTarget(actor, user)) return false;
+  if (buttons.some((button) => button.class === "wgi-import" || button.class === "wgi-export")) return false;
+  const entries = [
+    { class: "wgi-import", icon: "fas fa-file-import", label: importLabel, onclick: onImport },
+    { class: "wgi-export", icon: "fas fa-file-export", label: exportLabel, onclick: onExport },
+  ];
+  const closeAt = buttons.findIndex((button) => button.class === "close");
+  if (closeAt >= 0) buttons.splice(closeAt, 0, ...entries);
+  else buttons.push(...entries);
   return true;
 }
 

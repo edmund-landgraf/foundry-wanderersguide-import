@@ -1,5 +1,6 @@
 {
   "WGI.Button": "Import from Wanderer's Guide",
+  "WGI.ExportButton": "Export to Wanderer's Guide",
   "WGI.Settings.ApiKey.Name": "API Key",
   "WGI.Settings.ApiKey.Hint": "Click Copy next to Key in Wanderer's Guide (Account > API Clients) and paste it here. Stored only in this browser (client setting).",
   "WGI.Settings.AuthUrl.Name": "Auth URL",
