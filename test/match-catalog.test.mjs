@@ -9,6 +9,7 @@ const fixture = JSON.parse(readFileSync(new URL("./fixtures/match-catalog.min.js
 // data/match-catalog.json is generated locally (git-ignored); check it only when present.
 const bundledUrl = new URL("../data/match-catalog.json", import.meta.url);
 const bundled = existsSync(bundledUrl) ? JSON.parse(readFileSync(bundledUrl)) : null;
+const manifest = JSON.parse(readFileSync(new URL("../module.json", import.meta.url)));
 
 test("fixture loads on the matching PF2e version without warnings", () => {
   const r = checkCatalog(fixture, "8.6.1");
@@ -91,4 +92,8 @@ test("loader: 404 -> missing; fetch error -> missing; ok -> loaded; cached", asy
 test("unwrapCatalog accepts raw catalogs (back-compat) and nothing", () => {
   assert.equal(unwrapCatalog(null).status, "missing");
   assert.equal(unwrapCatalog({ aliases: [] }).status, "loaded");
+});
+test("manifest minimum matches the only bundled PF2e catalog version", () => {
+  const minimum = manifest.relationships.systems.find((system) => system.id === "pf2e")?.compatibility?.minimum;
+  assert.equal(minimum, PF2E_VERSION);
 });
