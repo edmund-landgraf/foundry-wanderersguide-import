@@ -3,7 +3,8 @@
 
 export const DEFAULT_RELAY_URL = "http://127.0.0.1:8787";
 const ACTOR_ID = /^[A-Za-z0-9]{1,32}$/;
-const WORLD_ID = /^[A-Za-z0-9]{1,32}$/; // Current WGUI relay contract.
+// Keep in sync with WandersGuideUI/server/foundry-relay-core.mjs.
+const WORLD_ID = /^[A-Za-z0-9](?:[A-Za-z0-9_-]{0,62}[A-Za-z0-9])?$/;
 const REQUEST_ID = /^[0-9a-f]{16}$/;
 const OMIT_KEYS = new Set([
   "biography", "notes", "gmnotes", "privatenotes", "secretnotes",
@@ -30,8 +31,8 @@ export function validateReadConfig({ code, worldId, origin, relayUrl }) {
   if (secret.length < 16 || secret.length > 128) {
     throw new Error("Set a connection code of 16 to 128 characters in Wanderer's Guide Import settings.");
   }
-  if (!WORLD_ID.test(String(worldId ?? ""))) {
-    throw new Error("This world ID is not supported by the current WGUI relay (letters and digits only).");
+  if (typeof worldId !== "string" || !WORLD_ID.test(worldId)) {
+    throw new Error("World ID must be 1–64 characters: letters or digits at both ends, with letters, digits, hyphens or underscores inside.");
   }
   let address;
   try { address = new URL(origin); }

@@ -1,0 +1,22 @@
+name: Foundry importer tests
+on:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: foundry-wanderersguide-import
+      - uses: actions/checkout@v4
+        with:
+          repository: edmund-landgraf/WandersGuideUI
+          ref: 106d451582373794cfd1be124220457c67e3bb6d
+          path: WandersGuideUI
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node --test test/*.mjs
+        working-directory: foundry-wanderersguide-import
