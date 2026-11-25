@@ -9,7 +9,7 @@ import {
 const CODE = "random-test-code-0123456789";
 const config = {
   code: CODE,
-  worldId: "TestWorld",
+  worldId: "price-of-prophecy-test",
   origin: "http://localhost:30000",
   relayUrl: "http://127.0.0.1:8787",
 };
@@ -72,7 +72,12 @@ test("relay accepts only HTTPS or loopback HTTP and never a credentialed URL", (
 test("connection credentials validate before any relay call", () => {
   assert.equal(validateReadConfig(config).code, CODE);
   assert.throws(() => validateReadConfig({ ...config, code: "short" }));
-  assert.throws(() => validateReadConfig({ ...config, worldId: "world-with-hyphens" }));
+  for (const worldId of ['price-of-prophecy-test','the-price-of-prophecy','World_A-2','a','a'.repeat(64)]) {
+    assert.equal(validateReadConfig({...config,worldId}).worldId,worldId);
+  }
+  for (const worldId of ['../x','a/b','a\\b','','a b','a'.repeat(65),'-world','world-','_world','world_','a.b','a\n',null,123]) {
+    assert.throws(()=>validateReadConfig({...config,worldId}),/World ID must be/);
+  }
   assert.throws(() => validateReadConfig({ ...config, origin: "http://localhost:30000/game" }));
 });
 
@@ -104,7 +109,7 @@ test("actor source strips biographies, private notes, descriptions and arbitrary
   }
   assert.equal(sameFunctionsHost("https://amba.wandersguide.site/functions/v1/", "https://amba.wandersguide.site"), true);
   assert.equal(sameFunctionsHost("https://amba.wandersguide.site", "http://amba.wandersguide.site"), false);
-  assert.equal(sameFunctionsHost("https://amba.wandersguide.site", "TestWorld"), false);
+  assert.equal(sameFunctionsHost("https://amba.wandersguide.site", "price-of-prophecy-test"), false);
   const bare = readFoundryCharacter({
     user: { isGM: true },
     actors: { get: () => ({ id: "ACTOR123", type: "character", toObject: () => ({ _id: "ACTOR123", name: "Bare", flags: { "foundry-wanderersguide-import": {} }, items: [] }) }) },
@@ -113,6 +118,7 @@ test("actor source strips biographies, private notes, descriptions and arbitrary
   assert.equal(readFoundryCharacter(fixture({ isGM: false }), "ACTOR123"), null);
   assert.equal(readFoundryCharacter(fixture(), "NPC123"), null);
   assert.equal(readFoundryCharacter(fixture(), "../etc/passwd"), null);
+  assert.equal(readFoundryCharacter(fixture(), "ACTOR-123"), null);
 });
 
 test("GM client connects, waits, responds to list and one actor, then stops", async () => {
@@ -126,7 +132,7 @@ test("GM client connects, waits, responds to list and one actor, then stops", as
   const fetchImpl = async (url, options) => {
     calls.push({ path: new URL(url).pathname, body: JSON.parse(options.body), headers: options.headers });
     let body = { ok: true };
-    if (url.endsWith("/connect")) body = { worldId: "TestWorld", session: "opaque-session-0123456789" };
+    if (url.endsWith("/connect")) body = { worldId: "price-of-prophecy-test", session: "opaque-session-0123456789" };
     if (url.endsWith("/wait")) body = jobs.shift() ?? { type: "idle" };
     if (url.endsWith("/respond") && jobs.length === 0) controller.abort();
     return { ok: true, json: async () => body };
@@ -141,6 +147,9 @@ test("GM client connects, waits, responds to list and one actor, then stops", as
     "/foundry-relay/v1/wait", "/foundry-relay/v1/respond",
   ]);
   assert.equal(calls[0].body.code, CODE);
+  assert.equal(calls[0].body.worldId, config.worldId);
+  assert.equal(calls[2].body.worldId, config.worldId);
+  assert.equal(calls[4].body.worldId, config.worldId);
   assert.deepEqual(calls[2].body.characters[0].name, "Kota");
   assert.equal(calls[4].body.actor._id, "ACTOR123");
   assert.equal(calls[1].headers["X-WGI-Relay-Session"], "opaque-session-0123456789");
@@ -153,7 +162,7 @@ test("actor read refuses unknown IDs without exposing other actors", async () =>
   let n = 0;
   const fetchImpl = async (url, options) => {
     const path = new URL(url).pathname;
-    if (path.endsWith("/connect")) return { ok: true, json: async () => ({ session: "opaque-session-0123456789", worldId: "TestWorld" }) };
+    if (path.endsWith("/connect")) return { ok: true, json: async () => ({ session: "opaque-session-0123456789", worldId: "price-of-prophecy-test" }) };
     if (path.endsWith("/wait")) return { ok: true, json: async () => ({ type: "actor", actorId: "NPC123", requestId: "0123456789abcdef" }) };
     if (path.endsWith("/respond")) {
       responseBody = JSON.parse(options.body);
