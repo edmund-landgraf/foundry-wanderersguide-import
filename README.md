@@ -5,7 +5,7 @@ Imports Pathfinder 2e player characters from Wanderer's Guide (WGUI) into the cu
 | | |
 |---|---|
 | Module id | `foundry-wanderersguide-import` |
-| Version | 0.1.5 |
+| Version | 0.1.6 |
 | Foundry | minimum 12, verified 14 (build 370) |
 | System | `pf2e`, minimum 8.7.1, verified 8.7.1 |
 | Tests | `npm test` (Node built-in test runner, 94 tests passing as of 2026-11-01) |
@@ -40,8 +40,8 @@ This is a separate direction from the existing **WGUI → Foundry** character im
 ### Local setup
 
 1. In the **WandersGuideUI** repository run `npm run foundry-relay`. The relay listens at `http://127.0.0.1:8787`; it is not an endpoint inside the Foundry application.
-2. Open your PF2e world in Foundry as a **GM**, with this module enabled. Under **Configure Settings → Wanderer's Guide Import**, set **Foundry → WGUI connection code** to a random 16–128 character secret; do **not** use the Wanderer's Guide API Key, which is for the opposite direction. The new code and relay URL are **client-scope** settings, local to that GM's browser. Default relay URL: `http://127.0.0.1:8787`. Saving settings (or reloading the world) starts the read connector. Leaving the code blank disables it.
-3. In WGUI, use **Import from Foundry**, enter the exact Foundry browser **origin**, e.g. `http://localhost:30000`, and the same connection code. Select one character, review, and import in WGUI.
+2. Open your PF2e world in Foundry as a **GM**, with this module enabled. Under **Configure Settings → Wanderer's Guide Import**, click **Generate random number** for **Foundry → WGUI connection code** (16 decimal digits); do **not** use the Wanderer's Guide API Key, which is for the opposite direction. The code and relay URL are **client-scope** settings in that browser. Default relay URL: `http://127.0.0.1:8787`. Saving settings (or reloading the world) starts the read connector. Leaving the code blank disables it.
+3. In WGUI, use **Import from Foundry**, pick the same world **origin** as the Foundry address bar (`http://localhost:30000` or `http://127.0.0.1:30000`, not both), and paste the same connection code. Connect lists player characters in that world; select one or a party folder, review, and import.
 
 Only an open GM client dials the relay. It connects outward, waits for requests, and responds with summaries of `character` actors or one selected actor's source. It never starts an HTTP listener or reads an NPC. It strips biography, notes, descriptions, arbitrary module flags and other marked private fields before sending the actor source; `flags.pf2e.rulesSelections` is retained. The shared secret is never included in URL query parameters or logged. A configured remote relay must use HTTPS; non-loopback HTTP relay URLs are rejected.
 
@@ -74,7 +74,7 @@ The old Auth URL / client id settings are hidden and unused; the server scopes e
 
 ## Use
 
-Actors sidebar → **Import from Wanderer's Guide** → tick characters → **Import selected**.
+Actors sidebar → **Import from Wanderer's Guide** → tick characters → **Import selected**. The character list shows a portrait thumbnail when Wanderer's Guide supplies one.
 
 - Imports are planned and shown for review before anything is written; Cancel changes nothing.
 - Re-importing the same WG character updates the same actor (flags `wgId` + host) and keeps current HP, temporary HP, prepared spells and spell-slot usage where the spellcasting entry still exists.

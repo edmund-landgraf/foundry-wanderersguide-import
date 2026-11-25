@@ -2,6 +2,24 @@
 // This does not modify the existing Wanderer's Guide -> Foundry importer.
 
 export const DEFAULT_RELAY_URL = "http://127.0.0.1:8787";
+export const FOUNDRY_CONNECTION_CODE_LENGTH = 16;
+
+/** Shared secret for the read relay. Sixteen decimal digits; not a password. */
+export function generateFoundryConnectionCode(length = FOUNDRY_CONNECTION_CODE_LENGTH) {
+  const want = Math.min(Math.max(length, FOUNDRY_CONNECTION_CODE_LENGTH), 128);
+  let out = "";
+  while (out.length < want) {
+    if (globalThis.crypto?.getRandomValues) {
+      const bytes = new Uint8Array(want - out.length);
+      globalThis.crypto.getRandomValues(bytes);
+      for (const byte of bytes) out += String(byte % 10);
+    } else {
+      out += String(Math.floor(Math.random() * 10));
+    }
+  }
+  return out.slice(0, want);
+}
+
 const ACTOR_ID = /^[A-Za-z0-9]{1,32}$/;
 // Keep in sync with WandersGuideUI/server/foundry-relay-core.mjs.
 const WORLD_ID = /^[A-Za-z0-9](?:[A-Za-z0-9_-]{0,62}[A-Za-z0-9])?$/;

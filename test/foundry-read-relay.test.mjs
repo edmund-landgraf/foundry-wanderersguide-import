@@ -4,6 +4,7 @@ import {
   validateRelayUrl, validateReadConfig, listFoundryCharacters,
   readFoundryCharacter, runFoundryReadRelay, jsonUtf8ByteLength, createRelayLease,
   sameFunctionsHost, reduceRelayStatus, initialRelayStatus, LINK_FLAG,
+  generateFoundryConnectionCode,
 } from "../scripts/foundry-read-relay.js";
 
 const CODE = "random-test-code-0123456789";
@@ -60,6 +61,11 @@ function fixture({ isGM = true } = {}) {
     actors: { contents: [actor, npc], get: (id) => id === actor.id ? actor : npc },
   };
 }
+
+test("connection code generator returns sixteen decimal digits", () => {
+  const code = generateFoundryConnectionCode();
+  assert.match(code, /^\d{16}$/);
+});
 
 test("relay accepts only HTTPS or loopback HTTP and never a credentialed URL", () => {
   assert.equal(validateRelayUrl("http://127.0.0.1:8787/"), "http://127.0.0.1:8787");

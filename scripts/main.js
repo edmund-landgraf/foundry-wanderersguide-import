@@ -1,6 +1,6 @@
 import { MODULE_ID, DEFAULT_FUNCTIONS_URL } from "./constants.js";
 import { addSheetHeaderButtons, exportHandoffMessage, importLinkedCharacter, openImportDialog } from "./dialog.js";
-import { DEFAULT_RELAY_URL, createRelayLease, getFoundryReadRelayStatus, runFoundryReadRelay, setFoundryReadRelayStatus, validateReadConfig } from "./foundry-read-relay.js";
+import { DEFAULT_RELAY_URL, createRelayLease, generateFoundryConnectionCode, getFoundryReadRelayStatus, runFoundryReadRelay, setFoundryReadRelayStatus, validateReadConfig } from "./foundry-read-relay.js";
 import { assertSecureFunctionsUrl } from "./api.js";
 
 let foundryReadController = null;
@@ -59,13 +59,11 @@ function startFoundryReadRelay() {
 
 Hooks.once("init", () => {
   game.settings.register(MODULE_ID, "readRelayCode", {
-    name: "Foundry → WGUI connection code",
-    hint: "GM only. 16–128 character shared secret. The WGUI Import from Foundry dialog uses this code. Stored in this browser only.",
+    name: "WGI.Settings.ReadRelayCode.Name", hint: "WGI.Settings.ReadRelayCode.Hint",
     scope: "client", config: true, type: String, default: "",
   });
   game.settings.register(MODULE_ID, "readRelayUrl", {
-    name: "Foundry → WGUI relay URL",
-    hint: "Local relay defaults to http://127.0.0.1:8787. Use an HTTPS origin for a remote relay.",
+    name: "WGI.Settings.ReadRelayUrl.Name", hint: "WGI.Settings.ReadRelayUrl.Hint",
     scope: "client", config: true, type: String, default: DEFAULT_RELAY_URL,
   });
   game.settings.register(MODULE_ID, "apiKey", {
@@ -104,6 +102,21 @@ Hooks.on("renderSettingsConfig", (_app, html) => {
   if (readCodeInput) {
     readCodeInput.type = "password";
     readCodeInput.autocomplete = "off";
+    const row = readCodeInput.closest(".form-group");
+    if (row && !row.querySelector(".wgi-generate-relay-code")) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "wgi-generate-relay-code";
+      btn.textContent = game.i18n.localize("WGI.Settings.ReadRelayGenerate");
+      btn.addEventListener("click", async () => {
+        const next = generateFoundryConnectionCode();
+        readCodeInput.value = next;
+        readCodeInput.type = "text";
+        await game.settings.set(MODULE_ID, "readRelayCode", next);
+        startFoundryReadRelay();
+      });
+      row.append(btn);
+    }
   }
 });
 

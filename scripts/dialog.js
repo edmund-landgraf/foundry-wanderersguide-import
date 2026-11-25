@@ -3,6 +3,7 @@ import { applyCampaignArt, campaignArtUrl } from "./campaign.js";
 import { listCharacters, listCampaigns, getCampaign, campaignLabel, exportCharacter, parseLocalExport, resolveFunctionsUrl } from "./api.js";
 import { importCharacter, previewImport, diffHtml, reviewHtml } from "./importer.js";
 import { loadMatchCatalog } from "./match-catalog.js";
+import { FALLBACK_IMG, resolveImageUrl } from "./mapping.js";
 
 /** Monotonic campaign loads. A slower response for an earlier selection is ignored. */
 export function campaignRequestToken() {
@@ -19,14 +20,20 @@ function opts() {
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
+const portraitThumb = (src, name, { size = 36 } = {}) => {
+  const label = esc(name);
+  return `<img class="wgi-portrait-thumb" src="${esc(src)}" alt="${label}" title="${label}" width="${size}" height="${size}" style="width:${size}px;height:${size}px;object-fit:cover;border:1px solid #0006;border-radius:50%;vertical-align:middle;display:block">`;
+};
+
 function charTable(rows, host, { checked = false, tab, names }) {
   const inWorld = (id) => game.actors.some((a) => a.getFlag(MODULE_ID, "wgId") === id && a.getFlag(MODULE_ID, "host") === host);
   const tr = (r) => {
     const ok = r.granted !== false;
     const action = !ok ? "not granted" : inWorld(r.id) ? "Update" : "Insert";
-    return `<tr${ok ? "" : ' style="opacity:.5"'}><td><input type="checkbox" name="wgi" value="${r.id}" ${ok ? "" : "disabled"} ${ok && checked ? "checked" : ""}></td><td>${esc(r.name)}${r.player ? ` <span class="notes">(${esc(r.player)})</span>` : ""}</td><td>${esc(r.level)}</td><td>${esc(r.ancestry)}</td><td>${esc(r.class)}</td><td>${esc(campaignLabel(r.campaignId, names))}</td><td>${r.id}</td><td class="wgi-action">${action}</td></tr>`;
+    const portrait = resolveImageUrl(r.imageUrl, host) || FALLBACK_IMG;
+    return `<tr${ok ? "" : ' style="opacity:.5"'}><td><input type="checkbox" name="wgi" value="${r.id}" ${ok ? "" : "disabled"} ${ok && checked ? "checked" : ""}></td><td class="wgi-portrait">${portraitThumb(portrait, r.name)}</td><td>${esc(r.name)}${r.player ? ` <span class="notes">(${esc(r.player)})</span>` : ""}</td><td>${esc(r.level)}</td><td>${esc(r.ancestry)}</td><td>${esc(r.class)}</td><td>${esc(campaignLabel(r.campaignId, names))}</td><td>${r.id}</td><td class="wgi-action">${action}</td></tr>`;
   };
-  return `<table class="wgi-table" data-tab="${tab}"><thead><tr><th></th><th>Name</th><th>Lvl</th><th>Ancestry</th><th>Class</th><th>Campaign</th><th>WG id</th><th>Action</th></tr></thead><tbody>${rows.map(tr).join("") || '<tr><td colspan="8">No characters.</td></tr>'}</tbody></table>`;
+  return `<table class="wgi-table" data-tab="${tab}"><thead><tr><th></th><th aria-label="Portrait"></th><th>Name</th><th>Lvl</th><th>Ancestry</th><th>Class</th><th>Campaign</th><th>WG id</th><th>Action</th></tr></thead><tbody>${rows.map(tr).join("") || '<tr><td colspan="9">No characters.</td></tr>'}</tbody></table>`;
 }
 
 // Review step (AMBA_REUSE_PLAN 5): the full plan is shown before anything is written; Cancel changes nothing.
