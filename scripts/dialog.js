@@ -22,7 +22,7 @@ const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "
 
 const portraitThumb = (src, name, { size = 36 } = {}) => {
   const label = esc(name);
-  return `<img class="wgi-portrait-thumb" src="${esc(src)}" alt="${label}" title="${label}" width="${size}" height="${size}" style="width:${size}px;height:${size}px;object-fit:cover;border:1px solid #0006;border-radius:50%;vertical-align:middle;display:block">`;
+  return `<img class="wgi-portrait-thumb" src="${esc(src)}" alt="${label}" title="${label}" width="${size}" height="${size}">`;
 };
 
 function charTable(rows, host, { checked = false, tab, names }) {
@@ -31,9 +31,9 @@ function charTable(rows, host, { checked = false, tab, names }) {
     const ok = r.granted !== false;
     const action = !ok ? "not granted" : inWorld(r.id) ? "Update" : "Insert";
     const portrait = resolveImageUrl(r.imageUrl, host) || FALLBACK_IMG;
-    return `<tr${ok ? "" : ' style="opacity:.5"'}><td><input type="checkbox" name="wgi" value="${r.id}" ${ok ? "" : "disabled"} ${ok && checked ? "checked" : ""}></td><td class="wgi-portrait">${portraitThumb(portrait, r.name)}</td><td>${esc(r.name)}${r.player ? ` <span class="notes">(${esc(r.player)})</span>` : ""}</td><td>${esc(r.level)}</td><td>${esc(r.ancestry)}</td><td>${esc(r.class)}</td><td>${esc(campaignLabel(r.campaignId, names))}</td><td>${r.id}</td><td class="wgi-action">${action}</td></tr>`;
+    return `<tr${ok ? "" : ' style="opacity:.5"'}><td class="wgi-col-check"><input type="checkbox" name="wgi" value="${r.id}" ${ok ? "" : "disabled"} ${ok && checked ? "checked" : ""}></td><td class="wgi-portrait wgi-col-portrait">${portraitThumb(portrait, r.name)}</td><td>${esc(r.name)}${r.player ? ` <span class="notes">(${esc(r.player)})</span>` : ""}</td><td class="wgi-col-lvl">${esc(r.level)}</td><td>${esc(r.ancestry)}</td><td>${esc(r.class)}</td><td>${esc(campaignLabel(r.campaignId, names))}</td><td class="wgi-col-id">${r.id}</td><td class="wgi-action">${action}</td></tr>`;
   };
-  return `<table class="wgi-table" data-tab="${tab}"><thead><tr><th></th><th aria-label="Portrait"></th><th>Name</th><th>Lvl</th><th>Ancestry</th><th>Class</th><th>Campaign</th><th>WG id</th><th>Action</th></tr></thead><tbody>${rows.map(tr).join("") || '<tr><td colspan="9">No characters.</td></tr>'}</tbody></table>`;
+  return `<div class="wgi-table-wrap"><table class="wgi-table" data-tab="${tab}"><thead><tr><th class="wgi-col-check" aria-label="Select"></th><th class="wgi-col-portrait" aria-label="Portrait"></th><th>Name</th><th class="wgi-col-lvl">Lvl</th><th>Ancestry</th><th>Class</th><th>Campaign</th><th class="wgi-col-id">WG id</th><th class="wgi-action">Action</th></tr></thead><tbody>${rows.map(tr).join("") || '<tr><td colspan="9">No characters.</td></tr>'}</tbody></table></div>`;
 }
 
 // Review step (AMBA_REUSE_PLAN 5): the full plan is shown before anything is written; Cancel changes nothing.
@@ -266,7 +266,7 @@ export async function openImportDialog() {
   if (DialogV2) {
     await DialogV2.wait({
       window: { title: "Import from Wanderer's Guide" },
-      position: { width: 700 },
+      position: { width: 820 },
       content: body,
       render: (_ev, dialog) => onRender(dialog.element ?? _ev?.target?.element, dialog),
       buttons: [
@@ -303,5 +303,5 @@ export async function openImportDialog() {
       cancel: { label: "Cancel" },
     },
     default: "import",
-  }, { width: 700 }).render(true);
+  }, { width: 820 }).render(true);
 }

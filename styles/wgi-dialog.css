@@ -1,0 +1,56 @@
+/* Import dialog: keep portrait thumbs square (Foundry shrinks table images otherwise). */
+.wgi-table-wrap {
+  overflow: auto;
+  max-height: min(50vh, 320px);
+  margin-bottom: 0.5rem;
+}
+
+.wgi-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.wgi-table th,
+.wgi-table td {
+  vertical-align: middle;
+  padding: 2px 6px;
+  text-align: left;
+}
+
+.wgi-table .wgi-col-check {
+  width: 1.75rem;
+}
+
+.wgi-table .wgi-col-portrait {
+  width: 2.75rem;
+  min-width: 2.75rem;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.wgi-table .wgi-portrait-thumb {
+  width: 36px;
+  height: 36px;
+  max-width: none;
+  min-width: 36px;
+  object-fit: cover;
+  border: 1px solid #0006;
+  border-radius: 50%;
+  display: block;
+  vertical-align: middle;
+}
+
+.wgi-table .wgi-col-lvl {
+  width: 2.25rem;
+  white-space: nowrap;
+}
+
+.wgi-table .wgi-col-id {
+  width: 3.25rem;
+  white-space: nowrap;
+}
+
+.wgi-table .wgi-action {
+  width: 4.25rem;
+  white-space: nowrap;
+}

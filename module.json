@@ -9,6 +9,7 @@
     "systems": [{ "id": "pf2e", "type": "system", "compatibility": { "minimum": "8.7.1", "verified": "8.7.1" } }]
   },
   "esmodules": ["scripts/main.js"],
+  "styles": ["styles/wgi-dialog.css"],
   "languages": [{ "lang": "en", "name": "English", "path": "lang/en.json" }],
   "url": "https://github.com/edmund-landgraf/foundry-wanderersguide-import",
   "manifest": "https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/main/manifests/foundry-wanderersguide-import.json",
