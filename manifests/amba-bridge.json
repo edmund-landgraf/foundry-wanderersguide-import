@@ -1,14 +1,18 @@
 {
   "id": "amba-bridge",
   "title": "AMBA Bridge",
-  "description": "Publishes Adventure Maker By Act adventures into Foundry V14/PF2e and optionally archives completed combat logs to WGUI.",
-  "version": "0.2.0",
+  "description": "Publishes Adventure Maker By Act adventures into Foundry V14/PF2e and optionally records public combat rolls locally for GM review.",
+  "version": "0.2.1",
   "compatibility": {
     "minimum": "14",
     "verified": "14"
   },
-  "esmodules": ["scripts/amba-bridge.mjs"],
-  "styles": ["styles/amba-bridge.css"],
+  "esmodules": [
+    "scripts/amba-bridge.mjs"
+  ],
+  "styles": [
+    "styles/amba-bridge.css"
+  ],
   "languages": [
     {
       "lang": "en",
@@ -28,9 +32,13 @@
       }
     ]
   },
-  "authors": [{ "name": "Adventure Maker By Act" }],
+  "authors": [
+    {
+      "name": "Adventure Maker By Act"
+    }
+  ],
   "socket": false,
   "url": "https://github.com/edmund-landgraf/foundry-wanderersguide-import",
   "manifest": "https://raw.githubusercontent.com/edmund-landgraf/foundry-wanderersguide-import/main/manifests/amba-bridge.json",
-  "download": "https://github.com/edmund-landgraf/foundry-wanderersguide-import/releases/download/amba-bridge-v0.2.0/module.zip"
+  "download": "https://github.com/edmund-landgraf/foundry-wanderersguide-import/releases/download/amba-bridge-v0.2.1/module.zip"
 }
