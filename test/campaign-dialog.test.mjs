@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { selectCampaignArtLevel } from "../scripts/campaign.js";
-import { addSheetHeaderButtons, campaignRequestToken, exportHandoffMessage, sheetImportTarget } from "../scripts/dialog.js";
+import { addSheetHeaderButtons, campaignRequestToken, exportHandoffMessage, importFailureMessage, sheetImportTarget } from "../scripts/dialog.js";
 import { readFileSync } from "node:fs";
 
 test("campaign art updates the tagged or initial level, not whichever level is first", () => {
@@ -56,6 +56,11 @@ test("the sheet button is only for a character the user can update", () => {
   assert.match(handoff, /Import from Foundry/);
   assert.equal(/updated|exported/i.test(handoff), false);
   assert.match(exportHandoffMessage({ status: "disabled", reason: "Set a code." }), /Set a code/);
+});
+
+test("export failures are not mislabeled as planning failures", () => {
+  assert.equal(importFailureMessage(new Error("WorkerRequestCancelled")), "Nothing was written (Wanderer's Guide export failed before planning).");
+  assert.equal(importFailureMessage({ rollback: { restored: true } }), "All changes were rolled back; the actor is as it was before the import.");
 });
 
 test("release packaging keeps the match catalog and not the private database", () => {

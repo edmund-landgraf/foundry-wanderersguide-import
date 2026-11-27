@@ -71,10 +71,7 @@ async function runImport(ids, host, { dryRun = false, parity = false, review = t
       ui.notifications.error(`Wanderer's Guide ${id}: ${e.message}`);
       // Toasts vanish; leave a whispered card so a failed import is visible afterwards (and scripted runs can see it).
       console.error(`${MODULE_ID} | import ${id} failed`, e);
-      const rb = e.rollback;
-      const rbText = !rb ? "Nothing was written (failed during planning)."
-        : rb.restored ? "All changes were rolled back; the actor is as it was before the import."
-        : `Restore failed (${esc(rb.restoreError ?? "")}); ${rb.backup ? `a backup actor "(WG backup)" (${esc(rb.backup)}) holds the pre-import state.` : `no backup could be created (${esc(rb.backupError ?? "")}).`}`;
+      const rbText = importFailureMessage(e);
       await ChatMessage.create({ whisper: [game.user.id], content: `<h3>WG import failed: WG id ${esc(id)}</h3><p>${esc(e.message)}</p><p>${rbText}</p>` }).catch(() => {});
     }
   }
@@ -143,6 +140,14 @@ export function exportHandoffMessage(status, actorName) {
   if (status?.status === "waiting") return "This browser tab is waiting to own the Foundry read relay.";
   if (status?.status === "disconnected") return "The Foundry read relay is not connected. Check the relay URL and connection code.";
   return status?.reason || "Set a Foundry → WGUI connection code in Wanderer's Guide Import settings.";
+}
+
+/** Describe what was preserved after a failed import or export fetch. */
+export function importFailureMessage(error) {
+  const rb = error?.rollback;
+  if (!rb) return "Nothing was written (Wanderer's Guide export failed before planning).";
+  if (rb.restored) return "All changes were rolled back; the actor is as it was before the import.";
+  return `Restore failed (${esc(rb.restoreError ?? "")}); ${rb.backup ? `a backup actor \"(WG backup)\" (${esc(rb.backup)}) holds the pre-import state.` : `no backup could be created (${esc(rb.backupError ?? "")}).`}`;
 }
 
 /** Application V1 header buttons. Import, then Export, immediately before Close. */
